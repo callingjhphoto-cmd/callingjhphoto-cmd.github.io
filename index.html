@@ -2187,8 +2187,13 @@ function loop(now){
     rotLat += (easeTarget.lat - rotLat) * 0.09;
     if(Math.abs(dl) < 0.25) { /* settled */ }
   } else if(!dragging){
-    if(Math.abs(vel) > 0.002){ rotLon += vel; vel *= 0.955; }
-    else if(!reduce) rotLon += spin * (dt/16.67);
+    if(hoverPin){
+      vel *= 0.82;
+    } else if(Math.abs(vel) > 0.002){
+      rotLon += vel; vel *= 0.955;
+    } else if(!reduce){
+      rotLon += spin * (dt/16.67);
+    }
     rotLat += (-16 - rotLat) * 0.03;
   }
   if(rotLon > 180) rotLon -= 360;
@@ -2217,8 +2222,8 @@ function pointOf(e){
   var t = (e.touches && e.touches[0]) || e;
   return { x: t.clientX - r.left, y: t.clientY - r.top };
 }
-function hitPin(pt){
-  var best = null, bd = 26;
+function hitPin(pt, radius){
+  var best = null, bd = radius == null ? 28 : radius;
   for(var id in pinScreen){
     var p = pinScreen[id];
     if(!p.vis) continue;
@@ -2227,27 +2232,31 @@ function hitPin(pt){
   }
   return best;
 }
+function hitPinSticky(pt){
+  var id = hitPin(pt, 28);
+  if(!id && hoverPin){
+    var p = pinScreen[hoverPin];
+    if(p && p.vis && Math.hypot(p.x - pt.x, p.y - pt.y) < 42) id = hoverPin;
+  }
+  return id;
+}
 
 cv.addEventListener('mousemove', function(e){
   if(dragging) return;
-  var pt = pointOf(e), id = hitPin(pt);
+  var pt = pointOf(e), id = hitPinSticky(pt);
   if(id !== hoverPin){
     hoverPin = id;
-    cv.style.cursor = 'grab';
-    if(id && !activePin){
+    if(id){
       var c = CITIES.filter(function(x){return x.id===id})[0];
-      easeTarget = { lon: c.lon, lat: -Math.max(-45, Math.min(45, c.lat*0.42)) * -1 };
-      easeTarget.lat = Math.max(-42, Math.min(42, c.lat * 0.45));
-      showReadout(c);
-    } else if(!id && !activePin){
-      easeTarget = null;
+      if(c) showReadout(c);
+    } else {
       hideReadout();
     }
   }
-  kick();
 });
 cv.addEventListener('mouseleave', function(){
-  if(!activePin){ hoverPin = null; easeTarget = null; hideReadout(); }
+  hoverPin = null;
+  hideReadout();
 });
 
 function down(e){
