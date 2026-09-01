@@ -438,6 +438,10 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   font-family:var(--mono);font-size:12px;letter-spacing:.18em;font-weight:700;padding:14px
 }
 #bookSheet .go:hover{background:#fff}
+#bookSheet .go:disabled{opacity:.55;cursor:wait}
+#bookStatus{font-family:var(--mono);font-size:11px;color:#8a8a8a;margin:12px 0 0;line-height:1.5;min-height:1.4em}
+#bookStatus.ok{color:#fff}
+#bookStatus.err{color:var(--red)}
 #bookSheet .x{
   position:absolute;top:12px;right:14px;background:none;border:0;color:#6a6a6a;
   font-family:var(--mono);font-size:10px;letter-spacing:.12em;cursor:pointer
@@ -786,9 +790,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <input type="text" id="bookJob" name="job" data-i18n-placeholder="book.ph.job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
     <label for="bookCity" data-i18n="book.city">CITY</label>
     <input type="text" id="bookCity" name="city" data-i18n-placeholder="book.ph.city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
+    <label for="bookEmail" data-i18n="book.email">YOUR EMAIL</label>
+    <input type="email" id="bookEmail" name="email" data-i18n-placeholder="book.ph.email" placeholder="producer@studio.com" autocomplete="email" required>
     <label for="bookNote" data-i18n="book.note">ANYTHING ELSE</label>
     <textarea id="bookNote" name="note" data-i18n-placeholder="book.ph.note" placeholder="Optional"></textarea>
-    <button type="submit" class="go" data-i18n="book.go">SEND REQUEST</button>
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+    <button type="submit" class="go" id="bookGo" data-i18n="book.go">SEND REQUEST</button>
+    <div id="bookStatus" aria-live="polite"></div>
   </form>
 </div>
 
@@ -1202,10 +1210,17 @@ var I18N = {
     'book.to': 'TO',
     'book.job': 'JOB / PRODUCTION',
     'book.city': 'CITY',
+    'book.email': 'YOUR EMAIL',
     'book.note': 'ANYTHING ELSE',
     'book.go': 'SEND REQUEST',
+    'book.sending': 'SENDING…',
+    'book.sent': 'SENT. I’ll reply from callingjhphoto@gmail.com.',
+    'book.needDate': 'Need a start date.',
+    'book.needEmail': 'Need an email so I can reply.',
+    'book.fail': 'Couldn’t send from here. Email callingjhphoto@gmail.com.',
     'book.ph.job': 'Who’s shooting, what’s the job',
     'book.ph.city': 'Barcelona, Mallorca, London…',
+    'book.ph.email': 'producer@studio.com',
     'book.ph.note': 'Optional',
     'chat.ph': 'Job, dates, city…',
     'chat.send': 'SEND',
@@ -1364,10 +1379,17 @@ var I18N = {
     'book.to': 'HASTA',
     'book.job': 'JOB / PRODUCCIÓN',
     'book.city': 'CIUDAD',
+    'book.email': 'TU EMAIL',
     'book.note': 'ALGO MÁS',
     'book.go': 'ENVIAR',
+    'book.sending': 'ENVIANDO…',
+    'book.sent': 'ENVIADO. Te respondo desde callingjhphoto@gmail.com.',
+    'book.needDate': 'Necesito una fecha de inicio.',
+    'book.needEmail': 'Necesito un email para responderte.',
+    'book.fail': 'No se ha podido enviar. Escribe a callingjhphoto@gmail.com.',
     'book.ph.job': 'Quién dispara, cuál es el job',
     'book.ph.city': 'Barcelona, Mallorca, Londres…',
+    'book.ph.email': 'productor@estudio.com',
     'book.ph.note': 'Opcional',
     'chat.ph': 'Job, fechas, ciudad…',
     'chat.send': 'ENVIAR',
@@ -2418,23 +2440,70 @@ function closeBook(){
   var scrim = $('#bookScrim');
   if(scrim) scrim.addEventListener('click', closeBook);
   if(!form) return;
+  var go = $('#bookGo'), status = $('#bookStatus');
+  function setStatus(msg, kind){
+    if(!status) return;
+    status.textContent = msg || '';
+    status.className = kind || '';
+  }
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var from = ($('#bookFrom') && $('#bookFrom').value) || '';
     var to = ($('#bookTo') && $('#bookTo').value) || '';
     var job = ($('#bookJob') && $('#bookJob').value) || '';
     var city = ($('#bookCity') && $('#bookCity').value) || '';
+    var email = ($('#bookEmail') && $('#bookEmail').value || '').trim();
     var note = ($('#bookNote') && $('#bookNote').value) || '';
-    if(!from){ if($('#bookFrom')) $('#bookFrom').focus(); return; }
+    if(!from){
+      setStatus(t('book.needDate'), 'err');
+      if($('#bookFrom')) $('#bookFrom').focus();
+      return;
+    }
+    if(!email || email.indexOf('@') < 1){
+      setStatus(t('book.needEmail'), 'err');
+      if($('#bookEmail')) $('#bookEmail').focus();
+      return;
+    }
     var dates = to && to !== from ? from + ' – ' + to : from;
     var sub = t('mail.sub') + dates;
-    var body = t('mail.body') + '\n\n' +
-      t('mail.dates') + dates + '\n' +
-      t('mail.job') + (job || '—') + '\n' +
-      t('mail.city') + (city || '—') + '\n';
-    if(note) body += '\n' + note + '\n';
-    window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
-      encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
+    var payload = {
+      _subject: sub,
+      _template: 'table',
+      _captcha: 'false',
+      _replyto: email,
+      email: email,
+      Dates: dates,
+      Job: job || '—',
+      City: city || '—',
+      Note: note || '—'
+    };
+    if(go){ go.disabled = true; go.textContent = t('book.sending'); }
+    setStatus(t('book.sending'), '');
+    fetch('https://formsubmit.co/ajax/callingjhphoto@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(res){ return res.json().then(function(j){ return { ok: res.ok, j: j }; }); })
+      .then(function(r){
+        if(!r.ok && !(r.j && (r.j.success === 'true' || r.j.success === true))){
+          throw new Error('send failed');
+        }
+        setStatus(t('book.sent'), 'ok');
+        if(go){ go.disabled = false; go.textContent = t('book.go'); }
+        form.reset();
+      })
+      .catch(function(){
+        setStatus(t('book.fail'), 'err');
+        if(go){ go.disabled = false; go.textContent = t('book.go'); }
+        var body = t('mail.body') + '\n\n' +
+          t('mail.dates') + dates + '\n' +
+          t('mail.job') + (job || '—') + '\n' +
+          t('mail.city') + (city || '—') + '\n' +
+          'Email: ' + email + '\n';
+        if(note) body += '\n' + note + '\n';
+        window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
+          encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
+      });
   });
 })();
 
