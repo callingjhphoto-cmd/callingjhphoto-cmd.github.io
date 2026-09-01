@@ -504,7 +504,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   .cols{grid-template-columns:1fr;gap:28px}
   .doshots{grid-template-columns:1fr 1fr}
   .cgrid{grid-template-columns:1fr}
-  .row{grid-template-columns:52px 1fr;gap:4px 12px;padding:14px 0}
+  .row{
+    grid-template-columns:52px 1fr;gap:4px 12px;padding:14px 0;
+    margin-left:0;padding-left:0;border-left:0
+  }
+  .row:hover{border-left-color:transparent}
   .row .pr,.row .ph,.row .ci{grid-column:2}
   .row.head{display:none}
   .row .pr:before,.row .ph:before,.row .ci:before{
@@ -579,7 +583,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #inspect .nav.next{right:6px}
   #stage{height:100svh;min-height:0}
   #scrollcue{display:none!important}
-  .wrap{padding:0 16px}
+  .wrap{
+    padding-left:max(20px, env(safe-area-inset-left, 0px));
+    padding-right:max(20px, env(safe-area-inset-right, 0px))
+  }
+  #hero{padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+  #brandmark{padding-left:max(20px, env(safe-area-inset-left, 0px))}
+  #bookSheet{left:max(16px, env(safe-area-inset-left, 0px));right:max(16px, env(safe-area-inset-right, 0px))}
   #polaroid{padding:56px 0 48px}
   #polaroid .attr{margin-bottom:28px}
   .ppair{gap:22px}
