@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="lang-wait">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -51,6 +51,33 @@ a{color:inherit}
 #boot .bar i{position:absolute;inset:0 100% 0 0;background:var(--red);transition:right .25s linear}
 #bootline{font-size:13px;letter-spacing:.14em;color:var(--grey2);min-height:1.4em;text-align:center;padding:0 22px;max-width:90vw}
 #boot.gone{opacity:0;pointer-events:none}
+
+html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
+#langGate{
+  position:fixed;inset:0;z-index:300;background:#000;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  font-family:var(--mono);transition:opacity .45s ease;
+}
+#langGate.gone{opacity:0;pointer-events:none}
+#langGate button{
+  background:none;border:0;color:#fff;cursor:pointer;
+  font-family:var(--mono);padding:18px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+#langGate button strong{
+  font-size:clamp(34px,8.5vw,76px);font-weight:700;letter-spacing:.22em;
+  line-height:1;
+}
+#langGate button small{
+  font-size:10.5px;letter-spacing:.32em;color:#5e5e5e;text-transform:uppercase;
+  font-weight:400;
+}
+#langGate button:hover strong, #langGate button:focus-visible strong{color:var(--red)}
+#langGate button:hover small, #langGate button:focus-visible small{color:var(--grey2)}
+#langGate .slash{
+  color:#2a2a2a;font-size:clamp(22px,5vw,42px);letter-spacing:0;padding:0 4px 18px;
+  pointer-events:none;font-weight:400;
+}
 
 /* ---------- nav ---------- */
 nav{
@@ -438,6 +465,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   .row .pr:before{content:'PROD '}
   .row .ph:before{content:'PHOTO '}
   .row .ci:before{content:'CITY '}
+  html[lang="es"] .row .ph:before{content:'FOTO '}
+  html[lang="es"] .row .ci:before{content:'CIUDAD '}
   .shot img{height:200px}
   #owngrid{grid-template-columns:1fr 1fr}
   #owngrid img{height:170px}
@@ -501,8 +530,20 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <div id="crt"></div>
 <div id="vig"></div>
 
+<div id="langGate" role="dialog" aria-modal="true" aria-label="English or Español">
+  <button type="button" data-lang="en" aria-label="English">
+    <strong>EN</strong>
+    <small>English</small>
+  </button>
+  <span class="slash" aria-hidden="true">/</span>
+  <button type="button" data-lang="es" aria-label="Español">
+    <strong>ES</strong>
+    <small>Español</small>
+  </button>
+</div>
+
 <div id="boot">
-  <div id="bootline">CALIBRATING MONITOR…</div>
+  <div id="bootline"></div>
   <div class="bar"><i id="bootbar"></i></div>
 </div>
 
@@ -517,70 +558,72 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   JH<em>/</em>01 <b>JAMES HUERTAS</b>
 </a>
 <nav class="mono">
-  <a href="#stage">globe</a>
-  <a href="#do">what i do</a>
-  <a href="#work">work</a>
-  <a href="#contact" id="navBook">book me</a>
+  <a href="#stage" data-i18n="nav.globe">globe</a>
+  <a href="#do" data-i18n="nav.do">what i do</a>
+  <a href="#work" data-i18n="nav.work">work</a>
+  <a href="#contact" id="navBook" data-i18n="nav.book">book me</a>
 </nav>
 
 <!-- ============ [00] GLOBE ============ -->
 <section id="stage">
   <canvas id="sky"></canvas>
-  <canvas id="globe" aria-label="Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens."></canvas>
+  <canvas id="globe" data-i18n-aria="globe.aria" aria-label="Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens."></canvas>
 
   <div id="hero">
     <h1>James Huertas</h1>
-    <div class="role mono">Digital Technician &amp; Lighting Assistant</div>
-    <div class="sub mono">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</div>
+    <div class="role mono" data-i18n="hero.role">Digital Technician &amp; Lighting Assistant</div>
+    <div class="sub mono" data-i18n="hero.sub">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</div>
     <div class="markets mono">
-      <b>EASY ROOM. MEAN STATION. MUSIC ON.</b>
+      <b data-i18n="hero.tag">EASY ROOM. MEAN STATION. MUSIC ON.</b>
       <i><em>VIA</em> LA · NYC · RIO · LDN · HAM · BCN · LIS · PMI · SIN</i>
     </div>
   </div>
 
   <div class="hud mono" id="hudTL">
     LAT/LON <b id="hLat">—</b><br>
-    UPTIME&nbsp; <b id="hUp">00:00</b>
+    <span data-i18n="hud.uptime">UPTIME</span>&nbsp; <b id="hUp">00:00</b>
   </div>
   <div class="hud mono" id="hudTR">
-    CARDS <b>2 OF 2 BACKED UP</b><br>
-    HDMI&nbsp; <b>SEATED (VERIFIED TWICE)</b>
+    <span data-i18n="hud.cardsK">CARDS</span> <b data-i18n="hud.cardsV">2 OF 2 BACKED UP</b><br>
+    HDMI&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
   </div>
   <div class="hud mono" id="hudBL">
-    COFFEE <b class="r">CRITICAL</b><br>
-    CLIENT <b>HAPPY</b>
+    <span data-i18n="hud.coffeeK">COFFEE</span> <b class="r" data-i18n="hud.coffeeV">CRITICAL</b><br>
+    <span data-i18n="hud.clientK">CLIENT</span> <b data-i18n="hud.clientV">HAPPY</b>
   </div>
   <div class="hud mono" id="hudBR">
-    CABLE TENSION <b>NOMINAL</b><br>
-    WIFI <b>“FINE”</b>
+    <span data-i18n="hud.cableK">CABLE TENSION</span> <b data-i18n="hud.cableV">NOMINAL</b><br>
+    WIFI <b data-i18n="hud.wifiV">“FINE”</b>
   </div>
 
   <div id="zoomui" class="mono">
-    <button id="zOut" aria-label="Zoom out">−</button><span>ZOOM</span><button id="zIn" aria-label="Zoom in">+</button>
-    <span style="color:#3a3a3a;margin-left:10px">DRAG TO SPIN</span>
+    <button id="zOut" data-i18n-aria="zoom.out" aria-label="Zoom out">−</button><span>ZOOM</span><button id="zIn" data-i18n-aria="zoom.in" aria-label="Zoom in">+</button>
+    <span style="color:#3a3a3a;margin-left:10px" data-i18n="zoom.drag">DRAG TO SPIN</span>
   </div>
 
   <div id="readout" class="mono"></div>
-  <div id="scrollcue" class="mono">SCROLL <i>▮</i></div>
+  <div id="scrollcue" class="mono"><span data-i18n="scroll">SCROLL</span> <i>▮</i></div>
 </section>
 
 <!-- mobile pin list -->
 <section id="pinlist"><div class="wrap">
-  <div class="secno mono">[00·B] EASY ROOM. MEAN STATION. MUSIC ON.</div>
+  <div class="secno mono" data-i18n="pin.secno">[00·B] EASY ROOM. MEAN STATION. MUSIC ON.</div>
   <div class="g" id="pinButtons"></div>
 </div></section>
 
 <!-- ============ [01] POLAROID ============ -->
 <section id="polaroid"><div class="wrap">
   <p class="quote">“Best digi ever”</p>
-  <div class="attr">— a producer at Canadá</div>
+  <div class="attr" data-i18n="polaroid.attr">— a producer at Canadá</div>
   <div class="ppair">
     <div class="pframe tilt-a">
       <img src="img/polaroid/station_crop.jpg"
+           data-i18n-alt="alt.polaroid1"
            alt="James Huertas on a beach with his digital technician station.">
     </div>
     <div class="pframe tilt-b">
       <img src="img/polaroid/cables.jpg"
+           data-i18n-alt="alt.polaroid2"
            alt="James Huertas on set, running tether cables at the capture station.">
     </div>
   </div>
@@ -588,38 +631,38 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <!-- ============ [02] WHAT I ACTUALLY DO ============ -->
 <section id="do"><div class="wrap">
-  <div class="secno mono">[02] WHAT I ACTUALLY DO</div>
-  <h2 class="big">Always there.</h2>
+  <div class="secno mono" data-i18n="do.secno">[02] WHAT I ACTUALLY DO</div>
+  <h2 class="big" data-i18n="do.h2">Always there.</h2>
 
   <div class="cols">
     <div class="col">
-      <h3>CAPTURE</h3>
-      <p>Tethered capture that does not drop. The camera talks to the station, the station talks to the client screen, and nobody stands around waiting for a frame to appear.</p>
+      <h3 data-i18n="do.cap.h">CAPTURE</h3>
+      <p data-i18n="do.cap.p">Tethered capture that does not drop. The camera talks to the station, the station talks to the client screen, and nobody stands around waiting for a frame to appear.</p>
       <ul>
-        <li>Capture One Pro sessions, named and structured</li>
+        <li data-i18n="do.cap.1">Capture One Pro sessions, named and structured</li>
         <li>Phase One · Hasselblad · Canon · Nikon · Sony · Fuji</li>
-        <li>Live view, focus checks, frame overlays</li>
+        <li data-i18n="do.cap.3">Live view, focus checks, frame overlays</li>
         <li>Phase One Certified Professional (POCP 2017)</li>
       </ul>
     </div>
     <div class="col">
-      <h3>COLOUR</h3>
-      <p>A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher's inbox. Styles and ICC set before the first frame, not after.</p>
+      <h3 data-i18n="do.col.h">COLOUR</h3>
+      <p data-i18n="do.col.p">A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher's inbox. Styles and ICC set before the first frame, not after.</p>
       <ul>
-        <li>Monitor calibration and profiling</li>
-        <li>Session styles, ICC, capture adjustments</li>
-        <li>Layered comps and stitching on set</li>
-        <li>Selects, exports and client-ready previews</li>
+        <li data-i18n="do.col.1">Monitor calibration and profiling</li>
+        <li data-i18n="do.col.2">Session styles, ICC, capture adjustments</li>
+        <li data-i18n="do.col.3">Layered comps and stitching on set</li>
+        <li data-i18n="do.col.4">Selects, exports and client-ready previews</li>
       </ul>
     </div>
     <div class="col">
-      <h3>DATA</h3>
-      <p>Three copies of everything, verified, before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
+      <h3 data-i18n="do.dat.h">DATA</h3>
+      <p data-i18n="do.dat.p">Three copies of everything, verified, before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
       <ul>
-        <li>Card plus two destinations, checksum verified</li>
-        <li>ChronoSync mirroring, structured hand-off</li>
-        <li>Shot logs, metadata, naming conventions</li>
-        <li>Power, distro, screens, cable management</li>
+        <li data-i18n="do.dat.1">Card plus two destinations, checksum verified</li>
+        <li data-i18n="do.dat.2">ChronoSync mirroring, structured hand-off</li>
+        <li data-i18n="do.dat.3">Shot logs, metadata, naming conventions</li>
+        <li data-i18n="do.dat.4">Power, distro, screens, cable management</li>
       </ul>
     </div>
   </div>
@@ -629,9 +672,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <!-- ============ [03] WHAT I WORK WITH ============ -->
 <section id="kit"><div class="wrap">
-  <div class="secno mono">[03] SOFTWARE · CAMERAS · LIGHTING</div>
-  <h2 class="big">What I work with</h2>
-  <p class="lede mono" style="margin-top:14px;max-width:640px;color:#8a8a8a;font-size:12.5px;line-height:1.9">
+  <div class="secno mono" data-i18n="kit.secno">[03] SOFTWARE · CAMERAS · LIGHTING</div>
+  <h2 class="big" data-i18n="kit.h2">What I work with</h2>
+  <p class="lede mono" data-i18n="kit.lede" style="margin-top:14px;max-width:640px;color:#8a8a8a;font-size:12.5px;line-height:1.9">
     The photographer's kit. Production's nerves. I take both.
   </p>
   <div class="caps">
@@ -640,11 +683,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
       <div class="v">Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync</div>
     </div>
     <div class="cap-row">
-      <div class="k">CAMERAS</div>
+      <div class="k" data-i18n="kit.cam">CAMERAS</div>
       <div class="v">Hasselblad · Phase One · Canon · Nikon · Sony · Fuji</div>
     </div>
     <div class="cap-row">
-      <div class="k">LIGHTING</div>
+      <div class="k" data-i18n="kit.lit">LIGHTING</div>
       <div class="v">Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure</div>
     </div>
     <div class="cap-row">
@@ -656,41 +699,41 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <!-- ============ [04] SELECTED WORK ============ -->
 <section id="work"><div class="wrap">
-  <div class="secno mono">[04] SELECTED WORK</div>
-  <h2 class="big">Selected work</h2>
+  <div class="secno mono" data-i18n="work.secno">[04] SELECTED WORK</div>
+  <h2 class="big" data-i18n="work.h2">Selected work</h2>
   <div class="tbl" id="workTbl"></div>
 </div></section>
 
 <!-- ============ [05] THE FLY-BY ============ -->
 <section id="flyby"><div class="wrap">
-  <div class="secno mono">[05] THE FLY-BY</div>
-  <h2 class="big">Frames from<br>real sets</h2>
+  <div class="secno mono" data-i18n="fly.secno">[05] THE FLY-BY</div>
+  <h2 class="big" data-i18n-html="fly.h2">Frames from<br>real sets</h2>
 
-  <div class="tierhd mono">01 &nbsp;SET-OPS · CART · SCREENS · CABLES</div>
+  <div class="tierhd mono" data-i18n-html="fly.t1">01 &nbsp;SET-OPS · CART · SCREENS · CABLES</div>
   <div class="lane"><div class="track" id="laneA"></div></div>
   <div class="lane"><div class="track slow rev" id="laneB"></div></div>
 
-  <div class="tierhd mono">02 &nbsp;BRANDS</div>
+  <div class="tierhd mono" data-i18n-html="fly.t2">02 &nbsp;BRANDS</div>
   <div class="lane" style="padding:26px 0"><div class="logolane" id="logoLane"></div></div>
 
-  <div class="tierhd mono">03 &nbsp;PRODUCTION COMPANIES</div>
+  <div class="tierhd mono" data-i18n-html="fly.t3">03 &nbsp;PRODUCTION COMPANIES</div>
   <div class="lane" style="padding:26px 0"><div class="logolane rev" id="prodLane"></div></div>
 </div></section>
 
 <!-- ============ [06] PERSONAL WORK ============ -->
 <section id="last"><div class="wrap">
-  <div class="secno mono">[06] PERSONAL WORK</div>
-  <h2 class="big">Personal work</h2>
-  <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> — on set and on the road.</p>
+  <div class="secno mono" data-i18n="own.secno">[06] PERSONAL WORK</div>
+  <h2 class="big" data-i18n="own.h2">Personal work</h2>
+  <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> <span data-i18n="own.lede">— on set and on the road.</span></p>
   <div class="ownbar">
-    <button id="toggleOwn" class="mono">[ + ] OPEN</button>
+    <button id="toggleOwn" class="mono" data-i18n="own.open">[ + ] OPEN</button>
   </div>
   <div id="owngrid"></div>
 </div></section>
 
 <!-- ============ [07] CONTACT ============ -->
 <section id="contact"><div class="wrap">
-  <div class="secno mono">[07] CONTACT</div>
+  <div class="secno mono" data-i18n="con.secno">[07] CONTACT</div>
   <div class="cgrid">
     <div class="cinfo mono">
       <div><span class="k">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
@@ -698,8 +741,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
       <div><span class="k">WHATSAPP</span><a href="https://wa.me/447562393477">+44 7562 393 477</a></div>
       <div><span class="k">INSTAGRAM</span><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a></div>
       <div><span class="k">BASE</span>Barcelona &amp; Mallorca</div>
-      <div><span class="k">LANG</span>English / Español — bilingual</div>
-      <div><span class="k">STATUS</span>EU resident · autónomo · invoices same day</div>
+      <div><span class="k">LANG</span><span data-i18n="con.langV">English / Español — bilingual</span></div>
+      <div><span class="k">STATUS</span><span data-i18n="con.statusV">EU resident · autónomo · invoices same day</span></div>
     </div>
   </div>
   <footer class="mono">
@@ -711,62 +754,62 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
         <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
         <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
       </svg>
-      JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT
+      <span data-i18n="foot.role">JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT</span>
     </span>
-    <span>BACKED UP IN TWO PLACES. OBVIOUSLY.</span>
+    <span data-i18n="foot.bak">BACKED UP IN TWO PLACES. OBVIOUSLY.</span>
   </footer>
 </div></section>
 
-<button type="button" id="bookFab" class="mono" aria-label="AI James — book me">
+<button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" aria-label="AI James — book me">
   <canvas id="bookGlobe" width="88" height="88"></canvas>
   <span class="lab-top">AI JAMES</span>
-  <span class="lab-bot">BOOK ME</span>
+  <span class="lab-bot" data-i18n="fab.book">BOOK ME</span>
 </button>
 <div id="bookScrim"></div>
-<div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
-  <button type="button" class="x" id="bookX">[ CLOSE ]</button>
-  <h3>Book the tech</h3>
-  <p class="lede">Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.</p>
+<div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book the tech">
+  <button type="button" class="x" id="bookX" data-i18n="ui.close">[ CLOSE ]</button>
+  <h3 data-i18n="book.h3">Book the tech</h3>
+  <p class="lede" data-i18n="book.lede">Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.</p>
   <form id="bookForm">
     <div class="row2">
       <div>
-        <label for="bookFrom">FROM</label>
+        <label for="bookFrom" data-i18n="book.from">FROM</label>
         <input type="date" id="bookFrom" name="from" required>
       </div>
       <div>
-        <label for="bookTo">TO</label>
+        <label for="bookTo" data-i18n="book.to">TO</label>
         <input type="date" id="bookTo" name="to">
       </div>
     </div>
-    <label for="bookJob">JOB / PRODUCTION</label>
-    <input type="text" id="bookJob" name="job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
-    <label for="bookCity">CITY</label>
-    <input type="text" id="bookCity" name="city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
-    <label for="bookNote">ANYTHING ELSE</label>
-    <textarea id="bookNote" name="note" placeholder="Optional"></textarea>
-    <button type="submit" class="go">SEND REQUEST</button>
+    <label for="bookJob" data-i18n="book.job">JOB / PRODUCTION</label>
+    <input type="text" id="bookJob" name="job" data-i18n-placeholder="book.ph.job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
+    <label for="bookCity" data-i18n="book.city">CITY</label>
+    <input type="text" id="bookCity" name="city" data-i18n-placeholder="book.ph.city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
+    <label for="bookNote" data-i18n="book.note">ANYTHING ELSE</label>
+    <textarea id="bookNote" name="note" data-i18n-placeholder="book.ph.note" placeholder="Optional"></textarea>
+    <button type="submit" class="go" data-i18n="book.go">SEND REQUEST</button>
   </form>
 </div>
 
 <div id="jamesChat" role="dialog" aria-label="James">
-  <div class="hd"><span><b>JAMES</b></span><button type="button" id="jamesX">[ CLOSE ]</button></div>
+  <div class="hd"><span><b>JAMES</b></span><button type="button" id="jamesX" data-i18n="ui.close">[ CLOSE ]</button></div>
   <div id="jamesLog"></div>
   <div id="jamesChips"></div>
   <form id="jamesForm">
-    <input id="jamesIn" type="text" autocomplete="off" placeholder="Job, dates, city…">
-    <button type="submit">SEND</button>
+    <input id="jamesIn" type="text" autocomplete="off" data-i18n-placeholder="chat.ph" placeholder="Job, dates, city…">
+    <button type="submit" data-i18n="chat.send">SEND</button>
   </form>
 </div>
 
-<div id="inspect" role="dialog" aria-modal="true" aria-label="Set-operations frame">
-  <button class="x" id="inspectX">[ CLOSE ]</button>
+<div id="inspect" role="dialog" aria-modal="true" data-i18n-aria="inspect.aria" aria-label="Set-operations frame">
+  <button class="x" id="inspectX" data-i18n="ui.close">[ CLOSE ]</button>
   <img id="inspectImg" alt="">
   <div class="cap mono" id="inspectCap"></div>
 </div>
 
 <div id="scrim"></div>
 <aside id="dossier" aria-hidden="true">
-  <button class="close" id="dClose">[ CLOSE ]</button>
+  <button class="close" id="dClose" data-i18n="ui.close">[ CLOSE ]</button>
   <div id="dBody"></div>
 </aside>
 
@@ -1065,29 +1108,391 @@ function el(tag, cls, html){
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 /* ============================================================
-   BOOT SEQUENCE
+   EN / ES — splash first, then boot, then the site
    ============================================================ */
-var BOOTS = [
-  'DIGITECH HERE.',
-  'TWO LANGUAGES ON SET.',
-  'THE CART TRAVELS.',
-  'READY TO SHOOT.'
-];
+var LANG = 'en';
+var fillChips = function(){};
 
-(function boot(){
+var I18N = {
+  en: {
+    'meta.title': 'James Huertas — Digital Technician & Lighting Assistant',
+    'meta.desc': 'James Huertas — Digital Technician & Lighting Assistant. Set tech, capture, colour, backup, screens, power, data. Barcelona & Mallorca. EN/ES.',
+    'nav.globe': 'globe',
+    'nav.do': 'what i do',
+    'nav.work': 'work',
+    'nav.book': 'book me',
+    'hero.role': 'Digital Technician & Lighting Assistant',
+    'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL',
+    'hero.tag': 'EASY ROOM. MEAN STATION. MUSIC ON.',
+    'hud.uptime': 'UPTIME',
+    'hud.cardsK': 'CARDS',
+    'hud.cardsV': '2 OF 2 BACKED UP',
+    'hud.hdmiV': 'SEATED (VERIFIED TWICE)',
+    'hud.coffeeK': 'COFFEE',
+    'hud.coffeeV': 'CRITICAL',
+    'hud.clientK': 'CLIENT',
+    'hud.clientV': 'HAPPY',
+    'hud.cableK': 'CABLE TENSION',
+    'hud.cableV': 'NOMINAL',
+    'hud.wifiV': '“FINE”',
+    'zoom.out': 'Zoom out',
+    'zoom.in': 'Zoom in',
+    'zoom.drag': 'DRAG TO SPIN',
+    'scroll': 'SCROLL',
+    'pin.secno': '[00·B] EASY ROOM. MEAN STATION. MUSIC ON.',
+    'polaroid.attr': '— a producer at Canadá',
+    'do.secno': '[02] WHAT I ACTUALLY DO',
+    'do.h2': 'Always there.',
+    'do.cap.h': 'CAPTURE',
+    'do.cap.p': 'Tethered capture that does not drop. The camera talks to the station, the station talks to the client screen, and nobody stands around waiting for a frame to appear.',
+    'do.cap.1': 'Capture One Pro sessions, named and structured',
+    'do.cap.3': 'Live view, focus checks, frame overlays',
+    'do.col.h': 'COLOUR',
+    'do.col.p': 'A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher\'s inbox. Styles and ICC set before the first frame, not after.',
+    'do.col.1': 'Monitor calibration and profiling',
+    'do.col.2': 'Session styles, ICC, capture adjustments',
+    'do.col.3': 'Layered comps and stitching on set',
+    'do.col.4': 'Selects, exports and client-ready previews',
+    'do.dat.h': 'DATA',
+    'do.dat.p': 'Three copies of everything, verified, before the cards go back in the bag. The words “where\'s the file” do not get said on a day I am running.',
+    'do.dat.1': 'Card plus two destinations, checksum verified',
+    'do.dat.2': 'ChronoSync mirroring, structured hand-off',
+    'do.dat.3': 'Shot logs, metadata, naming conventions',
+    'do.dat.4': 'Power, distro, screens, cable management',
+    'doshot.0': 'CART RIGGED · DUAL CLIENT SCREENS · POWER ON DISTRO',
+    'doshot.1': 'STATION SHADED · CABLES DRESSED · BACKUP IN THE RACK',
+    'doshot.2': 'CAPTURE ONE LIVE · CLIENT SCREEN CALIBRATED · SET RUNNING',
+    'doshot.3': 'HOOD ON · LIVE VIEW · LIGHTS SANDBAGGED',
+    'doshot.4': 'LOCATION STATION · TETHER DRESSED · TAPE ON THE LEGS',
+    'doshot.5': 'WHEELS DOWN · HOOD ON · REACHABLE FROM THE SET',
+    'kit.secno': '[03] SOFTWARE · CAMERAS · LIGHTING',
+    'kit.h2': 'What I work with',
+    'kit.lede': 'The photographer\'s kit. Production\'s nerves. I take both.',
+    'kit.cam': 'CAMERAS',
+    'kit.lit': 'LIGHTING',
+    'work.secno': '[04] SELECTED WORK',
+    'work.h2': 'Selected work',
+    'work.year': 'YEAR',
+    'work.client': 'CLIENT',
+    'work.prod': 'PRODUCTION',
+    'work.photo': 'PHOTOGRAPHER',
+    'work.city': 'CITY',
+    'fly.secno': '[05] THE FLY-BY',
+    'fly.h2': 'Frames from<br>real sets',
+    'fly.t1': '01 &nbsp;SET-OPS · CART · SCREENS · CABLES',
+    'fly.t2': '02 &nbsp;BRANDS',
+    'fly.t3': '03 &nbsp;PRODUCTION COMPANIES',
+    'own.secno': '[06] PERSONAL WORK',
+    'own.h2': 'Personal work',
+    'own.lede': '— on set and on the road.',
+    'own.open': '[ + ] OPEN',
+    'own.close': '[ − ] CLOSE',
+    'con.secno': '[07] CONTACT',
+    'con.langV': 'English / Español — bilingual',
+    'con.statusV': 'EU resident · autónomo · invoices same day',
+    'foot.role': 'JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT',
+    'foot.bak': 'BACKED UP IN TWO PLACES. OBVIOUSLY.',
+    'fab.aria': 'AI James — book me',
+    'fab.book': 'BOOK ME',
+    'book.aria': 'Book the tech',
+    'book.h3': 'Book the tech',
+    'book.lede': 'Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.',
+    'book.from': 'FROM',
+    'book.to': 'TO',
+    'book.job': 'JOB / PRODUCTION',
+    'book.city': 'CITY',
+    'book.note': 'ANYTHING ELSE',
+    'book.go': 'SEND REQUEST',
+    'book.ph.job': 'Who’s shooting, what’s the job',
+    'book.ph.city': 'Barcelona, Mallorca, London…',
+    'book.ph.note': 'Optional',
+    'chat.ph': 'Job, dates, city…',
+    'chat.send': 'SEND',
+    'chat.opener': 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?',
+    'ui.close': '[ CLOSE ]',
+    'inspect.aria': 'Set-operations frame',
+    'inspect.alt': 'Set-operations frame, enlarged.',
+    'own.alt': 'Photograph by James Huertas.',
+    'globe.aria': 'Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens.',
+    'readout.go': 'CLICK TO OPEN →',
+    'dos.credits': 'CREDITS · CANONICAL CV',
+    'dos.creditsBare': 'CREDITS',
+    'dos.reel': 'SET-OPS · THE REEL',
+    'dos.note': 'FRAMES ARE FROM THE SET-OPS SET. NOT TAGGED TO THIS CITY — I WILL NOT PRETEND THEY ARE.',
+    'dos.alt': 'Set-operations frame: digital technician station on set.',
+    'alt.polaroid1': 'James Huertas on a beach with his digital technician station.',
+    'alt.polaroid2': 'James Huertas on set, running tether cables at the capture station.',
+    'alt.shot': 'Set-operations frame: tethered capture station on set.',
+    'alt.card': 'Set-operations frame: digital technician station, screens and cabling on set.',
+    'nocredit.NYC': 'NEW YORK — NO CREDIT ON FILE. THE PIN IS HONEST.',
+    'nocredit.RIO': 'RIO DE JANEIRO — NO CREDIT ON FILE. THE PIN IS HONEST.',
+    'nocredit.SIN': 'SINGAPORE — NO CREDIT ON FILE. THE PIN IS HONEST.',
+    'nocredit.sub': 'James named this pin. The canonical CV carries no work for it, so the site carries no client for it. A fake credit would be a worse thing to find than an empty one — and you would find it.',
+    'city.LA': 'Los Angeles',
+    'city.NYC': 'New York',
+    'city.RIO': 'Rio de Janeiro',
+    'city.LDN': 'London',
+    'city.HAM': 'Hamburg',
+    'city.BCN': 'Barcelona',
+    'city.LIS': 'Lisbon',
+    'city.PMI': 'Mallorca',
+    'city.SIN': 'Singapore',
+    'cityline.LA': 'Editorial. Everyone has a second job. Including the sun.',
+    'cityline.NYC': 'No credit on file. The pin is honest. The pin is patient.',
+    'cityline.RIO': 'No credit on file. The pin is optimistic. Call me.',
+    'cityline.LDN': 'Eleven years of tethering in rooms with no natural light. Formative.',
+    'cityline.HAM': 'Precision. They start on time. It was a genuine shock.',
+    'cityline.BCN': 'Home. Where the cart lives. Where the coffee is correct.',
+    'cityline.LIS': 'Good light, long days, hills that punish a loaded cart.',
+    'cityline.PMI': 'Island logistics. Everything arrives on a boat, including the panic.',
+    'cityline.SIN': 'No credit on file. Ninety percent humidity is a data-integrity issue.',
+    'boot.0': 'DIGITECH HERE.',
+    'boot.1': 'TWO LANGUAGES ON SET.',
+    'boot.2': 'THE CART TRAVELS.',
+    'boot.3': 'READY TO SHOOT.',
+    'mail.sub': 'Digitech booking — ',
+    'mail.body': 'Are you free for digitech work?',
+    'mail.dates': 'Dates: ',
+    'mail.job': 'Job: ',
+    'mail.city': 'City: ',
+    'cap.0': 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
+    'cap.1': 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
+    'cap.2': 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
+    'cap.3': 'LIVE VIEW TO CLIENT MONITOR · NO LATENCY COMPLAINTS',
+    'cap.4': 'SESSION NAMED · FOLDER STRUCTURE SET BEFORE FRAME ONE',
+    'cap.5': 'ICC PROFILE LOADED · STYLE APPLIED AT CAPTURE',
+    'cap.6': 'CART RIGGED · SHADED · REACHABLE FROM THE SET',
+    'cap.7': 'FOCUS CHECK AT 100% · SELECT FLAGGED · MOVING ON',
+    'cap.8': 'SECOND BODY TETHERED · SAME SESSION · SAME NAMING',
+    'cap.9': 'SHOT LOG RUNNING · METADATA WRITTEN ON INGEST',
+    'cap.10': 'CLIENT SCREEN POSITIONED SO NOBODY STANDS IN THE LIGHT',
+    'cap.11': 'CARDS OFFLOADED · VERIFIED · THEN AND ONLY THEN FORMATTED',
+    'cap.12': 'LIGHTING ASSIST · MODIFIER SWAP · SANDBAGGED',
+    'cap.13': 'STITCH AND LAYER COMP ASSEMBLED ON SET',
+    'cap.14': 'HAND-OFF DRIVE MIRRORED · STRUCTURED · LABELLED',
+    'cap.15': 'HDMI RUN TAPED TO THE FLOOR. TWICE.',
+    'cap.16': 'BATTERY ROTATION LOGGED · NOTHING DIES MID-SETUP',
+    'cap.17': 'EXPORTS OUT BEFORE THE CLIENT ASKS FOR THEM'
+  },
+  es: {
+    'meta.title': 'James Huertas — Técnico digital y ayudante de iluminación',
+    'meta.desc': 'James Huertas — Técnico digital y ayudante de iluminación. Tech de set, captura, color, copias, pantallas, corriente, datos. Barcelona y Mallorca. EN/ES.',
+    'nav.globe': 'globo',
+    'nav.do': 'qué hago',
+    'nav.work': 'trabajo',
+    'nav.book': 'reserva',
+    'hero.role': 'Técnico digital y ayudante de iluminación',
+    'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL EN ESPAÑA Y PORTUGAL',
+    'hero.tag': 'SALA FÁCIL. ESTACIÓN SERIA. MÚSICA ON.',
+    'hud.uptime': 'TIEMPO',
+    'hud.cardsK': 'TARJETAS',
+    'hud.cardsV': '2 DE 2 COPIADAS',
+    'hud.hdmiV': 'COLOCADO (VERIFICADO DOS VECES)',
+    'hud.coffeeK': 'CAFÉ',
+    'hud.coffeeV': 'CRÍTICO',
+    'hud.clientK': 'CLIENTE',
+    'hud.clientV': 'CONTENTO',
+    'hud.cableK': 'TENSIÓN',
+    'hud.cableV': 'NOMINAL',
+    'hud.wifiV': '“BIEN”',
+    'zoom.out': 'Alejar',
+    'zoom.in': 'Acercar',
+    'zoom.drag': 'ARRASTRA PARA GIRAR',
+    'scroll': 'BAJA',
+    'pin.secno': '[00·B] SALA FÁCIL. ESTACIÓN SERIA. MÚSICA ON.',
+    'polaroid.attr': '— un productor de Canadá',
+    'do.secno': '[02] LO QUE HAGO DE VERDAD',
+    'do.h2': 'Siempre ahí.',
+    'do.cap.h': 'CAPTURA',
+    'do.cap.p': 'Captura por tether que no se cae. La cámara habla con la estación, la estación habla con la pantalla del cliente, y nadie se queda esperando a que aparezca un fotograma.',
+    'do.cap.1': 'Sesiones de Capture One Pro, nombradas y estructuradas',
+    'do.cap.3': 'Live view, focus checks, superposición de recuadro',
+    'do.col.h': 'COLOR',
+    'do.col.p': 'Una pantalla de cliente calibrada para que el ok que das a las 19:40 sea la misma imagen que llega al retocador. Estilos e ICC puestos antes del primer disparo, no después.',
+    'do.col.1': 'Calibración y perfilado de monitor',
+    'do.col.2': 'Estilos de sesión, ICC, ajustes de captura',
+    'do.col.3': 'Comps por capas y stitching en el set',
+    'do.col.4': 'Selects, exports y previews para el cliente',
+    'do.dat.h': 'DATOS',
+    'do.dat.p': 'Tres copias de todo, verificadas, antes de que las tarjetas vuelvan a la bolsa. En un día mío no se dice «dónde está el archivo».',
+    'do.dat.1': 'Tarjeta más dos destinos, checksum verificado',
+    'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
+    'do.dat.3': 'Shot logs, metadatos, convención de nombres',
+    'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
+    'doshot.0': 'CARRO MONTADO · DOBLE PANTALLA DE CLIENTE · CORRIENTE EN EL DISTRO',
+    'doshot.1': 'ESTACIÓN A LA SOMBRA · CABLES COLOCADOS · BACKUP EN EL RACK',
+    'doshot.2': 'CAPTURE ONE EN VIVO · PANTALLA DE CLIENTE CALIBRADA · SET EN MARCHA',
+    'doshot.3': 'HOOD PUESTO · LIVE VIEW · LUCES CON SACA',
+    'doshot.4': 'ESTACIÓN EN EXTERIOR · TETHER COLOCADO · CINTA EN LAS PATAS',
+    'doshot.5': 'RUEDAS ABAJO · HOOD PUESTO · AL ALCANCE DEL SET',
+    'kit.secno': '[03] SOFTWARE · CÁMARAS · ILUMINACIÓN',
+    'kit.h2': 'Con qué trabajo',
+    'kit.lede': 'El kit del fotógrafo. Los nervios de producción. Me encargo de los dos.',
+    'kit.cam': 'CÁMARAS',
+    'kit.lit': 'ILUMINACIÓN',
+    'work.secno': '[04] TRABAJO SELECCIONADO',
+    'work.h2': 'Trabajo seleccionado',
+    'work.year': 'AÑO',
+    'work.client': 'CLIENTE',
+    'work.prod': 'PRODUCCIÓN',
+    'work.photo': 'FOTÓGRAFO',
+    'work.city': 'CIUDAD',
+    'fly.secno': '[05] EL PASO',
+    'fly.h2': 'Fotogramas de<br>sets reales',
+    'fly.t1': '01 &nbsp;SET-OPS · CARRO · PANTALLAS · CABLES',
+    'fly.t2': '02 &nbsp;MARCAS',
+    'fly.t3': '03 &nbsp;PRODUCTORAS',
+    'own.secno': '[06] TRABAJO PERSONAL',
+    'own.h2': 'Trabajo personal',
+    'own.lede': '— en el set y de viaje.',
+    'own.open': '[ + ] ABRIR',
+    'own.close': '[ − ] CERRAR',
+    'con.secno': '[07] CONTACTO',
+    'con.langV': 'English / Español — bilingüe',
+    'con.statusV': 'Residente UE · autónomo · facturas el mismo día',
+    'foot.role': 'JH/01 — TÉCNICO DIGITAL Y AYUDANTE DE ILUMINACIÓN',
+    'foot.bak': 'COPIADO EN DOS SITIOS. OBVIAMENTE.',
+    'fab.aria': 'AI James — reserva',
+    'fab.book': 'RESERVA',
+    'book.aria': 'Reservar al técnico',
+    'book.h3': 'Reservar al técnico',
+    'book.lede': 'Fechas, el job, envía. Te respondo desde callingjhphoto@gmail.com.',
+    'book.from': 'DESDE',
+    'book.to': 'HASTA',
+    'book.job': 'JOB / PRODUCCIÓN',
+    'book.city': 'CIUDAD',
+    'book.note': 'ALGO MÁS',
+    'book.go': 'ENVIAR',
+    'book.ph.job': 'Quién dispara, cuál es el job',
+    'book.ph.city': 'Barcelona, Mallorca, Londres…',
+    'book.ph.note': 'Opcional',
+    'chat.ph': 'Job, fechas, ciudad…',
+    'chat.send': 'ENVIAR',
+    'chat.opener': 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?',
+    'ui.close': '[ CERRAR ]',
+    'inspect.aria': 'Fotograma de set-ops',
+    'inspect.alt': 'Fotograma de set-ops, ampliado.',
+    'own.alt': 'Fotografía de James Huertas.',
+    'globe.aria': 'Globo interactivo con nueve pines de ciudad. En pantallas pequeñas, la misma lista está debajo.',
+    'readout.go': 'CLIC PARA ABRIR →',
+    'dos.credits': 'CRÉDITOS · CV CANÓNICO',
+    'dos.creditsBare': 'CRÉDITOS',
+    'dos.reel': 'SET-OPS · EL REEL',
+    'dos.note': 'LOS FOTOGRAMAS SON DEL SET-OPS. NO VAN CON ESTA CIUDAD — NO VOY A PRETENDER QUE SÍ.',
+    'dos.alt': 'Fotograma de set-ops: estación de técnico digital en el set.',
+    'alt.polaroid1': 'James Huertas en una playa con su estación de técnico digital.',
+    'alt.polaroid2': 'James Huertas en el set, tendiendo cables de tether en la estación de captura.',
+    'alt.shot': 'Fotograma de set-ops: estación de captura por tether en el set.',
+    'alt.card': 'Fotograma de set-ops: estación de técnico digital, pantallas y cables en el set.',
+    'nocredit.NYC': 'NUEVA YORK — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
+    'nocredit.RIO': 'RÍO DE JANEIRO — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
+    'nocredit.SIN': 'SINGAPUR — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
+    'nocredit.sub': 'James puso este pin. El CV canónico no lleva trabajo aquí, así que la web no lleva cliente. Un crédito inventado sería peor que uno vacío — y se notaría.',
+    'city.LA': 'Los Ángeles',
+    'city.NYC': 'Nueva York',
+    'city.RIO': 'Río de Janeiro',
+    'city.LDN': 'Londres',
+    'city.HAM': 'Hamburgo',
+    'city.BCN': 'Barcelona',
+    'city.LIS': 'Lisboa',
+    'city.PMI': 'Mallorca',
+    'city.SIN': 'Singapur',
+    'cityline.LA': 'Editorial. Aquí todo el mundo tiene un segundo trabajo. Incluido el sol.',
+    'cityline.NYC': 'Sin crédito en el archivo. El pin es honesto. El pin es paciente.',
+    'cityline.RIO': 'Sin crédito en el archivo. El pin es optimista. Llámame.',
+    'cityline.LDN': 'Once años de tether en salas sin luz natural. Formativo.',
+    'cityline.HAM': 'Precisión. Empiezan a la hora. Fue un shock de verdad.',
+    'cityline.BCN': 'Casa. Donde vive el carro. Donde el café está bien.',
+    'cityline.LIS': 'Buena luz, días largos, cuestas que castigan un carro cargado.',
+    'cityline.PMI': 'Logística de isla. Todo llega en barco, incluido el pánico.',
+    'cityline.SIN': 'Sin crédito en el archivo. El noventa por ciento de humedad es un problema de integridad de datos.',
+    'boot.0': 'DIGITECH AQUÍ.',
+    'boot.1': 'DOS IDIOMAS EN EL SET.',
+    'boot.2': 'EL CARRO VIAJA.',
+    'boot.3': 'LISTO PARA DISPARAR.',
+    'mail.sub': 'Reserva digitech — ',
+    'mail.body': '¿Estás libre para un trabajo de técnico digital?',
+    'mail.dates': 'Fechas: ',
+    'mail.job': 'Job: ',
+    'mail.city': 'Ciudad: ',
+    'cap.0': 'CAPTURE ONE · TETHER · PANTALLA DE CLIENTE CALIBRADA',
+    'cap.1': 'ESTACIÓN MONTADA · CORRIENTE EN EL DISTRO · CABLES COLOCADOS',
+    'cap.2': 'COPIA A DOBLE DESTINO · CHECKSUM VERIFICADO',
+    'cap.3': 'LIVE VIEW AL MONITOR DEL CLIENTE · SIN QUEJAS DE LATENCIA',
+    'cap.4': 'SESIÓN NOMBRADA · CARPETAS ANTES DEL PRIMER DISPARO',
+    'cap.5': 'PERFIL ICC CARGADO · ESTILO APLICADO EN CAPTURA',
+    'cap.6': 'CARRO MONTADO · A LA SOMBRA · AL ALCANCE DEL SET',
+    'cap.7': 'FOCUS CHECK AL 100% · SELECT MARCADO · SEGUIMOS',
+    'cap.8': 'SEGUNDO CUERPO EN TETHER · MISMA SESIÓN · MISMO NOMBRE',
+    'cap.9': 'SHOT LOG EN MARCHA · METADATOS AL INGERIR',
+    'cap.10': 'PANTALLA DEL CLIENTE COLOCADA PARA QUE NADIE SE META EN LA LUZ',
+    'cap.11': 'TARJETAS DESCARGADAS · VERIFICADAS · Y SOLO ENTONCES FORMATEADAS',
+    'cap.12': 'AYUDANTE DE ILUMINACIÓN · CAMBIO DE MODIFICADOR · CON SACA',
+    'cap.13': 'STITCH Y COMP POR CAPAS MONTADO EN EL SET',
+    'cap.14': 'DISCO DE ENTREGA ESPEJADO · ESTRUCTURADO · ETIQUETADO',
+    'cap.15': 'HDMI PEGADO AL SUELO CON CINTA. DOS VECES.',
+    'cap.16': 'ROTACIÓN DE BATERÍAS APUNTADA · NADA SE MUERE A MEDIA MONTAJE',
+    'cap.17': 'EXPORTS FUERA ANTES DE QUE EL CLIENTE LOS PIDA'
+  }
+};
+
+function t(key){
+  var pack = I18N[LANG] || I18N.en;
+  if(pack[key] != null) return pack[key];
+  if(I18N.en[key] != null) return I18N.en[key];
+  return key;
+}
+function cityName(c){ return t('city.' + c.id) || c.name; }
+function cityLine(c){ return t('cityline.' + c.id) || c.line; }
+
+function applyI18n(){
+  document.documentElement.lang = LANG === 'es' ? 'es' : 'en';
+  document.title = t('meta.title');
+  var md = document.querySelector('meta[name="description"]');
+  if(md) md.setAttribute('content', t('meta.desc'));
+  document.querySelectorAll('[data-i18n]').forEach(function(n){
+    var v = t(n.getAttribute('data-i18n'));
+    if(v != null) n.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(n){
+    var v = t(n.getAttribute('data-i18n-html'));
+    if(v != null) n.innerHTML = v;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(n){
+    n.setAttribute('placeholder', t(n.getAttribute('data-i18n-placeholder')));
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(n){
+    n.setAttribute('aria-label', t(n.getAttribute('data-i18n-aria')));
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach(function(n){
+    n.setAttribute('alt', t(n.getAttribute('data-i18n-alt')));
+  });
+  document.querySelectorAll('#pinButtons button[data-city]').forEach(function(b){
+    var id = b.getAttribute('data-city');
+    var c = CITIES.filter(function(x){ return x.id === id; })[0];
+    if(c) b.textContent = cityName(c).toUpperCase();
+  });
+  fillChips();
+}
+
+var bootStarted = false;
+function startBoot(){
+  if(bootStarted) return;
+  bootStarted = true;
   var box = $('#boot'), line = $('#bootline'), bar = $('#bootbar'), i = 0;
+  var lines = [t('boot.0'), t('boot.1'), t('boot.2'), t('boot.3')];
   if(reduce){
     box.classList.add('gone');
-    setTimeout(function(){box.style.display='none'},100);
+    setTimeout(function(){ box.style.display = 'none'; }, 100);
     if($('#bookFab')) $('#bookFab').classList.add('on');
     return;
   }
   var step = function(){
-    line.textContent = BOOTS[i];
-    bar.style.right = (100 - Math.round(((i+1)/BOOTS.length)*100)) + '%';
+    line.textContent = lines[i];
+    bar.style.right = (100 - Math.round(((i + 1) / lines.length) * 100)) + '%';
     i++;
-    if(i < BOOTS.length){
-      setTimeout(step, i === BOOTS.length - 1 ? 1300 : 1100);
+    if(i < lines.length){
+      setTimeout(step, i === lines.length - 1 ? 1300 : 1100);
     } else {
       setTimeout(function(){
         box.classList.add('gone');
@@ -1097,6 +1502,27 @@ var BOOTS = [
     }
   };
   step();
+}
+
+function pickLang(lang){
+  LANG = (lang === 'es') ? 'es' : 'en';
+  try { localStorage.setItem('jh-lang', LANG); } catch(e){}
+  applyI18n();
+  document.documentElement.classList.remove('lang-wait');
+  var gate = $('#langGate');
+  if(gate){
+    gate.classList.add('gone');
+    setTimeout(function(){ gate.style.display = 'none'; }, 480);
+  }
+  startBoot();
+}
+
+(function(){
+  var gate = $('#langGate');
+  if(!gate){ startBoot(); return; }
+  gate.querySelectorAll('[data-lang]').forEach(function(b){
+    b.addEventListener('click', function(){ pickLang(b.getAttribute('data-lang')); });
+  });
 })();
 
 /* ============================================================
@@ -1499,9 +1925,9 @@ var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   readoutCity = c;
   readout.innerHTML =
-    '<div class="c">' + esc(c.name.toUpperCase()) + '</div>' +
+    '<div class="c">' + esc(cityName(c).toUpperCase()) + '</div>' +
     '<div class="x">' + c.lat.toFixed(2) + (c.lat>=0?'N':'S') + ' &nbsp;' + c.lon.toFixed(2) + (c.lon>=0?'E':'W') + '</div>' +
-    '<div class="go">CLICK TO OPEN →</div>';
+    '<div class="go">' + t('readout.go') + '</div>';
   readout.classList.add('on');
 }
 function hideReadout(){ readout.classList.remove('on'); readoutCity = null; }
@@ -1531,11 +1957,11 @@ function openDossier(id){
   var h = '';
   h += '<div class="coord mono">' + c.lat.toFixed(2) + (c.lat>=0?' N':' S') + ' &nbsp;·&nbsp; ' +
        c.lon.toFixed(2) + (c.lon>=0?' E':' W') + ' &nbsp;·&nbsp; ' + esc(c.yrs) + '</div>';
-  h += '<h2>' + esc(c.name) + '</h2>';
-  h += '<div class="cityline mono">' + esc(c.line) + '</div>';
+  h += '<h2>' + esc(cityName(c)) + '</h2>';
+  h += '<div class="cityline mono">' + esc(cityLine(c)) + '</div>';
 
   if(creds.length){
-    h += '<div class="hd mono">CREDITS · CANONICAL CV</div>';
+    h += '<div class="hd mono">' + t('dos.credits') + '</div>';
     creds.forEach(function(cr){
       h += '<div class="cred">' +
            '<span class="y">' + esc(cr.y) + '</span> &nbsp; <span class="cl">' + esc(cr.c) + '</span><br>' +
@@ -1543,20 +1969,20 @@ function openDossier(id){
            (cr.n ? '<br>' + esc(cr.n) : '') + '</span></div>';
     });
   } else {
-    h += '<div class="hd mono">CREDITS</div>';
-    h += '<div class="none mono" style="color:#ff3b1f;letter-spacing:.1em">' + esc(NOCREDIT[id]) + '</div>';
-    h += '<div class="none mono" style="margin-top:14px">' + esc(NOCREDIT_SUB) + '</div>';
+    h += '<div class="hd mono">' + t('dos.creditsBare') + '</div>';
+    h += '<div class="none mono" style="color:#ff3b1f;letter-spacing:.1em">' + esc(t('nocredit.' + id) || NOCREDIT[id]) + '</div>';
+    h += '<div class="none mono" style="margin-top:14px">' + esc(t('nocredit.sub')) + '</div>';
   }
 
-  h += '<div class="hd mono">SET-OPS · THE REEL</div>';
+  h += '<div class="hd mono">' + t('dos.reel') + '</div>';
   h += '<div class="reel">';
   var seed = id.charCodeAt(0) + id.charCodeAt(1) + id.charCodeAt(2);
   for(var i = 0; i < 4; i++){
-    h += '<img loading="lazy" src="img/set/' + SET[(seed*3 + i*5) % SET.length] + '" alt="Set-operations frame: digital technician station on set.">';
+    h += '<img loading="lazy" src="img/set/' + SET[(seed*3 + i*5) % SET.length] + '" alt="' + esc(t('dos.alt')) + '">';
   }
   h += '</div>';
   h += '<div class="none mono" style="margin-top:10px;font-size:9.5px;letter-spacing:.1em;color:#4e4e4e">' +
-       'FRAMES ARE FROM THE SET-OPS SET. NOT TAGGED TO THIS CITY — I WILL NOT PRETEND THEY ARE.</div>';
+       esc(t('dos.note')) + '</div>';
 
   dBody.innerHTML = h;
   dossier.classList.add('on');
@@ -1590,6 +2016,7 @@ function kick(){
   var g = $('#pinButtons');
   CITIES.forEach(function(c){
     var b = el('button', null, esc(c.name.toUpperCase()));
+    b.setAttribute('data-city', c.id);
     b.addEventListener('click', function(){ openDossier(c.id); });
     g.appendChild(b);
   });
@@ -1606,12 +2033,12 @@ var DOSHOTS = [
 ];
 (function(){
   var g = $('#doShots');
-  DOSHOTS.forEach(function(s){
+  DOSHOTS.forEach(function(s, i){
     var d = el('div','shot');
     d.setAttribute('tabindex','0');
     d.setAttribute('role','button');
-    d.innerHTML = '<img loading="lazy" src="img/set/' + s[0] + '" alt="Set-operations frame: tethered capture station on set.">' +
-                  '<div class="cap mono">' + s[1] + '</div>';
+    d.innerHTML = '<img loading="lazy" src="img/set/' + s[0] + '" data-i18n-alt="alt.shot" alt="Set-operations frame: tethered capture station on set.">' +
+                  '<div class="cap mono" data-i18n="doshot.' + i + '">' + s[1] + '</div>';
     g.appendChild(d);
   });
 })();
@@ -1620,7 +2047,7 @@ var DOSHOTS = [
 (function(){
   var t = $('#workTbl');
   t.appendChild(el('div','row head',
-    '<span>YEAR</span><span>CLIENT</span><span>PRODUCTION</span><span>PHOTOGRAPHER</span><span>CITY</span>'));
+    '<span data-i18n="work.year">YEAR</span><span data-i18n="work.client">CLIENT</span><span data-i18n="work.prod">PRODUCTION</span><span data-i18n="work.photo">PHOTOGRAPHER</span><span data-i18n="work.city">CITY</span>'));
   WORK.forEach(function(w){
     t.appendChild(el('div','row',
       '<span class="yr">' + esc(w[0]) + '</span>' +
@@ -1639,8 +2066,8 @@ var DOSHOTS = [
     for(var pass = 0; pass < passes; pass++){
       for(var i = 0; i < list.length; i++){
         html += '<div class="card" tabindex="0" role="button">' +
-          '<img loading="lazy" src="img/set/' + list[i] + '" alt="Set-operations frame: digital technician station, screens and cabling on set.">' +
-          '<div class="cap mono">' + CAPS[(i + capOff) % CAPS.length] + '</div></div>';
+          '<img loading="lazy" src="img/set/' + list[i] + '" data-i18n-alt="alt.card" alt="Set-operations frame: digital technician station, screens and cabling on set.">' +
+          '<div class="cap mono" data-i18n="cap.' + ((i + capOff) % CAPS.length) + '">' + CAPS[(i + capOff) % CAPS.length] + '</div></div>';
       }
     }
     node.innerHTML = html;
@@ -1675,14 +2102,14 @@ var DOSHOTS = [
     if(!built){
       OWN.forEach(function(f){
         var i = el('img'); i.loading = 'lazy'; i.src = 'img/own/' + f;
-        i.alt = 'Photograph by James Huertas.';
+        i.alt = t('own.alt');
         i.onerror = function(){ this.style.display = 'none'; };
         grid.appendChild(i);
       });
       built = true;
     }
     var on = grid.classList.toggle('on');
-    btn.textContent = on ? '[ − ] CLOSE' : '[ + ] OPEN';
+    btn.textContent = on ? t('own.close') : t('own.open');
   });
 })();
 
@@ -1730,7 +2157,7 @@ var DOSHOTS = [
 (function(){
   var box = $('#inspect'), img = $('#inspectImg'), cap = $('#inspectCap');
   function open(src, text){
-    img.src = src; img.alt = 'Set-operations frame, enlarged.';
+    img.src = src; img.alt = t('inspect.alt');
     cap.textContent = text || '';
     box.classList.add('on');
   }
@@ -1744,7 +2171,7 @@ var DOSHOTS = [
     if(e.target && e.target.closest && e.target.closest('#owngrid') && e.target.tagName === 'IMG'){
       e.preventDefault();
       open(e.target.getAttribute('src'), '');
-      img.alt = 'Photograph by James Huertas.';
+      img.alt = t('own.alt');
       return;
     }
     var n = e.target.closest ? e.target.closest('.shot, .card') : null;
@@ -1803,11 +2230,11 @@ function closeBook(){
     var note = ($('#bookNote') && $('#bookNote').value) || '';
     if(!from){ if($('#bookFrom')) $('#bookFrom').focus(); return; }
     var dates = to && to !== from ? from + ' – ' + to : from;
-    var sub = 'Digitech booking — ' + dates;
-    var body = 'Are you free for digitech work?\n\n' +
-      'Dates: ' + dates + '\n' +
-      'Job: ' + (job || '—') + '\n' +
-      'City: ' + (city || '—') + '\n';
+    var sub = t('mail.sub') + dates;
+    var body = t('mail.body') + '\n\n' +
+      t('mail.dates') + dates + '\n' +
+      t('mail.job') + (job || '—') + '\n' +
+      t('mail.city') + (city || '—') + '\n';
     if(note) body += '\n' + note + '\n';
     window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
       encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
@@ -1886,20 +2313,27 @@ function closeJames(){
     if($('#bookFab')) $('#bookFab').classList.add('on');
     chat.classList.add('on');
     if(!log.childNodes.length){
-      jamesSays('Hey — good to have you. I’m James. What’s the job, and when are you looking at?');
+      jamesSays(t('chat.opener'));
     }
     if(input) input.focus();
   }
   var globe = $('#bookFab');
   if(globe) globe.addEventListener('click', openJames);
 
-  var CHIP = [
-    ['Dates', 'Are you free next week?'],
-    ['What you do', 'What do you actually do on set?'],
-    ['EN / ES', 'Do you speak Spanish on set?'],
-    ['Kit', 'What kit do you run?']
-  ];
-  if(chips){
+  fillChips = function(){
+    if(!chips) return;
+    chips.innerHTML = '';
+    var CHIP = LANG === 'es' ? [
+      ['Fechas', '¿Estás libre la semana que viene?'],
+      ['Qué haces', '¿Qué haces de verdad en el set?'],
+      ['EN / ES', '¿Hablas español en el set?'],
+      ['Kit', '¿Con qué kit trabajas?']
+    ] : [
+      ['Dates', 'Are you free next week?'],
+      ['What you do', 'What do you actually do on set?'],
+      ['EN / ES', 'Do you speak Spanish on set?'],
+      ['Kit', 'What kit do you run?']
+    ];
     CHIP.forEach(function(c){
       var b = document.createElement('button');
       b.type = 'button';
@@ -1907,11 +2341,12 @@ function closeJames(){
       b.addEventListener('click', function(){
         add('you', c[1]);
         jamesSays(reply(c[1]));
-        if(/free|date/.test(c[1].toLowerCase())) setTimeout(openBook, 700);
+        if(/free|date|libre|fecha/.test(c[1].toLowerCase())) setTimeout(openBook, 700);
       });
       chips.appendChild(b);
     });
-  }
+  };
+  fillChips();
 
   var jx = $('#jamesX');
   if(jx) jx.addEventListener('click', closeJames);
