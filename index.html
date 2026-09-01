@@ -322,9 +322,56 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .cinfo{border:1px solid var(--line);padding:22px 24px}
 .cta{
   display:inline-block;margin-top:26px;background:var(--red);color:#000;text-decoration:none;
-  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:15px 28px;font-weight:700
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:15px 28px;font-weight:700;
+  border:0;cursor:pointer
 }
 .cta:hover{background:#fff}
+
+#bookFab{
+  position:fixed;right:22px;bottom:22px;z-index:80;
+  background:var(--red);color:#000;border:0;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;font-weight:700;
+  padding:15px 22px;
+  box-shadow:0 10px 40px rgba(255,59,31,.35);
+  display:none;
+}
+#bookFab.on{display:block}
+#bookFab:hover{background:#fff}
+#bookScrim{
+  position:fixed;inset:0;z-index:125;background:rgba(0,0,0,.72);display:none
+}
+#bookScrim.on{display:block}
+#bookSheet{
+  position:fixed;right:18px;bottom:78px;z-index:126;width:min(380px,calc(100vw - 28px));
+  background:#050505;border:1px solid #2a2a2a;padding:22px 22px 20px;
+  display:none;max-height:min(86vh,640px);overflow:auto
+}
+#bookSheet.on{display:block}
+#bookSheet h3{
+  font-family:var(--sans);font-weight:900;margin:0 0 6px;font-size:22px;
+  letter-spacing:-.03em;text-transform:uppercase
+}
+#bookSheet .lede{font-family:var(--mono);font-size:11px;color:#8a8a8a;letter-spacing:.06em;margin:0 0 18px;line-height:1.6}
+#bookSheet label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#5e5e5e;margin:0 0 6px}
+#bookSheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+#bookSheet input,#bookSheet textarea{
+  width:100%;background:#000;border:1px solid #2a2a2a;color:#fff;
+  font-family:var(--mono);font-size:13px;padding:10px 12px;margin-bottom:14px;
+  box-sizing:border-box
+}
+#bookSheet input[type=date]{color-scheme:dark}
+#bookSheet textarea{min-height:72px;resize:vertical;margin-bottom:16px}
+#bookSheet .go{
+  width:100%;background:var(--red);color:#000;border:0;cursor:pointer;
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;font-weight:700;padding:14px
+}
+#bookSheet .go:hover{background:#fff}
+#bookSheet .x{
+  position:absolute;top:12px;right:14px;background:none;border:0;color:#6a6a6a;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;cursor:pointer
+}
+#bookSheet .x:hover{color:var(--red)}
+#bookSheet h3{padding-right:72px}
 .cinfo{font-family:var(--mono);font-size:12px;line-height:2.3;color:var(--grey2)}
 .cinfo a{color:var(--grey2);text-decoration:none;border-bottom:1px solid #262626}
 .cinfo a:hover{color:var(--red);border-color:var(--red)}
@@ -372,6 +419,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
+  #bookFab{right:14px;bottom:16px;padding:13px 16px;font-size:10px}
+  #bookSheet{right:10px;bottom:70px;padding:18px 16px 16px}
+  #bookSheet .row2{grid-template-columns:1fr}
   #stage{height:88svh}
   .wrap{padding:0 16px}
   #pinlist{
@@ -421,7 +471,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   <a href="#stage">globe</a>
   <a href="#do">what i do</a>
   <a href="#work">work</a>
-  <a href="#contact">book me</a>
+  <a href="#contact" id="navBook">book me</a>
 </nav>
 
 <!-- ============ [00] GLOBE ============ -->
@@ -593,7 +643,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
         Available across Spain, the UK and wherever the job lands — Barcelona and Mallorca
         are home, the cart travels.
       </p>
-      <a class="cta" href="mailto:callingjhphoto@gmail.com?subject=Booking%20—%20digital%20technician">BOOK THE TECH</a>
+      <button type="button" class="cta" id="contactBook">BOOK THE TECH</button>
     </div>
     <div class="cinfo mono">
       <div><span class="k">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
@@ -618,6 +668,33 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <span>BACKED UP IN TWO PLACES. OBVIOUSLY.</span>
   </footer>
 </div></section>
+
+<button type="button" id="bookFab" class="mono">BOOK</button>
+<div id="bookScrim"></div>
+<div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
+  <button type="button" class="x" id="bookX">[ CLOSE ]</button>
+  <h3>Book the tech</h3>
+  <p class="lede">Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.</p>
+  <form id="bookForm">
+    <div class="row2">
+      <div>
+        <label for="bookFrom">FROM</label>
+        <input type="date" id="bookFrom" name="from" required>
+      </div>
+      <div>
+        <label for="bookTo">TO</label>
+        <input type="date" id="bookTo" name="to">
+      </div>
+    </div>
+    <label for="bookJob">JOB / PRODUCTION</label>
+    <input type="text" id="bookJob" name="job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
+    <label for="bookCity">CITY</label>
+    <input type="text" id="bookCity" name="city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
+    <label for="bookNote">ANYTHING ELSE</label>
+    <textarea id="bookNote" name="note" placeholder="Optional"></textarea>
+    <button type="submit" class="go">SEND REQUEST</button>
+  </form>
+</div>
 
 <div id="inspect" role="dialog" aria-modal="true" aria-label="Set-operations frame">
   <button class="x" id="inspectX">[ CLOSE ]</button>
@@ -937,7 +1014,12 @@ var BOOTS = [
 
 (function boot(){
   var box = $('#boot'), line = $('#bootline'), bar = $('#bootbar'), i = 0;
-  if(reduce){ box.classList.add('gone'); setTimeout(function(){box.style.display='none'},100); return; }
+  if(reduce){
+    box.classList.add('gone');
+    setTimeout(function(){box.style.display='none'},100);
+    if($('#bookFab')) $('#bookFab').classList.add('on');
+    return;
+  }
   var step = function(){
     line.textContent = BOOTS[i];
     bar.style.right = (100 - Math.round(((i+1)/BOOTS.length)*100)) + '%';
@@ -947,6 +1029,7 @@ var BOOTS = [
     } else {
       setTimeout(function(){
         box.classList.add('gone');
+        if($('#bookFab')) $('#bookFab').classList.add('on');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
       }, 700);
     }
@@ -1611,9 +1694,59 @@ var DOSHOTS = [
   box.addEventListener('click', function(e){ if(e.target === box) close(); });
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
-      if(box.classList.contains('on')) close();
+      if($('#bookSheet') && $('#bookSheet').classList.contains('on')) closeBook();
+      else if(box.classList.contains('on')) close();
       else closeDossier();
     }
+  });
+})();
+
+/* booking sheet — dates in, mailto out. No backend. */
+function openBook(e){
+  if(e) e.preventDefault();
+  var sheet = $('#bookSheet'), scrim = $('#bookScrim'), fab = $('#bookFab');
+  if(!sheet) return;
+  sheet.classList.add('on');
+  if(scrim) scrim.classList.add('on');
+  if(fab) fab.classList.remove('on');
+  var from = $('#bookFrom');
+  if(from) from.focus();
+}
+function closeBook(){
+  var sheet = $('#bookSheet'), scrim = $('#bookScrim'), fab = $('#bookFab');
+  if(sheet) sheet.classList.remove('on');
+  if(scrim) scrim.classList.remove('on');
+  if(fab) fab.classList.add('on');
+}
+(function(){
+  var fab = $('#bookFab'), form = $('#bookForm');
+  if(fab) fab.addEventListener('click', openBook);
+  var nb = $('#navBook');
+  if(nb) nb.addEventListener('click', openBook);
+  var cb = $('#contactBook');
+  if(cb) cb.addEventListener('click', openBook);
+  var x = $('#bookX');
+  if(x) x.addEventListener('click', closeBook);
+  var scrim = $('#bookScrim');
+  if(scrim) scrim.addEventListener('click', closeBook);
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var from = ($('#bookFrom') && $('#bookFrom').value) || '';
+    var to = ($('#bookTo') && $('#bookTo').value) || '';
+    var job = ($('#bookJob') && $('#bookJob').value) || '';
+    var city = ($('#bookCity') && $('#bookCity').value) || '';
+    var note = ($('#bookNote') && $('#bookNote').value) || '';
+    if(!from){ if($('#bookFrom')) $('#bookFrom').focus(); return; }
+    var dates = to && to !== from ? from + ' – ' + to : from;
+    var sub = 'Digitech booking — ' + dates;
+    var body = 'Are you free for digitech work?\n\n' +
+      'Dates: ' + dates + '\n' +
+      'Job: ' + (job || '—') + '\n' +
+      'City: ' + (city || '—') + '\n';
+    if(note) body += '\n' + note + '\n';
+    window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
+      encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
   });
 })();
 
