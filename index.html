@@ -1,141 +1,1705 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Huertas Digital — Digital Tech & Lighting Assist, Barcelona</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>James Huertas — Digital Technician &amp; Lighting Assistant</title>
+<meta name="description" content="James Huertas — Digital Technician &amp; Lighting Assistant. Set tech, capture, colour, backup, screens, power, data. Barcelona &amp; Mallorca. EN/ES.">
+<link rel="icon" href="img/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0A0A0A;--paper:#FFFFFF;--grey:#6B6B6B;--line:#E6E6E6;--pop:#1F4DFF;}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
-.bar{height:5px;width:72px;background:var(--pop)}
-header{padding:80px 0 48px}
-.mark{font-weight:900;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
-.mark b{color:var(--pop)}
-h1{font-weight:800;font-size:clamp(40px,7vw,82px);line-height:1.03;letter-spacing:-.02em;margin:28px 0 20px;color:var(--ink)}
-h1 .pop{color:var(--pop)}  /* only the period — the dash of colour */
-.lede{font-size:clamp(18px,2.4vw,24px);color:var(--ink);max-width:680px}
-.lede .mut{color:var(--grey)}
-section{padding:54px 0;border-top:1px solid var(--line)}
-.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--pop);font-weight:700;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
-.svc h3{font-size:19px;margin-bottom:8px}
-.svc p{color:var(--grey);font-size:15px}
-.credits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px 32px;font-size:16px}
-.credits div{padding:11px 0;border-bottom:1px solid var(--line)}
-.credits b{font-weight:700} .credits span{color:var(--grey)}
-.kit{columns:2;column-gap:40px;color:var(--grey);font-size:15px;max-width:760px}
-.kit li{margin-bottom:9px}
-.cta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:60px 0}
-.cta a{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;padding:16px 30px;font-weight:700;font-size:15px}
-.cta a.alt{background:var(--pop)}
-footer{border-top:1px solid var(--line);padding:40px 0;color:var(--grey);font-size:14px}
-.quote{font-size:13px;color:var(--grey);margin-top:10px;font-style:italic}
-@media(max-width:640px){.kit{columns:1}}
+:root{
+  --red:#ff3b1f;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  --grey:#7c7c7c;
+  --grey2:#b4b4b4;
+  --line:#1e1e1e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:#000;color:#fff;font-family:var(--sans);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--red);color:#000}
+a{color:inherit}
+.mono{font-family:var(--mono)}
+:focus-visible{outline:1px solid var(--red);outline-offset:3px}
 
-.gallery{background:#0A0A0A;border-top:1px solid var(--line);padding:48px 0}
-.gallery .eyebrow{color:#fff;opacity:.6}
-.collage{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:170px;grid-auto-flow:dense;gap:8px;padding:0 32px}
-.collage figure{margin:0;overflow:hidden;position:relative;background:#161616}
-.collage img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(8%) contrast(1.02);transition:transform .9s cubic-bezier(.2,.8,.2,1),filter .6s}
-.collage figure:hover img{transform:scale(1.06);filter:grayscale(0) contrast(1.05)}
-.collage .big{grid-column:span 2;grid-row:span 2}
-.collage .tall{grid-row:span 2}
-.collage .wide{grid-column:span 2}
-@media(max-width:760px){.collage{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:6px;padding:0 16px}.collage .big{grid-column:span 2;grid-row:span 2}.collage .wide{grid-column:span 2;grid-row:span 1}}
-.logos{overflow:hidden;border-top:1px solid var(--line);padding:34px 0;background:#fff}
-.logos .lrow{display:flex;gap:58px;align-items:center;width:max-content;animation:lscroll 60s linear infinite}
-.logos:hover .lrow{animation-play-state:paused}
-.logos img{max-height:30px;max-width:122px;width:auto;height:auto;object-fit:contain;filter:grayscale(1);opacity:.5;transition:filter .4s,opacity .4s;flex:none}
-.logos img:hover{filter:grayscale(0);opacity:1}
-@keyframes lscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(max-width:640px){.logos .lrow{gap:38px}.logos img{max-height:24px;max-width:96px}}
-.portrait{display:flex;gap:32px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding:48px 0}.portrait img{width:280px;height:340px;object-fit:cover;border-radius:2px}.portrait p{flex:1;min-width:240px;font-size:18px;color:var(--ink);max-width:520px}.portrait .mut{color:var(--grey)}</style></head>
+/* ---------- scanline / CRT ---------- */
+#crt{
+  position:fixed;inset:0;z-index:60;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.030) 0 1px,transparent 1px 3px);
+  opacity:.9;
+}
+#vig{position:fixed;inset:0;z-index:59;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.75) 100%)}
+
+/* ---------- boot ---------- */
+#boot{
+  position:fixed;inset:0;z-index:200;background:#000;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  transition:opacity .7s ease;font-family:var(--mono);
+}
+#boot .bar{width:min(280px,60vw);height:1px;background:#181818;position:relative;overflow:hidden}
+#boot .bar i{position:absolute;inset:0 100% 0 0;background:var(--red);transition:right .25s linear}
+#bootline{font-size:11px;letter-spacing:.12em;color:var(--grey2);min-height:1.2em;text-align:center;padding:0 18px}
+#boot.gone{opacity:0;pointer-events:none}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;right:0;z-index:70;display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;
+  padding:18px 24px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  max-width:70vw;
+}
+nav a{color:var(--grey);text-decoration:none;transition:color .2s;white-space:nowrap}
+nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
+#brandmark{
+  position:fixed;top:0;left:0;z-index:70;padding:14px 24px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--grey);
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+}
+#brandmark svg{width:22px;height:22px;display:block;flex:none}
+#brandmark b{color:#fff;font-weight:500}
+
+/* ---------- globe stage ---------- */
+#stage{position:relative;height:100svh;min-height:560px;width:100%;overflow:hidden}
+#sky,#globe{position:absolute;inset:0;width:100%;height:100%;display:block}
+#globe{cursor:grab;touch-action:pan-y}
+#globe.drag{cursor:grabbing}
+
+#hero{
+  position:absolute;left:0;right:0;top:100px;z-index:12;text-align:center;
+  pointer-events:none;padding:0 20px;
+}
+#hero h1{
+  font-family:var(--sans);font-weight:900;margin:0;
+  font-size:clamp(26px,6.4vw,74px);letter-spacing:-.035em;line-height:.95;
+  text-transform:uppercase;
+}
+#hero .sub{
+  font-family:var(--mono);color:var(--grey2);font-size:clamp(8.5px,1.15vw,11px);
+  letter-spacing:.16em;margin-top:14px;line-height:1.9;
+}
+#hero .sub .dim{color:var(--grey)}
+#hero .tag{
+  font-family:var(--mono);color:#8a8a8a;font-size:clamp(9px,1.2vw,12px);
+  letter-spacing:.08em;margin-top:16px;line-height:1.7;
+}
+#hero .tag .es{display:block;color:#6a6a6a;margin-top:4px}
+
+
+/* HUD */
+.hud{position:absolute;z-index:14;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.11em;color:#5e5e5e;line-height:1.85;pointer-events:none;white-space:nowrap}
+.hud b{color:var(--grey2);font-weight:400}
+.hud .r{color:var(--red)}
+#hudTL{top:52px;left:24px}
+#hudTR{top:52px;right:24px;text-align:right}
+#hudBL{bottom:58px;left:24px}
+#hudBR{bottom:58px;right:24px;text-align:right}
+
+#zoomui{
+  position:absolute;z-index:15;bottom:58px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#5e5e5e;
+  display:flex;gap:12px;align-items:center;
+}
+#zoomui button{
+  background:none;border:1px solid #262626;color:var(--grey2);font-family:var(--mono);
+  font-size:11px;width:22px;height:22px;line-height:1;cursor:pointer;padding:0;
+}
+#zoomui button:hover{border-color:var(--red);color:var(--red)}
+
+#idleline{
+  position:absolute;left:0;right:0;bottom:88px;z-index:14;text-align:center;
+  font-family:var(--mono);font-size:11px;color:#6a6a6a;letter-spacing:.04em;
+  pointer-events:none;padding:0 20px;min-height:1.3em;
+}
+#idleline .cur{color:var(--red)}
+
+#scrollcue{
+  position:absolute;left:50%;transform:translateX(-50%);bottom:22px;z-index:13;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:#4a4a4a;
+  transition:opacity .3s;
+}
+#scrollcue i{color:var(--red);font-style:normal;animation:blink 1.1s steps(1) infinite}
+#scrollcue.off{opacity:0}
+@keyframes blink{50%{opacity:0}}
+
+/* pin readout card */
+#readout{
+  position:absolute;z-index:16;pointer-events:none;font-family:var(--mono);
+  border:1px solid #2a2a2a;background:rgba(0,0,0,.82);padding:8px 11px;
+  font-size:10px;letter-spacing:.09em;color:var(--grey2);opacity:0;
+  transition:opacity .18s ease;white-space:nowrap;
+}
+#readout.on{opacity:1}
+#readout .c{color:#fff;font-size:11px;letter-spacing:.14em}
+#readout .x{color:#5e5e5e}
+#readout .go{color:var(--red)}
+
+/* mobile pin list */
+#pinlist{display:none}
+
+/* ---------- dossier ---------- */
+#dossier{
+  position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);z-index:120;
+  background:rgba(0,0,0,.96);border-left:1px solid #232323;
+  transform:translateX(102%);transition:transform .42s cubic-bezier(.22,.8,.28,1);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:26px 26px 60px;
+}
+#dossier.on{transform:translateX(0)}
+#dossier .close{
+  position:absolute;top:18px;right:22px;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;cursor:pointer;padding:4px
+}
+#dossier .close:hover{color:var(--red)}
+#dossier h2{font-family:var(--sans);font-weight:900;font-size:30px;letter-spacing:-.03em;
+  margin:8px 0 4px;text-transform:uppercase}
+#dossier .coord{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#5e5e5e}
+#dossier .cityline{font-family:var(--mono);font-size:12px;color:var(--grey2);
+  line-height:1.7;margin:20px 0 22px;border-left:1px solid var(--red);padding-left:12px}
+#dossier .hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:#5e5e5e;
+  margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:7px}
+#dossier .cred{font-family:var(--mono);font-size:11.5px;line-height:1.65;margin-bottom:14px}
+#dossier .cred .y{color:var(--red)}
+#dossier .cred .cl{color:#fff}
+#dossier .cred .meta{color:#6f6f6f}
+#dossier .none{font-family:var(--mono);font-size:11px;color:#6f6f6f;line-height:1.7}
+#dossier .reel{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+#dossier .reel img{width:100%;height:100px;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.06);opacity:.82}
+#scrim{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.5);opacity:0;
+  pointer-events:none;transition:opacity .35s}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:2;background:#000}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.secno{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:#4e4e4e;margin-bottom:16px}
+h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
+  letter-spacing:-.035em;line-height:1;margin:0 0 10px;text-transform:uppercase}
+.rule{height:1px;background:var(--line);margin:0}
+
+/* polaroid */
+#polaroid{padding:150px 0 160px;text-align:center;overflow:hidden}
+#polaroid .quote{font-family:var(--mono);font-size:clamp(18px,3.4vw,34px);
+  letter-spacing:-.01em;color:#fff;transform:skewX(-7deg);margin:0 0 8px}
+#polaroid .attr{font-family:var(--mono);font-size:11px;color:var(--grey);letter-spacing:.06em;margin-bottom:46px}
+.pframe{
+  display:inline-block;background:#f2f0eb;padding:13px 13px 52px;
+  transform:rotate(-1.2deg);
+  box-shadow:-22px 0 50px rgba(255,59,31,.22),0 0 90px rgba(255,59,31,.13),0 30px 80px rgba(0,0,0,.9);
+  animation:float 6s ease-in-out infinite;cursor:grab;touch-action:pan-y;
+  will-change:transform;
+}
+.pframe.grabbing{cursor:grabbing;animation:none}
+.pframe img{display:block;width:min(370px,72vw);height:auto}
+@keyframes float{0%,100%{transform:rotate(-1.2deg) translateY(-4px)}50%{transform:rotate(-1.2deg) translateY(4px)}}
+#polaroid .pframe{margin-bottom:0}
+
+/* what i do */
+#do{padding:110px 0}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:52px}
+.col h3{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--red);
+  margin:0 0 14px;font-weight:500}
+.col p{font-size:14.5px;line-height:1.72;color:var(--grey2);margin:0 0 16px}
+.col ul{list-style:none;padding:0;margin:0;font-family:var(--mono);font-size:11px;
+  line-height:2.15;color:#8a8a8a}
+.col li:before{content:'· ';color:var(--red)}
+.doshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:56px}
+.shot{position:relative;overflow:hidden;background:#080808;cursor:zoom-in;border:1px solid transparent}
+.shot:hover,.shot:focus-visible{border-color:#2a2a2a}
+.shot img{width:100%;height:260px;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.05);opacity:.78;transition:opacity .35s,filter .35s}
+.shot:hover img,.shot:focus-visible img{opacity:1;filter:grayscale(0) contrast(1)}
+.shot .cap{font-family:var(--mono);font-size:8.6px;letter-spacing:.11em;color:#6f6f6f;
+  padding:9px 2px 0;line-height:1.6}
+
+#kit{padding:110px 0}
+.caps{margin-top:40px;border-top:1px solid var(--line)}
+.cap-row{
+  display:grid;grid-template-columns:140px 1fr;gap:24px;
+  padding:18px 0;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:13px;line-height:1.7
+}
+.cap-row .k{color:var(--red);letter-spacing:.16em;font-size:10.5px;padding-top:4px}
+.cap-row .v{color:var(--grey2)}
+@media(max-width:720px){
+  .cap-row{grid-template-columns:1fr;gap:6px;padding:16px 0}
+}
+
+/* work table */
+#work{padding:110px 0}
+.tbl{margin-top:34px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:64px 1.35fr 1.15fr 1.05fr .8fr;gap:16px;
+  padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--mono);
+  font-size:11.5px;align-items:baseline;border-left:2px solid transparent;padding-left:10px;margin-left:-12px}
+.row:hover{border-left-color:var(--red);background:rgba(255,59,31,.035)}
+.row.head{color:#4e4e4e;font-size:9.5px;letter-spacing:.2em;padding:10px 0;position:sticky;top:0;background:#000;z-index:3}
+.row.head:hover{border-left-color:transparent;background:#000}
+.row .yr{color:var(--red)}
+.row .cl{color:#fff}
+.row .mt{color:#7c7c7c}
+
+/* fly-by */
+#flyby{padding:110px 0 0;overflow:hidden}
+.lane{overflow:hidden;position:relative;margin-top:26px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:slide 78s linear infinite}
+.track.slow{animation-duration:126s}
+.track.rev{animation-direction:reverse}
+.lane:hover .track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.card{width:290px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent}
+.card:hover,.card:focus-visible{border-color:#222}
+.card img{width:100%;height:190px;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.05);opacity:.72;transition:opacity .35s,filter .35s}
+.card:hover img,.card:focus-visible img{opacity:1;filter:grayscale(0)}
+.card .cap{font-family:var(--mono);font-size:8.4px;letter-spacing:.1em;color:#666;padding:8px 2px 0;line-height:1.6}
+.logolane{display:flex;gap:52px;width:max-content;animation:slide 96s linear infinite;align-items:center}
+.logolane img{
+  height:26px;width:auto;max-width:140px;object-fit:contain;
+  opacity:.42;transition:opacity .3s;filter:none
+}
+.logolane img.ink{filter:brightness(0) invert(1)}
+.logolane img:hover{opacity:.8}
+.logolane.rev{animation-direction:reverse;animation-duration:110s}
+.tierhd{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:#4e4e4e;
+  margin:52px 0 0;display:flex;align-items:center;gap:14px}
+.tierhd:after{content:'';flex:1;height:1px;background:var(--line)}
+.reserved{border:1px dashed #1f1f1f;padding:22px;margin-top:22px;font-family:var(--mono);
+  font-size:10.5px;color:#5a5a5a;line-height:1.85}
+.reserved b{color:var(--grey2);font-weight:400}
+
+/* portfolio last */
+#last{padding:130px 0 110px;border-top:1px solid var(--line);margin-top:110px}
+#last .lede{font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#8a8a8a;
+  max-width:640px;margin:18px 0 0}
+#last .lede b{color:var(--grey2);font-weight:400}
+#toggleOwn{
+  margin-top:30px;background:none;border:1px solid #262626;color:var(--grey2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;padding:11px 20px;cursor:pointer
+}
+#toggleOwn:hover{border-color:var(--red);color:var(--red)}
+#owngrid{display:none;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:34px}
+#owngrid.on{display:grid}
+#owngrid img{width:100%;height:170px;object-fit:cover;display:block;opacity:.88;cursor:zoom-in}
+
+/* inspect */
+#inspect{
+  position:fixed;inset:0;z-index:180;background:rgba(0,0,0,.92);
+  display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;
+  padding:40px 24px
+}
+#inspect.on{display:flex}
+#inspect img{max-width:min(920px,92vw);max-height:78vh;object-fit:contain;filter:grayscale(0)}
+#inspect .cap{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#8a8a8a;text-align:center;max-width:720px}
+#inspect .x{
+  position:absolute;top:18px;right:22px;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;cursor:pointer
+}
+#inspect .x:hover{color:var(--red)}
+
+/* contact */
+#contact{padding:120px 0 90px;border-top:1px solid var(--line)}
+.cgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:start;margin-top:34px}
+.cinfo{border:1px solid var(--line);padding:22px 24px}
+.cta{
+  display:inline-block;margin-top:26px;background:var(--red);color:#000;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:15px 28px;font-weight:700
+}
+.cta:hover{background:#fff}
+.cinfo{font-family:var(--mono);font-size:12px;line-height:2.3;color:var(--grey2)}
+.cinfo a{color:var(--grey2);text-decoration:none;border-bottom:1px solid #262626}
+.cinfo a:hover{color:var(--red);border-color:var(--red)}
+.cinfo .k{color:#4e4e4e;display:inline-block;min-width:74px}
+footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.14em;color:#3e3e3e;display:flex;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .cols{grid-template-columns:1fr;gap:28px}
+  .doshots{grid-template-columns:1fr 1fr}
+  .cgrid{grid-template-columns:1fr}
+  .row{grid-template-columns:52px 1fr;gap:4px 12px;padding:14px 0}
+  .row .pr,.row .ph,.row .ci{grid-column:2}
+  .row.head{display:none}
+  .row .pr:before,.row .ph:before,.row .ci:before{
+    color:#4e4e4e;letter-spacing:.14em;font-size:8.5px;margin-right:8px
+  }
+  .row .pr:before{content:'PROD '}
+  .row .ph:before{content:'PHOTO '}
+  .row .ci:before{content:'CITY '}
+  .shot img{height:200px}
+  #owngrid{grid-template-columns:1fr 1fr}
+  #owngrid img{height:170px}
+}
+@media(max-width:720px){
+  nav{
+    left:0;right:0;max-width:100%;width:100%;
+    flex-wrap:nowrap;gap:0;padding:36px 16px 8px;font-size:9.5px;letter-spacing:.02em;
+    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr
+  }
+  nav a{color:#c8c8c8;text-align:center}
+  #vig{top:52px}
+  #brandmark{padding:12px 10px;font-size:9px;letter-spacing:.08em}
+  #brandmark svg{width:18px;height:18px}
+  #brandmark b{display:none}
+  #hero .sub{letter-spacing:.08em;padding:0 4px}
+  #hero{top:96px}
+  #hero .tag{display:none}
+  #hudTL,#hudTR,#hudBL,#hudBR{display:none}
+  #zoomui{display:none}
+  #stage{height:88svh}
+  .wrap{padding:0 16px}
+  #pinlist{
+    display:block;padding:34px 0 90px;
+  }
+  #pinlist .g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+    border:1px solid var(--line);margin-top:16px}
+  #pinlist button{
+    background:#000;border:0;color:var(--grey2);font-family:var(--mono);font-size:11px;
+    letter-spacing:.12em;padding:16px 12px;text-align:left;cursor:pointer;width:100%}
+  #pinlist button:active{color:var(--red)}
+  #pinlist button .n{display:block;color:#4e4e4e;font-size:8.6px;margin-top:5px;letter-spacing:.1em}
+  #polaroid{padding:100px 0 110px}
+  #do,#kit,#work,#flyby{padding:80px 0}
+  #last{padding:90px 0 80px;margin-top:80px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .track,.logolane{animation:none!important;flex-wrap:wrap;width:100%}
+  .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .card{width:calc(50% - 8px)}
+}
+</style>
+</head>
 <body>
-<div class="bar"></div>
-<div class="wrap">
-  <header>
-    <div class="mark">Huertas <b>Digital</b></div>
-    <h1>Digital tech &amp;<br>lighting assist.<span class="pop">.</span></h1>
-    <p class="lede">High-end stills &amp; motion sets in Barcelona and across Europe. A calibrated, colour-managed Capture One station, run clean and fast — <span class="mut">so the shoot never waits on the tech.</span></p>
-  </header>
 
-<section class="portrait"><img src="img/cv_photo.png" alt="James Huertas — digital technician, Barcelona"><p>That's me — <span class="mut">James Huertas.</span> I run the full on-set technical chain — tethered capture, colour management, data &amp; client review — so the photographer, director and agency can focus on the shot. Calm under pressure, fast, discreet.</p></section>
+<div id="crt"></div>
+<div id="vig"></div>
 
-  <section class="logos"><div class="eyebrow" style="text-align:center;padding:0 32px 22px">Trusted on set by</div><div class="lrow">
-    <img src="img/logos/offwhite.svg" alt="Off-White"><img src="img/logos/mercedes-benz.svg" alt="Mercedes-Benz"><img src="img/logos/cupra.svg" alt="CUPRA"><img src="img/logos/macallan.svg" alt="The Macallan"><img src="img/logos/inditex.svg" alt="Inditex"><img src="img/logos/new-balance.svg" alt="New Balance"><img src="img/logos/sfera.png" alt="Sfera"><img src="img/logos/mahou.svg" alt="Mahou"><img src="img/logos/frette.png" alt="Frette"><img src="img/logos/don-julio.png" alt="Don Julio"><img src="img/logos/matthew-williamson.png" alt="Matthew Williamson"><img src="img/logos/cecil.png" alt="Cecil"><img src="img/logos/0039-italy.svg" alt="0039 Italy"><img src="img/logos/street-one.png" alt="Street One"><img src="img/logos/lustau.svg" alt="Lustau"><img src="img/logos/general-optica.png" alt="General Óptica"><img src="img/logos/questex.png" alt="Questex"><img src="img/logos/offwhite.svg" alt="Off-White"><img src="img/logos/mercedes-benz.svg" alt="Mercedes-Benz"><img src="img/logos/cupra.svg" alt="CUPRA"><img src="img/logos/macallan.svg" alt="The Macallan"><img src="img/logos/inditex.svg" alt="Inditex"><img src="img/logos/new-balance.svg" alt="New Balance"><img src="img/logos/sfera.png" alt="Sfera"><img src="img/logos/mahou.svg" alt="Mahou"><img src="img/logos/frette.png" alt="Frette"><img src="img/logos/don-julio.png" alt="Don Julio"><img src="img/logos/matthew-williamson.png" alt="Matthew Williamson"><img src="img/logos/cecil.png" alt="Cecil"><img src="img/logos/0039-italy.svg" alt="0039 Italy"><img src="img/logos/street-one.png" alt="Street One"><img src="img/logos/lustau.svg" alt="Lustau"><img src="img/logos/general-optica.png" alt="General Óptica"><img src="img/logos/questex.png" alt="Questex">
-  </div></section>
-
-  <section>
-    <div class="eyebrow">What I do</div>
-    <div class="grid">
-      <div class="svc"><h3>Digital tech</h3><p>Capture One tethering, live colour management, on-set grading, file integrity &amp; backup. Your images safe and looking right, in real time.</p></div>
-      <div class="svc"><h3>Lighting assist</h3><p>Second pair of trusted hands on lighting — fast, anticipatory, fluent with Profoto &amp; the gaffer's plan.</p></div>
-      <div class="svc"><h3>Own kit</h3><p>MacBook Pro M-series station, monitors, Hollyland, Tether Tools, hardened SSD workflow. Full equipment list on request.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="eyebrow">Selected recent work</div>
-    <div class="credits">
-      <div><b>Off-White</b> <span>· 247 (ph. William Arcand)</span></div>
-      <div><b>Matthew Williamson × Frette</b> <span>· Isla Blonde</span></div>
-      <div><b>CUPRA</b> <span>· Las Montañas del Canadá</span></div>
-      <div><b>Sfera — Inditex</b> <span>· Canadá</span></div>
-      <div><b>Players Magazine</b> <span>· Dreamteam Europe</span></div>
-      <div><b>Anton Renborg</b> <span>· OAS</span></div>
-    </div>
-    <p class="quote">★★★★★ “Best Digi Ever” — overheard on set, once.</p>
-  </section>
-
-  <section>
-    <div class="eyebrow">The station</div>
-    <ul class="kit">
-      <li>Apple MacBook Pro (M-series) + Capture One</li>
-      <li>Colour-calibrated client monitor</li>
-      <li>Tether Tools pro tethering kit</li>
-      <li>Hollyland wireless monitoring</li>
-      <li>Redundant SSD backup workflow</li>
-      <li>Profoto-fluent lighting support</li>
-    </ul>
-  </section>
-
-  <section class="gallery"><div class="eyebrow" style="padding:0 32px 18px">On set</div><div class="collage">
-    <figure class="tall"><img loading="lazy" src="img/1768dc9a-4cc8-4aad-96a2-bc3a52f6119a_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_08.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/ce6a3e12-6961-4424-86f4-cfc75f6c4f9d_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_01.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/83ebd615-973b-4f38-be7d-3a9da7dda2d9_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/1ba8739a-36b7-457e-8d68-c1d452f42960_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_10.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="big"><img loading="lazy" src="img/3109917e-9156-4b27-b50a-f17c8a88a831_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_06.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="big"><img loading="lazy" src="img/b47897cb-024a-4b38-8c76-e5b627f59089_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/a6ea8162-2a86-4105-8f38-d49fb1ebfef1_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_18.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_11.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/848a8183-bc92-4362-b793-bc3b65b881f3_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_12.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_14.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_02.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_15.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_17.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_05.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="big"><img loading="lazy" src="img/85ef5583-47a1-486f-9fba-f52df661d252_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_16.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/45b9160e-e5df-4eea-945c-9406dc537b88_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_04.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_03.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/76fc2cdd-fe51-4856-a115-ca4347fa6220.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/0fd645a9-7667-446e-9dad-4e85de6c46b8_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-    <figure><img loading="lazy" src="img/onset_07.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="tall"><img loading="lazy" src="img/onset_13.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/onset_09.jpg" alt="On set — James Huertas digital tech"></figure>
-    <figure class="wide"><img loading="lazy" src="img/eaa8e4cb-1d34-4740-ac2b-ff5e22a8e610_1_105_c-1.jpeg" alt="On set — James Huertas digital tech"></figure>
-  </div></section>
-<div class="cta">
-    <a class="alt" href="mailto:callingjhphoto@gmail.com?subject=Booking%20enquiry%20%E2%80%94%20digital%20tech%20%2F%20lighting">Book me for a shoot</a>
-    <a href="mailto:callingjhphoto@gmail.com?subject=CV%20%26%20kit%20list%20request">CV &amp; full kit list</a>
-  </div>
+<div id="boot">
+  <div id="bootline">CALIBRATING MONITOR…</div>
+  <div class="bar"><i id="bootbar"></i></div>
 </div>
-<footer><div class="wrap"><b>HUERTAS DIGITAL</b> — Barcelona · jameshphoto.com · callingjhphoto@gmail.com</div></footer>
-</body></html>
+
+<a href="#stage" id="brandmark" class="mono" aria-label="James Huertas — JH/01">
+  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="16" cy="18" r="10.2" stroke="#fff" stroke-width="1.25"/>
+    <ellipse cx="16" cy="18" rx="4.2" ry="10.2" stroke="#fff" stroke-width=".7" opacity=".4"/>
+    <path d="M6 18h20" stroke="#fff" stroke-width=".7" opacity=".4"/>
+    <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
+    <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
+  </svg>
+  JH<span style="color:#ff3b1f">/</span>01 — <b>JAMES HUERTAS</b>
+</a>
+<nav class="mono">
+  <a href="#stage">globe</a>
+  <a href="#do">what i do</a>
+  <a href="#work">work</a>
+  <a href="#contact">book me</a>
+</nav>
+
+<!-- ============ [00] GLOBE ============ -->
+<section id="stage">
+  <canvas id="sky"></canvas>
+  <canvas id="globe" aria-label="Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens."></canvas>
+
+  <div id="hero">
+    <h1>James Huertas</h1>
+    <div class="sub mono">
+      DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT<br>
+      <span class="dim">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</span>
+    </div>
+    <div class="tag mono">Good vibes. Tight workflow. Cool music on set.<span class="es">Buen rollo. Flujo de trabajo afinado. Buena música en el set.</span></div>
+  </div>
+
+  <div class="hud mono" id="hudTL">
+    LAT/LON <b id="hLat">—</b><br>
+    UPTIME&nbsp; <b id="hUp">00:00</b>
+  </div>
+  <div class="hud mono" id="hudTR">
+    CARDS <b>2 OF 2 BACKED UP</b><br>
+    HDMI&nbsp; <b>SEATED (VERIFIED TWICE)</b>
+  </div>
+  <div class="hud mono" id="hudBL">
+    COFFEE <b class="r">CRITICAL</b><br>
+    CLIENT <b>HAPPY</b>
+  </div>
+  <div class="hud mono" id="hudBR">
+    CABLE TENSION <b>NOMINAL</b><br>
+    WIFI <b>“FINE”</b>
+  </div>
+
+  <div id="zoomui" class="mono">
+    <button id="zOut" aria-label="Zoom out">−</button><span>ZOOM</span><button id="zIn" aria-label="Zoom in">+</button>
+    <span style="color:#3a3a3a;margin-left:10px">DRAG TO SPIN</span>
+  </div>
+
+  <div id="readout" class="mono"></div>
+  <div id="idleline" class="mono"></div>
+  <div id="scrollcue" class="mono">SCROLL <i>▮</i></div>
+</section>
+
+<!-- mobile pin list -->
+<section id="pinlist"><div class="wrap">
+  <div class="secno mono">[00·B] NINE PINS</div>
+  <div class="g" id="pinButtons"></div>
+</div></section>
+
+<!-- ============ [01] POLAROID ============ -->
+<section id="polaroid"><div class="wrap">
+  <p class="quote">“Best digi ever”</p>
+  <div class="attr">— a producer at Canadá</div>
+  <div class="pframe" id="pframe">
+    <img src="img/polaroid/station_crop.jpg"
+         alt="Polaroid print of James Huertas on set with his digital technician station.">
+  </div>
+</div></section>
+
+<!-- ============ [02] WHAT I ACTUALLY DO ============ -->
+<section id="do"><div class="wrap">
+  <div class="secno mono">[02] WHAT I ACTUALLY DO</div>
+  <h2 class="big">I look after all<br>the tech on set</h2>
+
+  <div class="cols">
+    <div class="col">
+      <h3>CAPTURE</h3>
+      <p>Tethered capture that does not drop. The camera talks to the station, the station talks to the client screen, and nobody stands around waiting for a frame to appear.</p>
+      <ul>
+        <li>Capture One Pro sessions, named and structured</li>
+        <li>Phase One · Hasselblad · Canon · Nikon · Sony · Fuji</li>
+        <li>Live view, focus checks, frame overlays</li>
+        <li>Phase One Certified Professional (POCP 2017)</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>COLOUR</h3>
+      <p>A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher's inbox. Styles and ICC set before the first frame, not after.</p>
+      <ul>
+        <li>Monitor calibration and profiling</li>
+        <li>Session styles, ICC, capture adjustments</li>
+        <li>Layered comps and stitching on set</li>
+        <li>Selects, exports and client-ready previews</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>DATA</h3>
+      <p>Two copies of everything, verified, before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
+      <ul>
+        <li>Dual-destination backup, checksum verified</li>
+        <li>ChronoSync mirroring, structured hand-off</li>
+        <li>Shot logs, metadata, naming conventions</li>
+        <li>Power, distro, screens, cable management</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doshots" id="doShots"></div>
+</div></section>
+
+<!-- ============ [03] WHAT I WORK WITH ============ -->
+<section id="kit"><div class="wrap">
+  <div class="secno mono">[03] SOFTWARE · CAMERAS · LIGHTING</div>
+  <h2 class="big">What I work with</h2>
+  <p class="lede mono" style="margin-top:14px;max-width:640px;color:#8a8a8a;font-size:12.5px;line-height:1.9">
+    Systems I run on set. Not a hire list. Whatever the production specifies.
+  </p>
+  <div class="caps">
+    <div class="cap-row">
+      <div class="k">SOFTWARE</div>
+      <div class="v">Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync</div>
+    </div>
+    <div class="cap-row">
+      <div class="k">CAMERAS</div>
+      <div class="v">Hasselblad · Phase One · Canon · Nikon · Sony · Fuji</div>
+    </div>
+    <div class="cap-row">
+      <div class="k">LIGHTING</div>
+      <div class="v">Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure</div>
+    </div>
+    <div class="cap-row">
+      <div class="k">CERT</div>
+      <div class="v">Phase One Certified Professional / POCP 2017</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ [04] SELECTED WORK ============ -->
+<section id="work"><div class="wrap">
+  <div class="secno mono">[04] SELECTED WORK</div>
+  <h2 class="big">Selected work</h2>
+  <div class="tbl" id="workTbl"></div>
+</div></section>
+
+<!-- ============ [05] THE FLY-BY ============ -->
+<section id="flyby"><div class="wrap">
+  <div class="secno mono">[05] THE FLY-BY</div>
+  <h2 class="big">Frames from<br>real sets</h2>
+
+  <div class="tierhd mono">01 &nbsp;SET-OPS · CART · SCREENS · CABLES</div>
+  <div class="lane"><div class="track" id="laneA"></div></div>
+  <div class="lane"><div class="track slow rev" id="laneB"></div></div>
+
+  <div class="tierhd mono">02 &nbsp;PUBLISHED CAMPAIGN WORK</div>
+  <div class="reserved mono" id="pubSlot">
+    <b>ONE CREDIT VERIFIED PUBLIC.</b><br>
+    REVOLVE / FWRD · Kate Bellm · Mallorca · 2026 —
+    <a href="https://www.prnewswire.com/news-releases/fwrd-continues-to-gain-market-share-in-luxury-and-expands-fashion-leadership-globally-with-rosie-huntington-whiteley-302635524.html" target="_blank" rel="noopener" style="color:#ff3b1f;text-decoration:none;border-bottom:1px solid rgba(255,59,31,.35)">PR Newswire →</a>
+    &nbsp;·&nbsp;
+    <a href="http://www.mshelene.com/2026/07/daily-delight-rosie-huntington-whiteley.html" target="_blank" rel="noopener" style="color:#ff3b1f;text-decoration:none;border-bottom:1px solid rgba(255,59,31,.35)">mshelene →</a><br>
+    The frames are the client's, not mine to host. So they are linked, not shown.
+  </div>
+
+  <div class="tierhd mono">03 &nbsp;OFF-WHITE · WILLIAM ARCAND</div>
+  <div class="reserved mono">
+    <b>SLOT RESERVED. NOTHING TO SHOW YET.</b><br>
+    The stills exist. They are not on this drive. A placeholder image would be a lie, so there
+    isn't one. Which is, I accept, an unusual flex for a man whose entire job is knowing exactly
+    where every file is.
+  </div>
+
+  <div class="tierhd mono">04 &nbsp;BRANDS</div>
+  <div class="lane" style="padding:26px 0"><div class="logolane" id="logoLane"></div></div>
+
+  <div class="tierhd mono">05 &nbsp;PRODUCTION COMPANIES</div>
+  <div class="lane" style="padding:26px 0"><div class="logolane rev" id="prodLane"></div></div>
+</div></section>
+
+<!-- ============ [06] PERSONAL WORK ============ -->
+<section id="last"><div class="wrap">
+  <div class="secno mono">[06] PERSONAL WORK</div>
+  <h2 class="big">Personal work</h2>
+  <p class="lede mono">Not from a booking.</p>
+  <button id="toggleOwn" class="mono">[ + ] OPEN</button>
+  <div id="owngrid"></div>
+</div></section>
+
+<!-- ============ [07] CONTACT ============ -->
+<section id="contact"><div class="wrap">
+  <div class="secno mono">[07] CONTACT</div>
+  <h2 class="big">Book the tech</h2>
+  <div class="cgrid">
+    <div>
+      <p style="color:#b4b4b4;font-size:15px;line-height:1.75;max-width:460px;margin:14px 0 0">
+        Good vibes. Tight workflow. Cool music on set.<br>
+        Buen rollo. Flujo de trabajo afinado. Buena música en el set.<br>
+        Available across Spain, the UK and wherever the job lands — Barcelona and Mallorca
+        are home, the cart travels.
+      </p>
+      <a class="cta" href="mailto:callingjhphoto@gmail.com?subject=Booking%20—%20digital%20technician">BOOK THE TECH</a>
+    </div>
+    <div class="cinfo mono">
+      <div><span class="k">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
+      <div><span class="k">PHONE</span><a href="tel:+34643147756">+34 643 147 756</a></div>
+      <div><span class="k">BASE</span>Barcelona &amp; Mallorca</div>
+      <div><span class="k">LANG</span>English / Español — bilingual</div>
+      <div><span class="k">STATUS</span>EU resident · autónomo · invoices same day</div>
+    </div>
+  </div>
+  <footer class="mono">
+    <span style="display:flex;align-items:center;gap:8px">
+      <svg viewBox="0 0 32 32" width="14" height="14" fill="none" aria-hidden="true">
+        <circle cx="16" cy="18" r="10.2" stroke="#fff" stroke-width="1.25"/>
+        <ellipse cx="16" cy="18" rx="4.2" ry="10.2" stroke="#fff" stroke-width=".7" opacity=".4"/>
+        <path d="M6 18h20" stroke="#fff" stroke-width=".7" opacity=".4"/>
+        <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
+        <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
+      </svg>
+      JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT
+    </span>
+    <span>BACKED UP IN TWO PLACES. OBVIOUSLY.</span>
+  </footer>
+</div></section>
+
+<div id="inspect" role="dialog" aria-modal="true" aria-label="Set-operations frame">
+  <button class="x" id="inspectX">[ CLOSE ]</button>
+  <img id="inspectImg" alt="">
+  <div class="cap mono" id="inspectCap"></div>
+</div>
+
+<div id="scrim"></div>
+<aside id="dossier" aria-hidden="true">
+  <button class="close" id="dClose">[ CLOSE ]</button>
+  <div id="dBody"></div>
+</aside>
+
+<script>
+"use strict";
+(function(){
+
+/* ============================================================
+   DATA
+   ============================================================ */
+var RED = '#ff3b1f';
+
+var CITIES = [
+  {id:'LAX', name:'Los Angeles',    lat: 34.05, lon:-118.24, yrs:'2017 · 2024',      line:'Editorial. Everyone has a second job. Including the sun.'},
+  {id:'NYC', name:'New York',       lat: 40.71, lon: -74.01, yrs:'—',               line:'No credit on file. The pin is honest. The pin is patient.'},
+  {id:'RIO', name:'Rio de Janeiro', lat:-22.91, lon: -43.17, yrs:'—',               line:'No credit on file. The pin is optimistic. Call me.'},
+  {id:'LDN', name:'London',         lat: 51.51, lon:  -0.13, yrs:'2015 — 2026',     line:'Eleven years of tethering in rooms with no natural light. Formative.'},
+  {id:'HAM', name:'Hamburg',        lat: 53.55, lon:   9.99, yrs:'2018 · 2024',     line:'Precision. They start on time. It was a genuine shock.'},
+  {id:'BCN', name:'Barcelona',      lat: 41.39, lon:   2.17, yrs:'2026',            line:'Home. Where the cart lives. Where the coffee is correct.'},
+  {id:'LIS', name:'Lisbon',         lat: 38.72, lon:  -9.14, yrs:'2022 — 2026',     line:'Good light, long days, hills that punish a loaded cart.'},
+  {id:'PMI', name:'Mallorca',       lat: 39.57, lon:   2.65, yrs:'2026',            line:'Island logistics. Everything arrives on a boat, including the panic.'},
+  {id:'SIN', name:'Singapore',      lat:  1.35, lon: 103.82, yrs:'—',               line:'No credit on file. Ninety percent humidity is a data-integrity issue.'}
+];
+
+/* credits — verbatim from JOBS.md, which is verbatim from the canonical CV.
+   Nothing here is invented. Cities with no credit carry none. */
+var CREDITS = {
+  BCN:[
+    {y:'2026', c:'Off-White',                      p:'Twentyfour Seven Plus',   ph:'William Arcand'},
+    {y:'2026', c:'adidas SS27 × Audi F1',          p:'Rayo Productions',        ph:'William Arcand', n:'Sitges'},
+    {y:'2026', c:'adidas × FC Barcelona',          p:'Players Magazine',        ph:'William Arcand'},
+    {y:'2026', c:'Cupra — layered key visual',     p:'Canadá Pictures · &Rosàs',ph:'Joe Howatt'},
+    {y:'2026', c:'Sfera',                          p:'Canadá Pictures',         ph:'Javier Fernández · Xavier Casanueva'},
+    {y:'2026', c:'Mercedes-Benz VLE',              p:'Nouri Films · U-Crane',   ph:'Chris Noltekuhlman'},
+    {y:'2026', c:'Senseo',                         p:'Fight Films',             ph:'—'},
+    {y:'2026', c:'Questex / FNTV — MWC',           p:'Questex',                 ph:'—'},
+    {y:'2025', c:'0039 Italy',                     p:'Inezz Productions',       ph:'Stephan Glathe'}
+  ],
+  PMI:[
+    {y:'2026', c:'REVOLVE / FWRD',                 p:"The Blonde's Pool",       ph:'Kate Bellm', n:'talent: Rosie Huntington-Whiteley'},
+    {y:'2026', c:'Matthew Williamson / Free People',p:'—',                      ph:'Kate Bellm'},
+    {y:'2026', c:'Mahou Cinco Estrellas',          p:'Bakery Productions',      ph:'—', n:'Copa del Rey · San Isidro'},
+    {y:'2026', c:'Palma Pictures',                 p:'Palma Pictures',          ph:'Lukasz Pukowiec · Elliot Wilcox · Nathan Lang'},
+    {y:'2026', c:'Anton Renborg',                  p:'OAS Company',             ph:'Anton Renborg'}
+  ],
+  LDN:[
+    {y:'2021—25', c:'Diageo · Bacardi · Guinness · Bombay · Macallan · Stella · Don Papa', p:'—', ph:'Rob Lawson'},
+    {y:'2022—25', c:'Nike · New Balance · North Face', p:'—',                   ph:'Tayler Prince-Fraser'},
+    {y:'2023', c:'adidas · Harvey Nichols',        p:'—',                       ph:'Ben Stockley'},
+    {y:'2026', c:'TrueGroup — corporate',          p:'TrueGroup',               ph:'—', n:'London & Brussels'},
+    {y:'2015—16', c:'Reuters · Bloomberg · Getty', p:'press',                   ph:'James Huertas', n:'articles for The Times, The Independent'}
+  ],
+  HAM:[
+    {y:'2024', c:'Netflix doc — Lukas Podolski',   p:'—',                       ph:'Kai Sehr'},
+    {y:'2018', c:'Die Zeit · Amazon · Volkswagen', p:'—',                       ph:'Marion Nehmzow'}
+  ],
+  LIS:[
+    {y:'2026', c:'Uber',                           p:'xLOB · Palma Pictures',   ph:'Anisha Sisodia'},
+    {y:'2022—25', c:'Nike · New Balance · North Face', p:'—',                   ph:'Tayler Prince-Fraser', n:'London / Lisbon'}
+  ],
+  LAX:[
+    {y:'2024', c:'Netflix doc — Lukas Podolski',   p:'—',                       ph:'Kai Sehr', n:'Hamburg / LA leg'},
+    {y:'2017', c:'Editorial',                      p:'Mathew David Studio',     ph:'—'}
+  ],
+  NYC:[], RIO:[], SIN:[]
+};
+
+var NOCREDIT = {
+  NYC:'NEW YORK — NO CREDIT ON FILE. THE PIN IS HONEST.',
+  RIO:'RIO DE JANEIRO — NO CREDIT ON FILE. THE PIN IS HONEST.',
+  SIN:'SINGAPORE — NO CREDIT ON FILE. THE PIN IS HONEST.'
+};
+var NOCREDIT_SUB = 'James named this pin. The canonical CV carries no work for it, so the site carries no client for it. A fake credit would be a worse thing to find than an empty one — and you would find it.';
+
+var SET = [
+ 'onset_01.jpg','onset_02.jpg','onset_03.jpg','onset_04.jpg','onset_05.jpg','onset_06.jpg',
+ 'onset_07.jpg','onset_08.jpg','onset_09.jpg','onset_10.jpg','onset_11.jpg','onset_12.jpg',
+ 'onset_13.jpg','onset_14.jpg','onset_15.jpg','onset_16.jpg','onset_17.jpg','onset_18.jpg',
+ 'digitech_00_85ef5583-47a1-486f-9fba-f52df661d252_1_105_c-1.jpg',
+ 'digitech_02_img_9135-1.jpg',
+ 'digitech_03_ce6a3e12-6961-4424-86f4-cfc75f6c4f9d_1_105_c-1.jpg',
+ 'digitech_04_eee2e849-1724-4cda-87e8-1d766b7a1d35_1_105_c.jpg',
+ 'digitech_05_848a8183-bc92-4362-b793-bc3b65b881f3_1_105_c-1.jpg',
+ 'digitech_06_45b9160e-e5df-4eea-945c-9406dc537b88_1_105_c-1.jpg',
+ 'digitech_07_img_1035.jpg',
+ 'digitech_08_76fc2cdd-fe51-4856-a115-ca4347fa6220.jpg',
+ 'digitech_09_0fd645a9-7667-446e-9dad-4e85de6c46b8_1_105_c-1.jpg',
+ 'digitech_10_1ba8739a-36b7-457e-8d68-c1d452f42960_1_105_c-1.jpg',
+ 'digitech_11_img_9102-1.jpg',
+ 'digitech_12_1768dc9a-4cc8-4aad-96a2-bc3a52f6119a_1_105_c-1.jpg',
+ 'digitech_14_83ebd615-973b-4f38-be7d-3a9da7dda2d9_1_105_c-1.jpg',
+ 'digitech_15_a6ea8162-2a86-4105-8f38-d49fb1ebfef1_1_105_c-1.jpg',
+ 'digitech_16_fa0db5b6-011d-40ac-86cf-c8e4786411e3_1_105_c-1.jpg',
+ 'digitech_17_3109917e-9156-4b27-b50a-f17c8a88a831_1_105_c-1.jpg',
+ 'digitech_18_eaa8e4cb-1d34-4740-ac2b-ff5e22a8e610_1_105_c-1.jpg',
+ 'digitech_19_b47897cb-024a-4b38-8c76-e5b627f59089_1_105_c-1.jpg',
+ 'digitech_21_img_0246-1.jpg'
+];
+
+/* equipment-log captions. Operational only — no client, no city, no number. */
+var CAPS = [
+ 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
+ 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
+ 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
+ 'LIVE VIEW TO CLIENT MONITOR · NO LATENCY COMPLAINTS',
+ 'SESSION NAMED · FOLDER STRUCTURE SET BEFORE FRAME ONE',
+ 'ICC PROFILE LOADED · STYLE APPLIED AT CAPTURE',
+ 'CART RIGGED · SHADED · REACHABLE FROM THE SET',
+ 'FOCUS CHECK AT 100% · SELECT FLAGGED · MOVING ON',
+ 'SECOND BODY TETHERED · SAME SESSION · SAME NAMING',
+ 'SHOT LOG RUNNING · METADATA WRITTEN ON INGEST',
+ 'CLIENT SCREEN POSITIONED SO NOBODY STANDS IN THE LIGHT',
+ 'CARDS OFFLOADED · VERIFIED · THEN AND ONLY THEN FORMATTED',
+ 'LIGHTING ASSIST · MODIFIER SWAP · SANDBAGGED',
+ 'STITCH AND LAYER COMP ASSEMBLED ON SET',
+ 'HAND-OFF DRIVE MIRRORED · STRUCTURED · LABELLED',
+ 'HDMI RUN TAPED TO THE FLOOR. TWICE.',
+ 'BATTERY ROTATION LOGGED · NOTHING DIES MID-SETUP',
+ 'EXPORTS OUT BEFORE THE CLIENT ASKS FOR THEM'
+];
+
+/* CV brands. White-on-transparent PNGs unless ink:1 (black SVG → invert). */
+var LOGOS = [
+  {f:'uber.png', n:'Uber'},
+  {f:'adidas.png', n:'adidas'},
+  {f:'audi.png', n:'Audi'},
+  {f:'nike.svg', n:'Nike', ink:1},
+  {f:'newbalance.png', n:'New Balance'},
+  {f:'thenorthface.png', n:'The North Face'},
+  {f:'netflix.png', n:'Netflix'},
+  {f:'amazon.png', n:'Amazon'},
+  {f:'volkswagen.png', n:'Volkswagen'},
+  {f:'mercedes.png', n:'Mercedes-Benz'},
+  {f:'offwhite.png', n:'Off-White'},
+  {f:'cupra.png', n:'Cupra'},
+  {f:'mahou.png', n:'Mahou'},
+  {f:'macallan.png', n:'The Macallan'},
+  {f:'sfera-mark.png', n:'Sfera'},
+  {f:'questex.png', n:'Questex'},
+  {f:'matthew-williamson.png', n:'Matthew Williamson'},
+  {f:'fcbarcelona.png', n:'FC Barcelona'},
+  {f:'0039.png', n:'0039 Italy'},
+  {f:'bloomberg.png', n:'Bloomberg'},
+  {f:'reuters.png', n:'Reuters'},
+  {f:'diageo-mark.png', n:'Diageo'},
+  {f:'guinness.png', n:'Guinness'},
+  {f:'stella-artois.png', n:'Stella Artois'},
+  {f:'bacardi.png', n:'Bacardi'},
+  {f:'bombay.png', n:'Bombay Sapphire'},
+  {f:'don-papa.png', n:'Don Papa'},
+  {f:'getty.png', n:'Getty'},
+  {f:'die-zeit.png', n:'Die Zeit'},
+  {f:'senseo.png', n:'Senseo'},
+  {f:'harvey-nichols.png', n:'Harvey Nichols'},
+  {f:'fwrd.png', n:'FWRD'},
+  {f:'free-people.png', n:'Free People'},
+  {f:'truegroup.png', n:'TrueGroup'}
+];
+
+/* Production houses from JOBS.md. Canadá is the real mark; the rest are nameplates
+   where a clean vector wasn't on disk. */
+var PRODS = [
+  {f:'canada.png', n:'Canadá'},
+  {f:'palma-pictures.png', n:'Palma Pictures'},
+  {f:'xlob.png', n:'xLOB'},
+  {f:'rayo-productions.png', n:'Rayo Productions'},
+  {f:'fight-films.png', n:'Fight Films'},
+  {f:'blondes-pool.png', n:"The Blonde's Pool"},
+  {f:'twentyfour-seven.png', n:'Twentyfour Seven Plus'},
+  {f:'and-rosas.png', n:'&Rosàs'},
+  {f:'nouri-films.png', n:'Nouri Films'},
+  {f:'u-crane.png', n:'U-Crane'},
+  {f:'bakery-productions.png', n:'Bakery Productions'},
+  {f:'oas-company.png', n:'OAS Company'},
+  {f:'inezz.png', n:'Inezz Productions'},
+  {f:'mathew-david.png', n:'Mathew David Studio'},
+  {f:'truegroup.png', n:'TrueGroup'}
+];
+
+var OWN = [
+ 'home_00_0.jpg','home_00_1.jpg','home_00_untitled-1-1.jpg',
+ 'home_01_0.jpg','home_01_1.jpg','home_01_untitled-2-1.jpg',
+ 'home_02_0.jpg','home_02_1.jpg','home_02_untitled-3-1.jpg',
+ 'home_03_0.jpg','home_03_1.jpg','home_03_untitled-15.jpg',
+ 'home_04_0.jpg','home_04_1.jpg','home_04_untitled-13.jpg',
+ 'home_05_0.jpg','home_05_1.jpg','home_05_untitled-17.jpg',
+ 'home_06_0.jpg','home_06_1.jpg','home_06_untitled-16.jpg',
+ 'home_07_0.jpg','home_07_1.jpg','home_07_untitled-18.jpg',
+ 'home_08_0.jpg','home_08_1.jpg','home_08_untitled-19.jpg',
+ 'home_09_0.jpg','home_09_1.jpg','home_09_untitled-4.jpg',
+ 'home_11_0.jpg','home_11_1.jpg','home_11_untitled-6.jpg',
+ 'home_12_0.jpg','home_12_1.jpg','home_12_untitled-11-1.jpg',
+ 'home_13_0.jpg','home_13_1.jpg','home_13_untitled-8.jpg',
+ 'home_14_0.jpg','home_14_1.jpg','home_14_untitled-12.jpg',
+ 'home_15_0.jpg','home_15_1.jpg','home_15_untitled-7-1.jpg',
+ 'home_16_0.jpg','home_16_1.jpg','home_16_untitled-9-1.jpg',
+ 'home_17_0.jpg','home_17_1.jpg','home_17_untitled-10-1.jpg',
+ 'home_18_0.jpg','home_18_1.jpg','home_18_untitled-20.jpg',
+ 'home_19_0.jpg','home_19_1.jpg','home_19_untitled-22.jpg',
+ 'home_20_0.jpg','home_20_1.jpg','home_20_untitled-21.jpg',
+ 'home_21_0.jpg','home_21_1.jpg','home_21_untitled-14.jpg',
+ 'home_23_0.jpg','home_23_1.jpg','home_23_untitled-5-2.jpg',
+ 'archery_00_archery1-copy.jpg','archery_01_archery2-copy.jpg','archery_02_archery3-copy.jpg',
+ 'archery_03_archery4-copy.jpg','archery_04_archery5-copy.jpg','archery_05_archery6-copy.jpg',
+ 'archery_06_archery7-copy.jpg',
+ 'fencers_00_fencer-12.jpg','fencers_01_fencer-11.jpg','fencers_02_fencer-10.jpg',
+ 'fencers_03_fencer-5.jpg','fencers_04_fencer-9.jpg','fencers_05_fencer-4.jpg',
+ 'violins_00_ian-violin-15.jpg','violins_01_ian-violin-6.jpg','violins_02_ian-violin.jpg',
+ 'violins_03_ian-violin-14.jpg','violins_04_ian-violin-1.jpg','violins_05_ian-violin-2-1.jpg',
+ 'violins_06_ian-violin-21.jpg','violins_07_ian-violin-11.jpg','violins_08_ian-violin-16.jpg',
+ 'violins_09_ian-violin-4.jpg','violins_10_ian-violin-3.jpg'
+];
+
+/* work table — verbatim from JOBS.md */
+var WORK = [
+ ['2026','Uber','xLOB · Palma Pictures','Anisha Sisodia','Lisbon','UNVERIFIED',''],
+ ['2026','adidas SS27 × Audi F1','Rayo Productions','William Arcand','Sitges','BRAND-LIVE',''],
+ ['2026','Off-White','Twentyfour Seven Plus','William Arcand','Barcelona','UNVERIFIED',''],
+ ['2026','REVOLVE / FWRD',"The Blonde's Pool",'Kate Bellm','Mallorca','PUBLISHED','https://www.prnewswire.com/news-releases/fwrd-continues-to-gain-market-share-in-luxury-and-expands-fashion-leadership-globally-with-rosie-huntington-whiteley-302635524.html'],
+ ['2026','Cupra','Canadá Pictures · &Rosàs','Joe Howatt','Barcelona','BRAND-LIVE',''],
+ ['2026','Sfera','Canadá Pictures','Javier Fernández · Xavier Casanueva','Barcelona','UNVERIFIED',''],
+ ['2026','Mercedes-Benz VLE','Nouri Films · U-Crane','Chris Noltekuhlman','Barcelona','BRAND-LIVE',''],
+ ['2026','adidas × FC Barcelona','Players Magazine','William Arcand','Barcelona','UNVERIFIED',''],
+ ['2026','Senseo','Fight Films','—','Barcelona','UNVERIFIED',''],
+ ['2026','Matthew Williamson / Free People','—','Kate Bellm','Mallorca','UNVERIFIED',''],
+ ['2026','Mahou Cinco Estrellas','Bakery Productions','—','Mallorca / Madrid','UNVERIFIED',''],
+ ['2026','Palma Pictures','Palma Pictures','Lukasz Pukowiec · Elliot Wilcox · Nathan Lang','Mallorca','UNVERIFIED',''],
+ ['2026','Anton Renborg','OAS Company','Anton Renborg','Mallorca','UNVERIFIED',''],
+ ['2026','TrueGroup','TrueGroup','—','London & Brussels','UNVERIFIED',''],
+ ['2026','Questex / FNTV — MWC','Questex','—','Barcelona','UNVERIFIED',''],
+ ['2025','0039 Italy','Inezz Productions','Stephan Glathe','Barcelona','UNVERIFIED',''],
+ ['2024','Netflix doc — Lukas Podolski','—','Kai Sehr','Hamburg / LA','UNVERIFIED',''],
+ ['2023','adidas · Harvey Nichols','—','Ben Stockley','London','UNVERIFIED',''],
+ ['2022—25','Nike · New Balance · North Face','—','Tayler Prince-Fraser','London / Lisbon','UNVERIFIED',''],
+ ['2021—24','Diageo · Bacardi · Guinness · Bombay · Macallan · Stella · Don Papa','—','Rob Lawson','London','UNVERIFIED',''],
+ ['2018','Die Zeit · Amazon · Volkswagen','—','Marion Nehmzow','Hamburg','UNVERIFIED',''],
+ ['2017','Editorial','Mathew David Studio','—','Los Angeles','UNVERIFIED',''],
+ ['2015—16','Reuters · Bloomberg · Getty','press','James Huertas','London','UNVERIFIED','']
+];
+
+/* Continent outlines [lat, lon]. Coasts are the point — NYC sits on the
+   Atlantic seaboard, Rio on the Brazilian coast, not in the interior. */
+var RINGS = [
+  /* North America — west coast to Florida to Maine */
+  [[71,-156],[69,-128],[68,-105],[66,-85],[63,-65],[58,-62],[54,-58],[51,-56],
+   [47,-53],[46,-60],[44,-65],[45,-67],[43,-70],[42,-70],[41,-73],[40.7,-73.9],
+   [40,-74],[39,-74.5],[38,-76],[37,-76],[35,-76],[34,-78],[33,-79],[31,-81],
+   [26,-80],[25.2,-80.2],[25.8,-81.5],[28,-83],[29,-85],[29.5,-89],[29,-94],
+   [27,-97],[23,-98],[19,-96],[16,-93],[16,-88],[18,-87],[21,-87],[22,-84],
+   [18,-88],[15,-83],[8.5,-77],[8,-83],[12,-87],[15,-93],[16,-97],[19,-105],
+   [23,-110],[28,-115],[32.5,-117],[34,-120],[38,-123],[42,-124],[46,-124],
+   [48,-125],[50,-127],[55,-131],[59,-139],[60,-146],[61,-150],[66,-168],[71,-156]],
+  /* Greenland */
+  [[83,-32],[80,-18],[70,-22],[60,-44],[60,-52],[70,-62],[77,-70],[83,-40],[83,-32]],
+  /* South America — Brazil bulge at ~-35, Rio on the coast at 43W */
+  [[12,-72],[11,-64],[8,-60],[6,-55],[4,-51],[1.5,-49],[-1,-48],[-5,-35],
+   [-8,-35],[-13,-38],[-18,-39],[-22.9,-42.0],[-23.0,-43.2],[-25,-48],
+   [-32,-52],[-34,-54],[-38,-58],[-43,-63],[-50,-68],[-54,-67],[-55,-67],
+   [-54,-71],[-51,-74],[-45,-75],[-35,-73],[-18,-71],[-13,-77],[-5,-81],
+   [0,-80],[4,-77],[8,-77],[12,-72]],
+  /* Europe mainland — Iberia included, west edge past Lisbon */
+  [[71,8],[71,30],[65,40],[54,40],[41,36],[36,28],[35,20],[36,10],[36,-6],
+   [37,-10],[39,-10],[43,-10],[44,-1],[48,-5],[51,1],[53,7],[58,8],[62,5],[71,8]],
+  /* UK + Ireland */
+  [[59,-3],[58.5,-5],[55,-6],[53,-10],[51.5,-10],[51,-6],[50,-5],[50,-1],
+   [51,1.4],[53,0],[55,-1],[58,0],[59,-3]],
+  /* Africa */
+  [[37,-6],[37,10],[32,20],[32,32],[15,40],[12,51],[0,43],[-5,39],[-15,41],
+   [-25,34],[-35,28],[-35,20],[-30,18],[-22,14],[-18,12],[-5,12],[5,9],
+   [5,-3],[6,-10],[12,-17],[16,-16],[21,-17],[28,-13],[32,-10],[36,-6],[37,-6]],
+  /* Asia (main) */
+  [[77,100],[75,140],[70,160],[66,180],[60,160],[55,140],[50,140],[42,130],
+   [35,140],[31,131],[22,114],[10,109],[1,104],[6,98],[13,100],[15,95],
+   [10,78],[8,77],[15,74],[23,68],[25,62],[30,49],[30,48],[37,48],[40,48],
+   [38,44],[41,40],[47,47],[55,66],[60,70],[70,70],[75,90],[77,100]],
+  /* Australia */
+  [[-11,142],[-12,131],[-16,123],[-22,114],[-35,115],[-35,118],[-34,138],
+   [-38,140],[-39,146],[-28,153],[-12,143],[-11,142]],
+  /* Antarctica (thin skirt, not a checkerboard) */
+  [[-63,-60],[-63,0],[-63,60],[-63,120],[-63,180],[-63,-120],[-63,-60]]
+];
+
+/* ============================================================
+   SMALL HELPERS
+   ============================================================ */
+var $ = function(s){return document.querySelector(s)};
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+
+function el(tag, cls, html){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(html !== undefined) n.innerHTML = html;
+  return n;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ============================================================
+   BOOT SEQUENCE
+   ============================================================ */
+var BOOTS = ['CALIBRATING MONITOR…','LOCATING GAFFER TAPE…','NEGOTIATING WITH HDMI CABLE…',
+ "MOUNTING VOLUME 'BACKUP_02'…",'ASKING THE CLIENT TO STAND SLIGHTLY LEFT OF THE SCREEN…',
+ 'PRETENDING THE WIFI IS FINE…','READY.'];
+
+(function boot(){
+  var box = $('#boot'), line = $('#bootline'), bar = $('#bootbar'), i = 0;
+  if(reduce){ box.classList.add('gone'); setTimeout(function(){box.style.display='none'},100); return; }
+  var step = function(){
+    line.textContent = BOOTS[i];
+    bar.style.right = (100 - Math.round(((i+1)/BOOTS.length)*100)) + '%';
+    i++;
+    if(i < BOOTS.length){ setTimeout(step, i===BOOTS.length-1 ? 380 : 300); }
+    else setTimeout(function(){
+      box.classList.add('gone');
+      setTimeout(function(){ box.style.display = 'none'; }, 750);
+    }, 420);
+  };
+  step();
+})();
+
+/* ============================================================
+   STARFIELD — 3 parallax layers, drifting (we are moving)
+   ============================================================ */
+var sky = $('#sky'), sctx = sky.getContext('2d');
+var stars = [], SW = 0, SH = 0, DPR = Math.min(window.devicePixelRatio||1, 1.5);
+/* the globe only paints while it is on screen. Two full-viewport canvases
+   repainting behind six screens of scroll is how you cook a laptop. */
+var onScreen = true;
+
+function buildStars(){
+  var area = SW * SH;
+  var base = Math.min(520, Math.max(150, Math.round(area / 5200)));
+  if(isTouch) base = Math.round(base * 0.55);
+  stars = [];
+  for(var L = 0; L < 3; L++){
+    var n = Math.round(base * [0.5,0.32,0.18][L]);
+    for(var i = 0; i < n; i++){
+      stars.push({
+        x: Math.random()*SW, y: Math.random()*SH,
+        r: [0.55,0.9,1.35][L] * (0.7 + Math.random()*0.6),
+        a: [0.18,0.32,0.55][L] * (0.6 + Math.random()*0.5),
+        v: [0.035,0.085,0.17][L],
+        tw: Math.random()*Math.PI*2
+      });
+    }
+  }
+}
+
+/* ============================================================
+   GLOBE — canvas 2D orthographic projection
+   ============================================================ */
+var cv = $('#globe'), ctx = cv.getContext('2d');
+var W = 0, H = 0, CX = 0, CY = 0, R = 0;
+var rotLon = 20, rotLat = -16;      // camera-facing longitude / tilt
+var spin = -0.10;                    // deg per frame ≈ 1 rev / 60s at 60fps
+var zoom = 1;
+var vel = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0, downX = 0, downY = 0;
+var hoverPin = null, activePin = null;
+var easeTarget = null;               // {lon, lat} when a pin is hovered
+var pinScreen = {};                  // id -> {x,y,vis}
+
+var D2R = Math.PI/180;
+
+function resize(){
+  var r = cv.getBoundingClientRect();
+  W = r.width; H = r.height;
+  SW = W; SH = H;
+  [cv, sky].forEach(function(c){
+    c.width  = Math.round(W * DPR);
+    c.height = Math.round(H * DPR);
+  });
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  sctx.setTransform(DPR,0,0,DPR,0,0);
+  CX = W/2; CY = H/2 + Math.min(96, H*0.10);
+  R = Math.min(W, H) * (W < 720 ? 0.34 : 0.30);
+  buildStars();
+}
+
+/* lat/lon -> rotated 3D -> screen. returns {x,y,z} ; z>0 = facing camera */
+function project(lat, lon, rad){
+  var la = lat*D2R, lo = (lon - rotLon)*D2R;
+  var x = Math.cos(la)*Math.sin(lo);
+  var y = Math.sin(la);
+  var z = Math.cos(la)*Math.cos(lo);
+  var t = rotLat*D2R;
+  var y2 = y*Math.cos(t) - z*Math.sin(t);
+  var z2 = y*Math.sin(t) + z*Math.cos(t);
+  return { x: CX + x*rad, y: CY - y2*rad, z: z2, ux:x, uy:y2, uz:z2 };
+}
+
+function pip(lat, lon, ring){
+  var inside = false;
+  for(var i = 0, j = ring.length - 1; i < ring.length; j = i++){
+    var yi = ring[i][0], xi = ring[i][1];
+    var yj = ring[j][0], xj = ring[j][1];
+    var hit = ((yi > lat) !== (yj > lat)) && (lon < (xj - xi) * (lat - yi) / (yj - yi + 1e-12) + xi);
+    if(hit) inside = !inside;
+  }
+  return inside;
+}
+
+/* denser than the old 5° mask so coasts read as coasts */
+var LANDPTS = [];
+(function(){
+  var step = 2.2;
+  for(var lat = 84; lat >= -78; lat -= step){
+    for(var lon = -180; lon < 180; lon += step){
+      for(var k = 0; k < RINGS.length; k++){
+        if(pip(lat, lon, RINGS[k])){ LANDPTS.push([lat, lon]); break; }
+      }
+    }
+  }
+})();
+
+function drawGlobe(){
+  var rad = R * zoom;
+  ctx.clearRect(0,0,W,H);
+
+  // limb glow
+  var g = ctx.createRadialGradient(CX,CY,rad*0.82,CX,CY,rad*1.30);
+  g.addColorStop(0,'rgba(255,59,31,0)');
+  g.addColorStop(0.62,'rgba(255,59,31,0.055)');
+  g.addColorStop(1,'rgba(255,59,31,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(CX,CY,rad*1.30,0,Math.PI*2); ctx.fill();
+
+  // limb ring
+  ctx.strokeStyle = 'rgba(255,255,255,0.13)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(CX,CY,rad,0,Math.PI*2); ctx.stroke();
+
+  // graticule — parallels
+  ctx.lineWidth = 0.6;
+  var lat, lon, p, started;
+  for(lat = -75; lat <= 75; lat += 15){
+    ctx.strokeStyle = (lat===0) ? 'rgba(255,59,31,0.30)' : 'rgba(255,255,255,0.075)';
+    ctx.beginPath(); started = false;
+    for(lon = -180; lon <= 180; lon += 4){
+      p = project(lat, lon, rad);
+      if(p.z > 0){ if(!started){ ctx.moveTo(p.x,p.y); started=true; } else ctx.lineTo(p.x,p.y); }
+      else started = false;
+    }
+    ctx.stroke();
+  }
+  // graticule — meridians
+  for(lon = -180; lon < 180; lon += 15){
+    ctx.strokeStyle = 'rgba(255,255,255,0.075)';
+    ctx.beginPath(); started = false;
+    for(lat = -88; lat <= 88; lat += 3){
+      p = project(lat, lon, rad);
+      if(p.z > 0){ if(!started){ ctx.moveTo(p.x,p.y); started=true; } else ctx.lineTo(p.x,p.y); }
+      else started = false;
+    }
+    ctx.stroke();
+  }
+
+  // land point-cloud
+  var dot = Math.max(0.85, rad/135);
+  for(var i = 0; i < LANDPTS.length; i++){
+    p = project(LANDPTS[i][0], LANDPTS[i][1], rad);
+    if(p.z <= 0.03) continue;
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.20 + p.z*0.64).toFixed(3) + ')';
+    ctx.fillRect(p.x - dot/2, p.y - dot/2, dot, dot);
+  }
+
+  // pins
+  var t = performance.now()/1000;
+  pinScreen = {};
+  for(var k = 0; k < CITIES.length; k++){
+    var city = CITIES[k];
+    p = project(city.lat, city.lon, rad);
+    var vis = p.z > 0.02;
+    pinScreen[city.id] = {x:p.x, y:p.y, vis:vis, z:p.z};
+    if(!vis) continue;
+
+    var hot = (hoverPin === city.id || activePin === city.id);
+    var top = project(city.lat, city.lon, rad + rad*0.115);
+
+    // light column
+    var lg = ctx.createLinearGradient(p.x,p.y,top.x,top.y);
+    lg.addColorStop(0,'rgba(255,59,31,' + (hot?0.95:0.55*p.z) + ')');
+    lg.addColorStop(1,'rgba(255,59,31,0)');
+    ctx.strokeStyle = lg;
+    ctx.lineWidth = hot ? 1.8 : 1.1;
+    ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(top.x,top.y); ctx.stroke();
+
+    // pulse
+    var ph = (t*0.85 + k*0.37) % 1;
+    ctx.strokeStyle = 'rgba(255,59,31,' + ((1-ph)*0.45*p.z).toFixed(3) + ')';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3 + ph*11*(hot?1.5:1), 0, Math.PI*2); ctx.stroke();
+
+    // core
+    ctx.fillStyle = hot ? '#fff' : RED;
+    ctx.beginPath(); ctx.arc(p.x, p.y, hot?3.4:2.3, 0, Math.PI*2); ctx.fill();
+
+    // label — skip if it would sit under the headline
+    if(!isTouch && top.y > 200){
+      ctx.font = '9px ' + "'JetBrains Mono',monospace";
+      ctx.fillStyle = hot ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,' + (0.16 + p.z*0.30).toFixed(3) + ')';
+      ctx.textAlign = 'left';
+      ctx.fillText(city.id, top.x + 6, top.y + 3);
+    }
+  }
+}
+
+var gridZ = 0;
+
+function drawGrid(){
+  var rad = R * zoom;
+  var vpX = CX;
+  var vpY = CY + rad * 0.58;
+  if(vpY > H - 90) vpY = H - 90;
+  var floorH = H - vpY;
+  if(floorH < 40) return;
+
+  var wash = sctx.createLinearGradient(0, vpY - 30, 0, H);
+  wash.addColorStop(0, 'rgba(0,0,0,0)');
+  wash.addColorStop(0.18, 'rgba(0,0,0,0.45)');
+  wash.addColorStop(1, 'rgba(0,0,0,0.72)');
+  sctx.fillStyle = wash;
+  sctx.fillRect(0, vpY - 30, W, H - (vpY - 30));
+
+  var bloom = sctx.createRadialGradient(vpX, vpY, 4, vpX, vpY, Math.min(W, H) * 0.42);
+  bloom.addColorStop(0, 'rgba(255,59,31,0.16)');
+  bloom.addColorStop(0.35, 'rgba(255,59,31,0.04)');
+  bloom.addColorStop(1, 'rgba(255,59,31,0)');
+  sctx.fillStyle = bloom;
+  sctx.fillRect(0, vpY - 80, W, floorH + 80);
+
+  sctx.strokeStyle = 'rgba(255,59,31,0.28)';
+  sctx.lineWidth = 1;
+  sctx.beginPath();
+  sctx.moveTo(0, vpY);
+  sctx.lineTo(W, vpY);
+  sctx.stroke();
+
+  var z0 = 1, zMax = 16;
+  var nH = isTouch ? 12 : 18;
+  var nV = isTouch ? 16 : 26;
+  var dz = (zMax - z0) / nH;
+
+  sctx.lineWidth = 0.7;
+  for(var i = 0; i < nH; i++){
+    var z = z0 + ((i - gridZ + nH) % nH) * dz;
+    var y = vpY + floorH * (z0 / z);
+    if(y > H + 2 || y < vpY) continue;
+    var near = (y - vpY) / floorH;
+    var a = 0.08 + near * 0.28;
+    sctx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+    sctx.beginPath();
+    sctx.moveTo(0, y);
+    sctx.lineTo(W, y);
+    sctx.stroke();
+  }
+
+  var span = W * 2.4;
+  for(var v = 0; v <= nV; v++){
+    var xB = vpX + (v / nV - 0.5) * span;
+    var mid = Math.abs(v / nV - 0.5);
+    var a2 = 0.22 - mid * 0.14;
+    if(v === Math.round(nV / 2)) sctx.strokeStyle = 'rgba(255,59,31,0.22)';
+    else sctx.strokeStyle = 'rgba(255,255,255,' + Math.max(0.05, a2).toFixed(3) + ')';
+    sctx.beginPath();
+    sctx.moveTo(vpX, vpY);
+    sctx.lineTo(xB, H + 8);
+    sctx.stroke();
+  }
+
+  var shadow = sctx.createRadialGradient(vpX, vpY + 18, 8, vpX, vpY + 18, rad * 0.55);
+  shadow.addColorStop(0, 'rgba(255,59,31,0.10)');
+  shadow.addColorStop(1, 'rgba(255,59,31,0)');
+  sctx.fillStyle = shadow;
+  sctx.beginPath();
+  sctx.ellipse(vpX, vpY + 16, rad * 0.55, 14, 0, 0, Math.PI * 2);
+  sctx.fill();
+}
+
+function drawSky(dt){
+  sctx.clearRect(0,0,SW,SH);
+  for(var i = 0; i < stars.length; i++){
+    var s = stars[i];
+    if(!reduce){
+      s.x -= s.v * dt * 0.06;
+      s.y += s.v * dt * 0.012;
+      if(s.x < -3){ s.x = SW + 3; s.y = Math.random()*SH; }
+      if(s.y > SH + 3){ s.y = -3; s.x = Math.random()*SW; }
+      s.tw += 0.012;
+    }
+    var a = s.a * (0.72 + 0.28*Math.sin(s.tw));
+    sctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+    sctx.fillRect(s.x, s.y, s.r, s.r);
+  }
+  if(!reduce) gridZ = (gridZ + dt * 0.0018) % 1;
+  drawGrid();
+}
+
+/* ---------- loop ---------- */
+var prev = performance.now(), upStart = Date.now();
+function loop(now){
+  var dt = Math.min(48, now - prev); prev = now;
+
+  if(!onScreen){ requestAnimationFrame(loop); return; }
+
+  if(easeTarget){
+    var dl = ((easeTarget.lon - rotLon + 540) % 360) - 180;
+    rotLon += dl * 0.09;
+    rotLat += (easeTarget.lat - rotLat) * 0.09;
+    if(Math.abs(dl) < 0.25) { /* settled */ }
+  } else if(!dragging){
+    if(Math.abs(vel) > 0.002){ rotLon += vel; vel *= 0.955; }
+    else if(!reduce) rotLon += spin * (dt/16.67);
+    rotLat += (-16 - rotLat) * 0.03;
+  }
+  if(rotLon > 180) rotLon -= 360;
+  if(rotLon < -180) rotLon += 360;
+
+  drawSky(dt);
+  drawGlobe();
+  updateHUD();
+  positionReadout();
+  requestAnimationFrame(loop);
+}
+
+/* ---------- HUD ---------- */
+var hLat = $('#hLat'), hUp = $('#hUp');
+function updateHUD(){
+  var lonTxt = (Math.abs(rotLon)).toFixed(1) + '°' + (rotLon >= 0 ? 'E' : 'W');
+  var latTxt = (Math.abs(rotLat)).toFixed(1) + '°' + (rotLat >= 0 ? 'N' : 'S');
+  hLat.textContent = latTxt + ' / ' + lonTxt;
+  var s = Math.floor((Date.now() - upStart)/1000);
+  hUp.textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}
+
+/* ---------- interaction ---------- */
+function pointOf(e){
+  var r = cv.getBoundingClientRect();
+  var t = (e.touches && e.touches[0]) || e;
+  return { x: t.clientX - r.left, y: t.clientY - r.top };
+}
+function hitPin(pt){
+  var best = null, bd = 26;
+  for(var id in pinScreen){
+    var p = pinScreen[id];
+    if(!p.vis) continue;
+    var d = Math.hypot(p.x - pt.x, p.y - pt.y);
+    if(d < bd){ bd = d; best = id; }
+  }
+  return best;
+}
+
+cv.addEventListener('mousemove', function(e){
+  if(dragging) return;
+  var pt = pointOf(e), id = hitPin(pt);
+  if(id !== hoverPin){
+    hoverPin = id;
+    cv.style.cursor = id ? 'pointer' : 'grab';
+    if(id && !activePin){
+      var c = CITIES.filter(function(x){return x.id===id})[0];
+      easeTarget = { lon: c.lon, lat: -Math.max(-45, Math.min(45, c.lat*0.42)) * -1 };
+      easeTarget.lat = Math.max(-42, Math.min(42, c.lat * 0.45));
+      showReadout(c);
+    } else if(!id && !activePin){
+      easeTarget = null;
+      hideReadout();
+    }
+  }
+  kick();
+});
+cv.addEventListener('mouseleave', function(){
+  if(!activePin){ hoverPin = null; easeTarget = null; hideReadout(); }
+});
+
+function down(e){
+  dragging = true; easeTarget = null;
+  cv.classList.add('drag');
+  var pt = pointOf(e);
+  lastX = pt.x; lastY = pt.y; downX = pt.x; downY = pt.y; lastT = performance.now(); vel = 0;
+  kick();
+}
+function move(e){
+  if(!dragging) return;
+  var pt = pointOf(e);
+  var dx = pt.x - lastX, dy = pt.y - lastY;
+  if(e.touches && Math.abs(dy) > Math.abs(dx)*1.6) return; // let the page scroll
+  if(e.cancelable && e.touches) e.preventDefault();
+  rotLon -= dx * 0.36;
+  rotLat = Math.max(-70, Math.min(70, rotLat + dy * 0.24));
+  var t = performance.now();
+  vel = -dx * 0.36 * Math.min(1.4, 16/Math.max(1, t - lastT));
+  lastX = pt.x; lastY = pt.y; lastT = t;
+}
+function up(e){
+  if(!dragging) return;
+  dragging = false;
+  cv.classList.remove('drag');
+  var pt = pointOf(e.changedTouches ? {clientX:e.changedTouches[0].clientX, clientY:e.changedTouches[0].clientY} : e);
+  var moved = Math.hypot(pt.x - downX, pt.y - downY);
+  var id = hitPin(pt);
+  if(id && moved < 10 && Math.abs(vel) < 1.2) openDossier(id);
+}
+cv.addEventListener('mousedown', down);
+window.addEventListener('mousemove', move);
+window.addEventListener('mouseup', up);
+cv.addEventListener('touchstart', down, {passive:true});
+cv.addEventListener('touchmove', move, {passive:false});
+cv.addEventListener('touchend', up);
+
+/* zoom: explicit controls only — the page scroll is never hijacked.
+   A producer must always be able to scroll past the toy. (IDEA §8) */
+function setZoom(z){ zoom = Math.max(0.72, Math.min(1.9, z)); }
+$('#zIn').addEventListener('click', function(){ setZoom(zoom*1.18); kick(); });
+$('#zOut').addEventListener('click', function(){ setZoom(zoom/1.18); kick(); });
+cv.addEventListener('dblclick', function(){ setZoom(zoom > 1.4 ? 1 : 1.55); kick(); });
+
+/* ---------- readout card ---------- */
+var readout = $('#readout'), readoutCity = null;
+function showReadout(c){
+  readoutCity = c;
+  var n = CREDITS[c.id] ? CREDITS[c.id].length : 0;
+  readout.innerHTML =
+    '<div class="c">' + esc(c.name.toUpperCase()) + '</div>' +
+    '<div class="x">' + c.lat.toFixed(2) + (c.lat>=0?'N':'S') + ' &nbsp;' + c.lon.toFixed(2) + (c.lon>=0?'E':'W') + '</div>' +
+    '<div class="x">' + (n ? n + (n===1?' CREDIT':' CREDITS') + ' ON FILE' : 'NO CREDIT ON FILE') + '</div>' +
+    '<div class="go">CLICK TO OPEN →</div>';
+  readout.classList.add('on');
+}
+function hideReadout(){ readout.classList.remove('on'); readoutCity = null; }
+function positionReadout(){
+  if(!readoutCity) return;
+  var p = pinScreen[readoutCity.id];
+  if(!p || !p.vis){ hideReadout(); return; }
+  var rw = readout.offsetWidth, rh = readout.offsetHeight;
+  var x = p.x + 22, y = p.y - rh - 16;
+  if(x + rw > W - 14) x = p.x - rw - 22;
+  if(y < 70) y = p.y + 18;
+  readout.style.left = Math.round(x) + 'px';
+  readout.style.top  = Math.round(y) + 'px';
+}
+
+/* ---------- dossier ---------- */
+var dossier = $('#dossier'), dBody = $('#dBody'), scrim = $('#scrim');
+
+function openDossier(id){
+  var c = CITIES.filter(function(x){return x.id===id})[0];
+  if(!c) return;
+  activePin = id; hoverPin = id;
+  easeTarget = { lon: c.lon, lat: Math.max(-42, Math.min(42, c.lat*0.45)) };
+  hideReadout();
+
+  var creds = CREDITS[id] || [];
+  var h = '';
+  h += '<div class="coord mono">' + c.lat.toFixed(2) + (c.lat>=0?' N':' S') + ' &nbsp;·&nbsp; ' +
+       c.lon.toFixed(2) + (c.lon>=0?' E':' W') + ' &nbsp;·&nbsp; ' + esc(c.yrs) + '</div>';
+  h += '<h2>' + esc(c.name) + '</h2>';
+  h += '<div class="cityline mono">' + esc(c.line) + '</div>';
+
+  if(creds.length){
+    h += '<div class="hd mono">CREDITS · CANONICAL CV</div>';
+    creds.forEach(function(cr){
+      h += '<div class="cred">' +
+           '<span class="y">' + esc(cr.y) + '</span> &nbsp; <span class="cl">' + esc(cr.c) + '</span><br>' +
+           '<span class="meta">' + esc(cr.p) + (cr.ph && cr.ph !== '—' ? ' &nbsp;·&nbsp; ' + esc(cr.ph) : '') +
+           (cr.n ? '<br>' + esc(cr.n) : '') + '</span></div>';
+    });
+  } else {
+    h += '<div class="hd mono">CREDITS</div>';
+    h += '<div class="none mono" style="color:#ff3b1f;letter-spacing:.1em">' + esc(NOCREDIT[id]) + '</div>';
+    h += '<div class="none mono" style="margin-top:14px">' + esc(NOCREDIT_SUB) + '</div>';
+  }
+
+  h += '<div class="hd mono">SET-OPS · THE REEL</div>';
+  h += '<div class="reel">';
+  var seed = id.charCodeAt(0) + id.charCodeAt(1) + id.charCodeAt(2);
+  for(var i = 0; i < 4; i++){
+    h += '<img loading="lazy" src="img/set/' + SET[(seed*3 + i*5) % SET.length] + '" alt="Set-operations frame: digital technician station on set.">';
+  }
+  h += '</div>';
+  h += '<div class="none mono" style="margin-top:10px;font-size:9.5px;letter-spacing:.1em;color:#4e4e4e">' +
+       'FRAMES ARE FROM THE SET-OPS SET. NOT TAGGED TO THIS CITY — I WILL NOT PRETEND THEY ARE.</div>';
+
+  dBody.innerHTML = h;
+  dossier.classList.add('on');
+  dossier.setAttribute('aria-hidden','false');
+  scrim.classList.add('on');
+  dossier.scrollTop = 0;
+  kick();
+}
+function closeDossier(){
+  activePin = null; hoverPin = null; easeTarget = null;
+  dossier.classList.remove('on');
+  dossier.setAttribute('aria-hidden','true');
+  scrim.classList.remove('on');
+}
+$('#dClose').addEventListener('click', closeDossier);
+scrim.addEventListener('click', closeDossier);
+/* Escape is handled with the inspect overlay so one key closes whichever is open. */
+
+/* ---------- idle typewriter ---------- */
+var IDLES = [
+ '> the globe will keep spinning. the shoot does not wait for you either.',
+ "> you can drag it. most people don't. most people also don't back up twice.",
+ "> still here? good. that's the job."
+];
+var idleEl = $('#idleline'), idleT = null, idleI = 0, typing = null, lastAct = Date.now();
+
+var scrollCue = $('#scrollcue');
+function kick(){
+  lastAct = Date.now();
+  if(typing){ clearInterval(typing); typing = null; }
+  idleEl.innerHTML = '';
+  if(scrollCue) scrollCue.classList.remove('off');
+}
+['mousemove','mousedown','touchstart','wheel','keydown','scroll'].forEach(function(ev){
+  window.addEventListener(ev, kick, {passive:true});
+});
+
+function idleTick(){
+  if(reduce) return;
+  if(Date.now() - lastAct < 20000) return;
+  if(typing) return;
+  var s = IDLES[idleI % IDLES.length]; idleI++;
+  var i = 0;
+  idleEl.innerHTML = '';
+  if(scrollCue) scrollCue.classList.add('off');
+  typing = setInterval(function(){
+    if(i > s.length){
+      clearInterval(typing); typing = null;
+      setTimeout(function(){ if(Date.now() - lastAct > 20000) idleEl.innerHTML = ''; }, 5200);
+      return;
+    }
+    idleEl.innerHTML = esc(s.slice(0,i)) + '<span class="cur">▮</span>';
+    i++;
+  }, 34);
+}
+setInterval(idleTick, 1200);
+
+/* ============================================================
+   BUILD THE PAGE
+   ============================================================ */
+
+/* mobile pin buttons */
+(function(){
+  var g = $('#pinButtons');
+  CITIES.forEach(function(c){
+    var n = (CREDITS[c.id]||[]).length;
+    var b = el('button', null,
+      esc(c.name.toUpperCase()) +
+      '<span class="n">' + (n ? n + (n===1?' CREDIT':' CREDITS') : 'NO CREDIT ON FILE') + '</span>');
+    b.addEventListener('click', function(){ openDossier(c.id); });
+    g.appendChild(b);
+  });
+})();
+
+/* what-i-do shots — 6 strongest cart/screens/cables frames, not every-third onset */
+var DOSHOTS = [
+  ['onset_01.jpg','CART RIGGED · DUAL CLIENT SCREENS · POWER ON DISTRO'],
+  ['onset_03.jpg','STATION SHADED · CABLES DRESSED · BACKUP IN THE RACK'],
+  ['digitech_00_85ef5583-47a1-486f-9fba-f52df661d252_1_105_c-1.jpg','CAPTURE ONE LIVE · CLIENT SCREEN CALIBRATED · SET RUNNING'],
+  ['onset_10.jpg','HOOD ON · LIVE VIEW · LIGHTS SANDBAGGED'],
+  ['onset_14.jpg','LOCATION STATION · TETHER DRESSED · TAPE ON THE LEGS'],
+  ['digitech_21_img_0246-1.jpg','WHEELS DOWN · HOOD ON · REACHABLE FROM THE SET']
+];
+(function(){
+  var g = $('#doShots');
+  DOSHOTS.forEach(function(s){
+    var d = el('div','shot');
+    d.setAttribute('tabindex','0');
+    d.setAttribute('role','button');
+    d.innerHTML = '<img loading="lazy" src="img/set/' + s[0] + '" alt="Set-operations frame: tethered capture station on set.">' +
+                  '<div class="cap mono">' + s[1] + '</div>';
+    g.appendChild(d);
+  });
+})();
+
+/* work table */
+(function(){
+  var t = $('#workTbl');
+  t.appendChild(el('div','row head',
+    '<span>YEAR</span><span>CLIENT</span><span>PRODUCTION</span><span>PHOTOGRAPHER</span><span>CITY</span>'));
+  WORK.forEach(function(w){
+    t.appendChild(el('div','row',
+      '<span class="yr">' + esc(w[0]) + '</span>' +
+      '<span class="cl">' + esc(w[1]) + '</span>' +
+      '<span class="mt pr">' + esc(w[2]) + '</span>' +
+      '<span class="mt ph">' + esc(w[3]) + '</span>' +
+      '<span class="mt ci">' + esc(w[4]) + '</span>'));
+  });
+})();
+
+/* fly-by lanes — SET-OPS FIRST. Double only when motion is allowed (seamless loop). */
+(function(){
+  function fill(node, list, capOff){
+    var html = '';
+    var passes = reduce ? 1 : 2;
+    for(var pass = 0; pass < passes; pass++){
+      for(var i = 0; i < list.length; i++){
+        html += '<div class="card" tabindex="0" role="button">' +
+          '<img loading="lazy" src="img/set/' + list[i] + '" alt="Set-operations frame: digital technician station, screens and cabling on set.">' +
+          '<div class="cap mono">' + CAPS[(i + capOff) % CAPS.length] + '</div></div>';
+      }
+    }
+    node.innerHTML = html;
+  }
+  var mid = Math.ceil(SET.length / 2);
+  fill($('#laneA'), SET.slice(0, mid), 0);
+  fill($('#laneB'), SET.slice(mid), 6);
+})();
+
+/* logo lanes — brands, then production houses underneath */
+(function(){
+  function fillLane(node, list){
+    if(!node) return;
+    var html = '';
+    var passes = reduce ? 1 : 2;
+    for(var pass = 0; pass < passes; pass++){
+      list.forEach(function(l){
+        html += '<img loading="lazy" class="' + (l.ink ? 'ink' : '') + '" src="img/logos/' + l.f +
+                '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
+      });
+    }
+    node.innerHTML = html;
+  }
+  fillLane($('#logoLane'), LOGOS);
+  fillLane($('#prodLane'), PRODS);
+})();
+
+/* personal work — last, collapsed */
+(function(){
+  var btn = $('#toggleOwn'), grid = $('#owngrid'), built = false;
+  btn.addEventListener('click', function(){
+    if(!built){
+      OWN.forEach(function(f){
+        var i = el('img'); i.loading = 'lazy'; i.src = 'img/own/' + f;
+        i.alt = 'Photograph by James Huertas.';
+        i.onerror = function(){ this.style.display = 'none'; };
+        grid.appendChild(i);
+      });
+      built = true;
+    }
+    var on = grid.classList.toggle('on');
+    btn.textContent = on ? '[ − ] CLOSE' : '[ + ] OPEN';
+  });
+})();
+
+/* polaroid drag-tumble */
+(function(){
+  var f = $('#pframe');
+  if(!f || reduce) return;
+  var dr = false, sx = 0, sy = 0, rx = 0, ry = 0, rot = -1.2, raf = null;
+  function set(){ f.style.transform = 'translate(' + rx + 'px,' + ry + 'px) rotate(' + rot + 'deg)'; }
+  function start(e){
+    dr = true; f.classList.add('grabbing');
+    var t = (e.touches && e.touches[0]) || e;
+    sx = t.clientX - rx; sy = t.clientY - ry;
+  }
+  function mv(e){
+    if(!dr) return;
+    var t = (e.touches && e.touches[0]) || e;
+    rx = t.clientX - sx; ry = t.clientY - sy;
+    rot = -1.2 + Math.max(-16, Math.min(16, rx * 0.06));
+    set();
+  }
+  function end(){
+    if(!dr) return;
+    dr = false; f.classList.remove('grabbing');
+    var settle = function(){
+      rx *= 0.86; ry *= 0.86; rot = -1.2 + (rot + 1.2) * 0.86;
+      set();
+      if(Math.abs(rx) + Math.abs(ry) > 0.6) raf = requestAnimationFrame(settle);
+      else { rx = 0; ry = 0; rot = -1.2; f.style.transform = ''; }
+    };
+    cancelAnimationFrame(raf); settle();
+  }
+  f.addEventListener('mousedown', start);
+  window.addEventListener('mousemove', mv);
+  window.addEventListener('mouseup', end);
+  f.addEventListener('touchstart', start, {passive:true});
+  f.addEventListener('touchmove', mv, {passive:true});
+  f.addEventListener('touchend', end);
+})();
+
+/* inspect — click a set-ops frame, same overlay language as the dossier */
+(function(){
+  var box = $('#inspect'), img = $('#inspectImg'), cap = $('#inspectCap');
+  function open(src, text){
+    img.src = src; img.alt = 'Set-operations frame, enlarged.';
+    cap.textContent = text || '';
+    box.classList.add('on');
+  }
+  function close(){ box.classList.remove('on'); img.removeAttribute('src'); }
+  function fromCard(node){
+    var im = node.querySelector('img');
+    var c = node.querySelector('.cap');
+    if(im) open(im.getAttribute('src'), c ? c.textContent : '');
+  }
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.closest && e.target.closest('#owngrid') && e.target.tagName === 'IMG'){
+      e.preventDefault();
+      open(e.target.getAttribute('src'), '');
+      img.alt = 'Photograph by James Huertas.';
+      return;
+    }
+    var n = e.target.closest ? e.target.closest('.shot, .card') : null;
+    if(n){ e.preventDefault(); fromCard(n); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter') return;
+    var n = e.target.closest ? e.target.closest('.shot, .card') : null;
+    if(n) fromCard(n);
+  });
+  $('#inspectX').addEventListener('click', close);
+  box.addEventListener('click', function(e){ if(e.target === box) close(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(box.classList.contains('on')) close();
+      else closeDossier();
+    }
+  });
+})();
+
+/* nav — which of the four items is in view */
+(function(){
+  var links = document.querySelectorAll('nav a');
+  var map = [];
+  links.forEach(function(a){
+    var id = (a.getAttribute('href')||'').slice(1);
+    var t = id ? document.getElementById(id) : null;
+    if(t) map.push({a:a, t:t});
+  });
+  if(!map.length || !window.IntersectionObserver) return;
+  var vis = {};
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ vis[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
+    var best = map[0];
+    map.forEach(function(m){ if((vis[m.t.id]||0) > (vis[best.t.id]||0)) best = m; });
+    links.forEach(function(a){ a.classList.toggle('here', a === best.a); });
+  }, {threshold:[0.12,0.35,0.6]});
+  map.forEach(function(m){ io.observe(m.t); });
+})();
+
+/* ---------- go ---------- */
+window.addEventListener('resize', resize);
+resize();
+requestAnimationFrame(loop);
+
+var inView = true;
+function syncOnScreen(){
+  var next = inView && !document.hidden;
+  if(next === onScreen) return;
+  onScreen = next;
+  if(onScreen) resize();
+  else { cv.width = 1; cv.height = 1; sky.width = 1; sky.height = 1; }  // release the buffers
+}
+if(window.IntersectionObserver){
+  new IntersectionObserver(function(entries){
+    inView = entries[0].isIntersecting;
+    syncOnScreen();
+  }, {rootMargin:'120px'}).observe($('#stage'));
+}
+document.addEventListener('visibilitychange', syncOnScreen);
+
+/* ---------- console ---------- */
+console.log('%c JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT ',
+  'background:#ff3b1f;color:#000;font-weight:700;padding:6px 10px;font-family:monospace');
+console.log("%cYou opened the console. You're my kind of producer.\nEverything on this page is backed up in two places. Obviously.\ncallingjhphoto@gmail.com",
+  'color:#b4b4b4;font-family:monospace;line-height:1.7');
+console.log("%c> this role has maybe two or three good years left.\n> which is exactly why this website exists and is this ridiculous.\n> book me while the wave is still up.",
+  'color:#7c7c7c;font-family:monospace;line-height:1.7');
+
+})();
+</script>
+</body>
+</html>
