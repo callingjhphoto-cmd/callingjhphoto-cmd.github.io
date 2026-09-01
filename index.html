@@ -334,17 +334,22 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .cta:hover{background:#fff}
 
 #bookFab{
-  position:fixed;right:22px;bottom:22px;z-index:80;
-  background:var(--red);color:#000;border:0;cursor:pointer;
-  font-family:var(--mono);font-size:11px;letter-spacing:.2em;font-weight:700;
-  padding:15px 22px;
-  box-shadow:0 10px 40px rgba(255,59,31,.35);
-  display:none;
+  position:fixed;right:18px;bottom:18px;z-index:80;
+  width:76px;height:76px;padding:0;border-radius:50%;
+  background:#000;border:1px solid #2a2a2a;cursor:pointer;
+  box-shadow:0 0 28px rgba(255,59,31,.38);
+  display:none;overflow:hidden
 }
 #bookFab.on{display:block}
-#bookFab:hover{background:#fff}
+#bookFab:hover{border-color:var(--red);box-shadow:0 0 42px rgba(255,59,31,.7)}
+#bookFab canvas{width:76px;height:76px;display:block;pointer-events:none}
+#bookFab span{
+  position:absolute;left:0;right:0;bottom:9px;text-align:center;
+  font-family:var(--mono);font-size:8px;letter-spacing:.18em;font-weight:700;
+  color:#ff3b1f;pointer-events:none;text-shadow:0 0 8px #000
+}
 #jamesFab{
-  position:fixed;right:22px;bottom:78px;z-index:80;
+  position:fixed;right:22px;bottom:108px;z-index:80;
   background:#000;color:#fff;border:1px solid var(--red);cursor:pointer;
   font-family:var(--mono);font-size:11px;letter-spacing:.2em;font-weight:700;
   padding:13px 18px;display:none
@@ -352,7 +357,7 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #jamesFab.on{display:block}
 #jamesFab:hover{background:var(--red);color:#000}
 #jamesChat{
-  position:fixed;right:18px;bottom:132px;z-index:126;width:min(360px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:162px;z-index:126;width:min(360px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;display:none;flex-direction:column;
   max-height:min(70vh,520px)
 }
@@ -387,7 +392,7 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 }
 #bookScrim.on{display:block}
 #bookSheet{
-  position:fixed;right:18px;bottom:78px;z-index:126;width:min(380px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:108px;z-index:126;width:min(380px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;padding:22px 22px 20px;
   display:none;max-height:min(86vh,640px);overflow:auto
 }
@@ -464,10 +469,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
-  #bookFab{right:14px;bottom:16px;padding:13px 16px;font-size:10px}
-  #jamesFab{right:14px;bottom:68px;padding:11px 14px;font-size:10px}
-  #jamesChat{right:10px;bottom:118px}
-  #bookSheet{right:10px;bottom:70px;padding:18px 16px 16px}
+  #bookFab{right:12px;bottom:14px;width:64px;height:64px}
+  #bookFab canvas{width:64px;height:64px}
+  #bookFab span{font-size:7px;bottom:7px}
+  #jamesFab{right:12px;bottom:88px;padding:11px 14px;font-size:10px}
+  #jamesChat{right:10px;bottom:138px}
+  #bookSheet{right:10px;bottom:88px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
   #stage{height:88svh}
   .wrap{padding:0 16px}
@@ -729,7 +736,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 </div></section>
 
 <button type="button" id="jamesFab" class="mono">JAMES</button>
-<button type="button" id="bookFab" class="mono">BOOK</button>
+<button type="button" id="bookFab" class="mono" aria-label="Book the tech">
+  <canvas id="bookGlobe" width="76" height="76"></canvas>
+  <span>BOOK</span>
+</button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
   <button type="button" class="x" id="bookX">[ CLOSE ]</button>
@@ -1978,6 +1988,69 @@ if(window.IntersectionObserver){
   }, {rootMargin:'120px'}).observe($('#stage'));
 }
 document.addEventListener('visibilitychange', syncOnScreen);
+
+/* mini globe on BOOK — same wireframe language, spins faster on hover */
+(function(){
+  var fab = $('#bookFab'), c = $('#bookGlobe');
+  if(!fab || !c || !LANDPTS.length) return;
+  var g = c.getContext('2d');
+  var size = 76, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function fit(){
+    var css = fab.getBoundingClientRect().width || 76;
+    size = css;
+    c.width = Math.round(size * dpr);
+    c.height = Math.round(size * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  fit();
+  var lon = 18, hover = false;
+  fab.addEventListener('mouseenter', function(){ hover = true; });
+  fab.addEventListener('mouseleave', function(){ hover = false; });
+  fab.addEventListener('touchstart', function(){ hover = true; }, {passive:true});
+  fab.addEventListener('touchend', function(){ hover = false; });
+  var step = Math.max(6, Math.floor(LANDPTS.length / 420));
+  function proj(lat, lo, rad){
+    var la = lat * D2R, ln = (lo - lon) * D2R;
+    var x = Math.cos(la) * Math.sin(ln);
+    var y = Math.sin(la);
+    var z = Math.cos(la) * Math.cos(ln);
+    var t = -14 * D2R;
+    var y2 = y * Math.cos(t) - z * Math.sin(t);
+    var z2 = y * Math.sin(t) + z * Math.cos(t);
+    return {x: size/2 + x * rad, y: size/2 + 1 - y2 * rad, z: z2};
+  }
+  function paint(){
+    if(!fab.classList.contains('on')){ requestAnimationFrame(paint); return; }
+    lon += reduce ? 0 : (hover ? 2.1 : 0.32);
+    if(lon > 180) lon -= 360;
+    var rad = size * 0.42;
+    var cx = size/2, cy = size/2;
+    g.clearRect(0,0,size,size);
+    var glow = g.createRadialGradient(cx, cy, rad*0.55, cx, cy, rad*1.12);
+    glow.addColorStop(0, 'rgba(255,59,31,0)');
+    glow.addColorStop(1, 'rgba(255,59,31,0.28)');
+    g.fillStyle = glow;
+    g.beginPath(); g.arc(cx, cy, rad*1.12, 0, Math.PI*2); g.fill();
+    g.strokeStyle = 'rgba(255,255,255,0.22)';
+    g.lineWidth = 1;
+    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI*2); g.stroke();
+    for(var i = 0; i < LANDPTS.length; i += step){
+      var p = proj(LANDPTS[i][0], LANDPTS[i][1], rad);
+      if(p.z < 0.04) continue;
+      g.fillStyle = 'rgba(255,255,255,' + (0.12 + p.z * 0.62).toFixed(3) + ')';
+      g.fillRect(p.x, p.y, 1.15, 1.15);
+    }
+    for(var k = 0; k < CITIES.length; k++){
+      var q = proj(CITIES[k].lat, CITIES[k].lon, rad);
+      if(q.z < 0.12) continue;
+      g.fillStyle = 'rgba(255,59,31,' + (0.35 + q.z * 0.65).toFixed(3) + ')';
+      g.beginPath(); g.arc(q.x, q.y, hover ? 1.6 : 1.15, 0, Math.PI*2); g.fill();
+    }
+    requestAnimationFrame(paint);
+  }
+  window.addEventListener('resize', fit);
+  paint();
+})();
 
 /* ---------- console ---------- */
 console.log('%c JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT ',
