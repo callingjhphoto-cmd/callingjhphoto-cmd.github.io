@@ -2,6 +2,7 @@
 <html lang="en" class="lang-wait">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>James Huertas — Digital Technician &amp; Lighting Assistant</title>
 <meta name="description" content="James Huertas — Digital Technician &amp; Lighting Assistant. Set tech, capture, colour, backup, screens, power, data. Barcelona &amp; Mallorca. EN/ES.">
@@ -531,7 +532,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #bookSheet .row2{grid-template-columns:1fr}
   #jamesForm input,#bookSheet input,#bookSheet textarea{font-size:16px}
   #stage{height:88svh;min-height:0}
-  #scrollcue{display:none}
+  #scrollcue{display:none!important}
   .wrap{padding:0 16px}
   #pinlist{
     display:block;padding:48px 0 90px;background:#000;position:relative;z-index:4;
@@ -1813,7 +1814,7 @@ function drawGlobe(){
 var gridZ = 0;
 
 function drawGrid(){
-  if(W < 720) return;
+  if(W < 720 || isTouch) return;
   var rad = R * zoom;
   var vpX = CX;
   var vpY = CY + rad * 0.58;
