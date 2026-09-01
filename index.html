@@ -348,16 +348,8 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   font-family:var(--mono);font-size:8px;letter-spacing:.18em;font-weight:700;
   color:#ff3b1f;pointer-events:none;text-shadow:0 0 8px #000
 }
-#jamesFab{
-  position:fixed;right:22px;bottom:108px;z-index:80;
-  background:#000;color:#fff;border:1px solid var(--red);cursor:pointer;
-  font-family:var(--mono);font-size:11px;letter-spacing:.2em;font-weight:700;
-  padding:13px 18px;display:none
-}
-#jamesFab.on{display:block}
-#jamesFab:hover{background:var(--red);color:#000}
 #jamesChat{
-  position:fixed;right:18px;bottom:162px;z-index:126;width:min(360px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:108px;z-index:126;width:min(360px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;display:none;flex-direction:column;
   max-height:min(70vh,520px)
 }
@@ -472,8 +464,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #bookFab{right:12px;bottom:14px;width:64px;height:64px}
   #bookFab canvas{width:64px;height:64px}
   #bookFab span{font-size:7px;bottom:7px}
-  #jamesFab{right:12px;bottom:88px;padding:11px 14px;font-size:10px}
-  #jamesChat{right:10px;bottom:138px}
+  #jamesChat{right:10px;bottom:88px}
   #bookSheet{right:10px;bottom:88px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
   #stage{height:88svh}
@@ -596,7 +587,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <!-- ============ [02] WHAT I ACTUALLY DO ============ -->
 <section id="do"><div class="wrap">
   <div class="secno mono">[02] WHAT I ACTUALLY DO</div>
-  <h2 class="big">Tech nerd.<br>Always there.</h2>
+  <h2 class="big">Always there.</h2>
 
   <div class="cols">
     <div class="col">
@@ -691,7 +682,6 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> — on set and on the road.</p>
   <div class="ownbar">
     <button id="toggleOwn" class="mono">[ + ] OPEN</button>
-    <span class="quiet">Not from a booking.</span>
   </div>
   <div id="owngrid"></div>
 </div></section>
@@ -735,10 +725,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </footer>
 </div></section>
 
-<button type="button" id="jamesFab" class="mono">JAMES</button>
-<button type="button" id="bookFab" class="mono" aria-label="Book the tech">
+<button type="button" id="bookFab" class="mono" aria-label="James — book me">
   <canvas id="bookGlobe" width="76" height="76"></canvas>
-  <span>BOOK</span>
+  <span>BOOK ME</span>
 </button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
@@ -767,7 +756,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 </div>
 
 <div id="jamesChat" role="dialog" aria-label="James">
-  <div class="hd"><span><b>JAMES</b> · TECH NERD</span><button type="button" id="jamesX">[ CLOSE ]</button></div>
+  <div class="hd"><span><b>JAMES</b></span><button type="button" id="jamesX">[ CLOSE ]</button></div>
   <div id="jamesLog"></div>
   <div id="jamesChips"></div>
   <form id="jamesForm">
@@ -1086,7 +1075,7 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
    BOOT SEQUENCE
    ============================================================ */
 var BOOTS = [
-  'TECH NERD INCOMING.',
+  'JAMES HERE.',
   'TWO LANGUAGES ON SET.',
   'THE CART TRAVELS.',
   'READY TO SHOOT.'
@@ -1098,7 +1087,6 @@ var BOOTS = [
     box.classList.add('gone');
     setTimeout(function(){box.style.display='none'},100);
     if($('#bookFab')) $('#bookFab').classList.add('on');
-    if($('#jamesFab')) $('#jamesFab').classList.add('on');
     return;
   }
   var step = function(){
@@ -1111,7 +1099,6 @@ var BOOTS = [
       setTimeout(function(){
         box.classList.add('gone');
         if($('#bookFab')) $('#bookFab').classList.add('on');
-        if($('#jamesFab')) $('#jamesFab').classList.add('on');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
       }, 700);
     }
@@ -1795,7 +1782,6 @@ function openBook(e){
   sheet.classList.add('on');
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
-  if($('#jamesFab')) $('#jamesFab').classList.remove('on');
   if($('#jamesChat')) $('#jamesChat').classList.remove('on');
   var from = $('#bookFrom');
   if(from) from.focus();
@@ -1805,11 +1791,9 @@ function closeBook(){
   if(sheet) sheet.classList.remove('on');
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
-  if($('#jamesFab')) $('#jamesFab').classList.add('on');
 }
 (function(){
-  var fab = $('#bookFab'), form = $('#bookForm');
-  if(fab) fab.addEventListener('click', openBook);
+  var form = $('#bookForm');
   var nb = $('#navBook');
   if(nb) nb.addEventListener('click', openBook);
   var cb = $('#contactBook');
@@ -1841,13 +1825,14 @@ function closeBook(){
 
 /* James on the page — his voice, not a model. Does not guess the diary. */
 function closeJames(){
-  var chat = $('#jamesChat'), fab = $('#jamesFab');
+  var chat = $('#jamesChat');
   if(chat) chat.classList.remove('on');
-  if(fab && !($('#bookSheet') && $('#bookSheet').classList.contains('on'))) fab.classList.add('on');
+  if($('#bookFab') && !($('#bookSheet') && $('#bookSheet').classList.contains('on')))
+    $('#bookFab').classList.add('on');
 }
 (function(){
   var chat = $('#jamesChat'), log = $('#jamesLog'), form = $('#jamesForm'), input = $('#jamesIn');
-  var fab = $('#jamesFab'), chips = $('#jamesChips');
+  var chips = $('#jamesChips');
   if(!chat || !log) return;
 
   function add(who, text){
@@ -1865,39 +1850,43 @@ function closeJames(){
     var es = /[áéíóúñ¿¡]/.test(t) || /\b(hola|buenas|disponible|presupuesto|tarifa|gracias|fechas|trabajo)\b/.test(t);
     if(/\b(dit|d\.i\.t)\b/.test(t))
       return es
-        ? 'Técnico digital y ayudante de iluminación. No uso DIT. Capture, color, datos, el carro.'
-        : 'Digital technician and lighting assistant. I don’t use DIT — capture, colour, data, the cart.';
+        ? 'Soy el técnico digital y ayudante de iluminación — captura, color, copias. Encantado de explicarlo.'
+        : 'I’m the digital technician and lighting assistant — capture, colour, the backups. Happy to walk through it.';
     if(/\b(rate|price|precio|tarifa|presupuesto|€|euro)\b/.test(t))
       return es
-        ? 'Te mando la tarifa. Email o WhatsApp es más rápido que adivinar aquí.'
-        : 'I’ll send the rate card. Email or WhatsApp is faster than guessing here.';
+        ? 'Te mando la tarifa por email o WhatsApp, más fácil que aquí. ¿Te la envío?'
+        : 'I’ll send the rate card on email or WhatsApp — easier than here. Want me to?';
     if(/\b(free|avail|busy|diary|calendar|disponible|libre|ocupado|agenda)\b/.test(t) || /\d{4}-\d{2}-\d{2}/.test(t) || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|ene|abr|ago|dic)\b/.test(t))
       return es
-        ? 'No adivino la agenda desde la web. Pon las fechas en BOOK. Confirmo el mismo día desde el calendario. Si estoy en un job, te lo digo.'
-        : 'I won’t guess the diary from a website. Hit BOOK, put the dates in. I’ll confirm the same day from the calendar. If I’m on a job I’ll say so.';
+        ? 'No quiero adivinar y equivocarme. Pon las fechas en el formulario y te confirmo el mismo día. Si ya estoy en un job, te lo digo.'
+        : 'I don’t want to guess from here and get it wrong. Drop the dates in the form and I’ll confirm the same day — if I’m already on a job I’ll say so.';
     if(/\b(spanish|english|idioma|bilingual|español|ingles|language|flown|american|german|london)\b/.test(t))
       return es
-        ? 'Inglés y español en set. Si habéis volado a alguien, dejo los dos lados cómodos.'
-        : 'English and Spanish on set. If you’ve flown someone in, I keep both sides comfortable.';
+        ? 'Inglés y español, sin problema. Si habéis volado a alguien, cuido los dos lados del set.'
+        : 'English and Spanish, no problem. If you’ve flown people in, I’ll look after both sides of the room.';
     if(/\b(where|based|barcelona|mallorca|spain|uk|lisbon|ciudad|dónde|donde|base)\b/.test(t))
       return es
-        ? 'Barcelona y Mallorca son casa. España, Portugal, UK, donde caiga el job. El carro viaja.'
-        : 'Barcelona and Mallorca are home. Spain, Portugal, UK, wherever the job lands. The cart travels.';
+        ? 'Barcelona y Mallorca son casa, y voy a donde esté el trabajo — España, Portugal, UK, más lejos si hace falta.'
+        : 'Barcelona and Mallorca are home, and I go where the job is — Spain, Portugal, the UK, further if you need.';
     if(/\b(kit|camera|hasselblad|phase|canon|sony|lighting|profoto|what do you (do|use)|qué haces)\b/.test(t))
       return es
-        ? 'Lo que dispare el fotógrafo. Yo llevo la estación para que puedan disparar.'
-        : 'Whatever the photographer shoots with. I run the station so they can shoot.';
+        ? 'Lo que le guste al fotógrafo. Yo llevo la estación para que puedan disparar tranquilos.'
+        : 'Whatever your photographer likes to shoot with. I’ll run the station so they can get on with it.';
     if(/\b(whatsapp|phone|email|contact|llamar|correo)\b/.test(t))
       return es
-        ? 'callingjhphoto@gmail.com · +34 643 147 756 · WhatsApp +44 7562 393 477'
-        : 'callingjhphoto@gmail.com · +34 643 147 756 · WhatsApp +44 7562 393 477';
-    if(/\b(hi|hey|hello|hola|buenas|good morning)\b/.test(t))
-      return es ? 'Hola. Soy James. ¿El trabajo y las fechas?' : 'Hey. I’m James. What’s the job and when?';
+        ? 'Lo más fácil: callingjhphoto@gmail.com o WhatsApp +44 7562 393 477.'
+        : 'Easiest is email or WhatsApp — callingjhphoto@gmail.com, or +44 7562 393 477 on WhatsApp.';
+    if(/\b(great|love|amazing|awesome|nice|brilliant|legend)\b/.test(t))
+      return es
+        ? 'Qué amable, de verdad. Si tienes un job a la vista, mándame fechas y lo miro ahora.'
+        : 'That’s very kind — thank you. If you’ve got a job coming, send the dates and I’ll look straight away.';
+    if(/\b(hi|hey|hello|hola|buenas|good morning|good afternoon)\b/.test(t))
+      return es ? 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?' : 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?';
     if(/\b(thanks|gracias|cheers|perfect)\b/.test(t))
-      return es ? 'Cuando quieras. Si tienes fechas, mándalas.' : 'Anytime. Send the dates if you’ve got them.';
+      return es ? 'Cuando quieras. Si tienes fechas, las miro encantado.' : 'Pleasure. If you’ve got dates, send them over and I’ll check.';
     return es
-      ? 'Fechas y el job. Te digo si estoy libre.'
-      : 'Give me dates and the job. I’ll tell you if I’m free.';
+      ? 'Encantado de mirarlo. Fechas y una línea del job y te digo si estoy libre.'
+      : 'Happy to look. Dates and a line on the job and I’ll tell you if I’m free.';
   }
 
   function openJames(e){
@@ -1905,12 +1894,13 @@ function closeJames(){
     closeBook();
     if($('#bookFab')) $('#bookFab').classList.add('on');
     chat.classList.add('on');
-    if(fab) fab.classList.remove('on');
     if(!log.childNodes.length){
-      jamesSays('Hey. I’m James. Tech nerd. What’s the job and when?');
+      jamesSays('Hey — good to have you. I’m James. What’s the job, and when are you looking at?');
     }
     if(input) input.focus();
   }
+  var globe = $('#bookFab');
+  if(globe) globe.addEventListener('click', openJames);
 
   var CHIP = [
     ['Dates', 'Are you free next week?'],
@@ -1932,7 +1922,6 @@ function closeJames(){
     });
   }
 
-  if(fab) fab.addEventListener('click', openJames);
   var jx = $('#jamesX');
   if(jx) jx.addEventListener('click', closeJames);
   if(form) form.addEventListener('submit', function(e){
