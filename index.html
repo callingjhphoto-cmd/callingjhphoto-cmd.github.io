@@ -301,7 +301,7 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 }
 
 /* work table */
-#work{padding:110px 0}
+#work{padding:110px 0;overflow:hidden}
 .tbl{margin-top:34px;border-top:1px solid var(--line)}
 .row{display:grid;grid-template-columns:64px 1.35fr 1.15fr 1.05fr .8fr;gap:16px;
   padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--mono);
@@ -312,6 +312,13 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .row .yr{color:var(--red)}
 .row .cl{color:#fff}
 .row .mt{color:var(--grey)}
+#work .lane{margin-top:36px}
+.workcard{width:196px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent;
+  overflow:hidden;min-width:0;isolation:isolate;contain:paint}
+.workcard:hover,.workcard:focus-visible{border-color:#222}
+.workcard img{width:100%;aspect-ratio:3/4;height:auto;object-fit:cover;object-position:center;display:block;
+  max-width:100%;min-width:0}
+.track.worktrack{animation-duration:96s}
 
 /* fly-by */
 #flyby{padding:110px 0 0;overflow:hidden}
@@ -601,6 +608,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   .caps{margin-top:24px}
   .tbl{margin-top:22px}
   .lane{margin-top:18px}
+  #work .lane{margin-top:28px}
+  .workcard{width:148px}
   #last{
     padding:56px 0 48px;
     margin-top:0
@@ -637,7 +646,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .track,.logolane{animation:none!important;flex-wrap:wrap;width:100%}
   .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
-  .card{width:calc(50% - 8px)}
+  .card,.workcard{width:calc(50% - 8px)}
 }
 </style>
 </head>
@@ -822,6 +831,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   <div class="secno mono" data-i18n="work.secno">[04] SELECTED WORK</div>
   <h2 class="big" data-i18n="work.h2">Selected work</h2>
   <div class="tbl" id="workTbl"></div>
+  <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
 </div></section>
 
 <!-- ============ [05] THE FLY-BY ============ -->
@@ -1164,6 +1174,13 @@ var WORK = [
  ['2015—16','Reuters · Bloomberg · Getty','press','James Huertas','London','UNVERIFIED','']
 ];
 
+/* campaign stills under the jobs list — captions stay empty, no invented clients */
+var WORKSTILLS = [
+  'work_00.jpg','work_01.jpg','work_02.jpg','work_03.jpg','work_04.jpg',
+  'work_05.jpg','work_06.jpg','work_07.jpg','work_08.jpg','work_09.jpg',
+  'work_10.jpg','work_11.jpg','work_12.jpg'
+];
+
 /* Continent outlines [lat, lon]. Coasts are the point — NYC sits on the
    Atlantic seaboard, Rio on the Brazilian coast, not in the interior. */
 var RINGS = [
@@ -1355,6 +1372,7 @@ var I18N = {
     'alt.polaroid2': 'James Huertas on set, running tether cables at the capture station.',
     'alt.shot': 'Set-operations frame: tethered capture station on set.',
     'alt.card': 'Set-operations frame: digital technician station, screens and cabling on set.',
+    'alt.work': 'Still from selected work.',
     'nocredit.NYC': 'NEW YORK — NO CREDIT ON FILE. THE PIN IS HONEST.',
     'nocredit.RIO': 'RIO DE JANEIRO — NO CREDIT ON FILE. THE PIN IS HONEST.',
     'nocredit.SIN': 'SINGAPORE — NO CREDIT ON FILE. THE PIN IS HONEST.',
@@ -1537,6 +1555,7 @@ var I18N = {
     'alt.polaroid2': 'James Huertas en el set, tendiendo cables de tether en la estación de captura.',
     'alt.shot': 'Fotograma de ops de set: estación de captura por tether en el set.',
     'alt.card': 'Fotograma de ops de set: estación de técnico digital, pantallas y cables en el set.',
+    'alt.work': 'Fotograma del trabajo seleccionado.',
     'nocredit.NYC': 'NUEVA YORK — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
     'nocredit.RIO': 'RÍO DE JANEIRO — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
     'nocredit.SIN': 'SINGAPUR — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
@@ -2425,6 +2444,22 @@ var DOSHOTS = [
   });
 })();
 
+/* work stills — under the jobs list. Own class so inspect does not open set-ops. */
+(function(){
+  var node = $('#workLane');
+  if(!node) return;
+  var html = '';
+  var passes = reduce ? 1 : 2;
+  for(var pass = 0; pass < passes; pass++){
+    for(var i = 0; i < WORKSTILLS.length; i++){
+      html += '<div class="workcard" tabindex="0" role="button">' +
+        '<img loading="lazy" src="img/work/' + WORKSTILLS[i] + '" data-i18n-alt="alt.work" alt="Still from selected work.">' +
+        '</div>';
+    }
+  }
+  node.innerHTML = html;
+})();
+
 /* fly-by lanes — SET-OPS FIRST. Double only when motion is allowed (seamless loop). */
 (function(){
   function fill(node, list, capOff){
@@ -2554,6 +2589,11 @@ var DOSHOTS = [
       { src: 'img/polaroid/cables.jpg', cap: '' }
     ];
   }
+  function workGallery(){
+    return WORKSTILLS.map(function(f){
+      return { src: 'img/work/' + f, cap: '', alt: t('alt.work') };
+    });
+  }
   var polaroidOpenAt = 0;
   window.__openPolaroid = function(src){
     if(Date.now() - polaroidOpenAt < 400) return;
@@ -2571,7 +2611,7 @@ var DOSHOTS = [
     if(!gal.length) return;
     var item = gal[galI];
     img.src = item.src;
-    img.alt = ownMode ? t('own.alt') : t('inspect.alt');
+    img.alt = item.alt || (ownMode ? t('own.alt') : t('inspect.alt'));
     cap.textContent = item.cap || '';
     if(idxEl) idxEl.textContent = (galI + 1) + ' / ' + gal.length;
     var many = gal.length > 1;
@@ -2606,7 +2646,10 @@ var DOSHOTS = [
     var im = node.querySelector('img');
     if(!im) return;
     var src = im.getAttribute('src');
-    var list = node.classList.contains('shot') ? doGallery() : setGallery();
+    var list;
+    if(node.classList.contains('workcard')) list = workGallery();
+    else if(node.classList.contains('shot')) list = doGallery();
+    else list = setGallery();
     openAt(list, indexOfSrc(list, src), false);
   }
   document.addEventListener('click', function(e){
@@ -2616,12 +2659,12 @@ var DOSHOTS = [
       openAt(list, indexOfSrc(list, e.target.getAttribute('src')), true);
       return;
     }
-    var n = e.target.closest ? e.target.closest('.shot, .card') : null;
+    var n = e.target.closest ? e.target.closest('.shot, .card, .workcard') : null;
     if(n){ e.preventDefault(); fromCard(n); }
   });
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Enter') return;
-    var n = e.target.closest ? e.target.closest('.shot, .card') : null;
+    var n = e.target.closest ? e.target.closest('.shot, .card, .workcard') : null;
     if(n) fromCard(n);
   });
   if($('#inspectX')) $('#inspectX').addEventListener('click', close);
