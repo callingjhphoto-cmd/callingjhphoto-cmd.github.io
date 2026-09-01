@@ -1818,8 +1818,8 @@ function buildNeurons(){
 
 function fieldFade(x, y, rad){
   var d = Math.hypot(x - CX, y - CY);
-  if(d < rad * 1.04) return 0;
-  if(d < rad * 1.18) return (d / rad - 1.04) / 0.14;
+  if(d < rad * 0.90) return 0.40;
+  if(d < rad * 1.12) return 0.40 + (d / rad - 0.90) * 2.73;
   return 1;
 }
 
@@ -1878,35 +1878,36 @@ function drawField(dt){
   var y0 = CY;
   var wing = Math.min(leftSpan, rightSpan);
   var amp = Math.min(rad * 0.36, Math.max(32, wing * 0.40));
-  var turns = 3.2;
+  var turns = 4.4;
   var s = W < 720 ? 10 : 16;
   if(!reduce) fieldT += dt * 0.00105;
 
-  function atomStream(x0, x1, n, phase){
-    var i, u, bx, by, buzz, buzz2, tw, rr;
+  function atomStream(x0, x1, n){
+    var i, u, bx, by, buzz, buzz2, tw, rr, fade, a;
     for(i = 0; i < n; i++){
-      u = (fieldT * 0.24 + i / n + phase) % 1;
+      u = (fieldT * 0.22 + i / n) % 1;
       bx = x0 + u * (x1 - x0);
       by = y0 + Math.sin(u * Math.PI * 2 * turns + fieldT * 0.9) * amp;
+      fade = fieldFade(bx, by, rad);
+      if(fade < 0.06) continue;
       buzz = Math.sin(fieldT * 36 + i * 2.4);
       buzz2 = Math.cos(fieldT * 44 + i * 1.7);
       bx += buzz * 1.5;
       by += buzz2 * 1.5;
       tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
       rr = (i % 5 === 0 ? 2.6 : 1.45) * (0.75 + 0.4 * tw);
+      a = fade * tw;
       if(i % 4 === 0){
-        sctx.fillStyle = 'rgba(255,59,31,' + (0.82 * tw).toFixed(3) + ')';
+        sctx.fillStyle = 'rgba(255,59,31,' + (0.82 * a).toFixed(3) + ')';
       } else {
-        sctx.fillStyle = 'rgba(255,255,255,' + (0.55 * tw).toFixed(3) + ')';
+        sctx.fillStyle = 'rgba(255,255,255,' + (0.55 * a).toFixed(3) + ')';
       }
       sctx.beginPath();
       sctx.arc(bx, by, rr, 0, Math.PI * 2);
       sctx.fill();
     }
   }
-  var nWing = isTouch ? 40 : 86;
-  atomStream(camX, leftEdge - 10, nWing, 0);
-  atomStream(rightEdge + 10, lapX, nWing, 0.5);
+  atomStream(camX, lapX, isTouch ? 80 : 170);
 
   var leftCol = CX - rad;
   var rightCol = CX + rad;
