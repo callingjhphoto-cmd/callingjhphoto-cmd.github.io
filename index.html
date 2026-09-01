@@ -12,21 +12,24 @@
 <meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --red:#ff3b1f;
+  --red-aaa:#ff6b54;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
-  --grey:#7c7c7c;
-  --grey2:#b4b4b4;
+  --sans:'Schibsted Grotesk',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  --grey:#c8c8c8;   /* ~12.6:1 on #000 — WCAG AAA for small text */
+  --grey2:#e4e4e4;  /* ~16:1 on #000 */
   --line:#1e1e1e;
+  --hit:42px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;touch-action:manipulation}
 body{
   margin:0;background:#000;color:#fff;font-family:var(--sans);
   overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  font-size:16px;line-height:1.5;
 }
 ::selection{background:var(--red);color:#000}
 a{color:inherit}
@@ -64,13 +67,14 @@ html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
   background:none;border:0;color:#fff;cursor:pointer;
   font-family:var(--mono);padding:18px 28px;
   display:flex;flex-direction:column;align-items:center;gap:12px;
+  min-width:var(--hit);min-height:96px;
 }
 #langGate button strong{
   font-size:clamp(34px,8.5vw,76px);font-weight:700;letter-spacing:.22em;
   line-height:1;
 }
 #langGate button small{
-  font-size:10.5px;letter-spacing:.32em;color:#5e5e5e;text-transform:uppercase;
+  font-size:12px;letter-spacing:.32em;color:var(--grey);text-transform:uppercase;
   font-weight:400;
 }
 #langGate button:hover strong, #langGate button:focus-visible strong{color:var(--red)}
@@ -82,16 +86,25 @@ html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
 
 /* ---------- nav ---------- */
 nav{
-  position:fixed;top:0;right:0;z-index:70;display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;
-  padding:18px 24px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  position:fixed;top:0;right:0;z-index:70;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+  padding:10px 16px;font-family:var(--mono);font-size:13px;letter-spacing:.1em;
   max-width:70vw;
 }
-nav a{color:var(--grey);text-decoration:none;transition:color .2s;white-space:nowrap}
-nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
+nav a{
+  color:var(--grey);text-decoration:none;transition:color .2s;white-space:nowrap;
+  min-height:var(--hit);min-width:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 12px;
+  text-shadow:0 1px 2px #000,0 0 10px #000,0 0 18px #000;
+}
+nav a:hover,nav a:focus-visible,nav a.here{color:#fff}
+nav a.here{color:var(--red-aaa)}
 #brandmark{
-  position:fixed;top:0;left:0;z-index:70;padding:12px 20px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:#fff;
+  position:fixed;top:0;left:0;z-index:71;padding:8px 16px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:#fff;
   display:flex;align-items:center;gap:12px;text-decoration:none;
+  min-height:var(--hit);
+  text-shadow:0 1px 2px #000,0 0 10px #000;
 }
 #brandmark svg{width:30px;height:30px;display:block;flex:none}
 #brandmark b{color:#fff;font-weight:500}
@@ -114,35 +127,42 @@ nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
 }
 #hero .role{
   font-family:var(--mono);color:#fff;font-weight:500;
-  font-size:clamp(13px,2.15vw,22px);letter-spacing:.18em;
+  font-size:clamp(14px,2.15vw,22px);letter-spacing:.18em;
   margin-top:16px;line-height:1.35;text-transform:uppercase;
+  text-shadow:0 1px 8px #000,0 0 14px #000;
 }
 #hero .sub{
-  font-family:var(--mono);color:var(--grey);font-size:clamp(8.5px,1.1vw,11px);
+  font-family:var(--mono);color:var(--grey);font-size:clamp(12px,1.4vw,14px);
   letter-spacing:.16em;margin-top:10px;line-height:1.9;
+  text-shadow:0 1px 8px #000,0 0 14px #000;
 }
 #hero .markets{
   font-family:var(--mono);margin-top:22px;line-height:1.7;
 }
 #hero .markets b{
-  display:block;color:var(--red);font-weight:400;
-  font-size:clamp(11px,1.45vw,14px);letter-spacing:.2em;
+  display:block;color:var(--red-aaa);font-weight:400;
+  font-size:clamp(12px,1.45vw,14px);letter-spacing:.12em;
+  text-shadow:0 1px 8px #000,0 0 14px #000;
+  max-width:46rem;margin-left:auto;margin-right:auto;
+  text-wrap:balance;
 }
 #hero .markets i{
-  display:block;font-style:normal;color:#7a7a7a;
-  font-size:clamp(9.5px,1.2vw,12px);letter-spacing:.22em;margin-top:12px;
+  display:block;font-style:normal;color:var(--grey);
+  font-size:clamp(12px,1.3vw,14px);letter-spacing:.22em;margin-top:12px;
   max-width:42rem;margin-left:auto;margin-right:auto;line-height:1.85;
+  text-shadow:0 1px 8px #000,0 0 14px #000;
 }
 #hero .markets i em{
-  font-style:normal;color:#4a4a4a;letter-spacing:.28em;margin-right:.7em;
+  font-style:normal;color:var(--grey2);letter-spacing:.28em;margin-right:.7em;
 }
 
 
 /* HUD */
-.hud{position:absolute;z-index:14;font-family:var(--mono);font-size:9.5px;
-  letter-spacing:.11em;color:#5e5e5e;line-height:1.85;pointer-events:none;white-space:nowrap}
+.hud{position:absolute;z-index:14;font-family:var(--mono);font-size:12px;
+  letter-spacing:.11em;color:var(--grey);line-height:1.85;pointer-events:none;white-space:nowrap;
+  text-shadow:0 1px 6px #000,0 0 10px #000}
 .hud b{color:var(--grey2);font-weight:400}
-.hud .r{color:var(--red)}
+.hud .r{color:var(--red-aaa)}
 #hudTL{top:52px;left:24px}
 #hudTR{top:52px;right:24px;text-align:right}
 #hudBL{bottom:58px;left:24px}
@@ -150,18 +170,19 @@ nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
 
 #zoomui{
   position:absolute;z-index:15;bottom:58px;left:50%;transform:translateX(-50%);
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#5e5e5e;
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--grey);
   display:flex;gap:12px;align-items:center;
 }
 #zoomui button{
   background:none;border:1px solid #262626;color:var(--grey2);font-family:var(--mono);
-  font-size:11px;width:22px;height:22px;line-height:1;cursor:pointer;padding:0;
+  font-size:18px;width:var(--hit);height:var(--hit);line-height:1;cursor:pointer;padding:0;
+  display:inline-flex;align-items:center;justify-content:center;
 }
 #zoomui button:hover{border-color:var(--red);color:var(--red)}
 
 #scrollcue{
   position:absolute;left:50%;transform:translateX(-50%);bottom:22px;z-index:13;
-  font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:#4a4a4a;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--grey);
   transition:opacity .3s;
 }
 #scrollcue i{color:var(--red);font-style:normal;animation:blink 1.1s steps(1) infinite}
@@ -172,62 +193,66 @@ nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
 #readout{
   position:absolute;z-index:16;pointer-events:none;font-family:var(--mono);
   border:1px solid #2a2a2a;background:rgba(0,0,0,.82);padding:8px 11px;
-  font-size:10px;letter-spacing:.09em;color:var(--grey2);opacity:0;
+  font-size:12px;letter-spacing:.09em;color:var(--grey2);opacity:0;
   transition:opacity .18s ease;white-space:nowrap;
 }
 #readout.on{opacity:1}
-#readout .c{color:#fff;font-size:11px;letter-spacing:.14em}
-#readout .x{color:#5e5e5e}
-#readout .go{color:var(--red)}
+#readout .c{color:#fff;font-size:13px;letter-spacing:.14em}
+#readout .x{color:var(--grey)}
+#readout .go{color:var(--red-aaa)}
 
 /* mobile pin list */
 #pinlist{display:none}
 
-/* ---------- dossier ---------- */
+/* ---------- dossier (killed: OVERRIDE_NO_CITY_DOSSIERS.md) ---------- */
 #dossier{
   position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);z-index:120;
   background:rgba(0,0,0,.96);border-left:1px solid #232323;
-  transform:translateX(102%);transition:transform .42s cubic-bezier(.22,.8,.28,1);
+  transform:translateX(102%);transition:none;
   overflow-y:auto;-webkit-overflow-scrolling:touch;padding:26px 26px 60px;
+  pointer-events:none;visibility:hidden;
 }
-#dossier.on{transform:translateX(0)}
+#dossier.on{transform:translateX(102%);visibility:hidden;pointer-events:none}
 #dossier .close{
-  position:absolute;top:18px;right:22px;background:none;border:0;color:var(--grey);
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;cursor:pointer;padding:4px
+  position:absolute;top:12px;right:12px;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);font-size:13px;letter-spacing:.14em;cursor:pointer;
+  min-width:var(--hit);min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center;padding:8px
 }
 #dossier .close:hover{color:var(--red)}
 #dossier h2{font-family:var(--sans);font-weight:900;font-size:30px;letter-spacing:-.03em;
   margin:8px 0 4px;text-transform:uppercase}
-#dossier .coord{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#5e5e5e}
-#dossier .cityline{font-family:var(--mono);font-size:12px;color:var(--grey2);
+#dossier .coord{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--grey)}
+#dossier .cityline{font-family:var(--mono);font-size:14px;color:var(--grey2);
   line-height:1.7;margin:20px 0 22px;border-left:1px solid var(--red);padding-left:12px}
-#dossier .hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:#5e5e5e;
+#dossier .hd{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--grey);
   margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:7px}
-#dossier .cred{font-family:var(--mono);font-size:11.5px;line-height:1.65;margin-bottom:14px}
+#dossier .cred{font-family:var(--mono);font-size:13px;line-height:1.65;margin-bottom:14px}
 #dossier .cred .y{color:var(--red)}
 #dossier .cred .cl{color:#fff}
-#dossier .cred .meta{color:#6f6f6f}
-#dossier .none{font-family:var(--mono);font-size:11px;color:#6f6f6f;line-height:1.7}
+#dossier .cred .meta{color:var(--grey)}
+#dossier .none{font-family:var(--mono);font-size:13px;color:var(--grey);line-height:1.7}
 #dossier .reel{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
-#dossier .reel img{width:100%;height:100px;object-fit:cover;display:block;
-  filter:grayscale(1) contrast(1.06);opacity:.82}
+#dossier .reel > *{overflow:hidden;min-width:0;isolation:isolate;contain:paint}
+#dossier .reel img{width:100%;height:100px;object-fit:cover;object-position:center;display:block;
+  max-width:100%;min-width:0;filter:grayscale(1) contrast(1.06);opacity:.82}
 #scrim{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.5);opacity:0;
   pointer-events:none;transition:opacity .35s}
-#scrim.on{opacity:1;pointer-events:auto}
+#scrim.on{opacity:0;pointer-events:none}
 
 /* ---------- sections ---------- */
 section{position:relative;z-index:2;background:#000}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-.secno{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:#4e4e4e;margin-bottom:16px}
+.secno{font-family:var(--mono);font-size:12px;letter-spacing:.26em;color:var(--grey);margin-bottom:16px}
 h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
-  letter-spacing:-.035em;line-height:1;margin:0 0 10px;text-transform:uppercase}
+  letter-spacing:-.035em;line-height:1;margin:0 0 10px;text-transform:uppercase;color:#fff}
 .rule{height:1px;background:var(--line);margin:0}
 
 /* polaroid */
 #polaroid{padding:150px 0 160px;text-align:center;overflow:hidden}
 #polaroid .quote{font-family:var(--mono);font-size:clamp(18px,3.4vw,34px);
   letter-spacing:-.01em;color:#fff;transform:skewX(-7deg);margin:0 0 8px}
-#polaroid .attr{font-family:var(--mono);font-size:11px;color:var(--grey);letter-spacing:.06em;margin-bottom:46px}
+#polaroid .attr{font-family:var(--mono);font-size:13px;color:var(--grey);letter-spacing:.06em;margin-bottom:46px}
 .ppair{display:flex;justify-content:center;align-items:flex-end;gap:36px;flex-wrap:wrap}
 .pframe{
   display:inline-block;background:#f2f0eb;padding:13px 13px 52px;
@@ -245,19 +270,21 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 /* what i do */
 #do{padding:110px 0}
 .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:52px}
-.col h3{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--red);
+.col h3{font-family:var(--mono);font-size:14px;letter-spacing:.24em;color:var(--red);
   margin:0 0 14px;font-weight:500}
-.col p{font-size:14.5px;line-height:1.72;color:var(--grey2);margin:0 0 16px}
-.col ul{list-style:none;padding:0;margin:0;font-family:var(--mono);font-size:11px;
-  line-height:2.15;color:#8a8a8a}
+.col p{font-size:16px;line-height:1.72;color:var(--grey2);margin:0 0 16px}
+.col ul{list-style:none;padding:0;margin:0;font-family:var(--mono);font-size:13px;
+  line-height:2.15;color:var(--grey)}
 .col li:before{content:'· ';color:var(--red)}
 .doshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:56px}
-.shot{position:relative;overflow:hidden;background:#080808;cursor:zoom-in;border:1px solid transparent}
+.shot{position:relative;overflow:hidden;background:#080808;cursor:zoom-in;border:1px solid transparent;
+  min-width:0;isolation:isolate;contain:paint}
 .shot:hover,.shot:focus-visible{border-color:#2a2a2a}
-.shot img{width:100%;height:260px;object-fit:cover;display:block;
+.shot img{width:100%;height:260px;object-fit:cover;object-position:center;display:block;
+  max-width:100%;min-width:0;
   filter:grayscale(1) contrast(1.05);opacity:.78;transition:opacity .35s,filter .35s}
 .shot:hover img,.shot:focus-visible img{opacity:1;filter:grayscale(0) contrast(1)}
-.shot .cap{font-family:var(--mono);font-size:8.6px;letter-spacing:.11em;color:#6f6f6f;
+.shot .cap{font-family:var(--mono);font-size:12px;letter-spacing:.11em;color:var(--grey);
   padding:9px 2px 0;line-height:1.6}
 
 #kit{padding:110px 0}
@@ -267,8 +294,8 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   padding:18px 0;border-bottom:1px solid var(--line);
   font-family:var(--mono);font-size:13px;line-height:1.7
 }
-.cap-row .k{color:var(--red);letter-spacing:.16em;font-size:10.5px;padding-top:4px}
-.cap-row .v{color:var(--grey2)}
+.cap-row .k{color:var(--red);letter-spacing:.16em;font-size:12px;padding-top:4px}
+.cap-row .v{color:var(--grey2);font-size:14px}
 @media(max-width:720px){
   .cap-row{grid-template-columns:1fr;gap:6px;padding:16px 0}
 }
@@ -278,13 +305,13 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .tbl{margin-top:34px;border-top:1px solid var(--line)}
 .row{display:grid;grid-template-columns:64px 1.35fr 1.15fr 1.05fr .8fr;gap:16px;
   padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--mono);
-  font-size:11.5px;align-items:baseline;border-left:2px solid transparent;padding-left:10px;margin-left:-12px}
+  font-size:13px;align-items:baseline;border-left:2px solid transparent;padding-left:10px;margin-left:-12px}
 .row:hover{border-left-color:var(--red);background:rgba(255,59,31,.035)}
-.row.head{color:#4e4e4e;font-size:9.5px;letter-spacing:.2em;padding:10px 0;position:sticky;top:0;background:#000;z-index:3}
+.row.head{color:var(--grey);font-size:12px;letter-spacing:.2em;padding:10px 0;position:sticky;top:0;background:#000;z-index:3}
 .row.head:hover{border-left-color:transparent;background:#000}
 .row .yr{color:var(--red)}
 .row .cl{color:#fff}
-.row .mt{color:#7c7c7c}
+.row .mt{color:var(--grey)}
 
 /* fly-by */
 #flyby{padding:110px 0 0;overflow:hidden}
@@ -296,12 +323,14 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .track.rev{animation-direction:reverse}
 .lane:hover .track{animation-play-state:paused}
 @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.card{width:290px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent}
+.card{width:290px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent;
+  overflow:hidden;min-width:0;isolation:isolate;contain:paint}
 .card:hover,.card:focus-visible{border-color:#222}
-.card img{width:100%;height:190px;object-fit:cover;display:block;
+.card img{width:100%;height:190px;object-fit:cover;object-position:center;display:block;
+  max-width:100%;min-width:0;
   filter:grayscale(1) contrast(1.05);opacity:.72;transition:opacity .35s,filter .35s}
 .card:hover img,.card:focus-visible img{opacity:1;filter:grayscale(0)}
-.card .cap{font-family:var(--mono);font-size:8.4px;letter-spacing:.1em;color:#666;padding:8px 2px 0;line-height:1.6}
+.card .cap{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--grey);padding:8px 2px 0;line-height:1.6}
 .logolane{display:flex;gap:52px;width:max-content;animation:slide 96s linear infinite;align-items:center}
 .logolane img{
   height:26px;width:auto;max-width:140px;object-fit:contain;
@@ -310,16 +339,16 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .logolane img.ink{filter:brightness(0) invert(1)}
 .logolane img:hover{opacity:.8}
 .logolane.rev{animation-direction:reverse;animation-duration:110s}
-.tierhd{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:#4e4e4e;
+.tierhd{font-family:var(--mono);font-size:12px;letter-spacing:.24em;color:var(--grey);
   margin:52px 0 0;display:flex;align-items:center;gap:14px}
 .tierhd:after{content:'';flex:1;height:1px;background:var(--line)}
 .reserved{border:1px dashed #1f1f1f;padding:22px;margin-top:22px;font-family:var(--mono);
-  font-size:10.5px;color:#5a5a5a;line-height:1.85}
+  font-size:13px;color:var(--grey);line-height:1.85}
 .reserved b{color:var(--grey2);font-weight:400}
 
 /* portfolio last */
 #last{padding:130px 0 110px;border-top:1px solid var(--line);margin-top:110px}
-#last .lede{font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#8a8a8a;
+#last .lede{font-family:var(--mono);font-size:14px;line-height:1.95;color:var(--grey);
   max-width:640px;margin:18px 0 0}
 #last .lede b{color:var(--grey2);font-weight:400}
 #last .lede a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(255,59,31,.35)}
@@ -327,37 +356,62 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .ownbar{display:flex;align-items:center;gap:18px;margin-top:28px;flex-wrap:wrap}
 #toggleOwn{
   background:none;border:1px solid #262626;color:var(--grey2);
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;padding:11px 20px;cursor:pointer
+  font-family:var(--mono);font-size:13px;letter-spacing:.18em;padding:11px 20px;cursor:pointer;
+  min-height:var(--hit);min-width:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center
 }
 #toggleOwn:hover{border-color:var(--red);color:var(--red)}
-.ownbar .quiet{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#4e4e4e}
-#owngrid{display:none;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:34px}
+.ownbar .quiet{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--grey)}
+#owngrid{display:none;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:34px;
+  overflow:hidden;min-width:0;width:100%;max-width:100%}
 #owngrid.on{display:grid}
-#owngrid img{width:100%;height:170px;object-fit:cover;display:block;opacity:.88;cursor:zoom-in}
+.owncell{
+  overflow:hidden;min-width:0;min-height:0;isolation:isolate;contain:paint;
+  background:#080808;aspect-ratio:1;position:relative;max-width:100%
+}
+.owncell img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  display:block;max-width:100%;opacity:.88;cursor:zoom-in;
+  position:absolute;inset:0
+}
 
-/* inspect */
+/* inspect — carousel, not a single close-card */
 #inspect{
   position:fixed;inset:0;z-index:180;background:rgba(0,0,0,.92);
   display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;
-  padding:40px 24px
+  padding:56px 72px 40px;touch-action:pan-y
 }
 #inspect.on{display:flex}
-#inspect img{max-width:min(920px,92vw);max-height:78vh;object-fit:contain;filter:grayscale(0)}
-#inspect .cap{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#8a8a8a;text-align:center;max-width:720px}
-#inspect .x{
-  position:absolute;top:18px;right:22px;background:none;border:0;color:var(--grey);
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;cursor:pointer
+#inspect img{max-width:min(920px,78vw);max-height:72vh;object-fit:contain;filter:grayscale(0);user-select:none}
+#inspect .cap{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--grey);text-align:center;max-width:720px}
+#inspect .idx{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--grey);text-align:center}
+#inspect .x,#inspect .nav{
+  position:absolute;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);cursor:pointer;
+  min-width:var(--hit);min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center;padding:8px
 }
-#inspect .x:hover{color:var(--red)}
+#inspect .x{
+  top:12px;right:12px;font-size:13px;letter-spacing:.14em
+}
+#inspect .nav{
+  top:50%;transform:translateY(-50%);
+  border:1px solid #262626;color:var(--grey2);font-size:22px;line-height:1;
+  z-index:2
+}
+#inspect .nav.prev{left:12px}
+#inspect .nav.next{right:12px}
+#inspect .x:hover,#inspect .nav:hover{color:var(--red);border-color:var(--red)}
+#inspect .nav[hidden]{display:none}
 
 /* contact */
 #contact{padding:120px 0 90px;border-top:1px solid var(--line)}
 .cgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:start;margin-top:34px}
 .cinfo{border:1px solid var(--line);padding:22px 24px}
 .cta{
-  display:inline-block;margin-top:26px;background:var(--red);color:#000;text-decoration:none;
-  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:15px 28px;font-weight:700;
-  border:0;cursor:pointer
+  display:inline-flex;align-items:center;justify-content:center;margin-top:26px;background:var(--red);color:#000;text-decoration:none;
+  font-family:var(--mono);font-size:13px;letter-spacing:.2em;padding:15px 28px;font-weight:700;
+  border:0;cursor:pointer;min-height:var(--hit)
 }
 .cta:hover{background:#fff}
 
@@ -378,44 +432,12 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   border-color:var(--red);box-shadow:0 0 42px rgba(255,59,31,.7)
 }
 #bookFab canvas{width:100%;height:100%;display:block;pointer-events:none}
-#bookFab .lab-top,#bookFab .lab-bot{
-  font-family:var(--mono);font-weight:700;color:#ff3b1f;
+#bookFab .lab-bot{
+  font-family:var(--mono);font-weight:700;color:var(--red-aaa);
   text-shadow:0 1px 8px #000,0 0 10px #000;
-  letter-spacing:.16em;line-height:1;white-space:nowrap
-}
-#bookFab .lab-top{font-size:10px;letter-spacing:.14em}
-#bookFab .lab-bot{font-size:11px}
-#jamesChat{
-  position:fixed;right:18px;bottom:248px;z-index:126;width:min(360px,calc(100vw - 28px));
-  background:#050505;border:1px solid #2a2a2a;display:none;flex-direction:column;
-  max-height:min(70vh,520px);border-radius:14px;overflow:hidden
-}
-#jamesChat.on{display:flex}
-#jamesChat .hd{
-  font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#8a8a8a;
-  padding:12px 14px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center
-}
-#jamesChat .hd b{color:#fff;font-weight:500;letter-spacing:.12em}
-#jamesChat .hd button{background:none;border:0;color:#6a6a6a;font-family:var(--mono);font-size:10px;letter-spacing:.12em;cursor:pointer}
-#jamesChat .hd button:hover{color:var(--red)}
-#jamesLog{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-#jamesLog .m{font-family:var(--sans);font-size:14px;line-height:1.45;max-width:92%;padding:8px 11px;border-radius:10px}
-#jamesLog .him{background:#111;color:#e8e8e8;align-self:flex-start}
-#jamesLog .you{background:var(--red);color:#000;align-self:flex-end}
-#jamesChips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
-#jamesChips button{
-  background:none;border:1px solid #2a2a2a;color:#8a8a8a;font-family:var(--mono);
-  font-size:9px;letter-spacing:.12em;padding:6px 8px;cursor:pointer;border-radius:8px
-}
-#jamesChips button:hover{border-color:var(--red);color:#fff}
-#jamesForm{display:flex;gap:8px;border-top:1px solid #1e1e1e;padding:10px}
-#jamesForm input{
-  flex:1;background:#000;border:1px solid #2a2a2a;color:#fff;font-family:var(--sans);
-  font-size:14px;padding:11px 12px;border-radius:8px
-}
-#jamesForm button{
-  background:var(--red);color:#000;border:0;font-family:var(--mono);font-size:10px;
-  letter-spacing:.16em;font-weight:700;padding:0 14px;cursor:pointer;border-radius:8px
+  letter-spacing:.16em;line-height:1;white-space:nowrap;
+  font-size:13px;min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center
 }
 #bookScrim{
   position:fixed;inset:0;z-index:125;background:rgba(0,0,0,.72);display:none
@@ -424,15 +446,24 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #bookSheet{
   position:fixed;right:18px;bottom:248px;z-index:126;width:min(380px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;padding:22px 22px 20px;
-  display:none;max-height:min(86vh,640px);overflow:auto;border-radius:14px
+  display:none;max-height:min(86vh,640px,calc(100dvh - 266px));overflow:auto;border-radius:14px
 }
 #bookSheet.on{display:block}
 #bookSheet h3{
   font-family:var(--sans);font-weight:900;margin:0 0 6px;font-size:22px;
   letter-spacing:-.03em;text-transform:uppercase
 }
-#bookSheet .lede{font-family:var(--mono);font-size:11px;color:#8a8a8a;letter-spacing:.06em;margin:0 0 18px;line-height:1.6}
-#bookSheet label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#5e5e5e;margin:0 0 6px}
+#bookSheet .lede{font-family:var(--mono);font-size:13px;color:var(--grey);letter-spacing:.06em;margin:0 0 10px;line-height:1.6}
+#bookSheet .desk{font-family:var(--mono);font-size:13px;color:var(--grey);letter-spacing:.06em;margin:0 0 16px;line-height:1.6}
+#bookSheet .botlink{
+  display:flex;align-items:center;justify-content:center;min-height:var(--hit);
+  margin:0 0 16px;padding:0 12px;box-sizing:border-box;
+  border:1px solid var(--red);color:var(--red-aaa);text-decoration:none;
+  font-family:var(--mono);font-size:13px;letter-spacing:.14em;font-weight:700;text-transform:uppercase
+}
+#bookSheet .botlink:hover{background:var(--red);color:#000}
+#bookSheet .desk[hidden],#bookSheet .botlink[hidden]{display:none!important}
+#bookSheet label{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--grey);margin:0 0 6px}
 #bookSheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 #bookSheet input,#bookSheet textarea{
   width:100%;background:#000;border:1px solid #2a2a2a;color:#fff;
@@ -443,25 +474,29 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #bookSheet textarea{min-height:72px;resize:vertical;margin-bottom:16px}
 #bookSheet .go{
   width:100%;background:var(--red);color:#000;border:0;cursor:pointer;
-  font-family:var(--mono);font-size:12px;letter-spacing:.18em;font-weight:700;padding:14px
+  font-family:var(--mono);font-size:13px;letter-spacing:.18em;font-weight:700;padding:14px;
+  min-height:var(--hit);position:sticky;bottom:0;box-shadow:0 -12px 18px #050505
 }
 #bookSheet .go:hover{background:#fff}
 #bookSheet .go:disabled{opacity:.55;cursor:wait}
-#bookStatus{font-family:var(--mono);font-size:11px;color:#8a8a8a;margin:12px 0 0;line-height:1.5;min-height:1.4em}
+#bookStatus{font-family:var(--mono);font-size:13px;color:var(--grey);margin:12px 0 0;line-height:1.5;min-height:1.4em}
 #bookStatus.ok{color:#fff}
-#bookStatus.err{color:var(--red)}
+#bookStatus.err{color:var(--red-aaa)}
 #bookSheet .x{
-  position:absolute;top:12px;right:14px;background:none;border:0;color:#6a6a6a;
-  font-family:var(--mono);font-size:10px;letter-spacing:.12em;cursor:pointer
+  position:absolute;top:8px;right:8px;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);font-size:13px;letter-spacing:.12em;cursor:pointer;
+  min-width:var(--hit);min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center
 }
 #bookSheet .x:hover{color:var(--red)}
 #bookSheet h3{padding-right:72px}
-.cinfo{font-family:var(--mono);font-size:12px;line-height:2.3;color:var(--grey2)}
-.cinfo a{color:var(--grey2);text-decoration:none;border-bottom:1px solid #262626}
+.cinfo{font-family:var(--mono);font-size:14px;line-height:2.3;color:var(--grey2)}
+.cinfo a{color:var(--grey2);text-decoration:none;border-bottom:1px solid #262626;
+  min-height:var(--hit);display:inline-flex;align-items:center}
 .cinfo a:hover{color:var(--red);border-color:var(--red)}
-.cinfo .k{color:#4e4e4e;display:inline-block;min-width:92px}
+.cinfo .k{color:var(--grey);display:inline-block;min-width:92px}
 footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
-  font-size:9.5px;letter-spacing:.14em;color:#3e3e3e;display:flex;
+  font-size:12px;letter-spacing:.14em;color:var(--grey);display:flex;
   justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* ---------- responsive ---------- */
@@ -473,7 +508,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   .row .pr,.row .ph,.row .ci{grid-column:2}
   .row.head{display:none}
   .row .pr:before,.row .ph:before,.row .ci:before{
-    color:#4e4e4e;letter-spacing:.14em;font-size:8.5px;margin-right:8px
+    color:var(--grey);letter-spacing:.14em;font-size:12px;margin-right:8px
   }
   .row .pr:before{content:'PROD '}
   .row .ph:before{content:'PHOTO '}
@@ -482,25 +517,37 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   html[lang="es"] .row .ci:before{content:'CIUDAD '}
   .shot img{height:200px}
   #owngrid{grid-template-columns:1fr 1fr}
-  #owngrid img{height:170px}
+  .owncell{aspect-ratio:1}
 }
 @media(max-width:720px){
   nav{
-    left:0;right:0;max-width:100%;width:100%;
-    flex-wrap:nowrap;gap:0;padding:36px 16px 8px;font-size:9.5px;letter-spacing:.02em;
-    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr
+    left:0;right:0;top:0;max-width:100%;width:100%;
+    flex-wrap:nowrap;gap:0;
+    padding:calc(4px + env(safe-area-inset-top, 0px)) 4px 4px;
+    font-size:11px;letter-spacing:.04em;
+    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr;
+    background:#000;
+    isolation:isolate;overflow:hidden;clip-path:inset(0);
+    max-height:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
+    box-sizing:border-box;z-index:72
   }
-  nav a{color:#c8c8c8;text-align:center}
+  nav a{
+    color:#fff;text-align:center;min-height:var(--hit);min-width:0;
+    max-height:var(--hit);padding:0 2px;font-size:11px;
+    overflow:hidden;white-space:nowrap;text-overflow:clip;
+    text-shadow:none
+  }
+  #stage{
+    padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
+    box-sizing:border-box
+  }
   #vig{top:52px}
-  #brandmark{padding:12px 10px;font-size:9px;letter-spacing:.08em}
-  #brandmark svg{width:18px;height:18px}
-  #brandmark b{display:none}
   #hero .sub{letter-spacing:.08em;padding:0 4px}
-  #hero{top:76px;padding-bottom:22px}
-  #hero .role{font-size:clamp(12px,3.6vw,16px);letter-spacing:.12em;margin-top:12px}
+  #hero{top:12px;padding-bottom:22px}
+  #hero .role{font-size:clamp(13px,3.6vw,16px);letter-spacing:.12em;margin-top:12px}
   #hero .markets{margin-top:12px}
   #hero .markets i{letter-spacing:.14em;margin-top:8px;padding-bottom:8px}
-  #brandmark{padding:10px 12px;font-size:11px;letter-spacing:.1em}
+  #brandmark{padding:calc(8px + env(safe-area-inset-top, 0px)) 12px 8px;font-size:13px;letter-spacing:.1em;min-height:var(--hit)}
   #brandmark svg{width:26px;height:26px}
   #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
@@ -511,13 +558,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     width:120px
   }
   #bookFab .globe-wrap{width:120px;height:120px}
-  #bookFab .lab-top{font-size:8px}
-  #bookFab .lab-bot{font-size:9px}
-  #jamesChat{
-    left:10px;right:10px;width:auto;
-    bottom:max(12px, env(safe-area-inset-bottom));
-    max-height:calc(100svh - 72px);max-height:calc(100dvh - 72px)
-  }
+  #bookFab .lab-bot{font-size:12px}
   #bookSheet{
     left:10px;right:10px;width:auto;
     top:10px;bottom:auto;
@@ -531,7 +572,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #bookSheet textarea{min-height:48px;margin-bottom:12px}
   #bookSheet .go{position:sticky;bottom:0}
   #bookSheet .row2{grid-template-columns:1fr}
-  #jamesForm input,#bookSheet input,#bookSheet textarea{font-size:16px}
+  #bookSheet input,#bookSheet textarea{font-size:16px}
+  #inspect{padding:56px 16px 32px}
+  #inspect img{max-width:92vw;max-height:64vh}
+  #inspect .nav.prev{left:6px}
+  #inspect .nav.next{right:6px}
   #stage{height:100svh;min-height:0}
   #scrollcue{display:none!important}
   .wrap{padding:0 16px}
@@ -618,14 +663,14 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <!-- ============ [00] GLOBE ============ -->
 <section id="stage">
   <canvas id="sky"></canvas>
-  <canvas id="globe" data-i18n-aria="globe.aria" aria-label="Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens."></canvas>
+  <canvas id="globe" data-i18n-aria="globe.aria" aria-label="Wireframe globe with nine city pins. Drag to spin. Pins are decorative."></canvas>
 
   <div id="hero">
     <h1>James Huertas</h1>
     <div class="role mono" data-i18n="hero.role">Digital Technician &amp; Lighting Assistant</div>
     <div class="sub mono" data-i18n="hero.sub">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</div>
     <div class="markets mono">
-      <b data-i18n="hero.tag">GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.</b>
+      <b data-i18n="hero.tag">SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME</b>
       <i><em>VIA</em> LA · NYC · RIO · LDN · HAM · BCN · LIS · PMI · SIN</i>
     </div>
   </div>
@@ -649,16 +694,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
   <div id="zoomui" class="mono">
     <button id="zOut" data-i18n-aria="zoom.out" aria-label="Zoom out">−</button><span data-i18n="zoom.label">ZOOM</span><button id="zIn" data-i18n-aria="zoom.in" aria-label="Zoom in">+</button>
-    <span style="color:#3a3a3a;margin-left:10px" data-i18n="zoom.drag">DRAG TO SPIN</span>
+    <span style="color:var(--grey);margin-left:10px" data-i18n="zoom.drag">DRAG TO SPIN</span>
   </div>
 
   <div id="readout" class="mono"></div>
   <div id="scrollcue" class="mono"><span data-i18n="scroll">SCROLL</span> <i>▮</i></div>
 </section>
 
-<!-- mobile pin list -->
-<section id="pinlist"><div class="wrap">
-  <div class="secno mono" data-i18n="pin.secno">[00·B] GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.</div>
+<!-- mobile pin list — decorative names only; never a dossier opener -->
+<section id="pinlist" hidden aria-hidden="true"><div class="wrap">
+  <div class="secno mono" data-i18n="pin.secno">[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME</div>
   <div class="g" id="pinButtons"></div>
 </div></section>
 
@@ -804,22 +849,21 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
       </svg>
       <span data-i18n="foot.role">JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT</span>
     </span>
-    <span data-i18n="foot.bak">BACKED UP IN THREE PLACES. MINIMUM.</span>
+    <span data-i18n="foot.bak">Retiring involuntarily in three years. Book me while you can.</span>
   </footer>
 </div></section>
 
-<button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" aria-label="AI James — book me">
-  <span class="lab-top" data-i18n="fab.ai">AI JAMES</span>
+<button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" aria-label="Book me">
   <span class="globe-wrap">
     <canvas id="bookGlobe" width="176" height="176"></canvas>
   </span>
   <span class="lab-bot" data-i18n="fab.book">BOOK ME</span>
 </button>
 <div id="bookScrim"></div>
-<div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book the tech">
+<div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book me">
   <button type="button" class="x" id="bookX" data-i18n="ui.close">[ CLOSE ]</button>
-  <h3 data-i18n="book.h3">Book the tech</h3>
-  <p class="lede" data-i18n="book.lede">Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.</p>
+  <h3 data-i18n="book.h3">Book me</h3>
+  <p class="lede" data-i18n="book.lede">Hello. Dates, city, the job, how to reach you. James will reply.</p>
   <form id="bookForm">
     <div class="row2">
       <div>
@@ -831,39 +875,30 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
         <input type="date" id="bookTo" name="to">
       </div>
     </div>
-    <label for="bookJob" data-i18n="book.job">JOB / PRODUCTION</label>
-    <input type="text" id="bookJob" name="job" data-i18n-placeholder="book.ph.job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
     <label for="bookCity" data-i18n="book.city">CITY</label>
     <input type="text" id="bookCity" name="city" data-i18n-placeholder="book.ph.city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
+    <label for="bookJob" data-i18n="book.job">JOB / PRODUCTION</label>
+    <input type="text" id="bookJob" name="job" data-i18n-placeholder="book.ph.job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
     <label for="bookEmail" data-i18n="book.email">YOUR EMAIL</label>
     <input type="email" id="bookEmail" name="email" data-i18n-placeholder="book.ph.email" placeholder="producer@studio.com" autocomplete="email" required>
-    <label for="bookNote" data-i18n="book.note">ANYTHING ELSE</label>
-    <textarea id="bookNote" name="note" data-i18n-placeholder="book.ph.note" placeholder="Optional"></textarea>
     <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
     <button type="submit" class="go" id="bookGo" data-i18n="book.go">SEND REQUEST</button>
     <div id="bookStatus" aria-live="polite"></div>
   </form>
 </div>
 
-<div id="jamesChat" role="dialog" data-i18n-aria="chat.aria" aria-label="James">
-  <div class="hd"><span><b data-i18n="chat.name">JAMES</b></span><button type="button" id="jamesX" data-i18n="ui.close">[ CLOSE ]</button></div>
-  <div id="jamesLog"></div>
-  <div id="jamesChips"></div>
-  <form id="jamesForm">
-    <input id="jamesIn" type="text" autocomplete="off" data-i18n-placeholder="chat.ph" placeholder="Job, dates, city…">
-    <button type="submit" data-i18n="chat.send">SEND</button>
-  </form>
-</div>
-
 <div id="inspect" role="dialog" aria-modal="true" data-i18n-aria="inspect.aria" aria-label="Set-operations frame">
   <button class="x" id="inspectX" data-i18n="ui.close">[ CLOSE ]</button>
+  <button type="button" class="nav prev" id="inspectPrev" data-i18n-aria="inspect.prev" aria-label="Previous still">‹</button>
   <img id="inspectImg" alt="">
+  <button type="button" class="nav next" id="inspectNext" data-i18n-aria="inspect.next" aria-label="Next still">›</button>
   <div class="cap mono" id="inspectCap"></div>
+  <div class="idx mono" id="inspectIdx"></div>
 </div>
 
 <div id="scrim"></div>
-<aside id="dossier" aria-hidden="true">
-  <button class="close" id="dClose" data-i18n="ui.close">[ CLOSE ]</button>
+<aside id="dossier" aria-hidden="true" hidden>
+  <button class="close" id="dClose" data-i18n="ui.close" tabindex="-1">[ CLOSE ]</button>
   <div id="dBody"></div>
 </aside>
 
@@ -1175,7 +1210,7 @@ var I18N = {
     'nav.book': 'book me',
     'hero.role': 'Digital Technician & Lighting Assistant',
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL',
-    'hero.tag': 'GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.',
+    'hero.tag': 'SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
     'hud.uptime': 'UPTIME',
     'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'CARDS',
@@ -1195,7 +1230,7 @@ var I18N = {
     'zoom.label': 'ZOOM',
     'zoom.drag': 'DRAG TO SPIN',
     'scroll': 'SCROLL',
-    'pin.secno': '[00·B] GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.',
+    'pin.secno': '[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— a producer at Canadá',
     'do.secno': '[02] WHAT I ACTUALLY DO',
@@ -1256,40 +1291,34 @@ var I18N = {
     'con.langV': 'English / Español — bilingual',
     'con.statusV': 'EU resident · autónomo',
     'foot.role': 'JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT',
-    'foot.bak': 'BACKED UP IN THREE PLACES. MINIMUM.',
-    'fab.aria': 'AI James — book me',
-    'fab.ai': 'AI JAMES',
+    'foot.bak': 'Retiring involuntarily in three years. Book me while you can.',
+    'fab.aria': 'Book me',
     'fab.book': 'BOOK ME',
-    'book.aria': 'Book the tech',
-    'book.h3': 'Book the tech',
-    'book.lede': 'Dates, the job, send. I’ll reply from callingjhphoto@gmail.com.',
+    'book.aria': 'Book me',
+    'book.h3': 'Book me',
+    'book.lede': 'Hello. Dates, city, the job, how to reach you. James will reply.',
     'book.from': 'FROM',
     'book.to': 'TO',
     'book.job': 'JOB / PRODUCTION',
     'book.city': 'CITY',
     'book.email': 'YOUR EMAIL',
-    'book.note': 'ANYTHING ELSE',
     'book.go': 'SEND REQUEST',
     'book.sending': 'SENDING…',
-    'book.sent': 'SENT. I’ll reply from callingjhphoto@gmail.com.',
+    'book.sent': 'SENT. James will reply from callingjhphoto@gmail.com.',
     'book.needDate': 'Need a start date.',
-    'book.needEmail': 'Need an email so I can reply.',
+    'book.needEmail': 'Need an email so James can reply.',
     'book.fail': 'Couldn’t send from here. Email callingjhphoto@gmail.com.',
     'book.ph.job': 'Who’s shooting, what’s the job',
     'book.ph.city': 'Barcelona, Mallorca, London…',
     'book.ph.email': 'producer@studio.com',
-    'book.ph.note': 'Optional',
-    'chat.ph': 'Job, dates, city…',
-    'chat.send': 'SEND',
-    'chat.name': 'JAMES',
-    'chat.aria': 'James',
-    'chat.opener': 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?',
     'ui.close': '[ CLOSE ]',
+    'inspect.prev': 'Previous still',
+    'inspect.next': 'Next still',
     'inspect.aria': 'Set-operations frame',
     'inspect.alt': 'Set-operations frame, enlarged.',
     'own.alt': 'Photograph by James Huertas.',
-    'globe.aria': 'Interactive wireframe globe with nine city pins. A tappable list of the same cities is below on small screens.',
-    'readout.go': 'CLICK TO OPEN →',
+    'globe.aria': 'Wireframe globe with nine city pins. Drag to spin. Pins are decorative.',
+    'readout.go': '',
     'dos.credits': 'CREDITS · CANONICAL CV',
     'dos.creditsBare': 'CREDITS',
     'dos.reel': 'SET-OPS · THE REEL',
@@ -1321,10 +1350,10 @@ var I18N = {
     'cityline.LIS': 'Good light, long days, hills that punish a loaded cart.',
     'cityline.PMI': 'Island logistics. Everything arrives on a boat, including the panic.',
     'cityline.SIN': 'No credit on file. Ninety percent humidity is a data-integrity issue.',
-    'boot.0': 'DIGITECH HERE.',
-    'boot.1': 'TWO LANGUAGES ON SET.',
-    'boot.2': 'THE CART TRAVELS.',
-    'boot.3': 'READY TO SHOOT.',
+    'boot.0': 'PRODUCERS THIS WAY.',
+    'boot.1': 'BILINGUAL.',
+    'boot.2': 'THE DIGI CART TRAVELS.',
+    'boot.3': 'TECH NERD INCOMING.',
     'field.cam': 'CAM',
     'field.station': 'DIGI STATION',
     'mail.sub': 'Digitech booking — ',
@@ -1332,7 +1361,9 @@ var I18N = {
     'mail.dates': 'Dates: ',
     'mail.job': 'Job: ',
     'mail.city': 'City: ',
+    'mail.name': 'Name: ',
     'mail.email': 'Email: ',
+    'mail.phone': 'Phone: ',
     'cap.0': 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
     'cap.1': 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
     'cap.2': 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
@@ -1361,7 +1392,7 @@ var I18N = {
     'nav.book': 'reserva',
     'hero.role': 'Técnico digital y ayudante de iluminación',
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL EN ESPAÑA Y PORTUGAL',
-    'hero.tag': 'BUEN ROLLO. CAPTURA SEGURA. BUENA BANDA SONORA.',
+    'hero.tag': 'CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
     'hud.uptime': 'TIEMPO',
     'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'TARJETAS',
@@ -1381,7 +1412,7 @@ var I18N = {
     'zoom.label': 'ZOOM',
     'zoom.drag': 'ARRASTRA PARA GIRAR',
     'scroll': 'BAJA',
-    'pin.secno': '[00·B] BUEN ROLLO. CAPTURA SEGURA. BUENA BANDA SONORA.',
+    'pin.secno': '[00·B] CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— un productor de Canadá',
     'do.secno': '[02] LO QUE HAGO DE VERDAD',
@@ -1442,40 +1473,34 @@ var I18N = {
     'con.langV': 'English / Español — bilingüe',
     'con.statusV': 'Residente UE · autónomo',
     'foot.role': 'JH/01 — TÉCNICO DIGITAL Y AYUDANTE DE ILUMINACIÓN',
-    'foot.bak': 'COPIADO EN TRES SITIOS. MÍNIMO.',
-    'fab.aria': 'IA James — reserva',
-    'fab.ai': 'IA JAMES',
+    'foot.bak': 'Me jubilan involuntariamente en tres años. Resérvame mientras puedas.',
+    'fab.aria': 'Reserva',
     'fab.book': 'RESERVA',
-    'book.aria': 'Reservar al técnico',
-    'book.h3': 'Reservar al técnico',
-    'book.lede': 'Fechas, el trabajo, envía. Te respondo desde callingjhphoto@gmail.com.',
+    'book.aria': 'Reserva',
+    'book.h3': 'Reserva',
+    'book.lede': 'Hola. Fechas, ciudad, el trabajo, cómo contactarte. James responde.',
     'book.from': 'DESDE',
     'book.to': 'HASTA',
     'book.job': 'TRABAJO / PRODUCCIÓN',
     'book.city': 'CIUDAD',
     'book.email': 'TU CORREO',
-    'book.note': 'ALGO MÁS',
     'book.go': 'ENVIAR SOLICITUD',
     'book.sending': 'ENVIANDO…',
-    'book.sent': 'ENVIADO. Te respondo desde callingjhphoto@gmail.com.',
+    'book.sent': 'ENVIADO. James responde desde callingjhphoto@gmail.com.',
     'book.needDate': 'Necesito una fecha de inicio.',
     'book.needEmail': 'Necesito un correo para responderte.',
     'book.fail': 'No se ha podido enviar. Escribe a callingjhphoto@gmail.com.',
     'book.ph.job': 'Quién dispara, cuál es el trabajo',
     'book.ph.city': 'Barcelona, Mallorca, Londres…',
     'book.ph.email': 'productor@estudio.com',
-    'book.ph.note': 'Opcional',
-    'chat.ph': 'Trabajo, fechas, ciudad…',
-    'chat.send': 'ENVIAR',
-    'chat.name': 'JAMES',
-    'chat.aria': 'James',
-    'chat.opener': 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?',
     'ui.close': '[ CERRAR ]',
+    'inspect.prev': 'Fotograma anterior',
+    'inspect.next': 'Fotograma siguiente',
     'inspect.aria': 'Fotograma de ops de set',
     'inspect.alt': 'Fotograma de ops de set, ampliado.',
     'own.alt': 'Fotografía de James Huertas.',
-    'globe.aria': 'Globo interactivo con nueve pines de ciudad. En pantallas pequeñas, la misma lista está debajo.',
-    'readout.go': 'CLIC PARA ABRIR →',
+    'globe.aria': 'Globo de alambre con nueve pines de ciudad. Arrastra para girar. Los pines son decorativos.',
+    'readout.go': '',
     'dos.credits': 'CRÉDITOS · CV CANÓNICO',
     'dos.creditsBare': 'CRÉDITOS',
     'dos.reel': 'OPS DE SET · EL REEL',
@@ -1507,10 +1532,10 @@ var I18N = {
     'cityline.LIS': 'Buena luz, días largos, cuestas que castigan un carro cargado.',
     'cityline.PMI': 'Logística de isla. Todo llega en barco, incluido el pánico.',
     'cityline.SIN': 'Sin crédito en el archivo. El noventa por ciento de humedad es un problema de integridad de datos.',
-    'boot.0': 'DIGITECH AQUÍ.',
-    'boot.1': 'DOS IDIOMAS EN EL SET.',
-    'boot.2': 'EL CARRO VIAJA.',
-    'boot.3': 'LISTO PARA DISPARAR.',
+    'boot.0': 'PRODUCTORES POR AQUÍ.',
+    'boot.1': 'BILINGÜE.',
+    'boot.2': 'EL CARRO DIGI VIAJA.',
+    'boot.3': 'TECH NERD INCOMING.',
     'field.cam': 'CÁM',
     'field.station': 'ESTACIÓN DIGI',
     'mail.sub': 'Reserva digitech — ',
@@ -1518,7 +1543,9 @@ var I18N = {
     'mail.dates': 'Fechas: ',
     'mail.job': 'Trabajo: ',
     'mail.city': 'Ciudad: ',
+    'mail.name': 'Nombre: ',
     'mail.email': 'Correo: ',
+    'mail.phone': 'Teléfono: ',
     'cap.0': 'CAPTURE ONE · POR TETHER · PANTALLA DE CLIENTE CALIBRADA',
     'cap.1': 'ESTACIÓN MONTADA · CORRIENTE EN EL DISTRO · CABLES COLOCADOS',
     'cap.2': 'COPIA A DOBLE DESTINO · CHECKSUM VERIFICADO',
@@ -1598,7 +1625,7 @@ function applyI18n(){
   document.querySelectorAll('[data-i18n-alt]').forEach(function(n){
     n.setAttribute('alt', t(n.getAttribute('data-i18n-alt')));
   });
-  document.querySelectorAll('#pinButtons button[data-city]').forEach(function(b){
+  document.querySelectorAll('#pinButtons [data-city]').forEach(function(b){
     var id = b.getAttribute('data-city');
     var c = CITIES.filter(function(x){ return x.id === id; })[0];
     if(c) b.textContent = cityName(c).toUpperCase();
@@ -1608,7 +1635,6 @@ function applyI18n(){
     n.textContent = locFrag(n.getAttribute('data-src'));
   });
   fillChips();
-  if(typeof activePin !== 'undefined' && activePin && typeof openDossier === 'function') openDossier(activePin);
 }
 
 var bootStarted = false;
@@ -1628,13 +1654,14 @@ function startBoot(){
     bar.style.right = (100 - Math.round(((i + 1) / lines.length) * 100)) + '%';
     i++;
     if(i < lines.length){
-      setTimeout(step, i === lines.length - 1 ? 800 : 600);
+      /* +250ms on each of the four waits = +1s TOTAL, not +1s per line */
+      setTimeout(step, i === lines.length - 1 ? 1050 : 850);
     } else {
       setTimeout(function(){
         box.classList.add('gone');
         if($('#bookFab')) $('#bookFab').classList.add('on');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
-      }, 250);
+      }, 500);
     }
   };
   step();
@@ -1672,18 +1699,19 @@ var onScreen = true;
 
 function buildStars(){
   var area = SW * SH;
-  var base = Math.min(520, Math.max(150, Math.round(area / 5200)));
-  if(isTouch) base = Math.round(base * 0.55);
+  /* same flashing starfield on laptop AND mobile (NOW_DESKTOP_STARS.md) */
+  var base = Math.min(560, Math.max(220, Math.round(area / 4200)));
   stars = [];
   for(var L = 0; L < 3; L++){
     var n = Math.round(base * [0.5,0.32,0.18][L]);
     for(var i = 0; i < n; i++){
       stars.push({
         x: Math.random()*SW, y: Math.random()*SH,
-        r: [0.55,0.9,1.35][L] * (0.7 + Math.random()*0.6),
-        a: [0.18,0.32,0.55][L] * (0.6 + Math.random()*0.5),
+        r: [0.75,1.2,1.85][L] * (0.7 + Math.random()*0.7),
+        a: [0.32,0.55,0.95][L] * (0.55 + Math.random()*0.45),
         v: [0.035,0.085,0.17][L],
-        tw: Math.random()*Math.PI*2
+        tw: Math.random()*Math.PI*2,
+        tws: 0.05 + Math.random()*0.14
       });
     }
   }
@@ -2133,11 +2161,13 @@ function drawSky(dt){
       s.y += s.v * dt * 0.012;
       if(s.x < -3){ s.x = SW + 3; s.y = Math.random()*SH; }
       if(s.y > SH + 3){ s.y = -3; s.x = Math.random()*SW; }
-      s.tw += 0.012;
+      s.tw += (s.tws || 0.08) * dt * 0.08;
     }
-    var a = s.a * (0.72 + 0.28*Math.sin(s.tw));
+    var pulse = Math.sin(s.tw);
+    var a = pulse > 0.08 ? s.a * (0.35 + 0.65 * pulse) : s.a * 0.05;
     sctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
-    sctx.fillRect(s.x, s.y, s.r, s.r);
+    var rr = s.r * (pulse > 0.55 ? 1.25 : 1);
+    sctx.fillRect(s.x, s.y, rr, rr);
   }
   drawField(dt);
   if(!reduce) gridZ = (gridZ + dt * 0.0018) % 1;
@@ -2203,7 +2233,7 @@ cv.addEventListener('mousemove', function(e){
   var pt = pointOf(e), id = hitPin(pt);
   if(id !== hoverPin){
     hoverPin = id;
-    cv.style.cursor = id ? 'pointer' : 'grab';
+    cv.style.cursor = 'grab';
     if(id && !activePin){
       var c = CITIES.filter(function(x){return x.id===id})[0];
       easeTarget = { lon: c.lon, lat: -Math.max(-45, Math.min(45, c.lat*0.42)) * -1 };
@@ -2243,10 +2273,7 @@ function up(e){
   if(!dragging) return;
   dragging = false;
   cv.classList.remove('drag');
-  var pt = pointOf(e.changedTouches ? {clientX:e.changedTouches[0].clientX, clientY:e.changedTouches[0].clientY} : e);
-  var moved = Math.hypot(pt.x - downX, pt.y - downY);
-  var id = hitPin(pt);
-  if(id && moved < 10 && Math.abs(vel) < 1.2) openDossier(id);
+  /* pin click does not open a dossier (OVERRIDE_NO_CITY_DOSSIERS.md) */
 }
 cv.addEventListener('mousedown', down);
 window.addEventListener('mousemove', move);
@@ -2268,8 +2295,7 @@ function showReadout(c){
   readoutCity = c;
   readout.innerHTML =
     '<div class="c">' + esc(cityName(c).toUpperCase()) + '</div>' +
-    '<div class="x">' + c.lat.toFixed(2) + (c.lat>=0?'N':'S') + ' &nbsp;' + c.lon.toFixed(2) + (c.lon>=0?'E':'W') + '</div>' +
-    '<div class="go">' + t('readout.go') + '</div>';
+    '<div class="x">' + c.lat.toFixed(2) + (c.lat>=0?'N':'S') + ' &nbsp;' + c.lon.toFixed(2) + (c.lon>=0?'E':'W') + '</div>';
   readout.classList.add('on');
 }
 function hideReadout(){ readout.classList.remove('on'); readoutCity = null; }
@@ -2288,59 +2314,22 @@ function positionReadout(){
 /* ---------- dossier ---------- */
 var dossier = $('#dossier'), dBody = $('#dBody'), scrim = $('#scrim');
 
-function openDossier(id){
-  var c = CITIES.filter(function(x){return x.id===id})[0];
-  if(!c) return;
-  activePin = id; hoverPin = id;
-  easeTarget = { lon: c.lon, lat: Math.max(-42, Math.min(42, c.lat*0.45)) };
-  hideReadout();
-
-  var creds = CREDITS[id] || [];
-  var h = '';
-  h += '<div class="coord mono">' + c.lat.toFixed(2) + (c.lat>=0?' N':' S') + ' &nbsp;·&nbsp; ' +
-       c.lon.toFixed(2) + (c.lon>=0?' E':' W') + ' &nbsp;·&nbsp; ' + esc(c.yrs) + '</div>';
-  h += '<h2>' + esc(cityName(c)) + '</h2>';
-  h += '<div class="cityline mono">' + esc(cityLine(c)) + '</div>';
-
-  if(creds.length){
-    h += '<div class="hd mono">' + t('dos.credits') + '</div>';
-    creds.forEach(function(cr){
-      h += '<div class="cred">' +
-           '<span class="y">' + esc(cr.y) + '</span> &nbsp; <span class="cl">' + esc(locFrag(cr.c)) + '</span><br>' +
-           '<span class="meta">' + esc(locFrag(cr.p)) + (cr.ph && cr.ph !== '—' ? ' &nbsp;·&nbsp; ' + esc(cr.ph) : '') +
-           (cr.n ? '<br>' + esc(locFrag(cr.n)) : '') + '</span></div>';
-    });
-  } else {
-    h += '<div class="hd mono">' + t('dos.creditsBare') + '</div>';
-    h += '<div class="none mono" style="color:#ff3b1f;letter-spacing:.1em">' + esc(t('nocredit.' + id) || NOCREDIT[id]) + '</div>';
-    h += '<div class="none mono" style="margin-top:14px">' + esc(t('nocredit.sub')) + '</div>';
-  }
-
-  h += '<div class="hd mono">' + t('dos.reel') + '</div>';
-  h += '<div class="reel">';
-  var seed = id.charCodeAt(0) + id.charCodeAt(1) + id.charCodeAt(2);
-  for(var i = 0; i < 4; i++){
-    h += '<img loading="lazy" src="img/set/' + SET[(seed*3 + i*5) % SET.length] + '" alt="' + esc(t('dos.alt')) + '">';
-  }
-  h += '</div>';
-  h += '<div class="none mono" style="margin-top:10px;font-size:9.5px;letter-spacing:.1em;color:#4e4e4e">' +
-       esc(t('dos.note')) + '</div>';
-
-  dBody.innerHTML = h;
-  dossier.classList.add('on');
-  dossier.setAttribute('aria-hidden','false');
-  scrim.classList.add('on');
-  dossier.scrollTop = 0;
-  kick();
+function openDossier(/* id */){
+  /* OVERRIDE_NO_CITY_DOSSIERS.md — pins are decorative. Never show work history. */
+  return;
 }
 function closeDossier(){
   activePin = null; hoverPin = null; easeTarget = null;
-  dossier.classList.remove('on');
-  dossier.setAttribute('aria-hidden','true');
-  scrim.classList.remove('on');
+  if(dossier){
+    dossier.classList.remove('on');
+    dossier.setAttribute('aria-hidden','true');
+    dossier.setAttribute('hidden','');
+  }
+  if(dBody) dBody.innerHTML = '';
+  if(scrim) scrim.classList.remove('on');
 }
-$('#dClose').addEventListener('click', closeDossier);
-scrim.addEventListener('click', closeDossier);
+if($('#dClose')) $('#dClose').addEventListener('click', closeDossier);
+if(scrim) scrim.addEventListener('click', closeDossier);
 /* Escape is handled with the inspect overlay so one key closes whichever is open. */
 
 /* idle typewriter removed — a producer does not need it. SCROLL stays. */
@@ -2353,14 +2342,14 @@ function kick(){
    BUILD THE PAGE
    ============================================================ */
 
-/* mobile pin buttons */
+/* mobile pin labels — names only, never open a dossier */
 (function(){
   var g = $('#pinButtons');
+  if(!g) return;
   CITIES.forEach(function(c){
-    var b = el('button', null, esc(c.name.toUpperCase()));
-    b.setAttribute('data-city', c.id);
-    b.addEventListener('click', function(){ openDossier(c.id); });
-    g.appendChild(b);
+    var s = el('span', null, esc(c.name.toUpperCase()));
+    s.setAttribute('data-city', c.id);
+    g.appendChild(s);
   });
 })();
 
@@ -2443,10 +2432,12 @@ var DOSHOTS = [
   btn.addEventListener('click', function(){
     if(!built){
       OWN.forEach(function(f){
+        var cell = el('div','owncell');
         var i = el('img'); i.loading = 'lazy'; i.src = 'img/own/' + f;
         i.alt = t('own.alt');
-        i.onerror = function(){ this.style.display = 'none'; };
-        grid.appendChild(i);
+        i.onerror = function(){ this.style.display = 'none'; var p = this.parentNode; if(p) p.style.display = 'none'; };
+        cell.appendChild(i);
+        grid.appendChild(cell);
       });
       built = true;
     }
@@ -2478,6 +2469,7 @@ var DOSHOTS = [
     function end(){
       if(!dr) return;
       dr = false; f.classList.remove('grabbing');
+      var moved = Math.hypot(rx, ry);
       var settle = function(){
         rx *= 0.86; ry *= 0.86; rot = base + (rot - base) * 0.86;
         set();
@@ -2485,6 +2477,10 @@ var DOSHOTS = [
         else { rx = 0; ry = 0; rot = base; f.style.transform = ''; }
       };
       cancelAnimationFrame(raf); settle();
+      if(moved < 10){
+        var img = f.querySelector('img');
+        if(img && window.__openPolaroid) window.__openPolaroid(img.getAttribute('src'));
+      }
     }
     f.addEventListener('mousedown', start);
     window.addEventListener('mousemove', mv);
@@ -2495,25 +2491,93 @@ var DOSHOTS = [
   });
 })();
 
-/* inspect — click a set-ops frame, same overlay language as the dossier */
+/* inspect — click a still = carousel of that set, not a single close-card */
 (function(){
   var box = $('#inspect'), img = $('#inspectImg'), cap = $('#inspectCap');
-  function open(src, text){
-    img.src = src; img.alt = t('inspect.alt');
-    cap.textContent = text || '';
+  var idxEl = $('#inspectIdx'), prevBtn = $('#inspectPrev'), nextBtn = $('#inspectNext');
+  var gal = [], galI = 0, ownMode = false, sx = 0, sy = 0;
+
+  function doGallery(){
+    return DOSHOTS.map(function(s, i){
+      return { src: 'img/set/' + s[0], cap: t('doshot.' + i) || s[1] };
+    });
+  }
+  function setGallery(){
+    return SET.map(function(f, i){
+      return { src: 'img/set/' + f, cap: t('cap.' + (i % CAPS.length)) || CAPS[i % CAPS.length] };
+    });
+  }
+  function ownGallery(){
+    return OWN.map(function(f){
+      return { src: 'img/own/' + f, cap: '' };
+    });
+  }
+  function polaroidGallery(){
+    return [
+      { src: 'img/polaroid/station_crop.jpg', cap: '' },
+      { src: 'img/polaroid/cables.jpg', cap: '' }
+    ];
+  }
+  var polaroidOpenAt = 0;
+  window.__openPolaroid = function(src){
+    if(Date.now() - polaroidOpenAt < 400) return;
+    polaroidOpenAt = Date.now();
+    var list = polaroidGallery();
+    openAt(list, indexOfSrc(list, src), true);
+  };
+  document.querySelectorAll('#polaroid .pframe img').forEach(function(im){
+    im.style.cursor = 'zoom-in';
+    im.addEventListener('click', function(){
+      window.__openPolaroid(im.getAttribute('src'));
+    });
+  });
+  function show(){
+    if(!gal.length) return;
+    var item = gal[galI];
+    img.src = item.src;
+    img.alt = ownMode ? t('own.alt') : t('inspect.alt');
+    cap.textContent = item.cap || '';
+    if(idxEl) idxEl.textContent = (galI + 1) + ' / ' + gal.length;
+    var many = gal.length > 1;
+    if(prevBtn) prevBtn.hidden = !many;
+    if(nextBtn) nextBtn.hidden = !many;
+  }
+  function openAt(list, i, isOwn){
+    gal = list;
+    galI = (i + gal.length) % gal.length;
+    ownMode = !!isOwn;
+    show();
     box.classList.add('on');
   }
-  function close(){ box.classList.remove('on'); img.removeAttribute('src'); }
+  function close(){
+    box.classList.remove('on');
+    img.removeAttribute('src');
+    gal = [];
+  }
+  function step(d){
+    if(gal.length < 2) return;
+    galI = (galI + d + gal.length) % gal.length;
+    show();
+  }
+  function indexOfSrc(list, src){
+    var i;
+    for(i = 0; i < list.length; i++){
+      if(list[i].src === src) return i;
+    }
+    return 0;
+  }
   function fromCard(node){
     var im = node.querySelector('img');
-    var c = node.querySelector('.cap');
-    if(im) open(im.getAttribute('src'), c ? c.textContent : '');
+    if(!im) return;
+    var src = im.getAttribute('src');
+    var list = node.classList.contains('shot') ? doGallery() : setGallery();
+    openAt(list, indexOfSrc(list, src), false);
   }
   document.addEventListener('click', function(e){
     if(e.target && e.target.closest && e.target.closest('#owngrid') && e.target.tagName === 'IMG'){
       e.preventDefault();
-      open(e.target.getAttribute('src'), '');
-      img.alt = t('own.alt');
+      var list = ownGallery();
+      openAt(list, indexOfSrc(list, e.target.getAttribute('src')), true);
       return;
     }
     var n = e.target.closest ? e.target.closest('.shot, .card') : null;
@@ -2524,27 +2588,40 @@ var DOSHOTS = [
     var n = e.target.closest ? e.target.closest('.shot, .card') : null;
     if(n) fromCard(n);
   });
-  $('#inspectX').addEventListener('click', close);
+  if($('#inspectX')) $('#inspectX').addEventListener('click', close);
+  if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); step(-1); });
+  if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); step(1); });
   box.addEventListener('click', function(e){ if(e.target === box) close(); });
+  box.addEventListener('touchstart', function(e){
+    if(!e.touches || !e.touches[0]) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, {passive:true});
+  box.addEventListener('touchend', function(e){
+    if(!e.changedTouches || !e.changedTouches[0]) return;
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if(Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy)) return;
+    step(dx < 0 ? 1 : -1);
+  }, {passive:true});
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
       if($('#bookSheet') && $('#bookSheet').classList.contains('on')) closeBook();
-      else if($('#jamesChat') && $('#jamesChat').classList.contains('on')) closeJames();
       else if(box.classList.contains('on')) close();
       else closeDossier();
+    } else if(box.classList.contains('on')){
+      if(e.key === 'ArrowRight'){ e.preventDefault(); step(1); }
+      else if(e.key === 'ArrowLeft'){ e.preventDefault(); step(-1); }
     }
   });
 })();
 
-/* booking sheet — dates in, mailto out. No backend. */
 function lockPage(on){
   document.documentElement.style.overflow = on ? 'hidden' : '';
   document.body.style.overflow = on ? 'hidden' : '';
 }
 function dockOverlays(){
-  var chat = $('#jamesChat'), sheet = $('#bookSheet');
+  var sheet = $('#bookSheet');
   if(window.innerWidth > 720){
-    if(chat){ chat.style.bottom = ''; chat.style.top = ''; chat.style.maxHeight = ''; chat.style.height = ''; }
     if(sheet){ sheet.style.bottom = ''; sheet.style.top = ''; sheet.style.maxHeight = ''; sheet.style.height = ''; }
     return;
   }
@@ -2552,17 +2629,12 @@ function dockOverlays(){
   var visH = window.innerHeight, offsetTop = 0;
   if(vv){ visH = vv.height; offsetTop = vv.offsetTop; }
   var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
-  if(chat && chat.classList.contains('on')){
-    chat.style.top = '';
-    chat.style.height = '';
-    chat.style.bottom = Math.max(12, kbGap + 8) + 'px';
-    chat.style.maxHeight = Math.max(160, visH - 24) + 'px';
-  }
   if(sheet && sheet.classList.contains('on')){
     sheet.style.bottom = 'auto';
     sheet.style.top = Math.max(8, offsetTop + 8) + 'px';
-    sheet.style.height = Math.max(180, visH - 16) + 'px';
-    sheet.style.maxHeight = Math.max(180, visH - 16) + 'px';
+    var cap = Math.max(180, visH - 16);
+    sheet.style.maxHeight = cap + 'px';
+    sheet.style.height = kbGap > 40 ? cap + 'px' : '';
     var ae = document.activeElement;
     if(ae && sheet.contains(ae) && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA'))
       scrollBookField(ae);
@@ -2583,7 +2655,6 @@ function openBook(e){
   sheet.classList.add('on');
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
-  if($('#jamesChat')) $('#jamesChat').classList.remove('on');
   lockPage(true);
   dockOverlays();
   var from = $('#bookFrom');
@@ -2609,6 +2680,8 @@ if(window.visualViewport){
   var form = $('#bookForm');
   var nb = $('#navBook');
   if(nb) nb.addEventListener('click', openBook);
+  var fab = $('#bookFab');
+  if(fab) fab.addEventListener('click', openBook);
   var x = $('#bookX');
   if(x) x.addEventListener('click', closeBook);
   var scrim = $('#bookScrim');
@@ -2627,12 +2700,13 @@ if(window.visualViewport){
   }
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return;
     var from = ($('#bookFrom') && $('#bookFrom').value) || '';
     var to = ($('#bookTo') && $('#bookTo').value) || '';
     var job = ($('#bookJob') && $('#bookJob').value) || '';
     var city = ($('#bookCity') && $('#bookCity').value) || '';
     var email = ($('#bookEmail') && $('#bookEmail').value || '').trim();
-    var note = ($('#bookNote') && $('#bookNote').value) || '';
     if(!from){
       setStatus(t('book.needDate'), 'err');
       if($('#bookFrom')) $('#bookFrom').focus();
@@ -2653,8 +2727,7 @@ if(window.visualViewport){
       email: email,
       Dates: dates,
       Job: job || '—',
-      City: city || '—',
-      Note: note || '—'
+      City: city || '—'
     };
     if(go){ go.disabled = true; go.textContent = t('book.sending'); }
     setStatus(t('book.sending'), '');
@@ -2679,142 +2752,9 @@ if(window.visualViewport){
           t('mail.job') + (job || '—') + '\n' +
           t('mail.city') + (city || '—') + '\n' +
           t('mail.email') + email + '\n';
-        if(note) body += '\n' + note + '\n';
         window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
           encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
       });
-  });
-})();
-
-/* James on the page — his voice, not a model. Does not guess the diary. */
-function closeJames(){
-  var chat = $('#jamesChat');
-  if(chat) chat.classList.remove('on');
-  if($('#bookFab') && !($('#bookSheet') && $('#bookSheet').classList.contains('on')))
-    $('#bookFab').classList.add('on');
-  if(!($('#bookSheet') && $('#bookSheet').classList.contains('on'))) lockPage(false);
-  dockOverlays();
-}
-(function(){
-  var chat = $('#jamesChat'), log = $('#jamesLog'), form = $('#jamesForm'), input = $('#jamesIn');
-  var chips = $('#jamesChips');
-  if(!chat || !log) return;
-
-  function add(who, text){
-    var d = document.createElement('div');
-    d.className = 'm ' + who;
-    d.textContent = text;
-    log.appendChild(d);
-    log.scrollTop = log.scrollHeight;
-  }
-  function jamesSays(text){
-    add('him', text);
-  }
-  function reply(raw){
-    var t = (raw || '').toLowerCase();
-    var es = LANG === 'es' || /[áéíóúñ¿¡]/.test(t) || /\b(hola|buenas|disponible|presupuesto|tarifa|gracias|fechas|trabajo)\b/.test(t);
-    if(/\b(dit|d\.i\.t)\b/.test(t))
-      return es
-        ? 'Soy el técnico digital y ayudante de iluminación — captura, color, copias. Encantado de explicarlo.'
-        : 'I’m the digital technician and lighting assistant — capture, colour, the backups. Happy to walk through it.';
-    if(/\b(rate|price|precio|tarifa|presupuesto|€|euro)\b/.test(t))
-      return es
-        ? 'Te mando la tarifa por correo o WhatsApp, más fácil que aquí. ¿Te la envío?'
-        : 'I’ll send the rate card on email or WhatsApp — easier than here. Want me to?';
-    if(/\b(free|avail|busy|diary|calendar|disponible|libre|ocupado|agenda)\b/.test(t) || /\d{4}-\d{2}-\d{2}/.test(t) || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|ene|abr|ago|dic)\b/.test(t))
-      return es
-        ? 'No quiero adivinar y equivocarme. Pon las fechas en el formulario y te confirmo el mismo día. Si ya estoy en un trabajo, te lo digo.'
-        : 'I don’t want to guess from here and get it wrong. Drop the dates in the form and I’ll confirm the same day — if I’m already on a job I’ll say so.';
-    if(/\b(spanish|english|idioma|bilingual|español|ingles|language|flown|american|german|london)\b/.test(t))
-      return es
-        ? 'Inglés y español, sin problema. Si habéis volado a alguien, cuido los dos lados del set.'
-        : 'English and Spanish, no problem. If you’ve flown people in, I’ll look after both sides of the room.';
-    if(/\b(where|based|barcelona|mallorca|spain|uk|lisbon|ciudad|dónde|donde|base)\b/.test(t))
-      return es
-        ? 'Barcelona y Mallorca son casa, y voy a donde esté el trabajo — España, Portugal, UK, más lejos si hace falta.'
-        : 'Barcelona and Mallorca are home, and I go where the job is — Spain, Portugal, the UK, further if you need.';
-    if(/\b(kit|camera|hasselblad|phase|canon|sony|lighting|profoto|what do you (do|use)|qué haces)\b/.test(t))
-      return es
-        ? 'Lo que le guste al fotógrafo. Yo llevo la estación para que puedan disparar tranquilos.'
-        : 'Whatever your photographer likes to shoot with. I’ll run the station so they can get on with it.';
-    if(/\b(whatsapp|phone|email|contact|llamar|correo)\b/.test(t))
-      return es
-        ? 'Lo más fácil: callingjhphoto@gmail.com o WhatsApp +44 7562 393 477.'
-        : 'Easiest is email or WhatsApp — callingjhphoto@gmail.com, or +44 7562 393 477 on WhatsApp.';
-    if(/\b(great|love|amazing|awesome|nice|brilliant|legend)\b/.test(t))
-      return es
-        ? 'Qué amable, de verdad. Si tienes un trabajo a la vista, mándame fechas y lo miro ahora.'
-        : 'That’s very kind — thank you. If you’ve got a job coming, send the dates and I’ll look straight away.';
-    if(/\b(hi|hey|hello|hola|buenas|good morning|good afternoon)\b/.test(t))
-      return es ? 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?' : 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?';
-    if(/\b(thanks|gracias|cheers|perfect)\b/.test(t))
-      return es ? 'Cuando quieras. Si tienes fechas, las miro encantado.' : 'Pleasure. If you’ve got dates, send them over and I’ll check.';
-    return es
-      ? 'Encantado de mirarlo. Fechas y una línea del trabajo y te digo si estoy libre.'
-      : 'Happy to look. Dates and a line on the job and I’ll tell you if I’m free.';
-  }
-
-  function openJames(e){
-    if(e) e.preventDefault();
-    closeBook();
-    if($('#bookFab')) $('#bookFab').classList.remove('on');
-    chat.classList.add('on');
-    if(!log.childNodes.length){
-      jamesSays(t('chat.opener'));
-    }
-    lockPage(true);
-    dockOverlays();
-    if(input && !isTouch) input.focus();
-  }
-  var globe = $('#bookFab');
-  if(globe){
-    globe.addEventListener('click', openJames);
-    globe.addEventListener('touchend', function(e){
-      e.preventDefault();
-      openJames(e);
-    }, {passive:false});
-  }
-
-  fillChips = function(){
-    if(!chips) return;
-    chips.innerHTML = '';
-    var CHIP = LANG === 'es' ? [
-      ['Fechas', '¿Estás libre la semana que viene?'],
-      ['Qué haces', '¿Qué haces de verdad en el set?'],
-      ['EN / ES', '¿Hablas español en el set?'],
-      ['Kit', '¿Con qué kit trabajas?']
-    ] : [
-      ['Dates', 'Are you free next week?'],
-      ['What you do', 'What do you actually do on set?'],
-      ['EN / ES', 'Do you speak Spanish on set?'],
-      ['Kit', 'What kit do you run?']
-    ];
-    CHIP.forEach(function(c){
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = c[0];
-      b.addEventListener('click', function(){
-        add('you', c[1]);
-        jamesSays(reply(c[1]));
-        if(/free|date|libre|fecha/.test(c[1].toLowerCase())) setTimeout(openBook, 700);
-      });
-      chips.appendChild(b);
-    });
-  };
-  fillChips();
-
-  var jx = $('#jamesX');
-  if(jx) jx.addEventListener('click', closeJames);
-  if(form) form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var v = (input && input.value || '').trim();
-    if(!v) return;
-    add('you', v);
-    if(input) input.value = '';
-    var r = reply(v);
-    jamesSays(r);
-    if(/\b(free|avail|busy|date|fecha|disponible)\b/i.test(v) || /\d{4}-\d{2}-\d{2}/.test(v))
-      setTimeout(openBook, 800);
   });
 })();
 
@@ -2985,6 +2925,8 @@ console.log("%cYou opened the console. You're my kind of producer.\nEverything o
   'color:#b4b4b4;font-family:monospace;line-height:1.7');
 console.log("%c> this role has maybe two or three good years left.\n> which is exactly why this website exists and is this ridiculous.\n> book me while the wave is still up.",
   'color:#7c7c7c;font-family:monospace;line-height:1.7');
+console.log("%cRetiring involuntarily in three years. Book me while you can.",
+  'color:#ff6b54;font-family:monospace;line-height:1.7');
 
 })();
 </script>
