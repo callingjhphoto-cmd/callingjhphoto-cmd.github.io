@@ -954,12 +954,12 @@ var BOOTS = [
     bar.style.right = (100 - Math.round(((i+1)/BOOTS.length)*100)) + '%';
     i++;
     if(i < BOOTS.length){
-      setTimeout(step, i === BOOTS.length - 1 ? 1100 : 900);
+      setTimeout(step, i === BOOTS.length - 1 ? 1300 : 1100);
     } else {
       setTimeout(function(){
         box.classList.add('gone');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
-      }, 500);
+      }, 700);
     }
   };
   step();
