@@ -58,12 +58,13 @@ nav{
 nav a{color:var(--grey);text-decoration:none;transition:color .2s;white-space:nowrap}
 nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
 #brandmark{
-  position:fixed;top:0;left:0;z-index:70;padding:14px 24px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--grey);
-  display:flex;align-items:center;gap:10px;text-decoration:none;
+  position:fixed;top:0;left:0;z-index:70;padding:12px 20px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:#fff;
+  display:flex;align-items:center;gap:12px;text-decoration:none;
 }
-#brandmark svg{width:22px;height:22px;display:block;flex:none}
+#brandmark svg{width:30px;height:30px;display:block;flex:none}
 #brandmark b{color:#fff;font-weight:500}
+#brandmark em{font-style:normal;color:var(--red)}
 
 /* ---------- globe stage ---------- */
 #stage{position:relative;height:100svh;min-height:560px;width:100%;overflow:hidden}
@@ -80,16 +81,26 @@ nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
   font-size:clamp(26px,6.4vw,74px);letter-spacing:-.035em;line-height:.95;
   text-transform:uppercase;
 }
+#hero .role{
+  font-family:var(--mono);color:#fff;font-weight:500;
+  font-size:clamp(13px,2.15vw,22px);letter-spacing:.18em;
+  margin-top:16px;line-height:1.35;text-transform:uppercase;
+}
 #hero .sub{
-  font-family:var(--mono);color:var(--grey2);font-size:clamp(8.5px,1.15vw,11px);
-  letter-spacing:.16em;margin-top:14px;line-height:1.9;
+  font-family:var(--mono);color:var(--grey);font-size:clamp(8.5px,1.1vw,11px);
+  letter-spacing:.16em;margin-top:10px;line-height:1.9;
 }
-#hero .sub .dim{color:var(--grey)}
-#hero .tag{
-  font-family:var(--mono);color:#8a8a8a;font-size:clamp(9px,1.2vw,12px);
-  letter-spacing:.08em;margin-top:16px;line-height:1.7;
+#hero .markets{
+  font-family:var(--mono);margin-top:18px;line-height:1.65;
 }
-#hero .tag .es{display:block;color:#6a6a6a;margin-top:4px}
+#hero .markets b{
+  display:block;color:var(--red);font-weight:400;
+  font-size:clamp(11px,1.45vw,14px);letter-spacing:.2em;
+}
+#hero .markets i{
+  display:block;font-style:normal;color:#6a6a6a;
+  font-size:clamp(9px,1.15vw,12px);letter-spacing:.08em;margin-top:5px;
+}
 
 
 /* HUD */
@@ -112,13 +123,6 @@ nav a:hover,nav a:focus-visible,nav a.here{color:var(--red)}
   font-size:11px;width:22px;height:22px;line-height:1;cursor:pointer;padding:0;
 }
 #zoomui button:hover{border-color:var(--red);color:var(--red)}
-
-#idleline{
-  position:absolute;left:0;right:0;bottom:88px;z-index:14;text-align:center;
-  font-family:var(--mono);font-size:11px;color:#6a6a6a;letter-spacing:.04em;
-  pointer-events:none;padding:0 20px;min-height:1.3em;
-}
-#idleline .cur{color:var(--red)}
 
 #scrollcue{
   position:absolute;left:50%;transform:translateX(-50%);bottom:22px;z-index:13;
@@ -352,8 +356,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark svg{width:18px;height:18px}
   #brandmark b{display:none}
   #hero .sub{letter-spacing:.08em;padding:0 4px}
-  #hero{top:96px}
-  #hero .tag{display:none}
+  #hero{top:88px}
+  #hero .role{font-size:clamp(12px,3.6vw,16px);letter-spacing:.12em;margin-top:12px}
+  #hero .markets{margin-top:12px}
+  #brandmark{padding:10px 12px;font-size:11px;letter-spacing:.1em}
+  #brandmark svg{width:26px;height:26px}
+  #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
   #stage{height:88svh}
@@ -399,7 +407,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
     <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
   </svg>
-  JH<span style="color:#ff3b1f">/</span>01 — <b>JAMES HUERTAS</b>
+  JH<em>/</em>01 <b>JAMES HUERTAS</b>
 </a>
 <nav class="mono">
   <a href="#stage">globe</a>
@@ -415,11 +423,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
   <div id="hero">
     <h1>James Huertas</h1>
-    <div class="sub mono">
-      DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT<br>
-      <span class="dim">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</span>
+    <div class="role mono">Digital Technician &amp; Lighting Assistant</div>
+    <div class="sub mono">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</div>
+    <div class="markets mono">
+      <b>NINE MARKETS. SAME CART.</b>
+      <i>The frequent-flyer miles are on the Pelican.</i>
     </div>
-    <div class="tag mono">Good vibes. Tight workflow. Cool music on set.<span class="es">Buen rollo. Flujo de trabajo afinado. Buena música en el set.</span></div>
   </div>
 
   <div class="hud mono" id="hudTL">
@@ -445,13 +454,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </div>
 
   <div id="readout" class="mono"></div>
-  <div id="idleline" class="mono"></div>
   <div id="scrollcue" class="mono">SCROLL <i>▮</i></div>
 </section>
 
 <!-- mobile pin list -->
 <section id="pinlist"><div class="wrap">
-  <div class="secno mono">[00·B] NINE PINS</div>
+  <div class="secno mono">[00·B] NINE MARKETS. SAME CART.</div>
+  <p class="lede mono" style="margin:8px 0 0;color:#6a6a6a">The frequent-flyer miles are on the Pelican.</p>
   <div class="g" id="pinButtons"></div>
 </div></section>
 
@@ -1126,7 +1135,7 @@ function drawGlobe(){
     ctx.beginPath(); ctx.arc(p.x, p.y, hot?3.4:2.3, 0, Math.PI*2); ctx.fill();
 
     // label — skip if it would sit under the headline
-    if(!isTouch && top.y > 200){
+    if(!isTouch && top.y > 280){
       ctx.font = '9px ' + "'JetBrains Mono',monospace";
       ctx.fillStyle = hot ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,' + (0.16 + p.z*0.30).toFixed(3) + ')';
       ctx.textAlign = 'left';
@@ -1425,44 +1434,11 @@ $('#dClose').addEventListener('click', closeDossier);
 scrim.addEventListener('click', closeDossier);
 /* Escape is handled with the inspect overlay so one key closes whichever is open. */
 
-/* ---------- idle typewriter ---------- */
-var IDLES = [
- '> the globe will keep spinning. the shoot does not wait for you either.',
- "> you can drag it. most people don't. most people also don't back up twice.",
- "> still here? good. that's the job."
-];
-var idleEl = $('#idleline'), idleT = null, idleI = 0, typing = null, lastAct = Date.now();
-
+/* idle typewriter removed — a producer does not need it. SCROLL stays. */
 var scrollCue = $('#scrollcue');
 function kick(){
-  lastAct = Date.now();
-  if(typing){ clearInterval(typing); typing = null; }
-  idleEl.innerHTML = '';
   if(scrollCue) scrollCue.classList.remove('off');
 }
-['mousemove','mousedown','touchstart','wheel','keydown','scroll'].forEach(function(ev){
-  window.addEventListener(ev, kick, {passive:true});
-});
-
-function idleTick(){
-  if(reduce) return;
-  if(Date.now() - lastAct < 20000) return;
-  if(typing) return;
-  var s = IDLES[idleI % IDLES.length]; idleI++;
-  var i = 0;
-  idleEl.innerHTML = '';
-  if(scrollCue) scrollCue.classList.add('off');
-  typing = setInterval(function(){
-    if(i > s.length){
-      clearInterval(typing); typing = null;
-      setTimeout(function(){ if(Date.now() - lastAct > 20000) idleEl.innerHTML = ''; }, 5200);
-      return;
-    }
-    idleEl.innerHTML = esc(s.slice(0,i)) + '<span class="cur">▮</span>';
-    i++;
-  }, 34);
-}
-setInterval(idleTick, 1200);
 
 /* ============================================================
    BUILD THE PAGE
