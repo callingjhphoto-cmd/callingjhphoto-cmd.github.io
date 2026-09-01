@@ -292,11 +292,15 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #last .lede{font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#8a8a8a;
   max-width:640px;margin:18px 0 0}
 #last .lede b{color:var(--grey2);font-weight:400}
+#last .lede a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(255,59,31,.35)}
+#last .lede a:hover{border-color:var(--red)}
+.ownbar{display:flex;align-items:center;gap:18px;margin-top:28px;flex-wrap:wrap}
 #toggleOwn{
-  margin-top:30px;background:none;border:1px solid #262626;color:var(--grey2);
+  background:none;border:1px solid #262626;color:var(--grey2);
   font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;padding:11px 20px;cursor:pointer
 }
 #toggleOwn:hover{border-color:var(--red);color:var(--red)}
+.ownbar .quiet{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#4e4e4e}
 #owngrid{display:none;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:34px}
 #owngrid.on{display:grid}
 #owngrid img{width:100%;height:170px;object-fit:cover;display:block;opacity:.88;cursor:zoom-in}
@@ -414,7 +418,7 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .cinfo{font-family:var(--mono);font-size:12px;line-height:2.3;color:var(--grey2)}
 .cinfo a{color:var(--grey2);text-decoration:none;border-bottom:1px solid #262626}
 .cinfo a:hover{color:var(--red);border-color:var(--red)}
-.cinfo .k{color:#4e4e4e;display:inline-block;min-width:74px}
+.cinfo .k{color:#4e4e4e;display:inline-block;min-width:92px}
 footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   font-size:9.5px;letter-spacing:.14em;color:#3e3e3e;display:flex;
   justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -667,8 +671,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <section id="last"><div class="wrap">
   <div class="secno mono">[06] PERSONAL WORK</div>
   <h2 class="big">Personal work</h2>
-  <p class="lede mono">Not from a booking.</p>
-  <button id="toggleOwn" class="mono">[ + ] OPEN</button>
+  <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> — on set and on the road.</p>
+  <div class="ownbar">
+    <button id="toggleOwn" class="mono">[ + ] OPEN</button>
+    <span class="quiet">Not from a booking.</span>
+  </div>
   <div id="owngrid"></div>
 </div></section>
 
@@ -690,6 +697,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
       <div><span class="k">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
       <div><span class="k">PHONE</span><a href="tel:+34643147756">+34 643 147 756</a></div>
       <div><span class="k">WHATSAPP</span><a href="https://wa.me/447562393477">+44 7562 393 477</a></div>
+      <div><span class="k">INSTAGRAM</span><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a></div>
       <div><span class="k">BASE</span>Barcelona &amp; Mallorca</div>
       <div><span class="k">LANG</span>English / Español — bilingual</div>
       <div><span class="k">STATUS</span>EU resident · autónomo · invoices same day</div>
