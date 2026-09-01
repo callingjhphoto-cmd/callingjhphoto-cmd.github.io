@@ -1882,32 +1882,49 @@ function drawField(dt){
   var s = W < 720 ? 10 : 16;
   if(!reduce) fieldT += dt * 0.00105;
 
-  function atomStream(x0, x1, n){
-    var i, u, bx, by, buzz, buzz2, tw, rr, fade, a;
-    for(i = 0; i < n; i++){
-      u = (fieldT * 0.22 + i / n) % 1;
-      bx = x0 + u * (x1 - x0);
-      by = y0 + Math.sin(u * Math.PI * 2 * turns + fieldT * 0.9) * amp;
-      fade = fieldFade(bx, by, rad);
-      if(fade < 0.06) continue;
-      buzz = Math.sin(fieldT * 36 + i * 2.4);
-      buzz2 = Math.cos(fieldT * 44 + i * 1.7);
-      bx += buzz * 1.5;
-      by += buzz2 * 1.5;
-      tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
-      rr = (i % 5 === 0 ? 2.6 : 1.45) * (0.75 + 0.4 * tw);
-      a = fade * tw;
-      if(i % 4 === 0){
-        sctx.fillStyle = 'rgba(255,59,31,' + (0.82 * a).toFixed(3) + ')';
-      } else {
-        sctx.fillStyle = 'rgba(255,255,255,' + (0.55 * a).toFixed(3) + ')';
-      }
-      sctx.beginPath();
-      sctx.arc(bx, by, rr, 0, Math.PI * 2);
-      sctx.fill();
-    }
+  var x0 = camX + s * 0.72;
+  var x1 = lapX - s * 1.25;
+  function tetherXY(u){
+    return {
+      x: x0 + u * (x1 - x0),
+      y: y0 + Math.sin(u * Math.PI * 2 * turns + fieldT * 0.9) * amp
+    };
   }
-  atomStream(camX, lapX, isTouch ? 80 : 170);
+
+  var segs = isTouch ? 64 : 130;
+  var i, u, p, q, fade;
+  sctx.lineCap = 'round';
+  sctx.lineJoin = 'round';
+  for(i = 0; i < segs; i++){
+    p = tetherXY(i / segs);
+    q = tetherXY((i + 1) / segs);
+    fade = (fieldFade(p.x, p.y, rad) + fieldFade(q.x, q.y, rad)) * 0.5;
+    sctx.strokeStyle = 'rgba(180,180,180,' + (0.16 + 0.38 * fade).toFixed(3) + ')';
+    sctx.lineWidth = 1.45;
+    sctx.beginPath();
+    sctx.moveTo(p.x, p.y);
+    sctx.lineTo(q.x, q.y);
+    sctx.stroke();
+  }
+
+  var nAtoms = isTouch ? 80 : 170;
+  for(i = 0; i < nAtoms; i++){
+    u = (fieldT * 0.22 + i / nAtoms) % 1;
+    p = tetherXY(u);
+    fade = fieldFade(p.x, p.y, rad);
+    if(fade < 0.06) continue;
+    var buzz = Math.sin(fieldT * 36 + i * 2.4) * 0.7;
+    var buzz2 = Math.cos(fieldT * 44 + i * 1.7) * 0.7;
+    var tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
+    var rr = (i % 5 === 0 ? 2.4 : 1.35) * (0.75 + 0.4 * tw);
+    var a = fade * tw;
+    sctx.fillStyle = (i % 4 === 0)
+      ? 'rgba(255,59,31,' + (0.82 * a).toFixed(3) + ')'
+      : 'rgba(255,255,255,' + (0.55 * a).toFixed(3) + ')';
+    sctx.beginPath();
+    sctx.arc(p.x + buzz, p.y + buzz2, rr, 0, Math.PI * 2);
+    sctx.fill();
+  }
 
   var leftCol = CX - rad;
   var rightCol = CX + rad;
