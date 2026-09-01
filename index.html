@@ -337,6 +337,45 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 }
 #bookFab.on{display:block}
 #bookFab:hover{background:#fff}
+#jamesFab{
+  position:fixed;right:22px;bottom:78px;z-index:80;
+  background:#000;color:#fff;border:1px solid var(--red);cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;font-weight:700;
+  padding:13px 18px;display:none
+}
+#jamesFab.on{display:block}
+#jamesFab:hover{background:var(--red);color:#000}
+#jamesChat{
+  position:fixed;right:18px;bottom:132px;z-index:126;width:min(360px,calc(100vw - 28px));
+  background:#050505;border:1px solid #2a2a2a;display:none;flex-direction:column;
+  max-height:min(70vh,520px)
+}
+#jamesChat.on{display:flex}
+#jamesChat .hd{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#8a8a8a;
+  padding:12px 14px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center
+}
+#jamesChat .hd b{color:#fff;font-weight:500;letter-spacing:.12em}
+#jamesChat .hd button{background:none;border:0;color:#6a6a6a;font-family:var(--mono);font-size:10px;letter-spacing:.12em;cursor:pointer}
+#jamesChat .hd button:hover{color:var(--red)}
+#jamesLog{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+#jamesLog .m{font-family:var(--sans);font-size:14px;line-height:1.45;max-width:92%;padding:8px 11px}
+#jamesLog .him{background:#111;color:#e8e8e8;align-self:flex-start}
+#jamesLog .you{background:var(--red);color:#000;align-self:flex-end}
+#jamesChips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+#jamesChips button{
+  background:none;border:1px solid #2a2a2a;color:#8a8a8a;font-family:var(--mono);
+  font-size:9px;letter-spacing:.12em;padding:6px 8px;cursor:pointer
+}
+#jamesChips button:hover{border-color:var(--red);color:#fff}
+#jamesForm{display:flex;border-top:1px solid #1e1e1e}
+#jamesForm input{
+  flex:1;background:#000;border:0;color:#fff;font-family:var(--sans);font-size:14px;padding:12px 14px
+}
+#jamesForm button{
+  background:var(--red);color:#000;border:0;font-family:var(--mono);font-size:10px;
+  letter-spacing:.16em;font-weight:700;padding:0 14px;cursor:pointer
+}
 #bookScrim{
   position:fixed;inset:0;z-index:125;background:rgba(0,0,0,.72);display:none
 }
@@ -420,6 +459,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
   #bookFab{right:14px;bottom:16px;padding:13px 16px;font-size:10px}
+  #jamesFab{right:14px;bottom:68px;padding:11px 14px;font-size:10px}
+  #jamesChat{right:10px;bottom:118px}
   #bookSheet{right:10px;bottom:70px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
   #stage{height:88svh}
@@ -669,6 +710,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </footer>
 </div></section>
 
+<button type="button" id="jamesFab" class="mono">JAMES</button>
 <button type="button" id="bookFab" class="mono">BOOK</button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
@@ -693,6 +735,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <label for="bookNote">ANYTHING ELSE</label>
     <textarea id="bookNote" name="note" placeholder="Optional"></textarea>
     <button type="submit" class="go">SEND REQUEST</button>
+  </form>
+</div>
+
+<div id="jamesChat" role="dialog" aria-label="James">
+  <div class="hd"><span><b>JAMES</b> · TECH NERD</span><button type="button" id="jamesX">[ CLOSE ]</button></div>
+  <div id="jamesLog"></div>
+  <div id="jamesChips"></div>
+  <form id="jamesForm">
+    <input id="jamesIn" type="text" autocomplete="off" placeholder="Job, dates, city…">
+    <button type="submit">SEND</button>
   </form>
 </div>
 
@@ -1018,6 +1070,7 @@ var BOOTS = [
     box.classList.add('gone');
     setTimeout(function(){box.style.display='none'},100);
     if($('#bookFab')) $('#bookFab').classList.add('on');
+    if($('#jamesFab')) $('#jamesFab').classList.add('on');
     return;
   }
   var step = function(){
@@ -1030,6 +1083,7 @@ var BOOTS = [
       setTimeout(function(){
         box.classList.add('gone');
         if($('#bookFab')) $('#bookFab').classList.add('on');
+        if($('#jamesFab')) $('#jamesFab').classList.add('on');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
       }, 700);
     }
@@ -1695,6 +1749,7 @@ var DOSHOTS = [
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
       if($('#bookSheet') && $('#bookSheet').classList.contains('on')) closeBook();
+      else if($('#jamesChat') && $('#jamesChat').classList.contains('on')) closeJames();
       else if(box.classList.contains('on')) close();
       else closeDossier();
     }
@@ -1709,6 +1764,8 @@ function openBook(e){
   sheet.classList.add('on');
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
+  if($('#jamesFab')) $('#jamesFab').classList.remove('on');
+  if($('#jamesChat')) $('#jamesChat').classList.remove('on');
   var from = $('#bookFrom');
   if(from) from.focus();
 }
@@ -1717,6 +1774,7 @@ function closeBook(){
   if(sheet) sheet.classList.remove('on');
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
+  if($('#jamesFab')) $('#jamesFab').classList.add('on');
 }
 (function(){
   var fab = $('#bookFab'), form = $('#bookForm');
@@ -1747,6 +1805,115 @@ function closeBook(){
     if(note) body += '\n' + note + '\n';
     window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
       encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
+  });
+})();
+
+/* James on the page — his voice, not a model. Does not guess the diary. */
+function closeJames(){
+  var chat = $('#jamesChat'), fab = $('#jamesFab');
+  if(chat) chat.classList.remove('on');
+  if(fab && !($('#bookSheet') && $('#bookSheet').classList.contains('on'))) fab.classList.add('on');
+}
+(function(){
+  var chat = $('#jamesChat'), log = $('#jamesLog'), form = $('#jamesForm'), input = $('#jamesIn');
+  var fab = $('#jamesFab'), chips = $('#jamesChips');
+  if(!chat || !log) return;
+
+  function add(who, text){
+    var d = document.createElement('div');
+    d.className = 'm ' + who;
+    d.textContent = text;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
+  function jamesSays(text){
+    add('him', text);
+  }
+  function reply(raw){
+    var t = (raw || '').toLowerCase();
+    var es = /[áéíóúñ¿¡]/.test(t) || /\b(hola|buenas|disponible|presupuesto|tarifa|gracias|fechas|trabajo)\b/.test(t);
+    if(/\b(dit|d\.i\.t)\b/.test(t))
+      return es
+        ? 'Técnico digital y ayudante de iluminación. No uso DIT. Capture, color, datos, el carro.'
+        : 'Digital technician and lighting assistant. I don’t use DIT — capture, colour, data, the cart.';
+    if(/\b(rate|price|precio|tarifa|presupuesto|€|euro)\b/.test(t))
+      return es
+        ? 'Te mando la tarifa. Email o WhatsApp es más rápido que adivinar aquí.'
+        : 'I’ll send the rate card. Email or WhatsApp is faster than guessing here.';
+    if(/\b(free|avail|busy|diary|calendar|disponible|libre|ocupado|agenda)\b/.test(t) || /\d{4}-\d{2}-\d{2}/.test(t) || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|ene|abr|ago|dic)\b/.test(t))
+      return es
+        ? 'No adivino la agenda desde la web. Pon las fechas en BOOK. Confirmo el mismo día desde el calendario. Si estoy en un job, te lo digo.'
+        : 'I won’t guess the diary from a website. Hit BOOK, put the dates in. I’ll confirm the same day from the calendar. If I’m on a job I’ll say so.';
+    if(/\b(spanish|english|idioma|bilingual|español|ingles|language|flown|american|german|london)\b/.test(t))
+      return es
+        ? 'Inglés y español en set. Si habéis volado a alguien, dejo los dos lados cómodos.'
+        : 'English and Spanish on set. If you’ve flown someone in, I keep both sides comfortable.';
+    if(/\b(where|based|barcelona|mallorca|spain|uk|lisbon|ciudad|dónde|donde|base)\b/.test(t))
+      return es
+        ? 'Barcelona y Mallorca son casa. España, Portugal, UK, donde caiga el job. El carro viaja.'
+        : 'Barcelona and Mallorca are home. Spain, Portugal, UK, wherever the job lands. The cart travels.';
+    if(/\b(kit|camera|hasselblad|phase|canon|sony|lighting|profoto|what do you (do|use)|qué haces)\b/.test(t))
+      return es
+        ? 'Lo que dispare el fotógrafo. Yo llevo la estación para que puedan disparar.'
+        : 'Whatever the photographer shoots with. I run the station so they can shoot.';
+    if(/\b(whatsapp|phone|email|contact|llamar|correo)\b/.test(t))
+      return es
+        ? 'callingjhphoto@gmail.com · +34 643 147 756 · WhatsApp +44 7562 393 477'
+        : 'callingjhphoto@gmail.com · +34 643 147 756 · WhatsApp +44 7562 393 477';
+    if(/\b(hi|hey|hello|hola|buenas|good morning)\b/.test(t))
+      return es ? 'Hola. Soy James. ¿El trabajo y las fechas?' : 'Hey. I’m James. What’s the job and when?';
+    if(/\b(thanks|gracias|cheers|perfect)\b/.test(t))
+      return es ? 'Cuando quieras. Si tienes fechas, mándalas.' : 'Anytime. Send the dates if you’ve got them.';
+    return es
+      ? 'Fechas y el job. Te digo si estoy libre.'
+      : 'Give me dates and the job. I’ll tell you if I’m free.';
+  }
+
+  function openJames(e){
+    if(e) e.preventDefault();
+    closeBook();
+    if($('#bookFab')) $('#bookFab').classList.add('on');
+    chat.classList.add('on');
+    if(fab) fab.classList.remove('on');
+    if(!log.childNodes.length){
+      jamesSays('Hey. I’m James. Tech nerd. What’s the job and when?');
+    }
+    if(input) input.focus();
+  }
+
+  var CHIP = [
+    ['Dates', 'Are you free next week?'],
+    ['What you do', 'What do you actually do on set?'],
+    ['EN / ES', 'Do you speak Spanish on set?'],
+    ['Kit', 'What kit do you run?']
+  ];
+  if(chips){
+    CHIP.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = c[0];
+      b.addEventListener('click', function(){
+        add('you', c[1]);
+        jamesSays(reply(c[1]));
+        if(/free|date/.test(c[1].toLowerCase())) setTimeout(openBook, 700);
+      });
+      chips.appendChild(b);
+    });
+  }
+
+  if(fab) fab.addEventListener('click', openJames);
+  var jx = $('#jamesX');
+  if(jx) jx.addEventListener('click', closeJames);
+  if(form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (input && input.value || '').trim();
+    if(!v) return;
+    add('you', v);
+    if(input) input.value = '';
+    var r = reply(v);
+    jamesSays(r);
+    if(/\b(free|avail|busy|date|fecha|disponible)\b/i.test(v) || /\d{4}-\d{2}-\d{2}/.test(v))
+      setTimeout(openBook, 800);
   });
 })();
 
