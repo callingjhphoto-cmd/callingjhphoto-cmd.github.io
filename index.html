@@ -498,7 +498,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #jamesChat{right:10px;bottom:136px}
   #bookSheet{right:10px;bottom:136px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
-  #stage{height:88svh}
+  #stage{height:100svh;min-height:0}
   .wrap{padding:0 16px}
   #pinlist{
     display:block;padding:34px 0 90px;
@@ -990,28 +990,28 @@ var PRODS = [
 ];
 
 var OWN = [
- 'home_00_0.jpg','home_00_1.jpg','home_00_untitled-1-1.jpg',
- 'home_01_0.jpg','home_01_1.jpg','home_01_untitled-2-1.jpg',
- 'home_02_0.jpg','home_02_1.jpg','home_02_untitled-3-1.jpg',
- 'home_03_0.jpg','home_03_1.jpg','home_03_untitled-15.jpg',
- 'home_04_0.jpg','home_04_1.jpg','home_04_untitled-13.jpg',
- 'home_05_0.jpg','home_05_1.jpg','home_05_untitled-17.jpg',
- 'home_06_0.jpg','home_06_1.jpg','home_06_untitled-16.jpg',
- 'home_07_0.jpg','home_07_1.jpg','home_07_untitled-18.jpg',
- 'home_08_0.jpg','home_08_1.jpg','home_08_untitled-19.jpg',
- 'home_09_0.jpg','home_09_1.jpg','home_09_untitled-4.jpg',
- 'home_11_0.jpg','home_11_1.jpg','home_11_untitled-6.jpg',
- 'home_12_0.jpg','home_12_1.jpg','home_12_untitled-11-1.jpg',
- 'home_13_0.jpg','home_13_1.jpg','home_13_untitled-8.jpg',
- 'home_14_0.jpg','home_14_1.jpg','home_14_untitled-12.jpg',
- 'home_15_0.jpg','home_15_1.jpg','home_15_untitled-7-1.jpg',
- 'home_16_0.jpg','home_16_1.jpg','home_16_untitled-9-1.jpg',
- 'home_17_0.jpg','home_17_1.jpg','home_17_untitled-10-1.jpg',
- 'home_18_0.jpg','home_18_1.jpg','home_18_untitled-20.jpg',
- 'home_19_0.jpg','home_19_1.jpg','home_19_untitled-22.jpg',
- 'home_20_0.jpg','home_20_1.jpg','home_20_untitled-21.jpg',
- 'home_21_0.jpg','home_21_1.jpg','home_21_untitled-14.jpg',
- 'home_23_0.jpg','home_23_1.jpg','home_23_untitled-5-2.jpg',
+ 'home_00_0.jpg','home_00_1.jpg',
+ 'home_01_0.jpg','home_01_1.jpg',
+ 'home_02_0.jpg','home_02_1.jpg',
+ 'home_03_0.jpg','home_03_1.jpg',
+ 'home_04_0.jpg','home_04_1.jpg',
+ 'home_05_0.jpg','home_05_1.jpg',
+ 'home_06_0.jpg','home_06_1.jpg',
+ 'home_07_0.jpg','home_07_1.jpg',
+ 'home_08_0.jpg','home_08_1.jpg',
+ 'home_09_0.jpg','home_09_1.jpg',
+ 'home_11_0.jpg','home_11_1.jpg',
+ 'home_12_0.jpg','home_12_1.jpg',
+ 'home_13_0.jpg','home_13_1.jpg',
+ 'home_14_0.jpg','home_14_1.jpg',
+ 'home_15_0.jpg','home_15_1.jpg',
+ 'home_16_0.jpg','home_16_1.jpg',
+ 'home_17_0.jpg','home_17_1.jpg',
+ 'home_18_0.jpg','home_18_1.jpg',
+ 'home_19_0.jpg','home_19_1.jpg',
+ 'home_20_0.jpg','home_20_1.jpg',
+ 'home_21_0.jpg','home_21_1.jpg',
+ 'home_23_0.jpg','home_23_1.jpg',
  'archery_00_archery1-copy.jpg','archery_01_archery2-copy.jpg','archery_02_archery3-copy.jpg',
  'archery_03_archery4-copy.jpg','archery_04_archery5-copy.jpg','archery_05_archery6-copy.jpg',
  'archery_06_archery7-copy.jpg',
@@ -1583,7 +1583,8 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   CX = W/2; CY = H/2 + Math.min(132, H*0.14);
-  R = Math.min(W, H) * (W < 720 ? 0.32 : 0.275);
+  if(W < 720) CY = H * 0.52;
+  R = Math.min(W, H) * (W < 720 ? 0.34 : 0.275);
   buildStars();
   buildNeurons();
 }
@@ -1721,8 +1722,8 @@ var gridZ = 0;
 function drawGrid(){
   var rad = R * zoom;
   var vpX = CX;
-  var vpY = CY + rad * 0.58;
-  if(vpY > H - 90) vpY = H - 90;
+  var vpY = CY + rad * (isTouch ? 0.48 : 0.58);
+  if(vpY > H - (isTouch ? 52 : 90)) vpY = H - (isTouch ? 52 : 90);
   var floorH = H - vpY;
   if(floorH < 40) return;
 
