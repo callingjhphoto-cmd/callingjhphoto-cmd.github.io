@@ -363,7 +363,8 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #bookFab{
   position:fixed;right:18px;bottom:18px;z-index:80;
   width:176px;padding:0;border:0;background:none;cursor:pointer;
-  display:none;flex-direction:column;align-items:center;gap:7px
+  display:none;flex-direction:column;align-items:center;gap:7px;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent
 }
 #bookFab.on{display:flex}
 #bookFab .globe-wrap{
@@ -422,7 +423,7 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #bookSheet{
   position:fixed;right:18px;bottom:248px;z-index:126;width:min(380px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;padding:22px 22px 20px;
-  display:none;max-height:min(86vh,640px);overflow:auto
+  display:none;max-height:min(86vh,640px);overflow:auto;border-radius:14px
 }
 #bookSheet.on{display:block}
 #bookSheet h3{
@@ -503,13 +504,32 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
-  #bookFab{right:12px;bottom:14px;width:144px}
-  #bookFab .globe-wrap{width:144px;height:144px}
+  #bookFab{
+    right:max(12px, env(safe-area-inset-right));
+    bottom:max(14px, env(safe-area-inset-bottom));
+    width:120px
+  }
+  #bookFab .globe-wrap{width:120px;height:120px}
   #bookFab .lab-top{font-size:8px}
   #bookFab .lab-bot{font-size:9px}
-  #jamesChat{right:10px;bottom:204px}
-  #bookSheet{right:10px;bottom:204px;padding:18px 16px 16px}
+  #jamesChat{
+    left:10px;right:10px;width:auto;
+    bottom:max(12px, env(safe-area-inset-bottom));
+    max-height:calc(100svh - 72px);max-height:calc(100dvh - 72px)
+  }
+  #bookSheet{
+    left:10px;right:10px;width:auto;
+    bottom:max(12px, env(safe-area-inset-bottom));
+    padding:16px 14px 12px;
+    max-height:calc(100svh - 72px);max-height:calc(100dvh - 72px)
+  }
+  #bookSheet h3{font-size:20px}
+  #bookSheet .lede{margin-bottom:12px}
+  #bookSheet input,#bookSheet textarea{margin-bottom:10px;padding:9px 10px}
+  #bookSheet textarea{min-height:48px;margin-bottom:12px}
+  #bookSheet .go{position:sticky;bottom:0}
   #bookSheet .row2{grid-template-columns:1fr}
+  #jamesForm input,#bookSheet input,#bookSheet textarea{font-size:16px}
   #stage{height:88svh;min-height:0}
   #scrollcue{display:none}
   .wrap{padding:0 16px}
@@ -2449,6 +2469,25 @@ var DOSHOTS = [
 })();
 
 /* booking sheet — dates in, mailto out. No backend. */
+function dockOverlays(){
+  var chat = $('#jamesChat'), sheet = $('#bookSheet');
+  if(window.innerWidth > 720){
+    if(chat){ chat.style.bottom = ''; chat.style.maxHeight = ''; }
+    if(sheet){ sheet.style.bottom = ''; sheet.style.maxHeight = ''; }
+    return;
+  }
+  var vv = window.visualViewport;
+  var kb = 0;
+  var visH = window.innerHeight;
+  if(vv){
+    kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    visH = vv.height;
+  }
+  var bottom = Math.max(12, kb + 8);
+  var maxH = Math.max(180, visH - 64);
+  if(chat){ chat.style.bottom = bottom + 'px'; chat.style.maxHeight = maxH + 'px'; }
+  if(sheet){ sheet.style.bottom = bottom + 'px'; sheet.style.maxHeight = maxH + 'px'; }
+}
 function openBook(e){
   if(e) e.preventDefault();
   var sheet = $('#bookSheet'), scrim = $('#bookScrim'), fab = $('#bookFab');
@@ -2457,14 +2496,21 @@ function openBook(e){
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
   if($('#jamesChat')) $('#jamesChat').classList.remove('on');
+  dockOverlays();
   var from = $('#bookFrom');
-  if(from) from.focus();
+  if(from && !isTouch) from.focus();
 }
 function closeBook(){
   var sheet = $('#bookSheet'), scrim = $('#bookScrim'), fab = $('#bookFab');
   if(sheet) sheet.classList.remove('on');
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
+  dockOverlays();
+}
+window.addEventListener('resize', dockOverlays);
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', dockOverlays);
+  window.visualViewport.addEventListener('scroll', dockOverlays);
 }
 (function(){
   var form = $('#bookForm');
@@ -2548,6 +2594,7 @@ function closeJames(){
   if(chat) chat.classList.remove('on');
   if($('#bookFab') && !($('#bookSheet') && $('#bookSheet').classList.contains('on')))
     $('#bookFab').classList.add('on');
+  dockOverlays();
 }
 (function(){
   var chat = $('#jamesChat'), log = $('#jamesLog'), form = $('#jamesForm'), input = $('#jamesIn');
@@ -2611,12 +2658,13 @@ function closeJames(){
   function openJames(e){
     if(e) e.preventDefault();
     closeBook();
-    if($('#bookFab')) $('#bookFab').classList.add('on');
+    if($('#bookFab')) $('#bookFab').classList.remove('on');
     chat.classList.add('on');
     if(!log.childNodes.length){
       jamesSays(t('chat.opener'));
     }
-    if(input) input.focus();
+    dockOverlays();
+    if(input && !isTouch) input.focus();
   }
   var globe = $('#bookFab');
   if(globe) globe.addEventListener('click', openJames);
