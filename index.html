@@ -46,7 +46,7 @@ a{color:inherit}
 }
 #boot .bar{width:min(280px,60vw);height:1px;background:#181818;position:relative;overflow:hidden}
 #boot .bar i{position:absolute;inset:0 100% 0 0;background:var(--red);transition:right .25s linear}
-#bootline{font-size:11px;letter-spacing:.12em;color:var(--grey2);min-height:1.2em;text-align:center;padding:0 18px}
+#bootline{font-size:13px;letter-spacing:.14em;color:var(--grey2);min-height:1.4em;text-align:center;padding:0 22px;max-width:90vw}
 #boot.gone{opacity:0;pointer-events:none}
 
 /* ---------- nav ---------- */
@@ -938,9 +938,13 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 /* ============================================================
    BOOT SEQUENCE
    ============================================================ */
-var BOOTS = ['CALIBRATING MONITOR…','LOCATING GAFFER TAPE…','NEGOTIATING WITH HDMI CABLE…',
- "MOUNTING VOLUME 'BACKUP_02'…",'ASKING THE CLIENT TO STAND SLIGHTLY LEFT OF THE SCREEN…',
- 'PRETENDING THE WIFI IS FINE…','READY.'];
+var BOOTS = [
+  'WAKING THE CART…',
+  'THREE COPIES. NOT TWO.',
+  'HDMI HAS BEEN SPOKEN TO.',
+  'TECH NERD. ALREADY THERE.',
+  'READY.'
+];
 
 (function boot(){
   var box = $('#boot'), line = $('#bootline'), bar = $('#bootbar'), i = 0;
@@ -949,11 +953,14 @@ var BOOTS = ['CALIBRATING MONITOR…','LOCATING GAFFER TAPE…','NEGOTIATING WIT
     line.textContent = BOOTS[i];
     bar.style.right = (100 - Math.round(((i+1)/BOOTS.length)*100)) + '%';
     i++;
-    if(i < BOOTS.length){ setTimeout(step, i===BOOTS.length-1 ? 380 : 300); }
-    else setTimeout(function(){
-      box.classList.add('gone');
-      setTimeout(function(){ box.style.display = 'none'; }, 750);
-    }, 420);
+    if(i < BOOTS.length){
+      setTimeout(step, i === BOOTS.length - 1 ? 1100 : 900);
+    } else {
+      setTimeout(function(){
+        box.classList.add('gone');
+        setTimeout(function(){ box.style.display = 'none'; }, 700);
+      }, 500);
+    }
   };
   step();
 })();
