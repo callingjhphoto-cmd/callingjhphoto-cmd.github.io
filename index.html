@@ -1250,6 +1250,8 @@ var I18N = {
     'boot.1': 'TWO LANGUAGES ON SET.',
     'boot.2': 'THE CART TRAVELS.',
     'boot.3': 'READY TO SHOOT.',
+    'field.cam': 'CAM',
+    'field.station': 'STATION',
     'mail.sub': 'Digitech booking — ',
     'mail.body': 'Are you free for digitech work?',
     'mail.dates': 'Dates: ',
@@ -1410,6 +1412,8 @@ var I18N = {
     'boot.1': 'DOS IDIOMAS EN EL SET.',
     'boot.2': 'EL CARRO VIAJA.',
     'boot.3': 'LISTO PARA DISPARAR.',
+    'field.cam': 'CÁM',
+    'field.station': 'ESTACIÓN',
     'mail.sub': 'Reserva digitech — ',
     'mail.body': '¿Estás libre para un trabajo de técnico digital?',
     'mail.dates': 'Fechas: ',
@@ -1581,6 +1585,7 @@ function resize(){
   CX = W/2; CY = H/2 + Math.min(132, H*0.14);
   R = Math.min(W, H) * (W < 720 ? 0.32 : 0.275);
   buildStars();
+  buildNeurons();
 }
 
 /* lat/lon -> rotated 3D -> screen. returns {x,y,z} ; z>0 = facing camera */
@@ -1783,6 +1788,226 @@ function drawGrid(){
   sctx.fill();
 }
 
+var fieldT = 0;
+var NEURONS = [];
+
+function buildNeurons(){
+  NEURONS = [];
+  if(!W || !H) return;
+  var n = isTouch ? 22 : 48;
+  for(var i = 0; i < n; i++){
+    NEURONS.push({
+      x: Math.random() * W,
+      y: CY + (Math.random() - 0.5) * Math.min(H * 0.55, 340),
+      vx: 0.12 + Math.random() * 0.28,
+      amp: 8 + Math.random() * 22,
+      ph: Math.random() * Math.PI * 2,
+      r: 0.7 + Math.random() * 1.5,
+      red: Math.random() < 0.22
+    });
+  }
+}
+
+function fieldFade(x, y, rad){
+  var d = Math.hypot(x - CX, y - CY);
+  if(d < rad * 0.82) return 0.22;
+  if(d < rad * 1.12) return 0.22 + (d / rad - 0.82) * 2.2;
+  return 1;
+}
+
+function drawCamIcon(x, y, s){
+  sctx.save();
+  sctx.translate(x, y);
+  sctx.strokeStyle = 'rgba(255,255,255,0.62)';
+  sctx.lineWidth = 1.15;
+  sctx.strokeRect(-s * 1.2, -s * 0.72, s * 1.85, s * 1.32);
+  sctx.beginPath();
+  sctx.arc(s * 0.08, 0.02 * s, s * 0.44, 0, Math.PI * 2);
+  sctx.stroke();
+  sctx.beginPath();
+  sctx.arc(s * 0.08, 0.02 * s, s * 0.18, 0, Math.PI * 2);
+  sctx.strokeStyle = 'rgba(255,59,31,0.9)';
+  sctx.stroke();
+  sctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  sctx.strokeRect(-s * 0.38, -s * 1.08, s * 0.58, s * 0.36);
+  sctx.restore();
+}
+
+function drawLapIcon(x, y, s){
+  sctx.save();
+  sctx.translate(x, y);
+  sctx.strokeStyle = 'rgba(255,255,255,0.62)';
+  sctx.lineWidth = 1.15;
+  sctx.strokeRect(-s * 1.15, -s * 1.02, s * 2.3, s * 1.55);
+  sctx.strokeStyle = 'rgba(255,255,255,0.22)';
+  sctx.strokeRect(-s * 0.92, -s * 0.82, s * 1.84, s * 1.18);
+  sctx.strokeStyle = 'rgba(255,59,31,0.55)';
+  sctx.beginPath();
+  sctx.moveTo(-s * 0.18, -s * 0.12);
+  sctx.lineTo(s * 0.18, -s * 0.12);
+  sctx.stroke();
+  sctx.strokeStyle = 'rgba(255,255,255,0.5)';
+  sctx.beginPath();
+  sctx.moveTo(-s * 1.45, s * 0.58);
+  sctx.lineTo(s * 1.45, s * 0.58);
+  sctx.lineTo(s * 1.2, s * 0.86);
+  sctx.lineTo(-s * 1.2, s * 0.86);
+  sctx.closePath();
+  sctx.stroke();
+  sctx.restore();
+}
+
+function helixXY(t, phase, camX, lapX, y0, amp, turns){
+  return {
+    x: camX + t * (lapX - camX),
+    y: y0 + Math.sin(t * Math.PI * 2 * turns + phase) * amp
+  };
+}
+
+function drawField(dt){
+  if(!R || W < 340) return;
+  var rad = R * zoom;
+  var pad = W < 720 ? 18 : 28;
+  var camX = CX - rad - pad;
+  var lapX = CX + rad + pad;
+  if(camX < 22) camX = 22;
+  if(lapX > W - 22) lapX = W - 22;
+  if(lapX - camX < rad * 1.35) return;
+  var y0 = CY;
+  var amp = rad * 0.58;
+  var turns = 2.35;
+  var s = W < 720 ? 11 : 15;
+  if(!reduce) fieldT += dt * 0.00105;
+
+  var phaseA = fieldT * 1.55;
+  var phaseB = phaseA + Math.PI;
+  var segs = isTouch ? 42 : 78;
+  var i, u, a, b, fade, f;
+
+  function strokeStrand(phase, color, width){
+    sctx.beginPath();
+    var started = false;
+    for(i = 0; i <= segs; i++){
+      u = i / segs;
+      a = helixXY(u, phase, camX, lapX, y0, amp, turns);
+      fade = fieldFade(a.x, a.y, rad);
+      if(fade < 0.12){ started = false; continue; }
+      if(!started){ sctx.moveTo(a.x, a.y); started = true; }
+      else sctx.lineTo(a.x, a.y);
+    }
+    sctx.strokeStyle = color;
+    sctx.lineWidth = width;
+    sctx.stroke();
+  }
+
+  strokeStrand(phaseA, 'rgba(255,255,255,0.22)', 1);
+  strokeStrand(phaseB, 'rgba(255,59,31,0.38)', 1.2);
+
+  var rungEvery = isTouch ? 7 : 6;
+  sctx.lineWidth = 0.7;
+  for(i = rungEvery; i < segs; i += rungEvery){
+    u = i / segs;
+    a = helixXY(u, phaseA, camX, lapX, y0, amp, turns);
+    b = helixXY(u, phaseB, camX, lapX, y0, amp, turns);
+    f = Math.min(fieldFade(a.x, a.y, rad), fieldFade(b.x, b.y, rad));
+    if(f < 0.2) continue;
+    sctx.strokeStyle = 'rgba(255,255,255,' + (0.08 * f).toFixed(3) + ')';
+    sctx.beginPath();
+    sctx.moveTo(a.x, a.y);
+    sctx.lineTo(b.x, b.y);
+    sctx.stroke();
+    sctx.fillStyle = 'rgba(255,59,31,' + (0.22 * f).toFixed(3) + ')';
+    sctx.beginPath(); sctx.arc(a.x, a.y, 1.35, 0, Math.PI * 2); sctx.fill();
+    sctx.fillStyle = 'rgba(255,255,255,' + (0.18 * f).toFixed(3) + ')';
+    sctx.beginPath(); sctx.arc(b.x, b.y, 1.15, 0, Math.PI * 2); sctx.fill();
+  }
+
+  var extra = isTouch ? 1 : 2;
+  for(var w = 0; w < extra; w++){
+    var off = (w === 0 ? -amp * 0.72 : amp * 0.78);
+    var ph = fieldT * (0.7 + w * 0.35) + w * 1.7;
+    sctx.beginPath();
+    var started2 = false;
+    for(i = 0; i <= segs; i++){
+      u = i / segs;
+      var x = camX + u * (lapX - camX);
+      var y = y0 + off + Math.sin(u * Math.PI * 2 * 1.4 + ph) * (amp * 0.28);
+      fade = fieldFade(x, y, rad);
+      if(fade < 0.15){ started2 = false; continue; }
+      if(!started2){ sctx.moveTo(x, y); started2 = true; }
+      else sctx.lineTo(x, y);
+    }
+    sctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    sctx.lineWidth = 0.7;
+    sctx.stroke();
+  }
+
+  var nPkt = isTouch ? 5 : 8;
+  for(i = 0; i < nPkt; i++){
+    u = (fieldT * 0.22 + i / nPkt) % 1;
+    a = helixXY(u, phaseA, camX, lapX, y0, amp, turns);
+    fade = fieldFade(a.x, a.y, rad);
+    if(fade < 0.12) continue;
+    var glow = 0.35 + 0.65 * Math.sin((u * Math.PI));
+    sctx.fillStyle = 'rgba(255,59,31,' + (0.55 * fade * glow).toFixed(3) + ')';
+    sctx.fillRect(a.x - 2.4, a.y - 1.7, 4.8, 3.4);
+    sctx.strokeStyle = 'rgba(255,255,255,' + (0.35 * fade).toFixed(3) + ')';
+    sctx.lineWidth = 0.6;
+    sctx.strokeRect(a.x - 2.4, a.y - 1.7, 4.8, 3.4);
+  }
+
+  var linkD = isTouch ? 52 : 64;
+  for(i = 0; i < NEURONS.length; i++){
+    var n = NEURONS[i];
+    if(!reduce){
+      n.x += n.vx * dt * 0.06;
+      n.ph += 0.012;
+      if(n.x > W + 8){ n.x = -8; n.y = CY + (Math.random() - 0.5) * Math.min(H * 0.55, 340); }
+    }
+    var ny = n.y + Math.sin(n.ph) * n.amp * 0.15;
+    fade = fieldFade(n.x, ny, rad) * 0.85;
+    if(fade < 0.08) continue;
+    var tw = 0.55 + 0.45 * Math.sin(n.ph * 1.3);
+    sctx.fillStyle = n.red
+      ? 'rgba(255,59,31,' + (0.22 * fade * tw).toFixed(3) + ')'
+      : 'rgba(255,255,255,' + (0.16 * fade * tw).toFixed(3) + ')';
+    sctx.beginPath();
+    sctx.arc(n.x, ny, n.r, 0, Math.PI * 2);
+    sctx.fill();
+    if(i % 3 === 0 && i + 1 < NEURONS.length){
+      var m = NEURONS[i + 1];
+      var my = m.y + Math.sin(m.ph) * m.amp * 0.15;
+      var dd = Math.hypot(n.x - m.x, ny - my);
+      if(dd < linkD){
+        var lf = Math.min(fade, fieldFade(m.x, my, rad)) * (1 - dd / linkD);
+        sctx.strokeStyle = 'rgba(255,59,31,' + (0.07 * lf).toFixed(3) + ')';
+        sctx.lineWidth = 0.6;
+        sctx.beginPath();
+        sctx.moveTo(n.x, ny);
+        sctx.lineTo(m.x, my);
+        sctx.stroke();
+      }
+    }
+  }
+
+  var pulse = 0.55 + 0.45 * Math.sin(fieldT * 3.2);
+  sctx.strokeStyle = 'rgba(255,59,31,' + (0.18 + 0.2 * pulse).toFixed(3) + ')';
+  sctx.lineWidth = 1;
+  sctx.beginPath(); sctx.arc(camX, y0, s * 1.85, 0, Math.PI * 2); sctx.stroke();
+  sctx.beginPath(); sctx.arc(lapX, y0, s * 1.85, 0, Math.PI * 2); sctx.stroke();
+
+  drawCamIcon(camX, y0, s);
+  drawLapIcon(lapX, y0, s);
+
+  if(W >= 720){
+    sctx.font = '8px "JetBrains Mono",monospace';
+    sctx.textAlign = 'center';
+    sctx.fillStyle = 'rgba(255,59,31,0.72)';
+    sctx.fillText(t('field.cam'), camX, y0 + s + 16);
+    sctx.fillText(t('field.station'), lapX, y0 + s + 16);
+  }
+}
+
 function drawSky(dt){
   sctx.clearRect(0,0,SW,SH);
   for(var i = 0; i < stars.length; i++){
@@ -1798,6 +2023,7 @@ function drawSky(dt){
     sctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
     sctx.fillRect(s.x, s.y, s.r, s.r);
   }
+  drawField(dt);
   if(!reduce) gridZ = (gridZ + dt * 0.0018) % 1;
   drawGrid();
 }
