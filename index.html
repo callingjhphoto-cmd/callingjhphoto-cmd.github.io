@@ -1348,11 +1348,9 @@ cv.addEventListener('dblclick', function(){ setZoom(zoom > 1.4 ? 1 : 1.55); kick
 var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   readoutCity = c;
-  var n = CREDITS[c.id] ? CREDITS[c.id].length : 0;
   readout.innerHTML =
     '<div class="c">' + esc(c.name.toUpperCase()) + '</div>' +
     '<div class="x">' + c.lat.toFixed(2) + (c.lat>=0?'N':'S') + ' &nbsp;' + c.lon.toFixed(2) + (c.lon>=0?'E':'W') + '</div>' +
-    '<div class="x">' + (n ? n + (n===1?' CREDIT':' CREDITS') + ' ON FILE' : 'NO CREDIT ON FILE') + '</div>' +
     '<div class="go">CLICK TO OPEN →</div>';
   readout.classList.add('on');
 }
@@ -1474,10 +1472,7 @@ setInterval(idleTick, 1200);
 (function(){
   var g = $('#pinButtons');
   CITIES.forEach(function(c){
-    var n = (CREDITS[c.id]||[]).length;
-    var b = el('button', null,
-      esc(c.name.toUpperCase()) +
-      '<span class="n">' + (n ? n + (n===1?' CREDIT':' CREDITS') : 'NO CREDIT ON FILE') + '</span>');
+    var b = el('button', null, esc(c.name.toUpperCase()));
     b.addEventListener('click', function(){ openDossier(c.id); });
     g.appendChild(b);
   });
