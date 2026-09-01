@@ -494,10 +494,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark svg{width:18px;height:18px}
   #brandmark b{display:none}
   #hero .sub{letter-spacing:.08em;padding:0 4px}
-  #hero{top:76px;padding-bottom:14px}
+  #hero{top:76px;padding-bottom:22px}
   #hero .role{font-size:clamp(12px,3.6vw,16px);letter-spacing:.12em;margin-top:12px}
-  #hero .markets{margin-top:14px}
-  #hero .markets i{letter-spacing:.14em;margin-top:10px}
+  #hero .markets{margin-top:12px}
+  #hero .markets i{letter-spacing:.14em;margin-top:8px;padding-bottom:8px}
   #brandmark{padding:10px 12px;font-size:11px;letter-spacing:.1em}
   #brandmark svg{width:26px;height:26px}
   #brandmark b{display:none}
@@ -510,11 +510,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #jamesChat{right:10px;bottom:204px}
   #bookSheet{right:10px;bottom:204px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
-  #stage{height:72svh;min-height:0}
+  #stage{height:88svh;min-height:0}
   #scrollcue{display:none}
   .wrap{padding:0 16px}
   #pinlist{
-    display:block;padding:28px 0 90px;background:#000;position:relative;z-index:4;
+    display:block;padding:48px 0 90px;background:#000;position:relative;z-index:4;
   }
   #pinlist .g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
     border:1px solid var(--line);margin-top:16px}
@@ -1636,8 +1636,8 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   CX = W/2; CY = H/2 + Math.min(132, H*0.14);
-  if(W < 720) CY = H * 0.52;
-  R = Math.min(W, H) * (W < 720 ? 0.34 : 0.275);
+  R = Math.min(W, H) * (W < 720 ? 0.27 : 0.275);
+  if(W < 720) CY = Math.min(H - R - 56, Math.max(R + 268, H * 0.62));
   buildStars();
   buildNeurons();
 }
@@ -1979,9 +1979,13 @@ function drawField(dt){
     var tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
     var rr = (i % 7 === 0 ? 2.2 : 1.2) * (0.75 + 0.4 * tw);
     var a = fade * tw;
-    sctx.fillStyle = (i % 5 === 0)
-      ? 'rgba(255,59,31,' + (0.80 * a).toFixed(3) + ')'
-      : 'rgba(255,255,255,' + (0.52 * a).toFixed(3) + ')';
+    if(i % 5 === 0){
+      sctx.fillStyle = 'rgba(255,59,31,' + (0.80 * a).toFixed(3) + ')';
+    } else if(i % 3 === 0){
+      sctx.fillStyle = 'rgba(255,206,0,' + (0.88 * a).toFixed(3) + ')';
+    } else {
+      sctx.fillStyle = 'rgba(255,255,255,' + (0.52 * a).toFixed(3) + ')';
+    }
     sctx.beginPath();
     sctx.arc(p.x + p.nx * off + buzz, p.y + p.ny * off + buzz2, rr, 0, Math.PI * 2);
     sctx.fill();
