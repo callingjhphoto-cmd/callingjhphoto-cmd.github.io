@@ -200,16 +200,18 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 #polaroid .quote{font-family:var(--mono);font-size:clamp(18px,3.4vw,34px);
   letter-spacing:-.01em;color:#fff;transform:skewX(-7deg);margin:0 0 8px}
 #polaroid .attr{font-family:var(--mono);font-size:11px;color:var(--grey);letter-spacing:.06em;margin-bottom:46px}
+.ppair{display:flex;justify-content:center;align-items:flex-end;gap:36px;flex-wrap:wrap}
 .pframe{
   display:inline-block;background:#f2f0eb;padding:13px 13px 52px;
-  transform:rotate(-1.2deg);
   box-shadow:-22px 0 50px rgba(255,59,31,.22),0 0 90px rgba(255,59,31,.13),0 30px 80px rgba(0,0,0,.9);
-  animation:float 6s ease-in-out infinite;cursor:grab;touch-action:pan-y;
-  will-change:transform;
+  cursor:grab;touch-action:pan-y;will-change:transform;
 }
+.pframe.tilt-a{transform:rotate(-2.4deg);animation:floatA 6.4s ease-in-out infinite}
+.pframe.tilt-b{transform:rotate(2.2deg);animation:floatB 7.1s ease-in-out infinite}
 .pframe.grabbing{cursor:grabbing;animation:none}
-.pframe img{display:block;width:min(370px,72vw);height:auto}
-@keyframes float{0%,100%{transform:rotate(-1.2deg) translateY(-4px)}50%{transform:rotate(-1.2deg) translateY(4px)}}
+.pframe img{display:block;width:min(300px,42vw);height:auto}
+@keyframes floatA{0%,100%{transform:rotate(-2.4deg) translateY(-4px)}50%{transform:rotate(-2.4deg) translateY(5px)}}
+@keyframes floatB{0%,100%{transform:rotate(2.2deg) translateY(3px)}50%{transform:rotate(2.2deg) translateY(-5px)}}
 #polaroid .pframe{margin-bottom:0}
 
 /* what i do */
@@ -480,6 +482,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #pinlist button:active{color:var(--red)}
   #pinlist button .n{display:block;color:#4e4e4e;font-size:8.6px;margin-top:5px;letter-spacing:.1em}
   #polaroid{padding:100px 0 110px}
+  .ppair{gap:22px}
+  .pframe img{width:min(280px,78vw)}
   #do,#kit,#work,#flyby{padding:80px 0}
   #last{padding:90px 0 80px;margin-top:80px}
 }
@@ -570,9 +574,15 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <section id="polaroid"><div class="wrap">
   <p class="quote">“Best digi ever”</p>
   <div class="attr">— a producer at Canadá</div>
-  <div class="pframe" id="pframe">
-    <img src="img/polaroid/cables.jpg"
-         alt="James Huertas on set, running tether cables at the capture station.">
+  <div class="ppair">
+    <div class="pframe tilt-a">
+      <img src="img/polaroid/station_crop.jpg"
+           alt="James Huertas on a beach with his digital technician station.">
+    </div>
+    <div class="pframe tilt-b">
+      <img src="img/polaroid/cables.jpg"
+           alt="James Huertas on set, running tether cables at the capture station.">
+    </div>
   </div>
 </div></section>
 
@@ -1688,39 +1698,42 @@ var DOSHOTS = [
 
 /* polaroid drag-tumble */
 (function(){
-  var f = $('#pframe');
-  if(!f || reduce) return;
-  var dr = false, sx = 0, sy = 0, rx = 0, ry = 0, rot = -1.2, raf = null;
-  function set(){ f.style.transform = 'translate(' + rx + 'px,' + ry + 'px) rotate(' + rot + 'deg)'; }
-  function start(e){
-    dr = true; f.classList.add('grabbing');
-    var t = (e.touches && e.touches[0]) || e;
-    sx = t.clientX - rx; sy = t.clientY - ry;
-  }
-  function mv(e){
-    if(!dr) return;
-    var t = (e.touches && e.touches[0]) || e;
-    rx = t.clientX - sx; ry = t.clientY - sy;
-    rot = -1.2 + Math.max(-16, Math.min(16, rx * 0.06));
-    set();
-  }
-  function end(){
-    if(!dr) return;
-    dr = false; f.classList.remove('grabbing');
-    var settle = function(){
-      rx *= 0.86; ry *= 0.86; rot = -1.2 + (rot + 1.2) * 0.86;
+  var frames = document.querySelectorAll('#polaroid .pframe');
+  if(!frames.length || reduce) return;
+  frames.forEach(function(f){
+    var base = f.classList.contains('tilt-b') ? 2.2 : -2.4;
+    var dr = false, sx = 0, sy = 0, rx = 0, ry = 0, rot = base, raf = null;
+    function set(){ f.style.transform = 'translate(' + rx + 'px,' + ry + 'px) rotate(' + rot + 'deg)'; }
+    function start(e){
+      dr = true; f.classList.add('grabbing');
+      var t = (e.touches && e.touches[0]) || e;
+      sx = t.clientX - rx; sy = t.clientY - ry;
+    }
+    function mv(e){
+      if(!dr) return;
+      var t = (e.touches && e.touches[0]) || e;
+      rx = t.clientX - sx; ry = t.clientY - sy;
+      rot = base + Math.max(-16, Math.min(16, rx * 0.06));
       set();
-      if(Math.abs(rx) + Math.abs(ry) > 0.6) raf = requestAnimationFrame(settle);
-      else { rx = 0; ry = 0; rot = -1.2; f.style.transform = ''; }
-    };
-    cancelAnimationFrame(raf); settle();
-  }
-  f.addEventListener('mousedown', start);
-  window.addEventListener('mousemove', mv);
-  window.addEventListener('mouseup', end);
-  f.addEventListener('touchstart', start, {passive:true});
-  f.addEventListener('touchmove', mv, {passive:true});
-  f.addEventListener('touchend', end);
+    }
+    function end(){
+      if(!dr) return;
+      dr = false; f.classList.remove('grabbing');
+      var settle = function(){
+        rx *= 0.86; ry *= 0.86; rot = base + (rot - base) * 0.86;
+        set();
+        if(Math.abs(rx) + Math.abs(ry) > 0.6) raf = requestAnimationFrame(settle);
+        else { rx = 0; ry = 0; rot = base; f.style.transform = ''; }
+      };
+      cancelAnimationFrame(raf); settle();
+    }
+    f.addEventListener('mousedown', start);
+    window.addEventListener('mousemove', mv);
+    window.addEventListener('mouseup', end);
+    f.addEventListener('touchstart', start, {passive:true});
+    f.addEventListener('touchmove', mv, {passive:true});
+    f.addEventListener('touchend', end);
+  });
 })();
 
 /* inspect — click a set-ops frame, same overlay language as the dossier */
