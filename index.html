@@ -1628,13 +1628,13 @@ function startBoot(){
     bar.style.right = (100 - Math.round(((i + 1) / lines.length) * 100)) + '%';
     i++;
     if(i < lines.length){
-      setTimeout(step, i === lines.length - 1 ? 1050 : 850);
+      setTimeout(step, i === lines.length - 1 ? 800 : 600);
     } else {
       setTimeout(function(){
         box.classList.add('gone');
         if($('#bookFab')) $('#bookFab').classList.add('on');
         setTimeout(function(){ box.style.display = 'none'; }, 700);
-      }, 450);
+      }, 250);
     }
   };
   step();
