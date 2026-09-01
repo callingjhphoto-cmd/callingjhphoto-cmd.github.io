@@ -510,10 +510,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #jamesChat{right:10px;bottom:204px}
   #bookSheet{right:10px;bottom:204px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
-  #stage{height:100svh;min-height:0}
+  #stage{height:72svh;min-height:0}
+  #scrollcue{display:none}
   .wrap{padding:0 16px}
   #pinlist{
-    display:block;padding:34px 0 90px;
+    display:block;padding:28px 0 90px;background:#000;position:relative;z-index:4;
   }
   #pinlist .g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
     border:1px solid var(--line);margin-top:16px}
@@ -1772,10 +1773,11 @@ function drawGlobe(){
 var gridZ = 0;
 
 function drawGrid(){
+  if(W < 720) return;
   var rad = R * zoom;
   var vpX = CX;
-  var vpY = CY + rad * (isTouch ? 0.48 : 0.58);
-  if(vpY > H - (isTouch ? 52 : 90)) vpY = H - (isTouch ? 52 : 90);
+  var vpY = CY + rad * 0.58;
+  if(vpY > H - 90) vpY = H - 90;
   var floorH = H - vpY;
   if(floorH < 40) return;
 
