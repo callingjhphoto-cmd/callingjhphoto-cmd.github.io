@@ -1722,7 +1722,7 @@ function buildStars(){
    ============================================================ */
 var cv = $('#globe'), ctx = cv.getContext('2d');
 var W = 0, H = 0, CX = 0, CY = 0, R = 0;
-var rotLon = 20, rotLat = -16;      // camera-facing longitude / tilt
+var rotLon = 20, rotLat = -28;      // camera-facing longitude / tilt (nodded a little down)
 var spin = -0.10;                    // deg per frame ≈ 1 rev / 60s at 60fps
 var zoom = 1;
 var vel = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0, downX = 0, downY = 0;
@@ -2194,7 +2194,7 @@ function loop(now){
     } else if(!reduce){
       rotLon += spin * (dt/16.67);
     }
-    rotLat += (-16 - rotLat) * 0.03;
+    rotLat += (-28 - rotLat) * 0.03;
   }
   if(rotLon > 180) rotLon -= 360;
   if(rotLon < -180) rotLon += 360;
