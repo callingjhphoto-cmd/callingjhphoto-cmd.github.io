@@ -335,21 +335,27 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 
 #bookFab{
   position:fixed;right:18px;bottom:18px;z-index:80;
-  width:76px;height:76px;padding:0;border-radius:50%;
+  width:88px;height:88px;padding:0;border-radius:50%;
   background:#000;border:1px solid #2a2a2a;cursor:pointer;
   box-shadow:0 0 28px rgba(255,59,31,.38);
   display:none;overflow:hidden
 }
 #bookFab.on{display:block}
 #bookFab:hover{border-color:var(--red);box-shadow:0 0 42px rgba(255,59,31,.7)}
-#bookFab canvas{width:76px;height:76px;display:block;pointer-events:none}
-#bookFab span{
-  position:absolute;left:0;right:0;bottom:9px;text-align:center;
-  font-family:var(--mono);font-size:8px;letter-spacing:.18em;font-weight:700;
-  color:#ff3b1f;pointer-events:none;text-shadow:0 0 8px #000
+#bookFab img{
+  width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;
+  transition:transform .35s ease
 }
+#bookFab:hover img{transform:rotate(-10deg) scale(1.08)}
+#bookFab span{
+  position:absolute;left:0;right:0;text-align:center;
+  font-family:var(--mono);font-weight:700;color:#ff3b1f;pointer-events:none;
+  text-shadow:0 1px 8px #000,0 0 10px #000
+}
+#bookFab .lab-top{top:9px;font-size:7px;letter-spacing:.14em}
+#bookFab .lab-bot{bottom:9px;font-size:8px;letter-spacing:.16em}
 #jamesChat{
-  position:fixed;right:18px;bottom:108px;z-index:126;width:min(360px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:118px;z-index:126;width:min(360px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;display:none;flex-direction:column;
   max-height:min(70vh,520px)
 }
@@ -461,11 +467,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
-  #bookFab{right:12px;bottom:14px;width:64px;height:64px}
-  #bookFab canvas{width:64px;height:64px}
-  #bookFab span{font-size:7px;bottom:7px}
-  #jamesChat{right:10px;bottom:88px}
-  #bookSheet{right:10px;bottom:88px;padding:18px 16px 16px}
+  #bookFab{right:12px;bottom:14px;width:72px;height:72px}
+  #bookFab .lab-top{top:7px;font-size:6px}
+  #bookFab .lab-bot{bottom:7px;font-size:7px}
+  #jamesChat{right:10px;bottom:96px}
+  #bookSheet{right:10px;bottom:96px;padding:18px 16px 16px}
   #bookSheet .row2{grid-template-columns:1fr}
   #stage{height:88svh}
   .wrap{padding:0 16px}
@@ -724,9 +730,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </footer>
 </div></section>
 
-<button type="button" id="bookFab" class="mono" aria-label="James — book me">
-  <canvas id="bookGlobe" width="76" height="76"></canvas>
-  <span>BOOK ME</span>
+<button type="button" id="bookFab" class="mono" aria-label="AI James — book me">
+  <img src="img/james-fab.png" alt="">
+  <span class="lab-top">AI JAMES</span>
+  <span class="lab-bot">BOOK ME</span>
 </button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" aria-label="Book the tech">
@@ -1974,69 +1981,6 @@ if(window.IntersectionObserver){
   }, {rootMargin:'120px'}).observe($('#stage'));
 }
 document.addEventListener('visibilitychange', syncOnScreen);
-
-/* mini globe on BOOK — same wireframe language, spins faster on hover */
-(function(){
-  var fab = $('#bookFab'), c = $('#bookGlobe');
-  if(!fab || !c || !LANDPTS.length) return;
-  var g = c.getContext('2d');
-  var size = 76, dpr = Math.min(window.devicePixelRatio || 1, 2);
-  function fit(){
-    var css = fab.getBoundingClientRect().width || 76;
-    size = css;
-    c.width = Math.round(size * dpr);
-    c.height = Math.round(size * dpr);
-    g.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  fit();
-  var lon = 18, hover = false;
-  fab.addEventListener('mouseenter', function(){ hover = true; });
-  fab.addEventListener('mouseleave', function(){ hover = false; });
-  fab.addEventListener('touchstart', function(){ hover = true; }, {passive:true});
-  fab.addEventListener('touchend', function(){ hover = false; });
-  var step = Math.max(6, Math.floor(LANDPTS.length / 420));
-  function proj(lat, lo, rad){
-    var la = lat * D2R, ln = (lo - lon) * D2R;
-    var x = Math.cos(la) * Math.sin(ln);
-    var y = Math.sin(la);
-    var z = Math.cos(la) * Math.cos(ln);
-    var t = -14 * D2R;
-    var y2 = y * Math.cos(t) - z * Math.sin(t);
-    var z2 = y * Math.sin(t) + z * Math.cos(t);
-    return {x: size/2 + x * rad, y: size/2 + 1 - y2 * rad, z: z2};
-  }
-  function paint(){
-    if(!fab.classList.contains('on')){ requestAnimationFrame(paint); return; }
-    lon += reduce ? 0 : (hover ? 2.1 : 0.32);
-    if(lon > 180) lon -= 360;
-    var rad = size * 0.42;
-    var cx = size/2, cy = size/2;
-    g.clearRect(0,0,size,size);
-    var glow = g.createRadialGradient(cx, cy, rad*0.55, cx, cy, rad*1.12);
-    glow.addColorStop(0, 'rgba(255,59,31,0)');
-    glow.addColorStop(1, 'rgba(255,59,31,0.28)');
-    g.fillStyle = glow;
-    g.beginPath(); g.arc(cx, cy, rad*1.12, 0, Math.PI*2); g.fill();
-    g.strokeStyle = 'rgba(255,255,255,0.22)';
-    g.lineWidth = 1;
-    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI*2); g.stroke();
-    for(var i = 0; i < LANDPTS.length; i += step){
-      var p = proj(LANDPTS[i][0], LANDPTS[i][1], rad);
-      if(p.z < 0.04) continue;
-      g.fillStyle = 'rgba(255,255,255,' + (0.12 + p.z * 0.62).toFixed(3) + ')';
-      g.fillRect(p.x, p.y, 1.15, 1.15);
-    }
-    for(var k = 0; k < CITIES.length; k++){
-      var q = proj(CITIES[k].lat, CITIES[k].lon, rad);
-      if(q.z < 0.12) continue;
-      g.fillStyle = 'rgba(255,59,31,' + (0.35 + q.z * 0.65).toFixed(3) + ')';
-      g.beginPath(); g.arc(q.x, q.y, hover ? 1.6 : 1.15, 0, Math.PI*2); g.fill();
-    }
-    requestAnimationFrame(paint);
-  }
-  window.addEventListener('resize', fit);
-  paint();
-})();
 
 /* ---------- console ---------- */
 console.log('%c JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT ',
