@@ -313,12 +313,14 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .row .cl{color:#fff}
 .row .mt{color:var(--grey)}
 #work .lane{margin-top:36px}
+#work .lane + .lane{margin-top:14px}
 .workcard{width:196px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent;
   overflow:hidden;min-width:0;isolation:isolate;contain:paint}
 .workcard:hover,.workcard:focus-visible{border-color:#222}
 .workcard img{width:100%;aspect-ratio:3/4;height:auto;object-fit:cover;object-position:center;display:block;
   max-width:100%;min-width:0}
 .track.worktrack{animation-duration:96s}
+.track.worktrack.slow{animation-duration:124s}
 
 /* fly-by */
 #flyby{padding:110px 0 0;overflow:hidden}
@@ -609,6 +611,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   .tbl{margin-top:22px}
   .lane{margin-top:18px}
   #work .lane{margin-top:28px}
+  #work .lane + .lane{margin-top:12px}
   .workcard{width:148px}
   #last{
     padding:56px 0 48px;
@@ -832,6 +835,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   <h2 class="big" data-i18n="work.h2">Selected work</h2>
   <div class="tbl" id="workTbl"></div>
   <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
+  <div class="lane worklane"><div class="track worktrack slow rev" id="workLaneB"></div></div>
 </div></section>
 
 <!-- ============ [05] THE FLY-BY ============ -->
@@ -1174,11 +1178,16 @@ var WORK = [
  ['2015—16','Reuters · Bloomberg · Getty','press','James Huertas','London','UNVERIFIED','']
 ];
 
-/* campaign stills under the jobs list — captions stay empty, no invented clients */
+/* campaign stills under the jobs list — two mixes, similar frames kept apart */
 var WORKSTILLS = [
-  'work_00.jpg','work_01.jpg','work_02.jpg','work_03.jpg','work_04.jpg',
-  'work_05.jpg','work_06.jpg','work_07.jpg','work_08.jpg','work_09.jpg',
-  'work_10.jpg','work_11.jpg','work_12.jpg'
+  'work_00.jpg','work_08.jpg','work_12.jpg','work_03.jpg','work_04.jpg',
+  'work_09.jpg','work_05.jpg','work_06.jpg','work_01.jpg','work_11.jpg',
+  'work_07.jpg','work_10.jpg','work_02.jpg'
+];
+var WORKSTILLS_B = [
+  'work_07.jpg','work_00.jpg','work_11.jpg','work_08.jpg','work_04.jpg',
+  'work_10.jpg','work_02.jpg','work_05.jpg','work_09.jpg','work_12.jpg',
+  'work_03.jpg','work_01.jpg','work_06.jpg'
 ];
 
 /* Continent outlines [lat, lon]. Coasts are the point — NYC sits on the
@@ -2446,18 +2455,26 @@ var DOSHOTS = [
 
 /* work stills — under the jobs list. Own class so inspect does not open set-ops. */
 (function(){
-  var node = $('#workLane');
-  if(!node) return;
-  var html = '';
-  var passes = reduce ? 1 : 2;
-  for(var pass = 0; pass < passes; pass++){
-    for(var i = 0; i < WORKSTILLS.length; i++){
-      html += '<div class="workcard" tabindex="0" role="button">' +
-        '<img loading="lazy" src="img/work/' + WORKSTILLS[i] + '" data-i18n-alt="alt.work" alt="Still from selected work.">' +
-        '</div>';
+  function fill(node, list){
+    if(!node) return;
+    var html = '';
+    var passes = reduce ? 1 : 2;
+    for(var pass = 0; pass < passes; pass++){
+      for(var i = 0; i < list.length; i++){
+        html += '<div class="workcard" tabindex="0" role="button">' +
+          '<img loading="lazy" src="img/work/' + list[i] + '" data-i18n-alt="alt.work" alt="Still from selected work.">' +
+          '</div>';
+      }
     }
+    node.innerHTML = html;
   }
-  node.innerHTML = html;
+  fill($('#workLane'), WORKSTILLS);
+  if(reduce){
+    var b = $('#workLaneB');
+    if(b && b.parentNode) b.parentNode.style.display = 'none';
+  } else {
+    fill($('#workLaneB'), WORKSTILLS_B);
+  }
 })();
 
 /* fly-by lanes — SET-OPS FIRST. Double only when motion is allowed (seamless loop). */
