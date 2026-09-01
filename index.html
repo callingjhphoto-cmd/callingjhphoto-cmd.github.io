@@ -551,7 +551,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 }
 
 @media (hover: hover) and (pointer: fine){
-  html.laptop-cursor, html.laptop-cursor * { cursor: none !important; }
+  html.laptop-cursor, html.laptop-cursor *:not(input):not(textarea):not(select) { cursor: none !important; }
+  html.laptop-cursor input, html.laptop-cursor textarea, html.laptop-cursor select { cursor: auto !important; }
+  html.laptop-cursor input[type=date], html.laptop-cursor input[type=date]::-webkit-calendar-picker-indicator { cursor: pointer !important; }
   #cursor{
     position:fixed;z-index:400;width:52px;height:52px;left:0;top:0;
     margin:-26px 0 0 -26px;pointer-events:none;opacity:0
@@ -2864,7 +2866,13 @@ document.addEventListener('visibilitychange', syncOnScreen);
   }
   window.addEventListener('mousemove', function(e){
     el.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
-    if(!shown){ el.classList.add('on'); shown = true; }
+    var native = e.target && e.target.closest && e.target.closest('input, textarea, select');
+    if(native){
+      el.classList.remove('on');
+    } else {
+      el.classList.add('on');
+      shown = true;
+    }
   });
   function paint(now){
     t0 = now * 0.001;
