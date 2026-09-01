@@ -2018,14 +2018,17 @@ function drawField(dt){
   var s = W < 720 ? 10 : 16;
   if(!reduce) fieldT += dt * 0.00105;
 
-  var x0 = camX + s * 0.72;
-  var x1 = lapX - s * 1.25;
+  var x0 = camX + s * 0.65;
+  var x1 = lapX - s * 1.15;
   var dx = x1 - x0;
   function tetherPt(u){
+    var env = Math.sin(Math.PI * u);
+    env *= env;
     var ang = u * Math.PI * 2 * turns + fieldT * 0.9;
     var x = x0 + u * dx;
-    var y = y0 + Math.sin(ang) * amp;
-    var dydu = Math.cos(ang) * amp * Math.PI * 2 * turns;
+    var y = y0 + Math.sin(ang) * amp * env;
+    var envp = Math.PI * Math.sin(2 * Math.PI * u);
+    var dydu = amp * (Math.cos(ang) * Math.PI * 2 * turns * env + Math.sin(ang) * envp);
     var len = Math.hypot(dx, dydu) || 1;
     return { x: x, y: y, nx: -dydu / len, ny: dx / len };
   }
@@ -2054,9 +2057,11 @@ function drawField(dt){
     fade = fieldFade(p.x, p.y, rad);
     if(fade < 0.06) continue;
     var lane = ((i * 37) % 1000) / 1000;
-    var off = (lane - 0.5) * 2 * halfW;
-    var buzz = Math.sin(fieldT * 36 + i * 2.4) * 0.9;
-    var buzz2 = Math.cos(fieldT * 44 + i * 1.7) * 0.9;
+    var plug = Math.sin(Math.PI * u);
+    plug *= plug;
+    var off = (lane - 0.5) * 2 * halfW * plug;
+    var buzz = Math.sin(fieldT * 36 + i * 2.4) * 0.9 * plug;
+    var buzz2 = Math.cos(fieldT * 44 + i * 1.7) * 0.9 * plug;
     var tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
     var rr = (i % 7 === 0 ? 2.2 : 1.2) * (0.75 + 0.4 * tw);
     var a = fade * tw;
@@ -2107,6 +2112,10 @@ function drawField(dt){
 
   drawCamIcon(camX, y0, s);
   drawLapIcon(lapX, y0, s);
+
+  sctx.fillStyle = 'rgba(255,59,31,0.9)';
+  sctx.beginPath(); sctx.arc(x0, y0, 2.1, 0, Math.PI * 2); sctx.fill();
+  sctx.beginPath(); sctx.arc(x1, y0, 2.1, 0, Math.PI * 2); sctx.fill();
 
   if(W >= 720){
     sctx.font = '8px "JetBrains Mono",monospace';
