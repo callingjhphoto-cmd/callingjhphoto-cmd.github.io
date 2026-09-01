@@ -520,9 +520,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   }
   #bookSheet{
     left:10px;right:10px;width:auto;
-    bottom:max(12px, env(safe-area-inset-bottom));
+    top:10px;bottom:auto;
     padding:16px 14px 12px;
-    max-height:calc(100svh - 72px);max-height:calc(100dvh - 72px)
+    max-height:calc(100svh - 20px);max-height:calc(100dvh - 20px);
+    -webkit-overflow-scrolling:touch;overscroll-behavior:contain
   }
   #bookSheet h3{font-size:20px}
   #bookSheet .lede{margin-bottom:12px}
@@ -2480,24 +2481,44 @@ var DOSHOTS = [
 })();
 
 /* booking sheet — dates in, mailto out. No backend. */
+function lockPage(on){
+  document.documentElement.style.overflow = on ? 'hidden' : '';
+  document.body.style.overflow = on ? 'hidden' : '';
+}
 function dockOverlays(){
   var chat = $('#jamesChat'), sheet = $('#bookSheet');
   if(window.innerWidth > 720){
-    if(chat){ chat.style.bottom = ''; chat.style.maxHeight = ''; }
-    if(sheet){ sheet.style.bottom = ''; sheet.style.maxHeight = ''; }
+    if(chat){ chat.style.bottom = ''; chat.style.top = ''; chat.style.maxHeight = ''; chat.style.height = ''; }
+    if(sheet){ sheet.style.bottom = ''; sheet.style.top = ''; sheet.style.maxHeight = ''; sheet.style.height = ''; }
     return;
   }
   var vv = window.visualViewport;
-  var kb = 0;
-  var visH = window.innerHeight;
-  if(vv){
-    kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-    visH = vv.height;
+  var visH = window.innerHeight, offsetTop = 0;
+  if(vv){ visH = vv.height; offsetTop = vv.offsetTop; }
+  var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
+  if(chat && chat.classList.contains('on')){
+    chat.style.top = '';
+    chat.style.height = '';
+    chat.style.bottom = Math.max(12, kbGap + 8) + 'px';
+    chat.style.maxHeight = Math.max(160, visH - 24) + 'px';
   }
-  var bottom = Math.max(12, kb + 8);
-  var maxH = Math.max(180, visH - 64);
-  if(chat){ chat.style.bottom = bottom + 'px'; chat.style.maxHeight = maxH + 'px'; }
-  if(sheet){ sheet.style.bottom = bottom + 'px'; sheet.style.maxHeight = maxH + 'px'; }
+  if(sheet && sheet.classList.contains('on')){
+    sheet.style.bottom = 'auto';
+    sheet.style.top = Math.max(8, offsetTop + 8) + 'px';
+    sheet.style.height = Math.max(180, visH - 16) + 'px';
+    sheet.style.maxHeight = Math.max(180, visH - 16) + 'px';
+    var ae = document.activeElement;
+    if(ae && sheet.contains(ae) && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA'))
+      scrollBookField(ae);
+  }
+}
+function scrollBookField(node){
+  var sheet = $('#bookSheet');
+  if(!sheet || !node || window.innerWidth > 720) return;
+  var s = sheet.getBoundingClientRect();
+  var r = node.getBoundingClientRect();
+  var target = s.top + Math.min(s.height * 0.32, 140);
+  sheet.scrollTop += (r.top - target);
 }
 function openBook(e){
   if(e) e.preventDefault();
@@ -2507,15 +2528,20 @@ function openBook(e){
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
   if($('#jamesChat')) $('#jamesChat').classList.remove('on');
+  lockPage(true);
   dockOverlays();
   var from = $('#bookFrom');
   if(from && !isTouch) from.focus();
 }
 function closeBook(){
   var sheet = $('#bookSheet'), scrim = $('#bookScrim'), fab = $('#bookFab');
-  if(sheet) sheet.classList.remove('on');
+  if(sheet){
+    sheet.classList.remove('on');
+    sheet.style.top = ''; sheet.style.height = ''; sheet.style.maxHeight = ''; sheet.style.bottom = '';
+  }
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
+  lockPage(false);
   dockOverlays();
 }
 window.addEventListener('resize', dockOverlays);
@@ -2532,6 +2558,11 @@ if(window.visualViewport){
   var scrim = $('#bookScrim');
   if(scrim) scrim.addEventListener('click', closeBook);
   if(!form) return;
+  form.addEventListener('focusin', function(e){
+    var n = e.target;
+    if(!n || (n.tagName !== 'INPUT' && n.tagName !== 'TEXTAREA')) return;
+    setTimeout(function(){ dockOverlays(); scrollBookField(n); }, 350);
+  });
   var go = $('#bookGo'), status = $('#bookStatus');
   function setStatus(msg, kind){
     if(!status) return;
@@ -2605,6 +2636,7 @@ function closeJames(){
   if(chat) chat.classList.remove('on');
   if($('#bookFab') && !($('#bookSheet') && $('#bookSheet').classList.contains('on')))
     $('#bookFab').classList.add('on');
+  if(!($('#bookSheet') && $('#bookSheet').classList.contains('on'))) lockPage(false);
   dockOverlays();
 }
 (function(){
@@ -2674,6 +2706,7 @@ function closeJames(){
     if(!log.childNodes.length){
       jamesSays(t('chat.opener'));
     }
+    lockPage(true);
     dockOverlays();
     if(input && !isTouch) input.focus();
   }
