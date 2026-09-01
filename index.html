@@ -529,6 +529,19 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #last{padding:90px 0 80px;margin-top:80px}
 }
 
+@media (hover: hover) and (pointer: fine){
+  html.laptop-cursor, html.laptop-cursor * { cursor: none !important; }
+  #cursor{
+    position:fixed;z-index:400;width:34px;height:34px;left:0;top:0;
+    margin:-17px 0 0 -17px;pointer-events:none;opacity:0
+  }
+  #cursor.on{opacity:1}
+  #cursor svg{width:100%;height:100%;display:block}
+}
+@media (hover: none){
+  #cursor{display:none}
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .track,.logolane{animation:none!important;flex-wrap:wrap;width:100%}
@@ -541,6 +554,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <div id="crt"></div>
 <div id="vig"></div>
+<div id="cursor" aria-hidden="true">
+  <svg viewBox="0 0 34 34" fill="none">
+    <circle cx="17" cy="17" r="15.5" stroke="#ff3b1f" stroke-width="1.25"/>
+    <rect x="9" y="10" width="16" height="10" rx="1.2" stroke="#ff3b1f" stroke-width="1.3"/>
+    <path d="M7.5 22.5h19L24.8 25.2H9.2z" fill="#ff3b1f"/>
+  </svg>
+</div>
 
 <div id="langGate" role="dialog" aria-modal="true" aria-label="English or Español">
   <button type="button" data-lang="en" aria-label="English">
@@ -2740,6 +2760,19 @@ document.addEventListener('visibilitychange', syncOnScreen);
   }
   window.addEventListener('resize', fit);
   paint();
+})();
+
+/* laptop cursor — pointer devices only */
+(function(){
+  if(isTouch) return;
+  var el = $('#cursor');
+  if(!el) return;
+  document.documentElement.classList.add('laptop-cursor');
+  var shown = false;
+  window.addEventListener('mousemove', function(e){
+    el.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+    if(!shown){ el.classList.add('on'); shown = true; }
+  });
 })();
 
 /* ---------- console ---------- */
