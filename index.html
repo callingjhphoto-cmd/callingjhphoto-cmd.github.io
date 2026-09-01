@@ -1885,45 +1885,51 @@ function drawField(dt){
 
   var x0 = camX + s * 0.72;
   var x1 = lapX - s * 1.25;
-  function tetherXY(u){
-    return {
-      x: x0 + u * (x1 - x0),
-      y: y0 + Math.sin(u * Math.PI * 2 * turns + fieldT * 0.9) * amp
-    };
+  var dx = x1 - x0;
+  function tetherPt(u){
+    var ang = u * Math.PI * 2 * turns + fieldT * 0.9;
+    var x = x0 + u * dx;
+    var y = y0 + Math.sin(ang) * amp;
+    var dydu = Math.cos(ang) * amp * Math.PI * 2 * turns;
+    var len = Math.hypot(dx, dydu) || 1;
+    return { x: x, y: y, nx: -dydu / len, ny: dx / len };
   }
 
+  var halfW = isTouch ? 6.5 : 9;
   var segs = isTouch ? 64 : 130;
   var i, u, p, q, fade;
   sctx.lineCap = 'round';
   sctx.lineJoin = 'round';
   for(i = 0; i < segs; i++){
-    p = tetherXY(i / segs);
-    q = tetherXY((i + 1) / segs);
+    p = tetherPt(i / segs);
+    q = tetherPt((i + 1) / segs);
     fade = (fieldFade(p.x, p.y, rad) + fieldFade(q.x, q.y, rad)) * 0.5;
-    sctx.strokeStyle = 'rgba(180,180,180,' + (0.16 + 0.38 * fade).toFixed(3) + ')';
-    sctx.lineWidth = 1.45;
+    sctx.strokeStyle = 'rgba(180,180,180,' + (0.10 + 0.22 * fade).toFixed(3) + ')';
+    sctx.lineWidth = 4.4;
     sctx.beginPath();
     sctx.moveTo(p.x, p.y);
     sctx.lineTo(q.x, q.y);
     sctx.stroke();
   }
 
-  var nAtoms = isTouch ? 80 : 170;
+  var nAtoms = isTouch ? 220 : 520;
   for(i = 0; i < nAtoms; i++){
     u = (fieldT * 0.22 + i / nAtoms) % 1;
-    p = tetherXY(u);
+    p = tetherPt(u);
     fade = fieldFade(p.x, p.y, rad);
     if(fade < 0.06) continue;
-    var buzz = Math.sin(fieldT * 36 + i * 2.4) * 0.7;
-    var buzz2 = Math.cos(fieldT * 44 + i * 1.7) * 0.7;
+    var lane = ((i * 37) % 1000) / 1000;
+    var off = (lane - 0.5) * 2 * halfW;
+    var buzz = Math.sin(fieldT * 36 + i * 2.4) * 0.9;
+    var buzz2 = Math.cos(fieldT * 44 + i * 1.7) * 0.9;
     var tw = 0.5 + 0.5 * Math.sin(fieldT * 22 + i * 1.1);
-    var rr = (i % 5 === 0 ? 2.4 : 1.35) * (0.75 + 0.4 * tw);
+    var rr = (i % 7 === 0 ? 2.2 : 1.2) * (0.75 + 0.4 * tw);
     var a = fade * tw;
-    sctx.fillStyle = (i % 4 === 0)
-      ? 'rgba(255,59,31,' + (0.82 * a).toFixed(3) + ')'
-      : 'rgba(255,255,255,' + (0.55 * a).toFixed(3) + ')';
+    sctx.fillStyle = (i % 5 === 0)
+      ? 'rgba(255,59,31,' + (0.80 * a).toFixed(3) + ')'
+      : 'rgba(255,255,255,' + (0.52 * a).toFixed(3) + ')';
     sctx.beginPath();
-    sctx.arc(p.x + buzz, p.y + buzz2, rr, 0, Math.PI * 2);
+    sctx.arc(p.x + p.nx * off + buzz, p.y + p.ny * off + buzz2, rr, 0, Math.PI * 2);
     sctx.fill();
   }
 
