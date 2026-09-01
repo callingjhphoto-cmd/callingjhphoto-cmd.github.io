@@ -631,12 +631,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </div>
 
   <div class="hud mono" id="hudTL">
-    LAT/LON <b id="hLat">—</b><br>
+    <span data-i18n="hud.latlon">LAT/LON</span> <b id="hLat">—</b><br>
     <span data-i18n="hud.uptime">UPTIME</span>&nbsp; <b id="hUp">00:00</b>
   </div>
   <div class="hud mono" id="hudTR">
     <span data-i18n="hud.cardsK">CARDS</span> <b data-i18n="hud.cardsV">2 OF 2 BACKED UP</b><br>
-    HDMI&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
+    <span data-i18n="hud.hdmiK">HDMI</span>&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
   </div>
   <div class="hud mono" id="hudBL">
     <span data-i18n="hud.coffeeK">COFFEE</span> <b class="r" data-i18n="hud.coffeeV">CRITICAL</b><br>
@@ -644,11 +644,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </div>
   <div class="hud mono" id="hudBR">
     <span data-i18n="hud.cableK">CABLE TENSION</span> <b data-i18n="hud.cableV">NOMINAL</b><br>
-    WIFI <b data-i18n="hud.wifiV">“FINE”</b>
+    <span data-i18n="hud.wifiK">WIFI</span> <b data-i18n="hud.wifiV">“FINE”</b>
   </div>
 
   <div id="zoomui" class="mono">
-    <button id="zOut" data-i18n-aria="zoom.out" aria-label="Zoom out">−</button><span>ZOOM</span><button id="zIn" data-i18n-aria="zoom.in" aria-label="Zoom in">+</button>
+    <button id="zOut" data-i18n-aria="zoom.out" aria-label="Zoom out">−</button><span data-i18n="zoom.label">ZOOM</span><button id="zIn" data-i18n-aria="zoom.in" aria-label="Zoom in">+</button>
     <span style="color:#3a3a3a;margin-left:10px" data-i18n="zoom.drag">DRAG TO SPIN</span>
   </div>
 
@@ -664,7 +664,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <!-- ============ [01] POLAROID ============ -->
 <section id="polaroid"><div class="wrap">
-  <p class="quote">“Best digi ever”</p>
+  <p class="quote" data-i18n="polaroid.quote">“Best digi ever”</p>
   <div class="attr" data-i18n="polaroid.attr">— a producer at Canadá</div>
   <div class="ppair">
     <div class="pframe tilt-a">
@@ -730,7 +730,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </p>
   <div class="caps">
     <div class="cap-row">
-      <div class="k">SOFTWARE</div>
+      <div class="k" data-i18n="kit.soft">SOFTWARE</div>
       <div class="v">Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync</div>
     </div>
     <div class="cap-row">
@@ -742,7 +742,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
       <div class="v">Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure</div>
     </div>
     <div class="cap-row">
-      <div class="k">CERT</div>
+      <div class="k" data-i18n="kit.cert">CERT</div>
       <div class="v">Phase One Certified Professional / POCP 2017</div>
     </div>
   </div>
@@ -812,7 +812,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 </div></section>
 
 <button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" aria-label="AI James — book me">
-  <span class="lab-top">AI JAMES</span>
+  <span class="lab-top" data-i18n="fab.ai">AI JAMES</span>
   <span class="globe-wrap">
     <canvas id="bookGlobe" width="176" height="176"></canvas>
   </span>
@@ -848,8 +848,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </form>
 </div>
 
-<div id="jamesChat" role="dialog" aria-label="James">
-  <div class="hd"><span><b>JAMES</b></span><button type="button" id="jamesX" data-i18n="ui.close">[ CLOSE ]</button></div>
+<div id="jamesChat" role="dialog" data-i18n-aria="chat.aria" aria-label="James">
+  <div class="hd"><span><b data-i18n="chat.name">JAMES</b></span><button type="button" id="jamesX" data-i18n="ui.close">[ CLOSE ]</button></div>
   <div id="jamesLog"></div>
   <div id="jamesChips"></div>
   <form id="jamesForm">
@@ -1182,8 +1182,10 @@ var I18N = {
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL',
     'hero.tag': 'GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.',
     'hud.uptime': 'UPTIME',
+    'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'CARDS',
     'hud.cardsV': '2 OF 2 BACKED UP',
+    'hud.hdmiK': 'HDMI',
     'hud.hdmiV': 'SEATED (VERIFIED TWICE)',
     'hud.coffeeK': 'COFFEE',
     'hud.coffeeV': 'CRITICAL',
@@ -1191,12 +1193,15 @@ var I18N = {
     'hud.clientV': 'HAPPY',
     'hud.cableK': 'CABLE TENSION',
     'hud.cableV': 'NOMINAL',
+    'hud.wifiK': 'WIFI',
     'hud.wifiV': '“FINE”',
     'zoom.out': 'Zoom out',
     'zoom.in': 'Zoom in',
+    'zoom.label': 'ZOOM',
     'zoom.drag': 'DRAG TO SPIN',
     'scroll': 'SCROLL',
     'pin.secno': '[00·B] GOOD VIBES. SECURE CAPTURE. SOLID SOUNDTRACK.',
+    'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— a producer at Canadá',
     'do.secno': '[02] WHAT I ACTUALLY DO',
     'do.h2': 'Always there.',
@@ -1225,8 +1230,10 @@ var I18N = {
     'kit.secno': '[03] SOFTWARE · CAMERAS · LIGHTING',
     'kit.h2': 'What I work with',
     'kit.lede': 'The photographer\'s kit. Production\'s nerves. I take both.',
+    'kit.soft': 'SOFTWARE',
     'kit.cam': 'CAMERAS',
     'kit.lit': 'LIGHTING',
+    'kit.cert': 'CERT',
     'work.secno': '[04] SELECTED WORK',
     'work.h2': 'Selected work',
     'work.year': 'YEAR',
@@ -1257,6 +1264,7 @@ var I18N = {
     'foot.role': 'JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT',
     'foot.bak': 'BACKED UP IN THREE PLACES. MINIMUM.',
     'fab.aria': 'AI James — book me',
+    'fab.ai': 'AI JAMES',
     'fab.book': 'BOOK ME',
     'book.aria': 'Book the tech',
     'book.h3': 'Book the tech',
@@ -1279,6 +1287,8 @@ var I18N = {
     'book.ph.note': 'Optional',
     'chat.ph': 'Job, dates, city…',
     'chat.send': 'SEND',
+    'chat.name': 'JAMES',
+    'chat.aria': 'James',
     'chat.opener': 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?',
     'ui.close': '[ CLOSE ]',
     'inspect.aria': 'Set-operations frame',
@@ -1328,6 +1338,7 @@ var I18N = {
     'mail.dates': 'Dates: ',
     'mail.job': 'Job: ',
     'mail.city': 'City: ',
+    'mail.email': 'Email: ',
     'cap.0': 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
     'cap.1': 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
     'cap.2': 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
@@ -1358,8 +1369,10 @@ var I18N = {
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL EN ESPAÑA Y PORTUGAL',
     'hero.tag': 'BUEN ROLLO. CAPTURA SEGURA. BUENA BANDA SONORA.',
     'hud.uptime': 'TIEMPO',
+    'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'TARJETAS',
     'hud.cardsV': '2 DE 2 COPIADAS',
+    'hud.hdmiK': 'HDMI',
     'hud.hdmiV': 'COLOCADO (VERIFICADO DOS VECES)',
     'hud.coffeeK': 'CAFÉ',
     'hud.coffeeV': 'CRÍTICO',
@@ -1367,42 +1380,47 @@ var I18N = {
     'hud.clientV': 'CONTENTO',
     'hud.cableK': 'TENSIÓN',
     'hud.cableV': 'NOMINAL',
+    'hud.wifiK': 'WIFI',
     'hud.wifiV': '“BIEN”',
     'zoom.out': 'Alejar',
     'zoom.in': 'Acercar',
+    'zoom.label': 'ZOOM',
     'zoom.drag': 'ARRASTRA PARA GIRAR',
     'scroll': 'BAJA',
     'pin.secno': '[00·B] BUEN ROLLO. CAPTURA SEGURA. BUENA BANDA SONORA.',
+    'polaroid.quote': '“El mejor digi de todos”',
     'polaroid.attr': '— un productor de Canadá',
     'do.secno': '[02] LO QUE HAGO DE VERDAD',
     'do.h2': 'Siempre ahí.',
     'do.cap.h': 'CAPTURA',
     'do.cap.p': 'Captura por tether que no se cae. La cámara habla con la estación, la estación habla con la pantalla del cliente, y nadie se queda esperando a que aparezca un fotograma.',
     'do.cap.1': 'Sesiones de Capture One Pro, nombradas y estructuradas',
-    'do.cap.3': 'Live view, focus checks, superposición de recuadro',
+    'do.cap.3': 'Visión en directo, chequeos de foco, superposición de recuadro',
     'do.col.h': 'COLOR',
     'do.col.p': 'Una pantalla de cliente calibrada para que el ok que das a las 19:40 sea la misma imagen que llega al retocador. Estilos e ICC puestos antes del primer disparo, no después.',
     'do.col.1': 'Calibración y perfilado de monitor',
     'do.col.2': 'Estilos de sesión, ICC, ajustes de captura',
-    'do.col.3': 'Comps por capas y stitching en el set',
-    'do.col.4': 'Selects, exports y previews para el cliente',
+    'do.col.3': 'Composiciones por capas y uniones en el set',
+    'do.col.4': 'Selección, exportaciones y previsualizaciones para el cliente',
     'do.dat.h': 'DATOS',
     'do.dat.p': 'Tres copias de todo, verificadas, antes de que las tarjetas vuelvan a la bolsa. En un día mío no se dice «dónde está el archivo».',
     'do.dat.1': 'Tarjeta más dos destinos, checksum verificado',
     'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
-    'do.dat.3': 'Shot logs, metadatos, convención de nombres',
+    'do.dat.3': 'Registros de toma, metadatos, convención de nombres',
     'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
     'doshot.0': 'CARRO MONTADO · DOBLE PANTALLA DE CLIENTE · CORRIENTE EN EL DISTRO',
-    'doshot.1': 'ESTACIÓN A LA SOMBRA · CABLES COLOCADOS · BACKUP EN EL RACK',
+    'doshot.1': 'ESTACIÓN A LA SOMBRA · CABLES COLOCADOS · COPIA EN EL RACK',
     'doshot.2': 'CAPTURE ONE EN VIVO · PANTALLA DE CLIENTE CALIBRADA · SET EN MARCHA',
-    'doshot.3': 'HOOD PUESTO · LIVE VIEW · LUCES CON SACA',
+    'doshot.3': 'PARASOL PUESTO · VISIÓN EN DIRECTO · LUCES CON SACA',
     'doshot.4': 'ESTACIÓN EN EXTERIOR · TETHER COLOCADO · CINTA EN LAS PATAS',
-    'doshot.5': 'RUEDAS ABAJO · HOOD PUESTO · AL ALCANCE DEL SET',
-    'kit.secno': '[03] SOFTWARE · CÁMARAS · ILUMINACIÓN',
+    'doshot.5': 'RUEDAS ABAJO · PARASOL PUESTO · AL ALCANCE DEL SET',
+    'kit.secno': '[03] PROGRAMAS · CÁMARAS · ILUMINACIÓN',
     'kit.h2': 'Con qué trabajo',
     'kit.lede': 'El kit del fotógrafo. Los nervios de producción. Me encargo de los dos.',
+    'kit.soft': 'PROGRAMAS',
     'kit.cam': 'CÁMARAS',
     'kit.lit': 'ILUMINACIÓN',
+    'kit.cert': 'CERTIFICACIÓN',
     'work.secno': '[04] TRABAJO SELECCIONADO',
     'work.h2': 'Trabajo seleccionado',
     'work.year': 'AÑO',
@@ -1412,7 +1430,7 @@ var I18N = {
     'work.city': 'CIUDAD',
     'fly.secno': '[05] EL PASO',
     'fly.h2': 'Fotogramas de<br>sets reales',
-    'fly.t1': '01 &nbsp;SET-OPS · CARRO · PANTALLAS · CABLES',
+    'fly.t1': '01 &nbsp;OPS DE SET · CARRO · PANTALLAS · CABLES',
     'fly.t2': '02 &nbsp;MARCAS',
     'fly.t3': '03 &nbsp;PRODUCTORAS',
     'own.secno': '[06] TRABAJO PERSONAL',
@@ -1421,7 +1439,7 @@ var I18N = {
     'own.open': '[ + ] ABRIR',
     'own.close': '[ − ] CERRAR',
     'con.secno': '[07] CONTACTO',
-    'con.email': 'EMAIL',
+    'con.email': 'CORREO',
     'con.phone': 'TELÉFONO',
     'con.wa': 'WHATSAPP',
     'con.ig': 'INSTAGRAM',
@@ -1432,45 +1450,48 @@ var I18N = {
     'con.statusV': 'Residente UE · autónomo',
     'foot.role': 'JH/01 — TÉCNICO DIGITAL Y AYUDANTE DE ILUMINACIÓN',
     'foot.bak': 'COPIADO EN TRES SITIOS. MÍNIMO.',
-    'fab.aria': 'AI James — reserva',
+    'fab.aria': 'IA James — reserva',
+    'fab.ai': 'IA JAMES',
     'fab.book': 'RESERVA',
     'book.aria': 'Reservar al técnico',
     'book.h3': 'Reservar al técnico',
-    'book.lede': 'Fechas, el job, envía. Te respondo desde callingjhphoto@gmail.com.',
+    'book.lede': 'Fechas, el trabajo, envía. Te respondo desde callingjhphoto@gmail.com.',
     'book.from': 'DESDE',
     'book.to': 'HASTA',
-    'book.job': 'JOB / PRODUCCIÓN',
+    'book.job': 'TRABAJO / PRODUCCIÓN',
     'book.city': 'CIUDAD',
-    'book.email': 'TU EMAIL',
+    'book.email': 'TU CORREO',
     'book.note': 'ALGO MÁS',
     'book.go': 'ENVIAR SOLICITUD',
     'book.sending': 'ENVIANDO…',
     'book.sent': 'ENVIADO. Te respondo desde callingjhphoto@gmail.com.',
     'book.needDate': 'Necesito una fecha de inicio.',
-    'book.needEmail': 'Necesito un email para responderte.',
+    'book.needEmail': 'Necesito un correo para responderte.',
     'book.fail': 'No se ha podido enviar. Escribe a callingjhphoto@gmail.com.',
-    'book.ph.job': 'Quién dispara, cuál es el job',
+    'book.ph.job': 'Quién dispara, cuál es el trabajo',
     'book.ph.city': 'Barcelona, Mallorca, Londres…',
     'book.ph.email': 'productor@estudio.com',
     'book.ph.note': 'Opcional',
-    'chat.ph': 'Job, fechas, ciudad…',
+    'chat.ph': 'Trabajo, fechas, ciudad…',
     'chat.send': 'ENVIAR',
+    'chat.name': 'JAMES',
+    'chat.aria': 'James',
     'chat.opener': 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?',
     'ui.close': '[ CERRAR ]',
-    'inspect.aria': 'Fotograma de set-ops',
-    'inspect.alt': 'Fotograma de set-ops, ampliado.',
+    'inspect.aria': 'Fotograma de ops de set',
+    'inspect.alt': 'Fotograma de ops de set, ampliado.',
     'own.alt': 'Fotografía de James Huertas.',
     'globe.aria': 'Globo interactivo con nueve pines de ciudad. En pantallas pequeñas, la misma lista está debajo.',
     'readout.go': 'CLIC PARA ABRIR →',
     'dos.credits': 'CRÉDITOS · CV CANÓNICO',
     'dos.creditsBare': 'CRÉDITOS',
-    'dos.reel': 'SET-OPS · EL REEL',
-    'dos.note': 'LOS FOTOGRAMAS SON DEL SET-OPS. NO VAN CON ESTA CIUDAD — NO VOY A PRETENDER QUE SÍ.',
-    'dos.alt': 'Fotograma de set-ops: estación de técnico digital en el set.',
+    'dos.reel': 'OPS DE SET · EL REEL',
+    'dos.note': 'LOS FOTOGRAMAS SON DE OPS DE SET. NO VAN CON ESTA CIUDAD — NO VOY A PRETENDER QUE SÍ.',
+    'dos.alt': 'Fotograma de ops de set: estación de técnico digital en el set.',
     'alt.polaroid1': 'James Huertas en una playa con su estación de técnico digital.',
     'alt.polaroid2': 'James Huertas en el set, tendiendo cables de tether en la estación de captura.',
-    'alt.shot': 'Fotograma de set-ops: estación de captura por tether en el set.',
-    'alt.card': 'Fotograma de set-ops: estación de técnico digital, pantallas y cables en el set.',
+    'alt.shot': 'Fotograma de ops de set: estación de captura por tether en el set.',
+    'alt.card': 'Fotograma de ops de set: estación de técnico digital, pantallas y cables en el set.',
     'nocredit.NYC': 'NUEVA YORK — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
     'nocredit.RIO': 'RÍO DE JANEIRO — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
     'nocredit.SIN': 'SINGAPUR — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
@@ -1504,24 +1525,25 @@ var I18N = {
     'mail.dates': 'Fechas: ',
     'mail.job': 'Trabajo: ',
     'mail.city': 'Ciudad: ',
-    'cap.0': 'CAPTURE ONE · TETHER · PANTALLA DE CLIENTE CALIBRADA',
+    'mail.email': 'Correo: ',
+    'cap.0': 'CAPTURE ONE · POR TETHER · PANTALLA DE CLIENTE CALIBRADA',
     'cap.1': 'ESTACIÓN MONTADA · CORRIENTE EN EL DISTRO · CABLES COLOCADOS',
     'cap.2': 'COPIA A DOBLE DESTINO · CHECKSUM VERIFICADO',
-    'cap.3': 'LIVE VIEW AL MONITOR DEL CLIENTE · SIN QUEJAS DE LATENCIA',
+    'cap.3': 'VISIÓN EN DIRECTO AL MONITOR DEL CLIENTE · SIN QUEJAS DE LATENCIA',
     'cap.4': 'SESIÓN NOMBRADA · CARPETAS ANTES DEL PRIMER DISPARO',
     'cap.5': 'PERFIL ICC CARGADO · ESTILO APLICADO EN CAPTURA',
     'cap.6': 'CARRO MONTADO · A LA SOMBRA · AL ALCANCE DEL SET',
-    'cap.7': 'FOCUS CHECK AL 100% · SELECT MARCADO · SEGUIMOS',
-    'cap.8': 'SEGUNDO CUERPO EN TETHER · MISMA SESIÓN · MISMO NOMBRE',
-    'cap.9': 'SHOT LOG EN MARCHA · METADATOS AL INGERIR',
+    'cap.7': 'CHEQUEO DE FOCO AL 100% · SELECCIÓN MARCADA · SEGUIMOS',
+    'cap.8': 'SEGUNDO CUERPO POR TETHER · MISMA SESIÓN · MISMO NOMBRE',
+    'cap.9': 'REGISTRO DE TOMAS EN MARCHA · METADATOS AL INGERIR',
     'cap.10': 'PANTALLA DEL CLIENTE COLOCADA PARA QUE NADIE SE META EN LA LUZ',
     'cap.11': 'TARJETAS DESCARGADAS · VERIFICADAS · Y SOLO ENTONCES FORMATEADAS',
     'cap.12': 'AYUDANTE DE ILUMINACIÓN · CAMBIO DE MODIFICADOR · CON SACA',
-    'cap.13': 'STITCH Y COMP POR CAPAS MONTADO EN EL SET',
+    'cap.13': 'UNIÓN Y COMPOSICIÓN POR CAPAS MONTADAS EN EL SET',
     'cap.14': 'DISCO DE ENTREGA ESPEJADO · ESTRUCTURADO · ETIQUETADO',
     'cap.15': 'HDMI PEGADO AL SUELO CON CINTA. DOS VECES.',
     'cap.16': 'ROTACIÓN DE BATERÍAS APUNTADA · NADA SE MUERE A MEDIA MONTAJE',
-    'cap.17': 'EXPORTS FUERA ANTES DE QUE EL CLIENTE LOS PIDA'
+    'cap.17': 'EXPORTACIONES FUERA ANTES DE QUE EL CLIENTE LAS PIDA'
   }
 };
 
@@ -1533,6 +1555,33 @@ function t(key){
 }
 function cityName(c){ return t('city.' + c.id) || c.name; }
 function cityLine(c){ return t('cityline.' + c.id) || c.line; }
+function locFrag(s){
+  if(s == null) return s;
+  s = String(s);
+  if(LANG !== 'es') return s;
+  var pairs = [
+    ['articles for The Times, The Independent', 'artículos para The Times y The Independent'],
+    ['Hamburg / LA leg', 'tramo Hamburgo / Los Ángeles'],
+    ['Hamburg / LA', 'Hamburgo / Los Ángeles'],
+    ['London / Lisbon', 'Londres / Lisboa'],
+    ['London & Brussels', 'Londres y Bruselas'],
+    ['layered key visual', 'key visual por capas'],
+    ['Netflix doc', 'Docu Netflix'],
+    ['Los Angeles', 'Los Ángeles'],
+    ['talent:', 'talento:'],
+    ['corporate', 'corporativo'],
+    ['Lisbon', 'Lisboa'],
+    ['London', 'Londres'],
+    ['Hamburg', 'Hamburgo'],
+    ['Brussels', 'Bruselas']
+  ];
+  var i;
+  for(i = 0; i < pairs.length; i++){
+    if(s.indexOf(pairs[i][0]) !== -1) s = s.split(pairs[i][0]).join(pairs[i][1]);
+  }
+  if(s === 'press') s = 'prensa';
+  return s;
+}
 
 function applyI18n(){
   document.documentElement.lang = LANG === 'es' ? 'es' : 'en';
@@ -1561,7 +1610,12 @@ function applyI18n(){
     var c = CITIES.filter(function(x){ return x.id === id; })[0];
     if(c) b.textContent = cityName(c).toUpperCase();
   });
+  document.querySelectorAll('[data-loc]').forEach(function(n){
+    if(!n.getAttribute('data-src')) n.setAttribute('data-src', n.textContent);
+    n.textContent = locFrag(n.getAttribute('data-src'));
+  });
   fillChips();
+  if(typeof activePin !== 'undefined' && activePin && typeof openDossier === 'function') openDossier(activePin);
 }
 
 var bootStarted = false;
@@ -2250,9 +2304,9 @@ function openDossier(id){
     h += '<div class="hd mono">' + t('dos.credits') + '</div>';
     creds.forEach(function(cr){
       h += '<div class="cred">' +
-           '<span class="y">' + esc(cr.y) + '</span> &nbsp; <span class="cl">' + esc(cr.c) + '</span><br>' +
-           '<span class="meta">' + esc(cr.p) + (cr.ph && cr.ph !== '—' ? ' &nbsp;·&nbsp; ' + esc(cr.ph) : '') +
-           (cr.n ? '<br>' + esc(cr.n) : '') + '</span></div>';
+           '<span class="y">' + esc(cr.y) + '</span> &nbsp; <span class="cl">' + esc(locFrag(cr.c)) + '</span><br>' +
+           '<span class="meta">' + esc(locFrag(cr.p)) + (cr.ph && cr.ph !== '—' ? ' &nbsp;·&nbsp; ' + esc(cr.ph) : '') +
+           (cr.n ? '<br>' + esc(locFrag(cr.n)) : '') + '</span></div>';
     });
   } else {
     h += '<div class="hd mono">' + t('dos.creditsBare') + '</div>';
@@ -2337,10 +2391,10 @@ var DOSHOTS = [
   WORK.forEach(function(w){
     t.appendChild(el('div','row',
       '<span class="yr">' + esc(w[0]) + '</span>' +
-      '<span class="cl">' + esc(w[1]) + '</span>' +
-      '<span class="mt pr">' + esc(w[2]) + '</span>' +
+      '<span class="cl" data-loc>' + esc(w[1]) + '</span>' +
+      '<span class="mt pr" data-loc>' + esc(w[2]) + '</span>' +
       '<span class="mt ph">' + esc(w[3]) + '</span>' +
-      '<span class="mt ci">' + esc(w[4]) + '</span>'));
+      '<span class="mt ci" data-loc>' + esc(w[4]) + '</span>'));
   });
 })();
 
@@ -2622,7 +2676,7 @@ if(window.visualViewport){
           t('mail.dates') + dates + '\n' +
           t('mail.job') + (job || '—') + '\n' +
           t('mail.city') + (city || '—') + '\n' +
-          'Email: ' + email + '\n';
+          t('mail.email') + email + '\n';
         if(note) body += '\n' + note + '\n';
         window.location.href = 'mailto:callingjhphoto@gmail.com?subject=' +
           encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
@@ -2656,18 +2710,18 @@ function closeJames(){
   }
   function reply(raw){
     var t = (raw || '').toLowerCase();
-    var es = /[áéíóúñ¿¡]/.test(t) || /\b(hola|buenas|disponible|presupuesto|tarifa|gracias|fechas|trabajo)\b/.test(t);
+    var es = LANG === 'es' || /[áéíóúñ¿¡]/.test(t) || /\b(hola|buenas|disponible|presupuesto|tarifa|gracias|fechas|trabajo)\b/.test(t);
     if(/\b(dit|d\.i\.t)\b/.test(t))
       return es
         ? 'Soy el técnico digital y ayudante de iluminación — captura, color, copias. Encantado de explicarlo.'
         : 'I’m the digital technician and lighting assistant — capture, colour, the backups. Happy to walk through it.';
     if(/\b(rate|price|precio|tarifa|presupuesto|€|euro)\b/.test(t))
       return es
-        ? 'Te mando la tarifa por email o WhatsApp, más fácil que aquí. ¿Te la envío?'
+        ? 'Te mando la tarifa por correo o WhatsApp, más fácil que aquí. ¿Te la envío?'
         : 'I’ll send the rate card on email or WhatsApp — easier than here. Want me to?';
     if(/\b(free|avail|busy|diary|calendar|disponible|libre|ocupado|agenda)\b/.test(t) || /\d{4}-\d{2}-\d{2}/.test(t) || /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|ene|abr|ago|dic)\b/.test(t))
       return es
-        ? 'No quiero adivinar y equivocarme. Pon las fechas en el formulario y te confirmo el mismo día. Si ya estoy en un job, te lo digo.'
+        ? 'No quiero adivinar y equivocarme. Pon las fechas en el formulario y te confirmo el mismo día. Si ya estoy en un trabajo, te lo digo.'
         : 'I don’t want to guess from here and get it wrong. Drop the dates in the form and I’ll confirm the same day — if I’m already on a job I’ll say so.';
     if(/\b(spanish|english|idioma|bilingual|español|ingles|language|flown|american|german|london)\b/.test(t))
       return es
@@ -2687,14 +2741,14 @@ function closeJames(){
         : 'Easiest is email or WhatsApp — callingjhphoto@gmail.com, or +44 7562 393 477 on WhatsApp.';
     if(/\b(great|love|amazing|awesome|nice|brilliant|legend)\b/.test(t))
       return es
-        ? 'Qué amable, de verdad. Si tienes un job a la vista, mándame fechas y lo miro ahora.'
+        ? 'Qué amable, de verdad. Si tienes un trabajo a la vista, mándame fechas y lo miro ahora.'
         : 'That’s very kind — thank you. If you’ve got a job coming, send the dates and I’ll look straight away.';
     if(/\b(hi|hey|hello|hola|buenas|good morning|good afternoon)\b/.test(t))
       return es ? 'Hola, qué tal. Soy James. ¿El trabajo y para cuándo?' : 'Hey — good to have you. I’m James. What’s the job, and when are you looking at?';
     if(/\b(thanks|gracias|cheers|perfect)\b/.test(t))
       return es ? 'Cuando quieras. Si tienes fechas, las miro encantado.' : 'Pleasure. If you’ve got dates, send them over and I’ll check.';
     return es
-      ? 'Encantado de mirarlo. Fechas y una línea del job y te digo si estoy libre.'
+      ? 'Encantado de mirarlo. Fechas y una línea del trabajo y te digo si estoy libre.'
       : 'Happy to look. Dates and a line on the job and I’ll tell you if I’m free.';
   }
 
