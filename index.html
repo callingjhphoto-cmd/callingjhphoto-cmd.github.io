@@ -342,6 +342,17 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .logolane img.ink{filter:brightness(0) invert(1)}
 .logolane img:hover{opacity:.8}
 .logolane.rev{animation-direction:reverse;animation-duration:110s}
+#brands{padding:112px 0}
+.logogrid{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;
+  gap:24px 40px;width:100%;padding:8px 0 32px;
+}
+.logogrid img{
+  height:28px;width:auto;max-width:140px;object-fit:contain;
+  opacity:.72;filter:none
+}
+.logogrid img.ink{filter:brightness(0) invert(1)}
+.logogrid img:hover{opacity:1}
 .tierhd{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--grey);
   margin:32px 0 0;display:flex;align-items:center;gap:16px;text-transform:uppercase}
 .tierhd:after{content:'';flex:1;height:1px;background:var(--line)}
@@ -596,7 +607,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   #polaroid .attr{margin-bottom:32px}
   .ppair{gap:24px}
   .pframe img{width:min(280px,78vw)}
-  #do,#kit,#work{padding:56px 0}
+  #brands,#do,#kit,#work{padding:56px 0}
   #flyby{padding:56px 0 0}
   .cols{margin-top:0;gap:32px}
   .doshots{margin-top:32px}
@@ -637,7 +648,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  .track,.logolane{animation:none!important;flex-wrap:wrap;width:100%}
+  .track,.logolane,.logogrid{animation:none!important;flex-wrap:wrap;width:100%}
   .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
   .card,.workcard{width:calc(50% - 8px)}
 }
@@ -754,6 +765,14 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   </div>
 </div></section>
 
+<!-- ============ BRANDS — all marks, no marquee ============ -->
+<section id="brands"><div class="wrap">
+  <div class="secno mono" data-i18n="brands.secno">BRANDS</div>
+  <div class="logogrid" id="logoLane"></div>
+  <div class="tierhd mono" data-i18n-html="brands.prod">PRODUCTION</div>
+  <div class="logogrid" id="prodLane"></div>
+</div></section>
+
 <!-- ============ [02] WHAT I ACTUALLY DO ============ -->
 <section id="do"><div class="wrap">
   <div class="secno mono" data-i18n="do.secno">[02] WHAT I ACTUALLY DO</div>
@@ -836,12 +855,6 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   <div class="tierhd mono" data-i18n-html="fly.t1">01 &nbsp;SET-OPS · CART · SCREENS · CABLES</div>
   <div class="lane"><div class="track" id="laneA"></div></div>
   <div class="lane"><div class="track slow rev" id="laneB"></div></div>
-
-  <div class="tierhd mono" data-i18n-html="fly.t2">02 &nbsp;BRANDS</div>
-  <div class="lane" style="padding:26px 0"><div class="logolane" id="logoLane"></div></div>
-
-  <div class="tierhd mono" data-i18n-html="fly.t3">03 &nbsp;PRODUCTION COMPANIES</div>
-  <div class="lane" style="padding:26px 0"><div class="logolane rev" id="prodLane"></div></div>
 </div></section>
 
 <!-- ============ [06] PERSONAL WORK ============ -->
@@ -1053,39 +1066,39 @@ var CAPS = [
 
 /* CV brands. White-on-transparent PNGs unless ink:1 (black SVG → invert). */
 var LOGOS = [
-  {f:'uber.png', n:'Uber'},
-  {f:'adidas.png', n:'adidas'},
-  {f:'audi.png', n:'Audi'},
   {f:'nike.svg', n:'Nike', ink:1},
-  {f:'newbalance.png', n:'New Balance'},
-  {f:'thenorthface.png', n:'The North Face'},
+  {f:'adidas.png', n:'adidas'},
   {f:'netflix.png', n:'Netflix'},
-  {f:'amazon.png', n:'Amazon'},
-  {f:'volkswagen.png', n:'Volkswagen'},
   {f:'mercedes.png', n:'Mercedes-Benz'},
   {f:'offwhite.png', n:'Off-White'},
-  {f:'cupra.png', n:'Cupra'},
-  {f:'mahou.png', n:'Mahou'},
-  {f:'macallan.png', n:'The Macallan'},
-  {f:'sfera-mark.png', n:'Sfera'},
-  {f:'questex.png', n:'Questex'},
-  {f:'matthew-williamson.png', n:'Matthew Williamson'},
+  {f:'uber.png', n:'Uber'},
+  {f:'amazon.png', n:'Amazon'},
+  {f:'audi.png', n:'Audi'},
+  {f:'volkswagen.png', n:'Volkswagen'},
+  {f:'diageo-mark.png', n:'Diageo'},
   {f:'fcbarcelona.png', n:'FC Barcelona'},
-  {f:'0039.png', n:'0039 Italy'},
+  {f:'thenorthface.png', n:'The North Face'},
+  {f:'newbalance.png', n:'New Balance'},
   {f:'bloomberg.png', n:'Bloomberg'},
   {f:'reuters.png', n:'Reuters'},
-  {f:'diageo-mark.png', n:'Diageo'},
-  {f:'guinness.png', n:'Guinness'},
+  {f:'getty.png', n:'Getty'},
+  {f:'macallan.png', n:'The Macallan'},
   {f:'stella-artois.png', n:'Stella Artois'},
+  {f:'guinness.png', n:'Guinness'},
   {f:'bacardi.png', n:'Bacardi'},
   {f:'bombay.png', n:'Bombay Sapphire'},
   {f:'don-papa.png', n:'Don Papa'},
-  {f:'getty.png', n:'Getty'},
+  {f:'fwrd.png', n:'FWRD'},
+  {f:'harvey-nichols.png', n:'Harvey Nichols'},
+  {f:'free-people.png', n:'Free People'},
+  {f:'mahou.png', n:'Mahou'},
+  {f:'cupra.png', n:'Cupra'},
+  {f:'sfera-mark.png', n:'Sfera'},
   {f:'die-zeit.png', n:'Die Zeit'},
   {f:'senseo.png', n:'Senseo'},
-  {f:'harvey-nichols.png', n:'Harvey Nichols'},
-  {f:'fwrd.png', n:'FWRD'},
-  {f:'free-people.png', n:'Free People'},
+  {f:'matthew-williamson.png', n:'Matthew Williamson'},
+  {f:'0039.png', n:'0039 Italy'},
+  {f:'questex.png', n:'Questex'},
   {f:'truegroup.png', n:'TrueGroup'}
 ];
 
@@ -1281,6 +1294,8 @@ var I18N = {
     'pin.secno': '[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— a producer at Canadá',
+    'brands.secno': 'BRANDS',
+    'brands.prod': 'PRODUCTION',
     'do.secno': '[02] WHAT I ACTUALLY DO',
     'do.h2': 'Always there',
     'do.cap.h': 'CAPTURE',
@@ -1465,6 +1480,8 @@ var I18N = {
     'pin.secno': '[00·B] CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— un productor de Canadá',
+    'brands.secno': 'MARCAS',
+    'brands.prod': 'PRODUCCIÓN',
     'do.secno': '[02] LO QUE HAGO DE VERDAD',
     'do.h2': 'Siempre ahí',
     'do.cap.h': 'CAPTURA',
@@ -2492,22 +2509,19 @@ var DOSHOTS = [
   fill($('#laneB'), SET.slice(mid), 6);
 })();
 
-/* logo lanes — brands, then production houses underneath */
+/* brand + production marks — static wrap, one of each, no marquee */
 (function(){
-  function fillLane(node, list){
+  function fillGrid(node, list){
     if(!node) return;
     var html = '';
-    var passes = reduce ? 1 : 2;
-    for(var pass = 0; pass < passes; pass++){
-      list.forEach(function(l){
-        html += '<img loading="lazy" class="' + (l.ink ? 'ink' : '') + '" src="img/logos/' + l.f +
-                '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
-      });
-    }
+    list.forEach(function(l){
+      html += '<img loading="lazy" class="' + (l.ink ? 'ink' : '') + '" src="img/logos/' + l.f +
+              '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
+    });
     node.innerHTML = html;
   }
-  fillLane($('#logoLane'), LOGOS);
-  fillLane($('#prodLane'), PRODS);
+  fillGrid($('#logoLane'), LOGOS);
+  fillGrid($('#prodLane'), PRODS);
 })();
 
 /* personal work — last, collapsed */
