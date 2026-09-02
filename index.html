@@ -347,9 +347,11 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .logolane img.ink{filter:brightness(0) invert(1)}
 .logolane img:hover{opacity:.8}
 .logolane.rev{animation-direction:reverse;animation-duration:110s}
-#brands{padding:112px 0}
+#brands{padding:112px 0;text-align:center}
+#brands .tierhd{justify-content:center}
+#brands .tierhd:before{content:'';flex:1;height:1px;background:var(--line)}
 .logogrid{
-  display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
   gap:24px 40px;width:100%;padding:8px 0 32px;
 }
 .logogrid img{
