@@ -366,35 +366,6 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   font-size:14px;color:var(--grey);line-height:1.7}
 .reserved b{color:var(--grey2);font-weight:400}
 
-/* portfolio last */
-#last{padding:96px 0;border-top:1px solid var(--line);margin-top:0}
-#last .lede{font-family:var(--sans);font-size:16px;line-height:1.72;letter-spacing:-.01em;color:var(--grey);
-  max-width:640px;margin:0}
-#last .lede b{color:var(--grey2);font-weight:400}
-#last .lede a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(255,59,31,.35)}
-#last .lede a:hover{border-color:var(--red)}
-.ownbar{display:flex;align-items:center;gap:18px;margin-top:28px;flex-wrap:wrap}
-#toggleOwn{
-  background:none;border:1px solid #262626;color:var(--grey2);
-  font-family:var(--mono);font-size:12px;letter-spacing:.16em;padding:8px 16px;cursor:pointer;text-transform:uppercase;
-  min-height:var(--hit);min-width:var(--hit);
-  display:inline-flex;align-items:center;justify-content:center
-}
-#toggleOwn:hover{border-color:var(--red);color:var(--red)}
-.ownbar .quiet{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--grey)}
-#owngrid{display:none;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:34px;
-  overflow:hidden;min-width:0;width:100%;max-width:100%}
-#owngrid.on{display:grid}
-.owncell{
-  overflow:hidden;min-width:0;min-height:0;isolation:isolate;contain:paint;
-  background:#080808;aspect-ratio:1;position:relative;max-width:100%
-}
-.owncell img{
-  width:100%;height:100%;object-fit:cover;object-position:center;
-  display:block;max-width:100%;opacity:.88;cursor:zoom-in;
-  position:absolute;inset:0
-}
-
 /* inspect — carousel, not a single close-card */
 #inspect{
   position:fixed;inset:0;z-index:180;background:rgba(0,0,0,.92);
@@ -540,8 +511,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   html[lang="es"] .row .ph:before{content:'FOTO '}
   html[lang="es"] .row .ci:before{content:'CIUDAD '}
   .shot img{height:200px}
-  #owngrid{grid-template-columns:1fr 1fr}
-  .owncell{aspect-ratio:1}
+
 }
 @media(max-width:720px){
   nav{
@@ -623,9 +593,6 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   #work .lane{margin-top:32px}
   #work .lane + .lane{margin-top:16px}
   .workcard{width:112px}
-  #last{padding:48px 0;margin-top:0}
-  #last .lede{margin-top:0}
-  .ownbar{margin-top:16px}
   #contact{
     padding:48px 0 calc(168px + env(safe-area-inset-bottom, 0px))
   }
@@ -871,20 +838,9 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   <div class="lane"><div class="track slow rev" id="laneB"></div></div>
 </div></section>
 
-<!-- ============ [06] PERSONAL WORK ============ -->
-<section id="last"><div class="wrap">
-  <div class="secno mono" data-i18n="own.secno">[06] PERSONAL WORK</div>
-  <h2 class="big" data-i18n="own.h2">Personal work</h2>
-  <p class="lede"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> <span data-i18n="own.lede">— on set and on the road with personal photography along the way.</span></p>
-  <div class="ownbar">
-    <button id="toggleOwn" class="mono" data-i18n="own.open">[ + ] OPEN</button>
-  </div>
-  <div id="owngrid"></div>
-</div></section>
-
-<!-- ============ [07] CONTACT ============ -->
+<!-- ============ [06] CONTACT ============ -->
 <section id="contact"><div class="wrap">
-  <div class="secno mono" data-i18n="con.secno">[07] CONTACT</div>
+  <div class="secno mono" data-i18n="con.secno">[06] CONTACT</div>
   <div class="cgrid">
     <div class="cinfo mono">
       <div><span class="k" data-i18n="con.email">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
@@ -1134,40 +1090,6 @@ var PRODS = [
   {f:'truegroup.png', n:'TrueGroup'}
 ];
 
-var OWN = [
- 'home_00_0.jpg','home_00_1.jpg',
- 'home_01_0.jpg','home_01_1.jpg',
- 'home_02_0.jpg','home_02_1.jpg',
- 'home_03_0.jpg','home_03_1.jpg',
- 'home_04_0.jpg','home_04_1.jpg',
- 'home_05_0.jpg','home_05_1.jpg',
- 'home_06_0.jpg','home_06_1.jpg',
- 'home_07_0.jpg','home_07_1.jpg',
- 'home_08_0.jpg','home_08_1.jpg',
- 'home_09_0.jpg','home_09_1.jpg',
- 'home_11_0.jpg','home_11_1.jpg',
- 'home_12_0.jpg','home_12_1.jpg',
- 'home_13_0.jpg','home_13_1.jpg',
- 'home_14_0.jpg','home_14_1.jpg',
- 'home_15_0.jpg','home_15_1.jpg',
- 'home_16_0.jpg','home_16_1.jpg',
- 'home_17_0.jpg','home_17_1.jpg',
- 'home_18_0.jpg','home_18_1.jpg',
- 'home_19_0.jpg','home_19_1.jpg',
- 'home_20_0.jpg','home_20_1.jpg',
- 'home_21_0.jpg','home_21_1.jpg',
- 'home_23_0.jpg','home_23_1.jpg',
- 'archery_00_archery1-copy.jpg','archery_01_archery2-copy.jpg','archery_02_archery3-copy.jpg',
- 'archery_03_archery4-copy.jpg','archery_04_archery5-copy.jpg','archery_05_archery6-copy.jpg',
- 'archery_06_archery7-copy.jpg',
- 'fencers_00_fencer-12.jpg','fencers_01_fencer-11.jpg','fencers_02_fencer-10.jpg',
- 'fencers_03_fencer-5.jpg','fencers_04_fencer-9.jpg','fencers_05_fencer-4.jpg',
- 'violins_00_ian-violin-15.jpg','violins_01_ian-violin-6.jpg','violins_02_ian-violin.jpg',
- 'violins_03_ian-violin-14.jpg','violins_04_ian-violin-1.jpg','violins_05_ian-violin-2-1.jpg',
- 'violins_06_ian-violin-21.jpg','violins_07_ian-violin-11.jpg','violins_08_ian-violin-16.jpg',
- 'violins_09_ian-violin-4.jpg','violins_10_ian-violin-3.jpg'
-];
-
 /* work table — verbatim from JOBS.md */
 var WORK = [
  ['2026','Uber','xLOB · Palma Pictures','Anisha Sisodia','Lisbon','UNVERIFIED',''],
@@ -1349,12 +1271,7 @@ var I18N = {
     'fly.t1': '01 &nbsp;SET-OPS · CART · SCREENS · CABLES',
     'fly.t2': '02 &nbsp;BRANDS',
     'fly.t3': '03 &nbsp;PRODUCTION COMPANIES',
-    'own.secno': '[06] PERSONAL WORK',
-    'own.h2': 'Personal work',
-    'own.lede': '— on set and on the road with personal photography along the way.',
-    'own.open': '[ + ] OPEN',
-    'own.close': '[ − ] CLOSE',
-    'con.secno': '[07] CONTACT',
+    'con.secno': '[06] CONTACT',
     'con.email': 'EMAIL',
     'con.phone': 'PHONE',
     'con.wa': 'WHATSAPP',
@@ -1536,12 +1453,7 @@ var I18N = {
     'fly.t1': '01 &nbsp;OPS DE SET · CARRO · PANTALLAS · CABLES',
     'fly.t2': '02 &nbsp;MARCAS',
     'fly.t3': '03 &nbsp;PRODUCTORAS',
-    'own.secno': '[06] TRABAJO PERSONAL',
-    'own.h2': 'Trabajo personal',
-    'own.lede': '— en el set y de viaje, con fotografía personal por el camino.',
-    'own.open': '[ + ] ABRIR',
-    'own.close': '[ − ] CERRAR',
-    'con.secno': '[07] CONTACTO',
+    'con.secno': '[06] CONTACTO',
     'con.email': 'CORREO',
     'con.phone': 'TELÉFONO',
     'con.wa': 'WHATSAPP',
@@ -2537,26 +2449,6 @@ var DOSHOTS = [
   fillGrid($('#prodLane'), PRODS);
 })();
 
-/* personal work — last, collapsed */
-(function(){
-  var btn = $('#toggleOwn'), grid = $('#owngrid'), built = false;
-  btn.addEventListener('click', function(){
-    if(!built){
-      OWN.forEach(function(f){
-        var cell = el('div','owncell');
-        var i = el('img'); i.loading = 'lazy'; i.src = 'img/own/' + f;
-        i.alt = t('own.alt');
-        i.onerror = function(){ this.style.display = 'none'; var p = this.parentNode; if(p) p.style.display = 'none'; };
-        cell.appendChild(i);
-        grid.appendChild(cell);
-      });
-      built = true;
-    }
-    var on = grid.classList.toggle('on');
-    btn.textContent = on ? t('own.close') : t('own.open');
-  });
-})();
-
 /* polaroid drag-tumble */
 (function(){
   var frames = document.querySelectorAll('#polaroid .pframe');
@@ -2616,11 +2508,6 @@ var DOSHOTS = [
   function setGallery(){
     return SET.map(function(f, i){
       return { src: 'img/set/' + f, cap: t('cap.' + (i % CAPS.length)) || CAPS[i % CAPS.length] };
-    });
-  }
-  function ownGallery(){
-    return OWN.map(function(f){
-      return { src: 'img/own/' + f, cap: '' };
     });
   }
   function polaroidGallery(){
@@ -2693,12 +2580,6 @@ var DOSHOTS = [
     openAt(list, indexOfSrc(list, src), false);
   }
   document.addEventListener('click', function(e){
-    if(e.target && e.target.closest && e.target.closest('#owngrid') && e.target.tagName === 'IMG'){
-      e.preventDefault();
-      var list = ownGallery();
-      openAt(list, indexOfSrc(list, e.target.getAttribute('src')), true);
-      return;
-    }
     var n = e.target.closest ? e.target.closest('.shot, .card, .workcard') : null;
     if(n){ e.preventDefault(); fromCard(n); }
   });
