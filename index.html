@@ -354,8 +354,8 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   gap:24px 40px;width:100%;padding:8px 0 0;
 }
 .logogrid img{
-  height:28px;width:auto;max-width:140px;object-fit:contain;
-  opacity:.72;filter:none
+  height:auto;width:auto;max-height:28px;max-width:200px;
+  object-fit:contain;opacity:.9;filter:none;background:transparent;display:block
 }
 .logogrid img.ink{filter:brightness(0) invert(1)}
 .logogrid img:hover{opacity:1}
@@ -1034,42 +1034,42 @@ var CAPS = [
  'EXPORTS OUT BEFORE THE CLIENT ASKS FOR THEM'
 ];
 
-/* CV brands. White-on-transparent PNGs unless ink:1 (black SVG → invert). */
+/* CV brands from Desktop/Brand Logos. Dark marks pre-whitened onto transparent PNG. */
 var LOGOS = [
-  {f:'nike.svg', n:'Nike', ink:1},
-  {f:'adidas.png', n:'adidas'},
-  {f:'netflix.png', n:'Netflix'},
-  {f:'mercedes.png', n:'Mercedes-Benz'},
-  {f:'offwhite.png', n:'Off-White'},
-  {f:'uber.png', n:'Uber'},
-  {f:'amazon.png', n:'Amazon'},
-  {f:'audi.png', n:'Audi'},
-  {f:'volkswagen.png', n:'Volkswagen'},
+  {f:'marks/nike.png', n:'Nike'},
+  {f:'marks/adidas.png', n:'adidas'},
+  {f:'marks/netflix.png', n:'Netflix'},
+  {f:'marks/mercedes-benz.png', n:'Mercedes-Benz'},
+  {f:'marks/off-white.png', n:'Off-White'},
+  {f:'marks/uber.png', n:'Uber'},
+  {f:'marks/amazon.png', n:'Amazon'},
+  {f:'marks/audi.png', n:'Audi'},
+  {f:'marks/volkswagen.png', n:'Volkswagen'},
   {f:'diageo-mark.png', n:'Diageo'},
-  {f:'fcbarcelona.png', n:'FC Barcelona'},
-  {f:'thenorthface.png', n:'The North Face'},
-  {f:'newbalance.png', n:'New Balance'},
-  {f:'bloomberg.png', n:'Bloomberg'},
-  {f:'reuters.png', n:'Reuters'},
-  {f:'getty.png', n:'Getty'},
-  {f:'macallan.png', n:'The Macallan'},
-  {f:'stella-artois.png', n:'Stella Artois'},
-  {f:'guinness.png', n:'Guinness'},
-  {f:'bacardi.png', n:'Bacardi'},
-  {f:'bombay.png', n:'Bombay Sapphire'},
-  {f:'don-papa.png', n:'Don Papa'},
-  {f:'fwrd.png', n:'FWRD'},
-  {f:'harvey-nichols.png', n:'Harvey Nichols'},
-  {f:'free-people.png', n:'Free People'},
-  {f:'mahou.png', n:'Mahou'},
-  {f:'cupra.png', n:'Cupra'},
-  {f:'sfera-mark.png', n:'Sfera'},
-  {f:'die-zeit.png', n:'Die Zeit'},
-  {f:'senseo.png', n:'Senseo'},
-  {f:'matthew-williamson.png', n:'Matthew Williamson'},
-  {f:'0039.png', n:'0039 Italy'},
-  {f:'questex.png', n:'Questex'},
-  {f:'truegroup.png', n:'TrueGroup'}
+  {f:'marks/fc-barcelona.png', n:'FC Barcelona'},
+  {f:'marks/the-north-face.png', n:'The North Face'},
+  {f:'marks/new-balance.png', n:'New Balance'},
+  {f:'marks/bloomberg.png', n:'Bloomberg'},
+  {f:'marks/reuters.png', n:'Reuters'},
+  {f:'marks/getty.png', n:'Getty'},
+  {f:'marks/the-macallan.png', n:'The Macallan'},
+  {f:'marks/stella-artois.png', n:'Stella Artois'},
+  {f:'marks/guinness.png', n:'Guinness'},
+  {f:'marks/bacardi.png', n:'Bacardi'},
+  {f:'marks/bombay-sapphire.png', n:'Bombay Sapphire'},
+  {f:'marks/don-papa.png', n:'Don Papa'},
+  {f:'marks/fwrd.png', n:'FWRD'},
+  {f:'marks/harvey-nichols.png', n:'Harvey Nichols'},
+  {f:'marks/free-people.png', n:'Free People'},
+  {f:'marks/mahou.png', n:'Mahou'},
+  {f:'marks/cupra.png', n:'Cupra'},
+  {f:'marks/sfera.png', n:'Sfera'},
+  {f:'marks/die-zeit.png', n:'Die Zeit'},
+  {f:'marks/senseo.png', n:'Senseo'},
+  {f:'marks/matthew-williamson.png', n:'Matthew Williamson'},
+  {f:'marks/0039-italy.png', n:'0039 Italy'},
+  {f:'marks/questex.png', n:'Questex'},
+  {f:'marks/truegroup.png', n:'TrueGroup'}
 ];
 
 /* Production houses from JOBS.md. Canadá is the real mark; the rest are nameplates
