@@ -308,10 +308,6 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .row .mt{color:var(--grey)}
 #work .lane{margin-top:36px}
 #work .lane + .lane{margin-top:14px}
-#work .worklane{
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)
-}
 .workcard{width:148px;flex:none;background:#070707;cursor:zoom-in;border:1px solid transparent;
   overflow:hidden;min-width:0;isolation:isolate;contain:paint}
 .workcard:hover,.workcard:focus-visible{border-color:#222}
@@ -624,7 +620,6 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   .track,.logolane,.logogrid{animation:none!important;flex-wrap:wrap;width:100%}
   .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
   .card,.workcard{width:calc(50% - 8px)}
-  #work .worklane{padding:0 24px}
   #work .workcard{width:calc(25% - 8px);max-width:200px}
 }
 @media(prefers-reduced-motion:reduce) and (max-width:720px){
@@ -799,9 +794,9 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
     <div class="secno mono" data-i18n="work.secno">[03] SELECTED WORK</div>
     <h2 class="big" data-i18n="work.h2">Selected work</h2>
     <div class="tbl" id="workTbl"></div>
+    <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
+    <div class="lane worklane"><div class="track worktrack slow rev" id="workLaneB"></div></div>
   </div>
-  <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
-  <div class="lane worklane"><div class="track worktrack slow rev" id="workLaneB"></div></div>
 </section>
 
 <!-- ============ [04] WHAT I WORK WITH ============ -->
