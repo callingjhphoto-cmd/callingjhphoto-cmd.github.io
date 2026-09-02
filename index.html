@@ -1189,20 +1189,16 @@ var WORK = [
  ['2015—16','Reuters · Bloomberg · Getty','press','James Huertas','London','UNVERIFIED','']
 ];
 
-/* campaign stills under the jobs list — two mixes, similar frames kept apart */
+/* campaign stills — two lanes, no shared frames */
 var WORKSTILLS = [
-  'work_00.jpg','work_22.jpg','work_16.jpg','work_13.jpg','work_08.jpg','work_25.jpg',
-  'work_17.jpg','work_12.jpg','work_03.jpg','work_23.jpg','work_18.jpg','work_04.jpg',
-  'work_14.jpg','work_09.jpg','work_26.jpg','work_19.jpg','work_05.jpg','work_06.jpg',
-  'work_24.jpg','work_20.jpg','work_01.jpg','work_11.jpg','work_07.jpg','work_27.jpg',
-  'work_21.jpg','work_15.jpg','work_10.jpg','work_02.jpg'
+  'work_00.jpg','work_16.jpg','work_08.jpg','work_22.jpg','work_03.jpg',
+  'work_12.jpg','work_17.jpg','work_04.jpg','work_25.jpg','work_09.jpg',
+  'work_18.jpg','work_23.jpg','work_14.jpg','work_05.jpg'
 ];
 var WORKSTILLS_B = [
-  'work_07.jpg','work_17.jpg','work_00.jpg','work_23.jpg','work_14.jpg','work_18.jpg',
-  'work_11.jpg','work_26.jpg','work_08.jpg','work_04.jpg','work_16.jpg','work_10.jpg',
-  'work_22.jpg','work_13.jpg','work_19.jpg','work_02.jpg','work_05.jpg','work_25.jpg',
-  'work_21.jpg','work_09.jpg','work_12.jpg','work_20.jpg','work_24.jpg','work_15.jpg',
-  'work_03.jpg','work_01.jpg','work_27.jpg','work_06.jpg'
+  'work_07.jpg','work_19.jpg','work_11.jpg','work_26.jpg','work_02.jpg',
+  'work_10.jpg','work_20.jpg','work_13.jpg','work_24.jpg','work_01.jpg',
+  'work_21.jpg','work_27.jpg','work_15.jpg','work_06.jpg'
 ];
 
 /* Continent outlines [lat, lon]. Coasts are the point — NYC sits on the
@@ -2627,7 +2623,7 @@ var DOSHOTS = [
     ];
   }
   function workGallery(){
-    return WORKSTILLS.map(function(f){
+    return WORKSTILLS.concat(WORKSTILLS_B).map(function(f){
       return { src: 'img/work/' + f, cap: '', alt: t('alt.work') };
     });
   }
