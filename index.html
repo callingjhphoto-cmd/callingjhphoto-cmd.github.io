@@ -1,23 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="lang-wait">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>
-(function(){
-  var lang = 'en', stored = null;
-  try { stored = localStorage.getItem('jh-lang'); } catch(e){}
-  if(stored === 'es' || stored === 'en') lang = stored;
-  else {
-    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
-    for(var i = 0; i < list.length; i++){
-      if(String(list[i] || '').toLowerCase().indexOf('es') === 0){ lang = 'es'; break; }
-    }
-  }
-  document.documentElement.lang = lang;
-})();
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>James Huertas — Digital Technician &amp; Lighting Assistant</title>
 <meta name="description" content="James Huertas — Digital Technician &amp; Lighting Assistant. Set tech, capture, colour, backup, screens, power, data. Barcelona &amp; Mallorca. EN/ES.">
 <link rel="icon" href="img/favicon.ico" sizes="any">
@@ -59,41 +45,42 @@ a{color:inherit}
 #vig{position:fixed;inset:0;z-index:59;pointer-events:none;
   background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.75) 100%)}
 
-/* ---------- boot — short overlay, does not own the first viewport ---------- */
+/* ---------- boot ---------- */
 #boot{
-  position:fixed;left:0;right:0;bottom:0;top:auto;z-index:200;
-  background:linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.35) 70%, transparent 100%);
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;
-  padding:18px 22px calc(18px + env(safe-area-inset-bottom, 0px));
-  transition:opacity .5s ease;font-family:var(--mono);pointer-events:none;
+  position:fixed;inset:0;z-index:200;background:#000;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  transition:opacity .7s ease;font-family:var(--mono);
 }
-#boot .bar{width:min(220px,50vw);height:1px;background:#181818;position:relative;overflow:hidden}
+#boot .bar{width:min(280px,60vw);height:1px;background:#181818;position:relative;overflow:hidden}
 #boot .bar i{position:absolute;inset:0 100% 0 0;background:var(--red);transition:right .25s linear}
-#bootline{font-size:12px;letter-spacing:.14em;color:var(--grey2);min-height:1.4em;text-align:center;padding:0 22px;max-width:90vw}
+#bootline{font-size:13px;letter-spacing:.14em;color:var(--grey2);min-height:1.4em;text-align:center;padding:0 22px;max-width:90vw}
 #boot.gone{opacity:0;pointer-events:none}
 
 html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
 #langGate{
-  position:fixed;left:0;right:0;top:0;height:40px;z-index:300;
-  background:#000;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;gap:2px;
-  font-family:var(--mono);transition:opacity .35s ease;
+  position:fixed;inset:0;z-index:300;background:#000;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  font-family:var(--mono);transition:opacity .45s ease;
 }
 #langGate.gone{opacity:0;pointer-events:none}
 #langGate button{
   background:none;border:0;color:#fff;cursor:pointer;
-  font-family:var(--mono);padding:0 14px;
-  display:flex;flex-direction:row;align-items:center;gap:8px;
-  min-width:var(--hit);min-height:40px;
+  font-family:var(--mono);padding:18px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  min-width:var(--hit);min-height:96px;
 }
 #langGate button strong{
-  font-size:13px;font-weight:700;letter-spacing:.16em;
+  font-size:clamp(34px,8.5vw,76px);font-weight:700;letter-spacing:.22em;
   line-height:1;
 }
-#langGate button small{display:none}
+#langGate button small{
+  font-size:12px;letter-spacing:.32em;color:var(--grey);text-transform:uppercase;
+  font-weight:400;
+}
 #langGate button:hover strong, #langGate button:focus-visible strong{color:var(--red)}
+#langGate button:hover small, #langGate button:focus-visible small{color:var(--grey2)}
 #langGate .slash{
-  color:#2a2a2a;font-size:13px;letter-spacing:0;padding:0 2px;
+  color:#2a2a2a;font-size:clamp(22px,5vw,42px);letter-spacing:0;padding:0 4px 18px;
   pointer-events:none;font-weight:400;
 }
 
@@ -112,19 +99,6 @@ nav a{
 }
 nav a:hover,nav a:focus-visible,nav a.here{color:#fff}
 nav a.here{color:var(--red-aaa)}
-nav .langsw{
-  display:inline-flex;align-items:center;gap:0;
-  min-height:var(--hit);
-}
-nav .langsw button{
-  background:none;border:0;color:var(--grey);cursor:pointer;
-  font-family:var(--mono);font-size:13px;letter-spacing:.1em;
-  min-height:var(--hit);min-width:var(--hit);padding:10px 8px;
-  text-shadow:0 1px 2px #000,0 0 10px #000;
-}
-nav .langsw button.on,nav .langsw button:hover,nav .langsw button:focus-visible{color:#fff}
-nav .langsw button.on{color:var(--red-aaa)}
-nav .langsw .slash{color:#2a2a2a;padding:0 1px;pointer-events:none}
 #brandmark{
   position:fixed;top:0;left:0;z-index:71;padding:8px 16px;
   font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:#fff;
@@ -139,7 +113,7 @@ nav .langsw .slash{color:#2a2a2a;padding:0 1px;pointer-events:none}
 /* ---------- globe stage ---------- */
 #stage{position:relative;height:100svh;min-height:560px;width:100%;overflow:hidden}
 #sky,#globe{position:absolute;inset:0;width:100%;height:100%;display:block}
-#globe{cursor:grab;touch-action:none}
+#globe{cursor:grab;touch-action:pan-y}
 #globe.drag{cursor:grabbing}
 
 #hero{
@@ -148,9 +122,8 @@ nav .langsw .slash{color:#2a2a2a;padding:0 1px;pointer-events:none}
 }
 #hero h1{
   font-family:var(--sans);font-weight:900;margin:0;
-  font-size:clamp(32px,8vw,74px);letter-spacing:-.035em;line-height:.95;
+  font-size:clamp(26px,6.4vw,74px);letter-spacing:-.035em;line-height:.95;
   text-transform:uppercase;
-  text-shadow:0 1px 8px #000,0 0 18px #000;
 }
 #hero .role{
   font-family:var(--mono);color:#fff;font-weight:500;
@@ -163,56 +136,25 @@ nav .langsw .slash{color:#2a2a2a;padding:0 1px;pointer-events:none}
   letter-spacing:.16em;margin-top:10px;line-height:1.9;
   text-shadow:0 1px 8px #000,0 0 14px #000;
 }
-#hero .promise{
-  font-family:var(--sans);font-weight:400;text-transform:none;
-  letter-spacing:-.01em;color:#fff;
-  font-size:clamp(17px,2.2vw,22px);line-height:1.35;
-  max-width:36rem;margin:16px auto 0;
-  text-shadow:0 1px 8px #000,0 0 14px #000;
-  text-wrap:balance;
-}
-#hero .human{
-  font-family:var(--sans);font-weight:400;text-transform:none;
-  letter-spacing:.01em;color:var(--grey2);
-  font-size:clamp(14px,1.7vw,16px);line-height:1.5;
-  max-width:36rem;margin:8px auto 0;
-  text-shadow:0 1px 8px #000,0 0 14px #000;
-  text-wrap:balance;
-}
 #hero .markets{
-  font-family:var(--mono);margin-top:16px;line-height:1.7;
+  font-family:var(--mono);margin-top:22px;line-height:1.7;
+}
+#hero .markets b{
+  display:block;color:var(--red-aaa);font-weight:400;
+  font-size:clamp(12px,1.45vw,14px);letter-spacing:.12em;
+  text-shadow:0 1px 8px #000,0 0 14px #000;
+  max-width:46rem;margin-left:auto;margin-right:auto;
+  text-wrap:balance;
 }
 #hero .markets i{
   display:block;font-style:normal;color:var(--grey);
-  font-size:12px;letter-spacing:.12em;margin-top:0;
+  font-size:clamp(12px,1.3vw,14px);letter-spacing:.22em;margin-top:12px;
   max-width:42rem;margin-left:auto;margin-right:auto;line-height:1.85;
   text-shadow:0 1px 8px #000,0 0 14px #000;
 }
 #hero .markets i em{
-  font-style:normal;color:var(--grey);letter-spacing:.12em;margin-right:.7em;
+  font-style:normal;color:var(--grey2);letter-spacing:.28em;margin-right:.7em;
 }
-#hero .proof{
-  font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--grey);
-  margin:16px auto 0;text-shadow:0 1px 8px #000,0 0 14px #000;
-}
-#hero .hero-cta{
-  pointer-events:auto;display:flex;flex-wrap:wrap;justify-content:center;
-  align-items:center;gap:10px 16px;margin-top:16px;
-}
-#hero .hero-cta a,#hero .hero-cta button{
-  font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--grey2);
-  text-decoration:none;border-bottom:1px solid #262626;
-  min-height:var(--hit);display:inline-flex;align-items:center;
-  background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;padding:0;
-  text-shadow:0 1px 8px #000;
-}
-#hero .hero-cta a:hover,#hero .hero-cta button:hover{color:var(--red);border-color:var(--red)}
-#hero .hero-cta .cta{
-  border:0;border-bottom:0;background:var(--red);color:#000;
-  padding:0 20px;letter-spacing:.2em;font-weight:700;font-size:13px;
-  text-shadow:none;min-height:var(--hit);margin-top:0;
-}
-#hero .hero-cta .cta:hover{background:#fff;color:#000;border-color:transparent}
 
 
 /* HUD */
@@ -307,9 +249,9 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 .rule{height:1px;background:var(--line);margin:0}
 
 /* polaroid */
-#polaroid{padding:80px 0 72px;text-align:center;overflow:hidden}
-#polaroid .quote{font-family:var(--sans);font-size:clamp(18px,3.4vw,34px);
-  letter-spacing:-.01em;color:#fff;transform:none;margin:0 0 8px}
+#polaroid{padding:150px 0 160px;text-align:center;overflow:hidden}
+#polaroid .quote{font-family:var(--mono);font-size:clamp(18px,3.4vw,34px);
+  letter-spacing:-.01em;color:#fff;transform:skewX(-7deg);margin:0 0 8px}
 #polaroid .attr{font-family:var(--mono);font-size:13px;color:var(--grey);letter-spacing:.06em;margin-bottom:46px}
 .ppair{display:flex;justify-content:center;align-items:flex-end;gap:36px;flex-wrap:wrap}
 .pframe{
@@ -328,11 +270,6 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 /* what i do */
 #do{padding:110px 0}
 .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:52px}
-.col.room{
-  margin-top:40px;padding-top:32px;border-top:1px solid var(--line);
-  max-width:42rem;
-}
-.col.room p{max-width:40rem}
 .col h3{font-family:var(--mono);font-size:14px;letter-spacing:.24em;color:var(--red);
   margin:0 0 14px;font-weight:500}
 .col p{font-size:16px;line-height:1.72;color:var(--grey2);margin:0 0 16px}
@@ -487,35 +424,38 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
 }
 .cta:hover{background:#fff}
 
-#bookBar{
-  position:fixed;right:18px;bottom:18px;z-index:80;
-  display:none;align-items:center;gap:10px;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent
-}
-#bookBar.on{display:flex}
-#bookBar .bar-link{
-  font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--grey2);
-  text-decoration:none;border-bottom:1px solid #262626;
-  min-height:var(--hit);display:none;align-items:center;
-  text-shadow:0 1px 8px #000;
-}
-#bookBar .bar-link:hover{color:var(--red);border-color:var(--red)}
 #bookFab{
-  margin:0;border:0;background:var(--red);color:#000;cursor:pointer;
-  font-family:var(--mono);font-size:13px;letter-spacing:.2em;font-weight:700;
-  min-height:var(--hit);padding:0 22px;
-  display:inline-flex;align-items:center;justify-content:center;
+  position:fixed;right:18px;bottom:18px;z-index:80;
+  width:176px;padding:0;border:0;background:none;cursor:pointer;
+  display:none;flex-direction:column;align-items:center;gap:7px;
   touch-action:manipulation;-webkit-tap-highlight-color:transparent
 }
-#bookFab:hover{background:#fff}
+#bookFab.on{display:flex}
+#bookFab .globe-wrap{
+  width:176px;height:176px;border-radius:50%;
+  background:#000;border:1px solid #2a2a2a;
+  box-shadow:0 0 28px rgba(255,59,31,.38);
+  overflow:hidden;flex:none
+}
+#bookFab:hover .globe-wrap{
+  border-color:var(--red);box-shadow:0 0 42px rgba(255,59,31,.7)
+}
+#bookFab canvas{width:100%;height:100%;display:block;pointer-events:none}
+#bookFab .lab-bot{
+  font-family:var(--mono);font-weight:700;color:var(--red-aaa);
+  text-shadow:0 1px 8px #000,0 0 10px #000;
+  letter-spacing:.16em;line-height:1;white-space:nowrap;
+  font-size:13px;min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center
+}
 #bookScrim{
   position:fixed;inset:0;z-index:125;background:rgba(0,0,0,.72);display:none
 }
 #bookScrim.on{display:block}
 #bookSheet{
-  position:fixed;right:18px;bottom:72px;z-index:126;width:min(380px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:248px;z-index:126;width:min(380px,calc(100vw - 28px));
   background:#050505;border:1px solid #2a2a2a;padding:22px 22px 20px;
-  display:none;max-height:min(86vh,640px,calc(100dvh - 96px));overflow:auto;border-radius:14px
+  display:none;max-height:min(86vh,640px,calc(100dvh - 266px));overflow:auto;border-radius:14px
 }
 #bookSheet.on{display:block}
 #bookSheet h3{
@@ -564,7 +504,6 @@ h2.big{font-family:var(--sans);font-weight:900;font-size:clamp(24px,4.4vw,50px);
   min-height:var(--hit);display:inline-flex;align-items:center}
 .cinfo a:hover{color:var(--red);border-color:var(--red)}
 .cinfo .k{color:var(--grey);display:inline-block;min-width:92px}
-.cinfo .note{display:block;font-size:12px;letter-spacing:.04em;color:var(--grey);line-height:1.5;margin:-4px 0 10px 92px}
 footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   font-size:12px;letter-spacing:.14em;color:var(--grey);display:flex;
   justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -599,7 +538,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     flex-wrap:nowrap;gap:0;
     padding:calc(4px + env(safe-area-inset-top, 0px)) 4px 4px;
     font-size:11px;letter-spacing:.04em;
-    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr 1.15fr;
+    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr;
     background:#000;
     isolation:isolate;overflow:hidden;clip-path:inset(0);
     max-height:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
@@ -611,45 +550,28 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     overflow:hidden;white-space:nowrap;text-overflow:clip;
     text-shadow:none
   }
-  nav .langsw{justify-content:center;min-width:0}
-  nav .langsw button{
-    min-width:0;padding:0 4px;font-size:11px;letter-spacing:.04em;
-    text-shadow:none;color:#fff
-  }
-  nav .langsw .slash{font-size:11px}
   #stage{
-    height:auto;min-height:0;
     padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
-    padding-bottom:16px;
     box-sizing:border-box
   }
-  #sky,#globe{
-    top:0;bottom:auto;height:58svh;pointer-events:none
-  }
-  #crt{opacity:0}
-  #vig{
-    top:52px;
-    background:radial-gradient(ellipse at 50% 30%,transparent 62%,rgba(0,0,0,.45) 100%)
-  }
+  #vig{top:52px}
   #hero .sub{letter-spacing:.08em;padding:0 4px}
-  #hero{position:relative;top:auto;padding-bottom:22px}
+  #hero{top:12px;padding-bottom:22px}
   #hero .role{font-size:clamp(13px,3.6vw,16px);letter-spacing:.12em;margin-top:12px}
-  #hero .promise{font-size:17px;margin-top:16px}
-  #hero .human{font-size:15px}
-  #hero .markets{margin-top:16px}
-  #hero .markets i{letter-spacing:.12em;margin-top:0;padding-bottom:0}
+  #hero .markets{margin-top:12px}
+  #hero .markets i{letter-spacing:.14em;margin-top:8px;padding-bottom:8px}
   #brandmark{padding:calc(8px + env(safe-area-inset-top, 0px)) 12px 8px;font-size:13px;letter-spacing:.1em;min-height:var(--hit)}
   #brandmark svg{width:26px;height:26px}
+  #brandmark b{display:none}
   #hudTL,#hudTR,#hudBL,#hudBR{display:none}
   #zoomui{display:none}
-  #bookBar{
-    left:0;right:0;bottom:0;width:100%;
-    padding:8px max(16px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left));
-    background:linear-gradient(to top, #000 70%, rgba(0,0,0,.55));
-    justify-content:center;gap:14px;box-sizing:border-box
+  #bookFab{
+    right:max(12px, env(safe-area-inset-right));
+    bottom:max(14px, env(safe-area-inset-bottom));
+    width:120px
   }
-  #bookBar .bar-link{display:inline-flex}
-  #bookFab{min-height:var(--hit);padding:0 20px}
+  #bookFab .globe-wrap{width:120px;height:120px}
+  #bookFab .lab-bot{font-size:12px}
   #bookSheet{
     left:10px;right:10px;width:auto;
     top:10px;bottom:auto;
@@ -668,13 +590,14 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #inspect img{max-width:92vw;max-height:64vh}
   #inspect .nav.prev{left:6px}
   #inspect .nav.next{right:6px}
+  #stage{height:100svh;min-height:0}
   #scrollcue{display:none!important}
   .wrap{
-    padding-left:max(24px, env(safe-area-inset-left, 0px));
-    padding-right:max(24px, env(safe-area-inset-right, 0px))
+    padding-left:max(20px, env(safe-area-inset-left, 0px));
+    padding-right:max(20px, env(safe-area-inset-right, 0px))
   }
-  #hero{padding-left:max(24px, env(safe-area-inset-left, 0px));padding-right:max(24px, env(safe-area-inset-right, 0px))}
-  #brandmark{padding-left:max(24px, env(safe-area-inset-left, 0px))}
+  #hero{padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+  #brandmark{padding-left:max(20px, env(safe-area-inset-left, 0px))}
   #bookSheet{left:max(16px, env(safe-area-inset-left, 0px));right:max(16px, env(safe-area-inset-right, 0px))}
   #polaroid{padding:56px 0 48px}
   #polaroid .attr{margin-bottom:28px}
@@ -683,7 +606,6 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #do,#kit,#work{padding:56px 0 48px}
   #flyby{padding:56px 0 12px}
   .cols{margin-top:28px;gap:40px}
-  .col.room{margin-top:8px;padding-top:28px;max-width:none}
   .doshots{margin-top:32px}
   .caps{margin-top:24px}
   .tbl{margin-top:22px}
@@ -698,14 +620,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   #last .lede{margin-top:12px}
   .ownbar{margin-top:18px}
   #contact{
-    padding:56px 0 calc(88px + env(safe-area-inset-bottom, 0px))
+    padding:56px 0 calc(168px + env(safe-area-inset-bottom, 0px))
   }
-  .cinfo .note{margin-left:0}
   .cgrid{margin-top:22px}
   footer{padding:22px 0 8px}
-}
-@media (hover: none){
-  #crt{opacity:0}
 }
 
 @media (hover: hover) and (pointer: fine){
@@ -747,7 +665,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </svg>
 </div>
 
-<div id="langGate" class="gone" hidden aria-hidden="true">
+<div id="langGate" role="dialog" aria-modal="true" aria-label="English or Español">
   <button type="button" data-lang="en" aria-label="English">
     <strong>EN</strong>
     <small>English</small>
@@ -775,15 +693,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   JH<em>/</em>01 <b>JAMES HUERTAS</b>
 </a>
 <nav class="mono">
-  <a href="#stage" data-i18n="nav.globe">JH</a>
-  <a href="#do" data-i18n="nav.do">set</a>
+  <a href="#stage" data-i18n="nav.globe">globe</a>
+  <a href="#do" data-i18n="nav.do">what i do</a>
   <a href="#work" data-i18n="nav.work">work</a>
-  <a href="#contact" id="navBook" data-i18n="nav.book">book</a>
-  <span class="langsw" role="group" aria-label="English or Español">
-    <button type="button" data-lang="en">EN</button>
-    <span class="slash" aria-hidden="true">/</span>
-    <button type="button" data-lang="es">ES</button>
-  </span>
+  <a href="#contact" id="navBook" data-i18n="nav.book">book me</a>
 </nav>
 
 <!-- ============ [00] GLOBE ============ -->
@@ -795,27 +708,19 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <h1>James Huertas</h1>
     <div class="role mono" data-i18n="hero.role">Digital Technician &amp; Lighting Assistant</div>
     <div class="sub mono" data-i18n="hero.sub">BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL</div>
-    <p class="promise" data-i18n="hero.promise">Secure capture. Calibrated screen. Three copies before the cards go back in the bag.</p>
-    <p class="human" data-i18n="hero.human">EN / ES. I sit between the client, the photographer, and the crew — and the playlist is good.</p>
     <div class="markets mono">
+      <b data-i18n="hero.tag">SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME</b>
       <i><em>VIA</em> LA · NYC · RIO · LDN · HAM · BCN · LIS · PMI · SIN</i>
-    </div>
-    <p class="proof mono" data-i18n="hero.proof">adidas · Off-White · Mercedes · Netflix · Nike</p>
-    <div class="hero-cta">
-      <button type="button" class="cta" id="heroBook" data-i18n="fab.book">BOOK</button>
-      <a href="tel:+34643147756">+34 643 147 756</a>
-      <a href="https://wa.me/447562393477">WhatsApp</a>
-      <a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a>
     </div>
   </div>
 
   <div class="hud mono" id="hudTL">
-    <span data-i18n="hud.cardsK">CARDS</span> <b data-i18n="hud.cardsV">2 OF 2 BACKED UP</b><br>
-    <span data-i18n="hud.hdmiK">HDMI</span>&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
+    <span data-i18n="hud.latlon">LAT/LON</span> <b id="hLat">—</b><br>
+    <span data-i18n="hud.uptime">UPTIME</span>&nbsp; <b id="hUp">00:00</b>
   </div>
   <div class="hud mono" id="hudTR">
-    <span data-i18n="hud.sumK">CHECKSUM</span> <b data-i18n="hud.sumV">VERIFIED</b><br>
-    <span data-i18n="hud.uptime">UPTIME</span>&nbsp; <b id="hUp">00:00</b>
+    <span data-i18n="hud.cardsK">CARDS</span> <b data-i18n="hud.cardsV">2 OF 2 BACKED UP</b><br>
+    <span data-i18n="hud.hdmiK">HDMI</span>&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
   </div>
   <div class="hud mono" id="hudBL">
     <span data-i18n="hud.coffeeK">COFFEE</span> <b class="r" data-i18n="hud.coffeeV">CRITICAL</b><br>
@@ -837,7 +742,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 
 <!-- mobile pin list — decorative names only; never a dossier opener -->
 <section id="pinlist" hidden aria-hidden="true"><div class="wrap">
-  <div class="secno mono" data-i18n="pin.secno">[00·B] NINE PINS. THREE OF THEM ARE EMPTY ON PURPOSE.</div>
+  <div class="secno mono" data-i18n="pin.secno">[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME</div>
   <div class="g" id="pinButtons"></div>
 </div></section>
 
@@ -859,9 +764,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   </div>
 </div></section>
 
-<!-- ============ [02] ON SET ============ -->
+<!-- ============ [02] WHAT I ACTUALLY DO ============ -->
 <section id="do"><div class="wrap">
-  <div class="secno mono" data-i18n="do.secno">[02] ON SET</div>
+  <div class="secno mono" data-i18n="do.secno">[02] WHAT I ACTUALLY DO</div>
   <h2 class="big" data-i18n="do.h2">Always there.</h2>
 
   <div class="cols">
@@ -897,17 +802,6 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     </div>
   </div>
 
-  <div class="col room">
-    <h3 data-i18n="do.room.h">ROOM</h3>
-    <p data-i18n="do.room.p">EN/ES on set. I run the conversation when the client is in English and the crew is in Spanish — brief, notes, and mood — so nobody is guessing across the monitor.</p>
-    <ul>
-      <li data-i18n="do.room.1">English / Español — bilingual, not a flag</li>
-      <li data-i18n="do.room.2">Client, photographer, production, same page</li>
-      <li data-i18n="do.room.3">Calm room, good playlist, no performance</li>
-      <li data-i18n="do.room.4">Local in Spain and Portugal</li>
-    </ul>
-  </div>
-
   <div class="doshots" id="doShots"></div>
 </div></section>
 
@@ -927,10 +821,6 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
     <div class="cap-row">
       <div class="k" data-i18n="kit.lit">LIGHTING</div>
       <div class="v">Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure</div>
-    </div>
-    <div class="cap-row">
-      <div class="k" data-i18n="kit.assist">LIGHTING ASSIST</div>
-      <div class="v" data-i18n="kit.assistV">heads and power I actually run on set — not a separate lighting-designer pitch.</div>
     </div>
     <div class="cap-row">
       <div class="k" data-i18n="kit.cert">CERT</div>
@@ -968,7 +858,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
 <section id="last"><div class="wrap">
   <div class="secno mono" data-i18n="own.secno">[06] PERSONAL WORK</div>
   <h2 class="big" data-i18n="own.h2">Personal work</h2>
-  <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> <span data-i18n="own.lede">— on set and on the road. Personal work.</span></p>
+  <p class="lede mono"><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a> <span data-i18n="own.lede">— on set and on the road.</span></p>
   <div class="ownbar">
     <button id="toggleOwn" class="mono" data-i18n="own.open">[ + ] OPEN</button>
   </div>
@@ -981,11 +871,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
   <div class="cgrid">
     <div class="cinfo mono">
       <div><span class="k" data-i18n="con.email">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
-      <span class="note" data-i18n="con.mailNote">A domain inbox is the next step.</span>
       <div><span class="k" data-i18n="con.phone">PHONE</span><a href="tel:+34643147756">+34 643 147 756</a></div>
       <div><span class="k" data-i18n="con.wa">WHATSAPP</span><a href="https://wa.me/447562393477">+44 7562 393 477</a></div>
       <div><span class="k" data-i18n="con.ig">INSTAGRAM</span><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a></div>
-      <span class="note" data-i18n="con.igNote">Personal — on set and on the road.</span>
       <div><span class="k" data-i18n="con.baseK">BASE</span>Barcelona &amp; Mallorca</div>
       <div><span class="k" data-i18n="con.langK">LANG</span><span data-i18n="con.langV">English / Español — bilingual</span></div>
       <div><span class="k" data-i18n="con.statusK">STATUS</span><span data-i18n="con.statusV">EU resident · autónomo</span></div>
@@ -1000,17 +888,18 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
         <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
         <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
       </svg>
-      <span data-i18n="foot.bak">JH/01 — digital technician &amp; lighting assistant.</span>
+      <span data-i18n="foot.role">JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT</span>
     </span>
-    <span data-i18n="con.statusV">EU resident · autónomo</span>
+    <span data-i18n="foot.bak">Retiring involuntarily in three years. Book me while you can.</span>
   </footer>
 </div></section>
 
-<div id="bookBar">
-  <a class="bar-link" href="tel:+34643147756">+34 643 147 756</a>
-  <a class="bar-link" href="https://wa.me/447562393477">WhatsApp</a>
-  <button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" data-i18n="fab.book" aria-label="Book">BOOK</button>
-</div>
+<button type="button" id="bookFab" class="mono" data-i18n-aria="fab.aria" aria-label="Book me">
+  <span class="globe-wrap">
+    <canvas id="bookGlobe" width="176" height="176"></canvas>
+  </span>
+  <span class="lab-bot" data-i18n="fab.book">BOOK ME</span>
+</button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book me">
   <button type="button" class="x" id="bookX" data-i18n="ui.close">[ CLOSE ]</button>
@@ -1289,8 +1178,7 @@ var WORK = [
  ['2015—16','Reuters · Bloomberg · Getty','press','James Huertas','London','UNVERIFIED','']
 ];
 
-/* campaign stills under the jobs list — two mixes, similar frames kept apart.
-   work_16–21 drinks (stylist portfolio). work_22–27 New Balance / FC Porto — scattered, never adjacent. */
+/* campaign stills under the jobs list — two mixes, similar frames kept apart */
 var WORKSTILLS = [
   'work_00.jpg','work_22.jpg','work_16.jpg','work_13.jpg','work_08.jpg','work_25.jpg',
   'work_17.jpg','work_12.jpg','work_03.jpg','work_23.jpg','work_18.jpg','work_04.jpg',
@@ -1366,22 +1254,20 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 /* ============================================================
    EN / ES — splash first, then boot, then the site
    ============================================================ */
-var LANG = (document.documentElement.lang === 'es') ? 'es' : 'en';
+var LANG = 'en';
 var fillChips = function(){};
 
 var I18N = {
   en: {
     'meta.title': 'James Huertas — Digital Technician & Lighting Assistant',
     'meta.desc': 'James Huertas — Digital Technician & Lighting Assistant. Set tech, capture, colour, backup, screens, power, data. Barcelona & Mallorca. EN/ES.',
-    'nav.globe': 'JH',
-    'nav.do': 'set',
+    'nav.globe': 'globe',
+    'nav.do': 'what i do',
     'nav.work': 'work',
-    'nav.book': 'book',
+    'nav.book': 'book me',
     'hero.role': 'Digital Technician & Lighting Assistant',
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL IN SPAIN AND PORTUGAL',
-    'hero.promise': 'Secure capture. Calibrated screen. Three copies before the cards go back in the bag.',
-    'hero.human': 'EN / ES. I sit between the client, the photographer, and the crew — and the playlist is good.',
-    'hero.proof': 'adidas · Off-White · Mercedes · Netflix · Nike',
+    'hero.tag': 'SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
     'hud.uptime': 'UPTIME',
     'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'CARDS',
@@ -1396,17 +1282,15 @@ var I18N = {
     'hud.cableV': 'NOMINAL',
     'hud.wifiK': 'WIFI',
     'hud.wifiV': '“FINE”',
-    'hud.sumK': 'CHECKSUM',
-    'hud.sumV': 'VERIFIED',
     'zoom.out': 'Zoom out',
     'zoom.in': 'Zoom in',
     'zoom.label': 'ZOOM',
     'zoom.drag': 'DRAG TO SPIN',
     'scroll': 'SCROLL',
-    'pin.secno': '[00·B] NINE PINS. THREE OF THEM ARE EMPTY ON PURPOSE.',
+    'pin.secno': '[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— a producer at Canadá',
-    'do.secno': '[02] ON SET',
+    'do.secno': '[02] WHAT I ACTUALLY DO',
     'do.h2': 'Always there.',
     'do.cap.h': 'CAPTURE',
     'do.cap.p': 'Tethered capture that does not drop. The camera talks to the station, the station talks to the client screen, and nobody stands around waiting for a frame to appear.',
@@ -1424,12 +1308,6 @@ var I18N = {
     'do.dat.2': 'ChronoSync mirroring, structured hand-off',
     'do.dat.3': 'Shot logs, metadata, naming conventions',
     'do.dat.4': 'Power, distro, screens, cable management',
-    'do.room.h': 'ROOM',
-    'do.room.p': 'EN/ES on set. I run the conversation when the client is in English and the crew is in Spanish — brief, notes, and mood — so nobody is guessing across the monitor.',
-    'do.room.1': 'English / Español — bilingual, not a flag',
-    'do.room.2': 'Client, photographer, production, same page',
-    'do.room.3': 'Calm room, good playlist, no performance',
-    'do.room.4': 'Local in Spain and Portugal',
     'doshot.0': 'CART RIGGED · DUAL CLIENT SCREENS · POWER ON DISTRO',
     'doshot.1': 'STATION SHADED · CABLES DRESSED · BACKUP IN THE RACK',
     'doshot.2': 'CAPTURE ONE LIVE · CLIENT SCREEN CALIBRATED · SET RUNNING',
@@ -1441,8 +1319,6 @@ var I18N = {
     'kit.soft': 'SOFTWARE',
     'kit.cam': 'CAMERAS',
     'kit.lit': 'LIGHTING',
-    'kit.assist': 'LIGHTING ASSIST',
-    'kit.assistV': 'heads and power I actually run on set — not a separate lighting-designer pitch.',
     'kit.cert': 'CERT',
     'work.secno': '[04] SELECTED WORK',
     'work.h2': 'Selected work',
@@ -1458,7 +1334,7 @@ var I18N = {
     'fly.t3': '03 &nbsp;PRODUCTION COMPANIES',
     'own.secno': '[06] PERSONAL WORK',
     'own.h2': 'Personal work',
-    'own.lede': '— on set and on the road. Personal work.',
+    'own.lede': '— on set and on the road.',
     'own.open': '[ + ] OPEN',
     'own.close': '[ − ] CLOSE',
     'con.secno': '[07] CONTACT',
@@ -1471,14 +1347,12 @@ var I18N = {
     'con.statusK': 'STATUS',
     'con.langV': 'English / Español — bilingual',
     'con.statusV': 'EU resident · autónomo',
-    'con.mailNote': 'A domain inbox is the next step.',
-    'con.igNote': 'Personal — on set and on the road.',
     'foot.role': 'JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT',
-    'foot.bak': 'JH/01 — digital technician & lighting assistant.',
-    'fab.aria': 'Book',
-    'fab.book': 'BOOK',
-    'book.aria': 'Book',
-    'book.h3': 'Book',
+    'foot.bak': 'Retiring involuntarily in three years. Book me while you can.',
+    'fab.aria': 'Book me',
+    'fab.book': 'BOOK ME',
+    'book.aria': 'Book me',
+    'book.h3': 'Book me',
     'book.lede': 'Hello. Dates, city, the job, how to reach you. James will reply.',
     'book.from': 'FROM',
     'book.to': 'TO',
@@ -1570,15 +1444,13 @@ var I18N = {
   es: {
     'meta.title': 'James Huertas — Técnico digital y ayudante de iluminación',
     'meta.desc': 'James Huertas — Técnico digital y ayudante de iluminación. Tech de set, captura, color, copias, pantallas, corriente, datos. Barcelona y Mallorca. EN/ES.',
-    'nav.globe': 'JH',
-    'nav.do': 'set',
+    'nav.globe': 'globo',
+    'nav.do': 'qué hago',
     'nav.work': 'trabajo',
     'nav.book': 'reserva',
     'hero.role': 'Técnico digital y ayudante de iluminación',
     'hero.sub': 'BARCELONA + MALLORCA · EN/ES · LOCAL EN ESPAÑA Y PORTUGAL',
-    'hero.promise': 'Captura segura. Pantalla calibrada. Tres copias antes de que las tarjetas vuelvan a la bolsa.',
-    'hero.human': 'EN / ES. Me siento entre el cliente, el fotógrafo y el equipo — y la lista es buena.',
-    'hero.proof': 'adidas · Off-White · Mercedes · Netflix · Nike',
+    'hero.tag': 'CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
     'hud.uptime': 'TIEMPO',
     'hud.latlon': 'LAT/LON',
     'hud.cardsK': 'TARJETAS',
@@ -1593,17 +1465,15 @@ var I18N = {
     'hud.cableV': 'NOMINAL',
     'hud.wifiK': 'WIFI',
     'hud.wifiV': '“BIEN”',
-    'hud.sumK': 'CHECKSUM',
-    'hud.sumV': 'VERIFICADO',
     'zoom.out': 'Alejar',
     'zoom.in': 'Acercar',
     'zoom.label': 'ZOOM',
     'zoom.drag': 'ARRASTRA PARA GIRAR',
     'scroll': 'BAJA',
-    'pin.secno': '[00·B] NUEVE PINES. TRES ESTÁN VACÍOS A PROPÓSITO.',
+    'pin.secno': '[00·B] CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— un productor de Canadá',
-    'do.secno': '[02] EN EL SET',
+    'do.secno': '[02] LO QUE HAGO DE VERDAD',
     'do.h2': 'Siempre ahí.',
     'do.cap.h': 'CAPTURA',
     'do.cap.p': 'Captura por tether que no se cae. La cámara habla con la estación, la estación habla con la pantalla del cliente, y nadie se queda esperando a que aparezca un fotograma.',
@@ -1621,12 +1491,6 @@ var I18N = {
     'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
     'do.dat.3': 'Registros de toma, metadatos, convención de nombres',
     'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
-    'do.room.h': 'SALA',
-    'do.room.p': 'EN/ES en el set. Llevo la conversación cuando el cliente habla inglés y el equipo habla español — briefing, notas y tono — para que nadie adivine al otro lado del monitor.',
-    'do.room.1': 'English / Español — bilingüe, no un adorno',
-    'do.room.2': 'Cliente, fotógrafo y producción, en la misma página',
-    'do.room.3': 'Sala calmada, buena lista, sin postureo',
-    'do.room.4': 'Local en España y Portugal',
     'doshot.0': 'CARRO MONTADO · DOBLE PANTALLA DE CLIENTE · CORRIENTE EN EL DISTRO',
     'doshot.1': 'ESTACIÓN A LA SOMBRA · CABLES COLOCADOS · COPIA EN EL RACK',
     'doshot.2': 'CAPTURE ONE EN VIVO · PANTALLA DE CLIENTE CALIBRADA · SET EN MARCHA',
@@ -1638,8 +1502,6 @@ var I18N = {
     'kit.soft': 'PROGRAMAS',
     'kit.cam': 'CÁMARAS',
     'kit.lit': 'ILUMINACIÓN',
-    'kit.assist': 'ILUMINACIÓN (AYUDANTE)',
-    'kit.assistV': 'cabezas y corriente que monté de verdad en set.',
     'kit.cert': 'CERTIFICACIÓN',
     'work.secno': '[04] TRABAJO SELECCIONADO',
     'work.h2': 'Trabajo seleccionado',
@@ -1655,7 +1517,7 @@ var I18N = {
     'fly.t3': '03 &nbsp;PRODUCTORAS',
     'own.secno': '[06] TRABAJO PERSONAL',
     'own.h2': 'Trabajo personal',
-    'own.lede': '— en el set y de viaje. Trabajo personal.',
+    'own.lede': '— en el set y de viaje.',
     'own.open': '[ + ] ABRIR',
     'own.close': '[ − ] CERRAR',
     'con.secno': '[07] CONTACTO',
@@ -1668,10 +1530,8 @@ var I18N = {
     'con.statusK': 'ESTADO',
     'con.langV': 'English / Español — bilingüe',
     'con.statusV': 'Residente UE · autónomo',
-    'con.mailNote': 'El siguiente paso es un correo de dominio.',
-    'con.igNote': 'Personal — en el set y de viaje.',
     'foot.role': 'JH/01 — TÉCNICO DIGITAL Y AYUDANTE DE ILUMINACIÓN',
-    'foot.bak': 'JH/01 — técnico digital y ayudante de iluminación.',
+    'foot.bak': 'Me jubilan involuntariamente en tres años. Resérvame mientras puedas.',
     'fab.aria': 'Reserva',
     'fab.book': 'RESERVA',
     'book.aria': 'Reserva',
@@ -1834,9 +1694,6 @@ function applyI18n(){
     n.textContent = locFrag(n.getAttribute('data-src'));
   });
   fillChips();
-  document.querySelectorAll('[data-lang]').forEach(function(b){
-    b.classList.toggle('on', b.getAttribute('data-lang') === LANG);
-  });
 }
 
 var bootStarted = false;
@@ -1848,7 +1705,7 @@ function startBoot(){
   if(reduce){
     box.classList.add('gone');
     setTimeout(function(){ box.style.display = 'none'; }, 100);
-    if($('#bookBar')) $('#bookBar').classList.add('on');
+    if($('#bookFab')) $('#bookFab').classList.add('on');
     return;
   }
   var step = function(){
@@ -1856,28 +1713,17 @@ function startBoot(){
     bar.style.right = (100 - Math.round(((i + 1) / lines.length) * 100)) + '%';
     i++;
     if(i < lines.length){
-      setTimeout(step, i === lines.length - 1 ? 700 : 550);
+      /* +250ms on each of the four waits = +1s TOTAL, not +1s per line */
+      setTimeout(step, i === lines.length - 1 ? 1050 : 850);
     } else {
       setTimeout(function(){
         box.classList.add('gone');
-        if($('#bookBar')) $('#bookBar').classList.add('on');
-        setTimeout(function(){ box.style.display = 'none'; }, 500);
-      }, 350);
+        if($('#bookFab')) $('#bookFab').classList.add('on');
+        setTimeout(function(){ box.style.display = 'none'; }, 700);
+      }, 500);
     }
   };
   step();
-}
-
-function detectLang(){
-  try {
-    var stored = localStorage.getItem('jh-lang');
-    if(stored === 'es' || stored === 'en') return stored;
-  } catch(e){}
-  var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
-  for(var i = 0; i < list.length; i++){
-    if(String(list[i] || '').toLowerCase().indexOf('es') === 0) return 'es';
-  }
-  return 'en';
 }
 
 function pickLang(lang){
@@ -1888,16 +1734,17 @@ function pickLang(lang){
   var gate = $('#langGate');
   if(gate){
     gate.classList.add('gone');
-    setTimeout(function(){ gate.style.display = 'none'; }, 280);
+    setTimeout(function(){ gate.style.display = 'none'; }, 480);
   }
   startBoot();
 }
 
 (function(){
-  document.querySelectorAll('[data-lang]').forEach(function(b){
+  var gate = $('#langGate');
+  if(!gate){ startBoot(); return; }
+  gate.querySelectorAll('[data-lang]').forEach(function(b){
     b.addEventListener('click', function(){ pickLang(b.getAttribute('data-lang')); });
   });
-  pickLang(detectLang());
 })();
 
 /* ============================================================
@@ -2240,7 +2087,7 @@ function drawLapIcon(x, y, s){
 }
 
 function drawField(dt){
-  if(!R || W < 720 || isTouch) return;
+  if(!R || W < 340) return;
   var rad = R * zoom;
   var leftEdge = CX - rad;
   var rightEdge = CX + rad;
@@ -2419,9 +2266,11 @@ function loop(now){
 }
 
 /* ---------- HUD ---------- */
-var hUp = $('#hUp');
+var hLat = $('#hLat'), hUp = $('#hUp');
 function updateHUD(){
-  if(!hUp) return;
+  var lonTxt = (Math.abs(rotLon)).toFixed(1) + '°' + (rotLon >= 0 ? 'E' : 'W');
+  var latTxt = (Math.abs(rotLat)).toFixed(1) + '°' + (rotLat >= 0 ? 'N' : 'S');
+  hLat.textContent = latTxt + ' / ' + lonTxt;
   var s = Math.floor((Date.now() - upStart)/1000);
   hUp.textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
 }
@@ -2906,7 +2755,6 @@ function openBook(e){
   sheet.classList.add('on');
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
-  if($('#bookBar')) $('#bookBar').classList.remove('on');
   lockPage(true);
   dockOverlays();
   var from = $('#bookFrom');
@@ -2920,7 +2768,6 @@ function closeBook(){
   }
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
-  if($('#bookBar')) $('#bookBar').classList.add('on');
   lockPage(false);
   dockOverlays();
 }
@@ -2933,8 +2780,6 @@ if(window.visualViewport){
   var form = $('#bookForm');
   var nb = $('#navBook');
   if(nb) nb.addEventListener('click', openBook);
-  var hb = $('#heroBook');
-  if(hb) hb.addEventListener('click', openBook);
   var fab = $('#bookFab');
   if(fab) fab.addEventListener('click', openBook);
   var x = $('#bookX');
@@ -3053,6 +2898,67 @@ if(window.IntersectionObserver){
   }, {rootMargin:'120px'}).observe($('#stage'));
 }
 document.addEventListener('visibilitychange', syncOnScreen);
+
+/* mini globe on AI James — spins faster on hover */
+(function(){
+  var fab = $('#bookFab'), c = $('#bookGlobe');
+  if(!fab || !c || !LANDPTS.length) return;
+  var g = c.getContext('2d');
+  var size = 176, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function fit(){
+    var css = (c.getBoundingClientRect().width) || 176;
+    size = css;
+    c.width = Math.round(size * dpr);
+    c.height = Math.round(size * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  fit();
+  var lon = 18, hover = false;
+  fab.addEventListener('mouseenter', function(){ hover = true; });
+  fab.addEventListener('mouseleave', function(){ hover = false; });
+  var step = Math.max(6, Math.floor(LANDPTS.length / 420));
+  function proj(lat, lo, rad){
+    var la = lat * D2R, ln = (lo - lon) * D2R;
+    var x = Math.cos(la) * Math.sin(ln);
+    var y = Math.sin(la);
+    var z = Math.cos(la) * Math.cos(ln);
+    var t = -14 * D2R;
+    var y2 = y * Math.cos(t) - z * Math.sin(t);
+    var z2 = y * Math.sin(t) + z * Math.cos(t);
+    return {x: size/2 + x * rad, y: size/2 + 1 - y2 * rad, z: z2};
+  }
+  function paint(){
+    if(!fab.classList.contains('on')){ requestAnimationFrame(paint); return; }
+    lon += reduce ? 0 : (hover ? 2.1 : 0.32);
+    if(lon > 180) lon -= 360;
+    var rad = size * 0.42;
+    var cx = size/2, cy = size/2;
+    g.clearRect(0,0,size,size);
+    var glow = g.createRadialGradient(cx, cy, rad*0.55, cx, cy, rad*1.12);
+    glow.addColorStop(0, 'rgba(255,59,31,0)');
+    glow.addColorStop(1, 'rgba(255,59,31,0.28)');
+    g.fillStyle = glow;
+    g.beginPath(); g.arc(cx, cy, rad*1.12, 0, Math.PI*2); g.fill();
+    g.strokeStyle = 'rgba(255,255,255,0.22)';
+    g.lineWidth = 1;
+    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI*2); g.stroke();
+    for(var i = 0; i < LANDPTS.length; i += step){
+      var p = proj(LANDPTS[i][0], LANDPTS[i][1], rad);
+      if(p.z < 0.04) continue;
+      g.fillStyle = 'rgba(255,255,255,' + (0.12 + p.z * 0.62).toFixed(3) + ')';
+      g.fillRect(p.x, p.y, 1.15, 1.15);
+    }
+    for(var k = 0; k < CITIES.length; k++){
+      var q = proj(CITIES[k].lat, CITIES[k].lon, rad);
+      if(q.z < 0.12) continue;
+      g.fillStyle = 'rgba(255,59,31,' + (0.35 + q.z * 0.65).toFixed(3) + ')';
+      g.beginPath(); g.arc(q.x, q.y, hover ? 1.6 : 1.15, 0, Math.PI*2); g.fill();
+    }
+    requestAnimationFrame(paint);
+  }
+  window.addEventListener('resize', fit);
+  paint();
+})();
 
 /* laptop cursor — pointer devices only; atoms orbit instead of a ring */
 (function(){
