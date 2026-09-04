@@ -620,90 +620,6 @@ footer{border-top:1px solid var(--line);padding:24px 0;font-family:var(--mono);
   #work .workcard{width:calc(50% - 8px);max-width:none}
 }
 </style>
-
-<!-- JH_LOGO_TEXT -->
-<style>
-/* logo consistency — text fallback matches mark weight */
-.logocell{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:6px 10px}
-.logotext{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:inherit;opacity:.9}
-</style>
-<!-- JH_LIGHT_THEME_START -->
-<style id="jh-light-theme">
-html[data-theme="light"]{color-scheme:light}
-html[data-theme="light"] body{background:#f2f0eb !important;color:#111 !important}
-html[data-theme="light"] #crt{opacity:.12 !important;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.04) 0 1px,transparent 1px 3px) !important}
-html[data-theme="light"] #vig{background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.12) 100%) !important}
-html[data-theme="light"] #boot,
-html[data-theme="light"] #langGate,
-html[data-theme="light"] section,
-html[data-theme="light"] .row.head,
-html[data-theme="light"] .row.head:hover{background:#f2f0eb !important}
-html[data-theme="light"] #bookSheet,
-html[data-theme="light"] #bookSheet .panel{background:#f7f5f0 !important;border-color:#d6d2c8 !important;color:#111 !important}
-html[data-theme="light"] nav a,
-html[data-theme="light"] #brandmark,
-html[data-theme="light"] #brandmark b,
-html[data-theme="light"] h1,
-html[data-theme="light"] h2,
-html[data-theme="light"] .row .cl,
-html[data-theme="light"] #readout .c,
-html[data-theme="light"] #dossier .cred .cl{color:#111 !important}
-html[data-theme="light"] nav a:hover,
-html[data-theme="light"] nav a.here,
-html[data-theme="light"] nav a:focus-visible{color:#000 !important}
-html[data-theme="light"] #langGate button,
-html[data-theme="light"] #boot .line{color:#111 !important}
-html[data-theme="light"] #boot .bar{background:#ddd !important}
-html[data-theme="light"] .shot,
-html[data-theme="light"] .workcard,
-html[data-theme="light"] .card{background:#e8e4dc !important;border-color:#ccc7bb !important}
-html[data-theme="light"] .shot:hover,
-html[data-theme="light"] .workcard:hover,
-html[data-theme="light"] .card:hover{border-color:#111 !important}
-html[data-theme="light"] #bookSheet input,
-html[data-theme="light"] #bookSheet textarea{background:#fff !important;border-color:#cfc9bc !important;color:#111 !important}
-html[data-theme="light"] .cta:hover,
-html[data-theme="light"] #bookSheet .go:hover{background:#111 !important;color:#f2f0eb !important}
-html[data-theme="light"] ::selection{background:var(--red);color:#fff}
-html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rgba(242,240,235,.85)}
-#jhThemeFlip{position:fixed;z-index:500;right:14px;bottom:14px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:10px 12px;min-height:var(--hit);border:1px solid #fff;background:rgba(0,0,0,.75);color:#fff;cursor:pointer;backdrop-filter:blur(6px)}
-#jhThemeFlip:hover{border-color:var(--red);color:var(--red)}
-</style>
-<script id="jh-light-theme-js">
-(function(){
-  var KEY='jh-theme';
-  function apply(t){
-    if(t==='light'){document.documentElement.setAttribute('data-theme','light');}
-    else{document.documentElement.removeAttribute('data-theme'); t='dark';}
-    try{localStorage.setItem(KEY,t);}catch(e){}
-    var b=document.getElementById('jhThemeFlip');
-    if(b) b.textContent = (t==='light' ? 'THEME \u00b7 DARK' : 'THEME \u00b7 LIGHT');
-  }
-  function current(){
-    var q=new URLSearchParams(location.search).get('theme');
-    if(q==='light'||q==='dark') return q;
-    try{var s=localStorage.getItem(KEY); if(s==='light'||s==='dark') return s;}catch(e){} return 'light';
-  }
-  apply(current());
-  document.addEventListener('DOMContentLoaded',function(){
-    apply(current());
-    if(!document.getElementById('jhThemeFlip')){
-      var b=document.createElement('button');
-      b.id='jhThemeFlip'; b.type='button';
-      b.textContent = (document.documentElement.getAttribute('data-theme')==='light' ? 'THEME \u00b7 DARK' : 'THEME \u00b7 LIGHT');
-      b.addEventListener('click',function(){
-        var next = document.documentElement.getAttribute('data-theme')==='light' ? 'dark' : 'light';
-        var u=new URL(location.href); u.searchParams.set('theme', next);
-        history.replaceState(null,'',u);
-        apply(next);
-      });
-      document.body.appendChild(b);
-    }
-  });
-})();
-</script>
-<!-- JH_LIGHT_THEME_END -->
-
 </head>
 <body>
 
@@ -775,7 +691,7 @@ html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rg
     <span data-i18n="hud.hdmiK">HDMI</span>&nbsp; <b data-i18n="hud.hdmiV">SEATED (VERIFIED TWICE)</b>
   </div>
   <div class="hud mono" id="hudBL">
-    <span data-i18n="hud.coffeeK">ON SET</span> <b class="r" data-i18n="hud.coffeeV">READY</b><br>
+    <span data-i18n="hud.coffeeK">COFFEE</span> <b class="r" data-i18n="hud.coffeeV">CRITICAL</b><br>
     <span data-i18n="hud.clientK">CLIENT</span> <b data-i18n="hud.clientV">HAPPY</b>
   </div>
   <div class="hud mono" id="hudBR">
@@ -796,25 +712,13 @@ html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rg
   <div class="g" id="pinButtons"></div>
 </div></section>
 
-<!-- ============ BRANDS — prodcos FIRST, then brand marks (James layout lock 2026-09-04) ============ -->
+<!-- ============ BRANDS — all marks, no marquee ============ -->
 <section id="brands"><div class="wrap">
-  <div class="tierhd mono" data-i18n-html="brands.prod">PRODUCTION</div>
-  <div class="logogrid" id="prodLane"></div>
   <div class="secno mono" data-i18n="brands.secno">BRANDS</div>
   <div class="logogrid" id="logoLane"></div>
+  <div class="tierhd mono" data-i18n-html="brands.prod">PRODUCTION</div>
+  <div class="logogrid" id="prodLane"></div>
 </div></section>
-
-
-<!-- ============ [03] SELECTED WORK — carousel above CV (James layout lock 2026-09-04) ============ -->
-<section id="work">
-  <div class="wrap">
-    <div class="secno mono" data-i18n="work.secno">[03] SELECTED WORK</div>
-    <h2 class="big" data-i18n="work.h2">Selected work</h2>
-    <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
-    <div class="lane worklane"><div class="track worktrack slow rev" id="workLaneB"></div></div>
-    <div class="tbl" id="workTbl"></div>
-  </div>
-</section>
 
 <!-- ============ [02] WHAT I ACTUALLY DO ============ -->
 <section id="do"><div class="wrap">
@@ -856,6 +760,17 @@ html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rg
 
   <div class="doshots" id="doShots"></div>
 </div></section>
+
+<!-- ============ [03] SELECTED WORK ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="secno mono" data-i18n="work.secno">[03] SELECTED WORK</div>
+    <h2 class="big" data-i18n="work.h2">Selected work</h2>
+    <div class="tbl" id="workTbl"></div>
+    <div class="lane worklane"><div class="track worktrack" id="workLane"></div></div>
+    <div class="lane worklane"><div class="track worktrack slow rev" id="workLaneB"></div></div>
+  </div>
+</section>
 
 <!-- ============ POLAROID ============ -->
 <section id="polaroid"><div class="wrap">
@@ -948,7 +863,7 @@ html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rg
 <div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book me">
   <button type="button" class="x" id="bookX" data-i18n="ui.close">[ CLOSE ]</button>
   <h3 data-i18n="book.h3">Book me</h3>
-  <p class="lede" data-i18n="book.lede">Hello. Dates, city, the job, how to reach you. I will reply.</p>
+  <p class="lede" data-i18n="book.lede">Hello. Dates, city, the job, how to reach you. James will reply.</p>
   <form id="bookForm">
     <div class="row2">
       <div>
@@ -1285,8 +1200,8 @@ var I18N = {
     'hud.cardsV': '2 OF 2 BACKED UP',
     'hud.hdmiK': 'HDMI',
     'hud.hdmiV': 'SEATED (VERIFIED TWICE)',
-    'hud.coffeeK': 'ON SET',
-    'hud.coffeeV': 'READY',
+    'hud.coffeeK': 'COFFEE',
+    'hud.coffeeV': 'CRITICAL',
     'hud.clientK': 'CLIENT',
     'hud.clientV': 'HAPPY',
     'hud.cableK': 'CABLE TENSION',
@@ -1361,7 +1276,7 @@ var I18N = {
     'fab.book': 'BOOK ME',
     'book.aria': 'Book me',
     'book.h3': 'Book me',
-    'book.lede': 'Hi. Dates, city, the job, how to reach you. I will reply.',
+    'book.lede': 'Hello. Dates, city, the job, how to reach you. James will reply.',
     'book.from': 'FROM',
     'book.to': 'TO',
     'book.job': 'JOB / PRODUCTION',
@@ -1369,7 +1284,7 @@ var I18N = {
     'book.email': 'YOUR EMAIL',
     'book.go': 'SEND REQUEST',
     'book.sending': 'SENDING…',
-    'book.sent': 'SENT. I will reply from callingjhphoto@gmail.com.',
+    'book.sent': 'SENT. James will reply from callingjhphoto@gmail.com.',
     'book.needDate': 'Need a start date.',
     'book.needEmail': 'Need an email so James can reply.',
     'book.fail': 'Couldn’t send from here. Email callingjhphoto@gmail.com.',
@@ -1467,8 +1382,8 @@ var I18N = {
     'hud.cardsV': '2 DE 2 COPIADAS',
     'hud.hdmiK': 'HDMI',
     'hud.hdmiV': 'COLOCADO (VERIFICADO DOS VECES)',
-    'hud.coffeeK': 'EN SET',
-    'hud.coffeeV': 'LISTO',
+    'hud.coffeeK': 'CAFÉ',
+    'hud.coffeeV': 'CRÍTICO',
     'hud.clientK': 'CLIENTE',
     'hud.clientV': 'CONTENTO',
     'hud.cableK': 'TENSIÓN',
@@ -1488,18 +1403,18 @@ var I18N = {
     'do.secno': '[02] LO QUE HAGO DE VERDAD',
     'do.h2': 'Siempre ahí',
     'do.cap.h': 'CAPTURA',
-    'do.cap.p': 'Captura en tether que no falla. La cámara habla con la estación, la estación con la pantalla del cliente, y nadie espera a que aparezca el fotograma.',
+    'do.cap.p': 'Captura por tether que no se cae. La cámara habla con la estación, la estación habla con la pantalla del cliente, y nadie se queda esperando a que aparezca un fotograma.',
     'do.cap.1': 'Sesiones de Capture One Pro, nombradas y estructuradas',
-    'do.cap.3': 'Live view, chequeos de foco y guías de encuadre',
+    'do.cap.3': 'Visión en directo, chequeos de foco, superposición de recuadro',
     'do.col.h': 'COLOR',
-    'do.col.p': 'Pantalla de cliente calibrada: el OK de las 19:40 es la misma imagen que llega al retocador. Estilos e ICC antes del primer disparo, no después.',
+    'do.col.p': 'Una pantalla de cliente calibrada para que el ok que das a las 19:40 sea la misma imagen que llega al retocador. Estilos e ICC puestos antes del primer disparo, no después.',
     'do.col.1': 'Calibración y perfilado de monitor',
     'do.col.2': 'Estilos de sesión, ICC, ajustes de captura',
-    'do.col.3': 'Comps por capas y stitching en set',
+    'do.col.3': 'Composiciones por capas y uniones en el set',
     'do.col.4': 'Selección, exportaciones y previsualizaciones para el cliente',
     'do.dat.h': 'DATOS',
-    'do.dat.p': 'Tres copias de todo, verificadas, antes de devolver las tarjetas. En un día mío no se pregunta «¿dónde está el archivo?».',
-    'do.dat.1': 'Tarjeta + dos destinos, con checksum verificado',
+    'do.dat.p': 'Tres copias de todo, verificadas, antes de que las tarjetas vuelvan a la bolsa. En un día mío no se dice «dónde está el archivo».',
+    'do.dat.1': 'Tarjeta más dos destinos, checksum verificado',
     'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
     'do.dat.3': 'Registros de toma, metadatos, convención de nombres',
     'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
@@ -1543,7 +1458,7 @@ var I18N = {
     'fab.book': 'RESERVA',
     'book.aria': 'Reserva',
     'book.h3': 'Reserva',
-    'book.lede': 'Hola. Fechas, ciudad, el trabajo, cómo contactarte. Te respondo yo.',
+    'book.lede': 'Hola. Fechas, ciudad, el trabajo, cómo contactarte. James responde.',
     'book.from': 'DESDE',
     'book.to': 'HASTA',
     'book.job': 'TRABAJO / PRODUCCIÓN',
@@ -1551,7 +1466,7 @@ var I18N = {
     'book.email': 'TU CORREO',
     'book.go': 'ENVIAR SOLICITUD',
     'book.sending': 'ENVIANDO…',
-    'book.sent': 'ENVIADO. Te respondo desde callingjhphoto@gmail.com.',
+    'book.sent': 'ENVIADO. James responde desde callingjhphoto@gmail.com.',
     'book.needDate': 'Necesito una fecha de inicio.',
     'book.needEmail': 'Necesito un correo para responderte.',
     'book.fail': 'No se ha podido enviar. Escribe a callingjhphoto@gmail.com.',
@@ -2511,10 +2426,8 @@ var DOSHOTS = [
     if(!node) return;
     var html = '';
     list.forEach(function(l){
-      html += '<span class="logocell"><img loading="lazy" class="' + (l.ink ? 'ink' : '') +
-              '" src="img/logos/' + l.f + '" alt="' + esc(l.n) +
-              '" onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'logotext\',textContent:this.alt}))">' +
-              '</span>';
+      html += '<img loading="lazy" class="' + (l.ink ? 'ink' : '') + '" src="img/logos/' + l.f +
+              '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
     });
     node.innerHTML = html;
   }
@@ -2938,8 +2851,7 @@ document.addEventListener('visibilitychange', syncOnScreen);
   if(isTouch) return;
   var el = $('#cursor'), cv = $('#cursorAtoms');
   if(!el || !cv) return;
-  /* laptop-cursor disabled — Mariona/James polish 2026-09-04 */
-  // document.documentElement.classList.add('laptop-cursor');
+  document.documentElement.classList.add('laptop-cursor');
   var g = cv.getContext('2d');
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
   cv.width = Math.round(52 * dpr);

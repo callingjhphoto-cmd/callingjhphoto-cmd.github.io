@@ -682,7 +682,7 @@ html[data-theme="light"] #jhThemeFlip{color:#111;border-color:#111;background:rg
   function current(){
     var q=new URLSearchParams(location.search).get('theme');
     if(q==='light'||q==='dark') return q;
-    try{var s=localStorage.getItem(KEY); if(s==='light'||s==='dark') return s;}catch(e){} return 'light';
+    try{return localStorage.getItem(KEY)||'dark';}catch(e){return 'dark';}
   }
   apply(current());
   document.addEventListener('DOMContentLoaded',function(){
