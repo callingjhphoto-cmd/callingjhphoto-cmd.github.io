@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v13 2026-09-05T19:31 — same R, center in pocket under copy, full sphere visible -->
+<!-- mobile-globe-v14 2026-09-05T19:33 — fit full R in band between copy and fab; center; no overlap -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -510,13 +510,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   }
   .hero-copy{
     position:relative;width:100%;max-width:100%;
-    padding:6px 16px 10px;justify-content:flex-start;z-index:12
+    padding:4px 16px 6px;justify-content:flex-start;z-index:12
   }
-  .hero-copy h1{font-size:clamp(32px, 8.8vw, 44px);min-height:2.7em}
+  .hero-copy h1{font-size:clamp(32px, 8.8vw, 44px);min-height:0}
   .hero-copy .tag{margin-bottom:10px}
   .hero-copy .role{margin:0 0 10px}
-  .hero-copy .deck{margin:12px 0 0;font-size:16px}
-  .hero-copy .meta{margin-top:10px;position:relative;z-index:13}
+  .hero-copy .deck{margin:8px 0 0;font-size:16px}
+  .hero-copy .meta{margin-top:6px;position:relative;z-index:13}
   #bookFab{
     right:10px;
     bottom:calc(16px + env(safe-area-inset-bottom, 0px) + 72px);
@@ -557,11 +557,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #work .tbl{margin-top:28px;font-size:12px}
   .row{gap:2px 10px;padding:8px 0}
   .row .ti{font-size:13px;letter-spacing:-.01em}
-  .hero-copy{padding:4px 14px 8px}
+  .hero-copy{padding:2px 14px 4px}
   .hero-copy .tag,.hero-copy .role,.hero-copy .meta{
     font-size:9px;letter-spacing:.1em;text-transform:uppercase
   }
-  .hero-copy h1{font-size:clamp(26px, 7.2vw, 36px);min-height:2.4em;letter-spacing:-.03em}
+  .hero-copy h1{font-size:clamp(26px, 7.2vw, 36px);min-height:0;letter-spacing:-.03em}
   .hero-copy .deck{margin:8px 0 0;font-size:14px;line-height:1.35;max-width:32ch}
   #flyby{padding:48px 0 36px}
   #flyby h2.big{font-size:clamp(36px, 12vw, 64px)}
@@ -604,7 +604,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #work, #contact{padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px))}
 }
 @media(max-width:720px) and (max-height:740px){
-  .hero-copy h1{font-size:clamp(28px, 7.8vw, 38px);min-height:2.55em}
+  .hero-copy h1{font-size:clamp(28px, 7.8vw, 38px);min-height:0}
   .hero-copy .deck{margin-top:8px;font-size:15px}
   .hero-copy .meta{margin-top:8px}
   .hero-copy .role{margin:0 0 8px}
@@ -1996,48 +1996,30 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
-    /* v13: same sphere size as before; sit in the vertical pocket UNDER hero copy
-       so text never overlaps and the full circle stays on screen (not clipped). */
+    /* v14: globe ONLY in band between hero-copy bottom and BOOK fab.
+       Dead-centered. Prefer classic size; only ease R if band < diameter. */
     var widthKey = Math.round(W);
-    var layoutVer = 13;
+    var layoutVer = 14;
     if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
       var sr = cv.getBoundingClientRect();
-      var metaEl = document.querySelector('#stage .hero-copy .meta');
-      var deckEl = document.querySelector('#stage .hero-copy .deck');
       var copy = document.querySelector('#stage .hero-copy');
-      var anchor = metaEl || deckEl || copy;
-      var anchorR = anchor ? anchor.getBoundingClientRect() : null;
-      var fabReserve = 118; /* BOOK ME fab + safe air */
-      /* Modest clearance only — previous +72 left a dead white band */
-      var topEdge = anchorR ? (anchorR.bottom - sr.top + 16) : 150;
-      topEdge = Math.max(110, topEdge);
+      var copyR = copy ? copy.getBoundingClientRect() : null;
+      var gapTop = 12;
+      var gapBot = 8;
+      var fabReserve = 100;
+      var topEdge = copyR ? (copyR.bottom - sr.top + gapTop) : 150;
+      topEdge = Math.max(96, topEdge);
       var layoutH = Math.max(H, window.innerHeight || H);
-      var botEdge = layoutH - fabReserve;
-      if(botEdge < topEdge + 200) botEdge = topEdge + 200;
-      var pocket = botEdge - topEdge;
-      /* SAME size recipe as pre-v11 (do not shrink for "fit") */
-      R = Math.min(W * 0.50, pocket * 0.62);
-      R = Math.max(R, Math.min(W * 0.44, 160));
+      var botEdge = layoutH - fabReserve - gapBot;
+      if(botEdge < topEdge + 180) botEdge = topEdge + 180;
+      var band = botEdge - topEdge;
+      var Rwant = Math.min(W * 0.50, band); /* classic width; band clamps later */
+      Rwant = Math.max(Rwant, Math.min(W * 0.44, 160));
+      R = Math.min(Rwant, band * 0.5);
       CX = W * 0.50;
-      /* Center of the pocket under the copy */
-      CY = (topEdge + botEdge) / 2;
-      /* Keep full disc inside pocket — nudge, don't shrink */
-      if(CY - R < topEdge) CY = topEdge + R;
-      if(CY + R > botEdge) CY = botEdge - R;
-      /* If pocket is tighter than 2R, center anyway and accept tiny clip risk
-         over shrinking — James: keep size. Prefer top clear over bottom. */
-      if(pocket < 2 * R){
-        CY = topEdge + R; /* hang from below copy, full top visible */
-        if(CY + R > botEdge + 8){
-          /* last resort: only then ease R so bottom isn't amputated */
-          R = Math.max(Math.min(W * 0.44, 150), (botEdge - topEdge) * 0.48);
-          CY = (topEdge + botEdge) / 2;
-          if(CY - R < topEdge) CY = topEdge + R;
-          if(CY + R > botEdge) CY = botEdge - R;
-        }
-      }
+      CY = topEdge + band * 0.5;
       mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
     }
   } else {
