@@ -59,22 +59,21 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
   position:fixed;inset:0;z-index:300;background:var(--paper);
   display:flex;align-items:center;justify-content:center;gap:4px;
   transition:opacity .6s ease;
-  padding:env(safe-area-inset-top, 0px) 8px env(safe-area-inset-bottom, 0px);
 }
 #langGate.gone{opacity:0;pointer-events:none}
 #langGate canvas{
   position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
 }
 #langGate .kicker{
-  position:absolute;top:calc(16px + env(safe-area-inset-top, 0px));left:12px;right:12px;text-align:center;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--grey2);
-  z-index:1;line-height:1.45;
+  position:absolute;top:28px;left:0;right:0;text-align:center;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--grey);
+  z-index:1;
 }
 #langGate button{
   background:none;border:0;color:var(--ink);cursor:pointer;
   font-family:var(--sans);padding:18px 32px;
   display:flex;flex-direction:column;align-items:center;gap:12px;
-  position:relative;z-index:1;min-width:112px;min-height:112px;
+  position:relative;z-index:1;min-width:var(--hit);
 }
 #langGate button strong{
   font-size:clamp(52px, 12vw, 120px);font-weight:700;letter-spacing:-.04em;
@@ -82,7 +81,7 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
 }
 #langGate button small{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;
-  color:var(--grey2);font-weight:400;
+  color:var(--grey);font-weight:400;
 }
 #langGate button:hover strong, #langGate button:focus-visible strong{color:var(--signal)}
 #langGate button:hover small, #langGate button:focus-visible small{color:var(--ink)}
@@ -470,61 +469,22 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 @media(max-width:720px){
   nav{
     left:0;right:0;top:0;width:100%;max-width:100%;
-    display:flex!important;flex-wrap:nowrap;justify-content:flex-start;align-items:center;gap:0;
-    overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;overscroll-behavior-x:contain;
-    padding:calc(4px + env(safe-area-inset-top, 0px)) 8px 2px;
-    background:var(--paper);z-index:72
+    padding:calc(4px + env(safe-area-inset-top, 0px)) 4px 4px;
+    display:grid!important;grid-template-columns:1fr 1fr 1fr 1fr 1fr auto;
+    background:none;z-index:72
   }
-  nav::-webkit-scrollbar{display:none}
-  nav a, nav button.langbtn{
-    flex:none;padding:0 11px;font-size:11px;letter-spacing:.12em;
-    justify-content:center;min-width:var(--hit);min-height:var(--hit)
-  }
-  nav .langpair{flex:none;border-left:.4pt solid var(--rule);margin-left:4px;padding-left:6px}
+  nav a, nav button.langbtn{padding:0 4px;font-size:10px;justify-content:center;min-width:0}
+  nav .langpair{border:0;margin:0;padding:0}
   #brandmark{display:none}
-  #stage{
-    padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
-    padding-bottom:env(safe-area-inset-bottom, 0px);
-    height:100svh;height:100dvh;max-height:100svh;min-height:100svh;
-    overflow:hidden
-  }
-  .hero-copy{
-    position:relative;width:100%;max-width:100%;
-    padding:6px 16px 10px;justify-content:flex-start;z-index:12
-  }
-  .hero-copy h1{font-size:clamp(32px, 8.8vw, 44px);min-height:2.7em}
-  .hero-copy .tag{margin-bottom:10px}
-  .hero-copy .role{margin:0 0 10px}
-  .hero-copy .deck{margin:12px 0 0;font-size:16px}
-  .hero-copy .meta{margin-top:10px;position:relative;z-index:13}
-  #bookFab{
-    right:12px;
-    bottom:calc(12px + env(safe-area-inset-bottom, 0px) + 48px);
-    width:76px;touch-action:manipulation
-  }
-  #bookFab .globe-wrap{width:76px;height:76px}
-  #bookFab .lab-bot{min-height:var(--hit)}
+  #stage{padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));height:100svh;min-height:0}
+  #bookFab{right:12px;bottom:max(14px, env(safe-area-inset-bottom));width:88px}
+  #bookFab .globe-wrap{width:88px;height:88px}
   #bookSheet{left:10px;right:10px;width:auto;top:10px;bottom:auto;max-height:calc(100dvh - 20px)}
   #contact{padding:56px 0 calc(140px + env(safe-area-inset-bottom, 0px))}
   #contact .pframe img{width:158px}
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
-  /* James 5 Sep: brand + prodco logos + section titles too big on mobile only */
-  .logogrid{gap:12px 14px;margin-top:12px}
-  #logoLane img{height:28px;max-width:110px}
-  #prodLane{padding:22px 14px;gap:12px 16px}
-  #prodLane img{height:26px;max-height:26px;max-width:120px}
-  .lane-title{font-size:clamp(22px, 5.5vw, 32px);margin:0 0 14px;letter-spacing:-.02em}
-  .lane-title.prod-title{margin-top:40px}
-  #brands{margin-top:28px}
-}
-@media(max-width:720px) and (max-height:740px){
-  .hero-copy h1{font-size:clamp(28px, 7.8vw, 38px);min-height:2.55em}
-  .hero-copy .deck{margin-top:8px;font-size:15px}
-  .hero-copy .meta{margin-top:8px}
-  .hero-copy .role{margin:0 0 8px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -1168,7 +1128,7 @@ var I18N = {
     'book.sending': 'SENDING…',
     'book.sent': 'SENT. I will reply from callingjhphoto@gmail.com.',
     'book.needDate': 'Need a start date.',
-    'book.needEmail': 'Need an email so I can reply.',
+    'book.needEmail': 'Need an email so James can reply.',
     'book.fail': 'Couldn’t send from here. Email callingjhphoto@gmail.com.',
     'book.ph.job': 'Who’s shooting, what’s the job',
     'book.ph.city': 'Barcelona, Mallorca, London…',
@@ -1574,8 +1534,6 @@ function startBoot(){
   if(box){ box.style.display = 'none'; }
   var fab = $('#bookFab');
   if(fab) fab.classList.add('on');
-  if(typeof dockOverlays === 'function') dockOverlays();
-  if(typeof resize === 'function') resize();
   return;
   var line = $('#bootline'), bar = $('#bootbar'), i = 0;
   var lines = [t('boot.0'), t('boot.1'), t('boot.2'), t('boot.3')];
@@ -1583,8 +1541,6 @@ function startBoot(){
     box.classList.add('gone');
     setTimeout(function(){ box.style.display = 'none'; }, 100);
     if($('#bookFab')) $('#bookFab').classList.add('on');
-    if(typeof dockOverlays === 'function') dockOverlays();
-    if(typeof resize === 'function') resize();
     return;
   }
   var step = function(){
@@ -1598,8 +1554,6 @@ function startBoot(){
       setTimeout(function(){
         box.classList.add('gone');
         if($('#bookFab')) $('#bookFab').classList.add('on');
-        if(typeof dockOverlays === 'function') dockOverlays();
-        if(typeof resize === 'function') resize();
         setTimeout(function(){ box.style.display = 'none'; }, 700);
       }, 500);
     }
@@ -1612,7 +1566,6 @@ function pickLang(lang, e){
   try { localStorage.setItem('jh-lang', LANG); } catch(err){}
   applyI18n();
   document.documentElement.classList.remove('lang-wait');
-  if(typeof dockOverlays === 'function') dockOverlays();
   var gate = $('#langGate');
   if(typeof gateFlockStop === 'function'){
     gateFlockStop(gate ? gate.querySelector('[data-lang="'+LANG+'"]') : null);
@@ -1917,24 +1870,9 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
-    var sr = cv.getBoundingClientRect();
-    var copy = document.querySelector('#stage .hero-copy');
-    var copyR = copy ? copy.getBoundingClientRect() : null;
-    var fabEl = document.getElementById('bookFab');
-    var fabR = (fabEl && fabEl.classList.contains('on')) ? fabEl.getBoundingClientRect() : null;
-    var topEdge = copyR ? Math.max(160, copyR.bottom - sr.top + 22) : 180;
-    var botEdge = fabR ? Math.max(topEdge + 96, fabR.top - sr.top - 12) : H - 130;
-    if(botEdge > H - 48) botEdge = H - 48;
-    var pocket = Math.max(96, botEdge - topEdge);
-    R = Math.min(W * 0.40, pocket * 0.46);
     CX = W * 0.50;
-    CY = topEdge + pocket * 0.50;
-    if(CY - R < topEdge) CY = topEdge + R;
-    if(CY + R > botEdge) CY = botEdge - R;
-    if(CY - R < topEdge){
-      R = Math.max(56, (botEdge - topEdge) / 2);
-      CY = topEdge + R;
-    }
+    CY = H * 0.70;
+    R = Math.min(W, H) * 0.36;
   } else {
     CX = W * 0.78;
     CY = H * 0.50;
@@ -2426,9 +2364,17 @@ function up(e){
   if(!dragging) return;
   dragging = false;
   cv.classList.remove('drag');
-  /* Pins stay visual. Tap does not open a city work list. */
-  stuckPin = null;
-  hideReadout();
+  var pt = pointOf(e);
+  if(Math.hypot(pt.x - downX, pt.y - downY) > 10) return;
+  var id = hitPin(pt, 32);
+  if(id){
+    var c = CITIES.filter(function(x){ return x.id === id; })[0];
+    stuckPin = id;
+    if(c) showReadout(c);
+  } else {
+    stuckPin = null;
+    hideReadout();
+  }
 }
 cv.addEventListener('mousedown', down);
 window.addEventListener('mousemove', move);
@@ -2446,8 +2392,18 @@ var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   if(!readout) return;
   readoutCity = c;
+  var jobs = CREDITS[c.id] || [];
   var html = '<div class="c">' + esc(cityName(c).toUpperCase()) + '</div>';
   if(c.yrs && c.yrs !== '—') html += '<div class="x">' + esc(c.yrs) + '</div>';
+  if(jobs.length){
+    html += '<ul class="jobs">';
+    jobs.forEach(function(j){
+      html += '<li><span class="jy">' + esc(j.y) + '</span><span class="jc">' + esc(j.c) + '</span>';
+      if(j.ph && j.ph !== '—') html += '<span class="jp">' + esc(j.ph) + '</span>';
+      html += '</li>';
+    });
+    html += '</ul>';
+  }
   readout.innerHTML = html;
   readout.classList.add('on');
 }
@@ -2833,32 +2789,13 @@ function lockPage(on){
 }
 function dockOverlays(){
   var sheet = $('#bookSheet');
-  var fab = $('#bookFab');
-  var stage = $('#stage');
-  var mobile = window.innerWidth <= 720;
-  var vv = window.visualViewport;
-  var visH = window.innerHeight, offsetTop = 0, offsetLeft = 0, visW = window.innerWidth;
-  if(vv){ visH = vv.height; visW = vv.width; offsetTop = vv.offsetTop; offsetLeft = vv.offsetLeft; }
-  if(!mobile){
+  if(window.innerWidth > 720){
     if(sheet){ sheet.style.bottom = ''; sheet.style.top = ''; sheet.style.maxHeight = ''; sheet.style.height = ''; }
-    if(fab){ fab.style.bottom = ''; fab.style.right = ''; }
-    if(stage){ stage.style.height = ''; stage.style.minHeight = ''; }
     return;
   }
-  var bottomGap = Math.max(0, window.innerHeight - (offsetTop + visH));
-  var rightGap = Math.max(0, window.innerWidth - (offsetLeft + visW));
-  if(fab){
-    fab.style.bottom = (bottomGap + 48) + 'px';
-    fab.style.right = Math.max(12, rightGap + 12) + 'px';
-  }
-  if(stage && window.scrollY < 40 && offsetTop < 40){
-    var h = Math.round(visH);
-    if(h > 200 && stage.style.height !== h + 'px'){
-      stage.style.height = h + 'px';
-      stage.style.minHeight = h + 'px';
-      if(typeof resize === 'function') resize();
-    }
-  }
+  var vv = window.visualViewport;
+  var visH = window.innerHeight, offsetTop = 0;
+  if(vv){ visH = vv.height; offsetTop = vv.offsetTop; }
   var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   if(sheet && sheet.classList.contains('on')){
     sheet.style.bottom = 'auto';
@@ -3011,14 +2948,7 @@ if(window.visualViewport){
 
 /* ---------- go ---------- */
 window.addEventListener('resize', resize);
-if(typeof dockOverlays === 'function') dockOverlays();
 resize();
-if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(function(){
-    if(typeof dockOverlays === 'function') dockOverlays();
-    resize();
-  });
-}
 requestAnimationFrame(loop);
 
 var inView = true;
