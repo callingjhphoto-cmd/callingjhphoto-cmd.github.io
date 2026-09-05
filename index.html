@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v9 2026-09-05T16:17 -->
+<!-- mobile-globe-v10 2026-09-05T16:19 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1989,16 +1989,17 @@ function resize(){
       var copy = document.querySelector('#stage .hero-copy');
       var copyR = copy ? copy.getBoundingClientRect() : null;
       var fabReserve = 110;
-      var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 10) : 140;
-      /* Use layout viewport height, not live scrolled copy rect for pocket */
+      /* Clear hero deck+meta — keep R, push sphere down */
+      var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 28) : 160;
       var layoutH = Math.max(H, window.innerHeight || H);
       var botEdge = Math.max(topEdge + 180, layoutH - fabReserve);
       var pocket = Math.max(180, botEdge - topEdge);
       R = Math.min(W * 0.50, pocket * 0.62);
       R = Math.max(R, Math.min(W * 0.44, 160));
       CX = W * 0.50;
-      CY = topEdge + pocket * 0.52;
-      if(CY - R < topEdge + 4) CY = topEdge + R + 4;
+      /* Bias center lower in the pocket so northern arc clears copy */
+      CY = topEdge + pocket * 0.58;
+      if(CY - R < topEdge + 12) CY = topEdge + R + 12;
       if(CY + R > botEdge - 4) CY = botEdge - R - 4;
       mobileGlobeLock = { W: widthKey, R: R, CX: CX, CY: CY };
     }
