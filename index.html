@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-tighten-v3 2026-09-05T15:40 -->
+<!-- mobile-tighten-v4 2026-09-05T15:45 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -500,12 +500,12 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .hero-copy .deck{margin:12px 0 0;font-size:16px}
   .hero-copy .meta{margin-top:10px;position:relative;z-index:13}
   #bookFab{
-    right:12px;
-    bottom:calc(12px + env(safe-area-inset-bottom, 0px) + 48px);
-    width:76px;touch-action:manipulation
+    right:10px;
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px) + 72px);
+    width:64px;touch-action:manipulation
   }
-  #bookFab .globe-wrap{width:76px;height:76px}
-  #bookFab .lab-bot{min-height:var(--hit)}
+  #bookFab .globe-wrap{width:64px;height:64px}
+  #bookFab .lab-bot{min-height:var(--hit);font-size:8px;letter-spacing:.1em}
   #bookSheet{left:10px;right:10px;width:auto;top:10px;bottom:auto;max-height:calc(100dvh - 20px)}
   #contact{padding:56px 0 calc(140px + env(safe-area-inset-bottom, 0px))}
   #contact .pframe img{width:158px}
@@ -548,6 +548,18 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
   #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
+  /* work table: keep a compact header row on mobile */
+  .row.head{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px;padding:0 0 8px;border-bottom:.4pt solid var(--rule);margin-bottom:4px}
+  .row.head span{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+  .row{grid-template-columns:1fr 1fr;gap:2px 8px}
+  .row .pr,.row .ph,.row .ci{grid-column:auto}
+  .row .ti{grid-column:1 / -1}
+  /* book polaroids: don't clip */
+  #contact .ppair{max-width:100%;overflow:hidden}
+  #contact .pframe img{width:min(42vw, 148px)}
+  #contact .quote{overflow:hidden}
+  /* extra bottom pad so FAB never covers last content */
+  #work, #contact{padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px))}
 }
 @media(max-width:720px) and (max-height:740px){
   .hero-copy h1{font-size:clamp(28px, 7.8vw, 38px);min-height:2.55em}
@@ -2877,7 +2889,7 @@ function dockOverlays(){
   var bottomGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   var rightGap = Math.max(0, window.innerWidth - (offsetLeft + visW));
   if(fab){
-    fab.style.bottom = (bottomGap + 48) + 'px';
+    fab.style.bottom = (bottomGap + 72) + 'px';
     fab.style.right = Math.max(12, rightGap + 12) + 'px';
   }
   if(stage && window.scrollY < 40 && offsetTop < 40){
