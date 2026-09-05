@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v12 2026-09-05T19:25 — globe lower + spec rows + work/do gap -->
+<!-- mobile-globe-v13 2026-09-05T19:31 — same R, center in pocket under copy, full sphere visible -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1996,37 +1996,46 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
-    /* Freeze after settled layout — scroll must NOT grow R.
-       v11: James — globe MUST sit clearly below hero copy (deck+meta), not kissing it. */
+    /* v13: same sphere size as before; sit in the vertical pocket UNDER hero copy
+       so text never overlaps and the full circle stays on screen (not clipped). */
     var widthKey = Math.round(W);
-    var layoutVer = 11;
+    var layoutVer = 13;
     if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
       var sr = cv.getBoundingClientRect();
-      var copy = document.querySelector('#stage .hero-copy');
       var metaEl = document.querySelector('#stage .hero-copy .meta');
       var deckEl = document.querySelector('#stage .hero-copy .deck');
+      var copy = document.querySelector('#stage .hero-copy');
       var anchor = metaEl || deckEl || copy;
       var anchorR = anchor ? anchor.getBoundingClientRect() : null;
-      var fabReserve = 120;
-      /* Hard clearance under last hero line — previous +28 was invisible on phone */
-      var topEdge = anchorR ? Math.max(140, anchorR.bottom - sr.top + 72) : 200;
+      var fabReserve = 118; /* BOOK ME fab + safe air */
+      /* Modest clearance only — previous +72 left a dead white band */
+      var topEdge = anchorR ? (anchorR.bottom - sr.top + 16) : 150;
+      topEdge = Math.max(110, topEdge);
       var layoutH = Math.max(H, window.innerHeight || H);
-      var botEdge = Math.max(topEdge + 160, layoutH - fabReserve);
-      var pocket = Math.max(160, botEdge - topEdge);
-      /* Slightly smaller sphere so it can sit lower without eating the copy */
-      R = Math.min(W * 0.46, pocket * 0.52);
-      R = Math.max(R, Math.min(W * 0.40, 148));
+      var botEdge = layoutH - fabReserve;
+      if(botEdge < topEdge + 200) botEdge = topEdge + 200;
+      var pocket = botEdge - topEdge;
+      /* SAME size recipe as pre-v11 (do not shrink for "fit") */
+      R = Math.min(W * 0.50, pocket * 0.62);
+      R = Math.max(R, Math.min(W * 0.44, 160));
       CX = W * 0.50;
-      CY = topEdge + pocket * 0.72;
-      if(CY - R < topEdge + 8) CY = topEdge + R + 8;
-      if(CY + R > botEdge - 4){
-        CY = botEdge - R - 4;
-        /* If bottom clamp would pull north into copy, shrink R instead */
-        if(CY - R < topEdge + 8){
-          R = Math.max(120, (botEdge - 4) - (topEdge + 8));
-          CY = topEdge + R + 8;
+      /* Center of the pocket under the copy */
+      CY = (topEdge + botEdge) / 2;
+      /* Keep full disc inside pocket — nudge, don't shrink */
+      if(CY - R < topEdge) CY = topEdge + R;
+      if(CY + R > botEdge) CY = botEdge - R;
+      /* If pocket is tighter than 2R, center anyway and accept tiny clip risk
+         over shrinking — James: keep size. Prefer top clear over bottom. */
+      if(pocket < 2 * R){
+        CY = topEdge + R; /* hang from below copy, full top visible */
+        if(CY + R > botEdge + 8){
+          /* last resort: only then ease R so bottom isn't amputated */
+          R = Math.max(Math.min(W * 0.44, 150), (botEdge - topEdge) * 0.48);
+          CY = (topEdge + botEdge) / 2;
+          if(CY - R < topEdge) CY = topEdge + R;
+          if(CY + R > botEdge) CY = botEdge - R;
         }
       }
       mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
