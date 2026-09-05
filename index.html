@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v7 2026-09-05T16:12 -->
+<!-- mobile-globe-v8 2026-09-05T16:15 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -243,6 +243,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .ch{border-top:.7pt solid var(--ink);padding-top:14px}
 .ch .n{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--signal);text-transform:uppercase}
 .ch h3{font-size:clamp(26px, 2.4vw, 32px);letter-spacing:var(--ls-display);margin:10px 0 12px;font-weight:700;text-transform:none}
+.ch:nth-child(1) h3{color:#ff3b1f}
+.ch:nth-child(2) h3{color:#007A53}
+.ch:nth-child(3) h3{color:#1E22AA}
 .ch p{font-size:var(--fs-body);line-height:1.5;max-width:34ch;margin:0}
 .spec{
   margin-top:48px;border-top:.4pt solid var(--rule);padding-top:14px;
@@ -684,10 +687,6 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
       Hasselblad · Phase One · Canon · Nikon · Sony · Fuji<br>
       Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure<br>
       Phase One Certified Professional / POCP 2017
-    </div>
-    <div class="fieldband" aria-hidden="true">
-      <canvas id="svcGlobe" width="440" height="440"></canvas>
-      <div class="cap" data-i18n="do.globe">The same station, wherever the call sheet says.</div>
     </div>
   </div>
 </section>
@@ -3080,101 +3079,7 @@ if(window.IntersectionObserver){
 }
 document.addEventListener('visibilitychange', syncOnScreen);
 
-/* services globe — paper ink, readable sphere, paints only in view */
-(function(){
-  var host = $('#do'), c = $('#svcGlobe');
-  if(!host || !c || !LANDPTS.length) return;
-  var g = c.getContext('2d');
-  var size = 440, dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var lon = 8, inView = false, raf = 0;
-  function fit(){
-    var css = (c.getBoundingClientRect().width) || 440;
-    size = css;
-    c.width = Math.round(size * dpr);
-    c.height = Math.round(size * dpr);
-    g.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  fit();
-  var step = Math.max(2, Math.floor(LANDPTS.length / 1100));
-  function proj(lat, lo, rad){
-    var la = lat * D2R, ln = (lo - lon) * D2R;
-    var x = Math.cos(la) * Math.sin(ln);
-    var y = Math.sin(la);
-    var z = Math.cos(la) * Math.cos(ln);
-    var t = 18 * D2R;
-    var y2 = y * Math.cos(t) - z * Math.sin(t);
-    var z2 = y * Math.sin(t) + z * Math.cos(t);
-    return {x: size/2 + x * rad, y: size/2 - y2 * rad, z: z2};
-  }
-  function frame(){
-    if(!inView){ raf = 0; return; }
-    if(!reduce) lon += 0.10;
-    if(lon > 180) lon -= 360;
-    var rad = size * 0.46;
-    var cx = size/2, cy = size/2;
-    var p, i, k, lat, lo, started;
-    g.clearRect(0, 0, size, size);
-    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI * 2); g.fillStyle = '#FAFAF8'; g.fill();
-    g.strokeStyle = 'rgba(17,17,17,0.42)';
-    g.lineWidth = 1;
-    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI * 2); g.stroke();
-    g.save();
-    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI * 2); g.clip();
-    g.lineWidth = 0.65;
-    for(lat = -75; lat <= 75; lat += 15){
-      g.strokeStyle = 'rgba(17,17,17,0.14)';
-      g.beginPath(); started = false;
-      for(lo = -180; lo <= 180; lo += 4){
-        p = proj(lat, lo, rad);
-        if(p.z > 0){ if(!started){ g.moveTo(p.x, p.y); started = true; } else g.lineTo(p.x, p.y); }
-        else started = false;
-      }
-      g.stroke();
-    }
-    g.strokeStyle = 'rgba(255,59,31,0.55)';
-    g.lineWidth = 1;
-    g.beginPath(); started = false;
-    for(lo = -180; lo <= 180; lo += 3){
-      p = proj(0, lo, rad);
-      if(p.z > 0){ if(!started){ g.moveTo(p.x, p.y); started = true; } else g.lineTo(p.x, p.y); }
-      else started = false;
-    }
-    g.stroke();
-    for(i = 0; i < LANDPTS.length; i += step){
-      p = proj(LANDPTS[i][0], LANDPTS[i][1], rad);
-      if(p.z <= 0.04) continue;
-      var dr = 0.7 + 1.1 * p.z;
-      g.fillStyle = 'rgba(17,17,17,' + (0.32 + p.z * 0.55).toFixed(3) + ')';
-      g.fillRect(p.x - dr/2, p.y - dr/2, dr, dr);
-    }
-    for(k = 0; k < CITIES.length; k++){
-      p = proj(CITIES[k].lat, CITIES[k].lon, rad);
-      if(p.z < 0.08) continue;
-      var stem = 7 + 8 * p.z;
-      g.strokeStyle = 'rgba(255,59,31,' + (0.50 + 0.40 * p.z).toFixed(3) + ')';
-      g.lineWidth = 1.15;
-      g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(p.x, p.y - stem); g.stroke();
-      g.fillStyle = '#ff3b1f';
-      g.beginPath(); g.arc(p.x, p.y - stem, 2.2, 0, Math.PI * 2); g.fill();
-    }
-    g.restore();
-    raf = requestAnimationFrame(frame);
-  }
-  function go(){
-    if(!inView || raf) return;
-    raf = requestAnimationFrame(frame);
-  }
-  if(window.IntersectionObserver){
-    new IntersectionObserver(function(entries){
-      inView = entries[0].isIntersecting;
-      if(inView) go();
-    }, {rootMargin:'100px'}).observe(host);
-  } else {
-    inView = true;
-    go();
-  }
-  window.addEventListener('resize', function(){ fit(); if(inView && !raf) go(); });
-})();
+
 
 /* mini globe on AI James — spins faster on hover */
 (function(){
