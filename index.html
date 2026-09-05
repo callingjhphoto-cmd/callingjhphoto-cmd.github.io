@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v6 2026-09-05T16:10 -->
+<!-- mobile-globe-v7 2026-09-05T16:12 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -517,12 +517,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #logoLane img{height:20px;max-width:88px}
   #prodLane{padding:14px 10px;gap:8px 12px;margin-top:4px}
   #prodLane img{height:18px;max-height:18px;max-width:92px}
+  /* Titles stay display-weight; only logo images were meant to shrink */
   .lane-title{
-    font-family:var(--mono);font-weight:500;
-    font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-    margin:0 0 10px;line-height:1.2
+    font-family:var(--sans);font-weight:700;
+    font-size:clamp(28px, 7.5vw, 40px);letter-spacing:-.03em;text-transform:none;
+    margin:0 0 16px;line-height:.95
   }
-  .lane-title.prod-title{margin-top:28px}
+  .lane-title.prod-title{margin-top:48px}
   #brands{margin-top:20px}
   section.band{padding:40px 0}
   .wrap{padding-left:16px;padding-right:16px}
@@ -1943,6 +1944,7 @@ var vel = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0, downX = 0, downY
 var hoverPin = null, activePin = null, stuckPin = null;
 var easeTarget = null;               // {lon, lat} when a pin is hovered
 var pinScreen = {};                  // id -> {x,y,vis}
+var mobileGlobeLock = null;           // {W,R,CX,CY} frozen after first mobile layout
 
 var D2R = Math.PI/180;
 
@@ -1957,22 +1959,31 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
-    /* Stable mobile sphere: size from stage box once, not visualViewport chrome show/hide */
-    var sr = cv.getBoundingClientRect();
-    var copy = document.querySelector('#stage .hero-copy');
-    var copyR = copy ? copy.getBoundingClientRect() : null;
-    var fabEl = document.getElementById('bookFab');
-    var fabReserve = 110; /* FAB + safe-area clearance — don't chase live FAB rect (jumps on scroll) */
-    var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 10) : 140;
-    var botEdge = Math.max(topEdge + 160, H - fabReserve);
-    var pocket = Math.max(160, botEdge - topEdge);
-    R = Math.min(W * 0.48, pocket * 0.58);
-    R = Math.max(R, Math.min(W * 0.42, 150));
-    CX = W * 0.50;
-    CY = topEdge + pocket * 0.52;
-    if(CY - R < topEdge + 4) CY = topEdge + R + 4;
-    if(CY + R > botEdge - 4) CY = botEdge - R - 4;
+    /* Freeze sphere after first layout for this width — scroll must NOT recompute
+       from hero-copy getBoundingClientRect (copy moves up → pocket grows → R grows). */
+    var widthKey = Math.round(W);
+    if(mobileGlobeLock && mobileGlobeLock.W === widthKey){
+      R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
+    } else {
+      var sr = cv.getBoundingClientRect();
+      var copy = document.querySelector('#stage .hero-copy');
+      var copyR = copy ? copy.getBoundingClientRect() : null;
+      var fabReserve = 110;
+      var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 10) : 140;
+      /* Use layout viewport height, not live scrolled copy rect for pocket */
+      var layoutH = Math.max(H, window.innerHeight || H);
+      var botEdge = Math.max(topEdge + 180, layoutH - fabReserve);
+      var pocket = Math.max(180, botEdge - topEdge);
+      R = Math.min(W * 0.50, pocket * 0.62);
+      R = Math.max(R, Math.min(W * 0.44, 160));
+      CX = W * 0.50;
+      CY = topEdge + pocket * 0.52;
+      if(CY - R < topEdge + 4) CY = topEdge + R + 4;
+      if(CY + R > botEdge - 4) CY = botEdge - R - 4;
+      mobileGlobeLock = { W: widthKey, R: R, CX: CX, CY: CY };
+    }
   } else {
+    mobileGlobeLock = null;
     CX = W * 0.78;
     CY = H * 0.50;
     R = Math.min(H * 0.52, W * 0.42);
