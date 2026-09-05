@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-gate-v5 2026-09-05T16:09 -->
+<!-- mobile-globe-v6 2026-09-05T16:10 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1891,8 +1891,8 @@ var gateFlockStop = null;
     g.font = (Wg < 720 ? '9px ' : '11px ') + '"JetBrains Mono",monospace';
     g.textAlign = 'center';
     g.fillStyle = 'rgba(255,59,31,0.9)';
-    g.fillText('CAMERA', p.x, p.y + sIcon + 34);
-    g.fillText('DIGI STATION', q.x, q.y + sIcon + 34);
+    g.fillText('CAMERA', p.x, p.y + sIcon + 38);
+    g.fillText('DIGI STATION', q.x, q.y + sIcon + 38);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
@@ -1957,24 +1957,21 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
+    /* Stable mobile sphere: size from stage box once, not visualViewport chrome show/hide */
     var sr = cv.getBoundingClientRect();
     var copy = document.querySelector('#stage .hero-copy');
     var copyR = copy ? copy.getBoundingClientRect() : null;
     var fabEl = document.getElementById('bookFab');
-    var fabR = (fabEl && fabEl.classList.contains('on')) ? fabEl.getBoundingClientRect() : null;
-    var topEdge = copyR ? Math.max(160, copyR.bottom - sr.top + 22) : 180;
-    var botEdge = fabR ? Math.max(topEdge + 96, fabR.top - sr.top - 12) : H - 130;
-    if(botEdge > H - 48) botEdge = H - 48;
-    var pocket = Math.max(96, botEdge - topEdge);
-    R = Math.min(W * 0.40, pocket * 0.46);
+    var fabReserve = 110; /* FAB + safe-area clearance — don't chase live FAB rect (jumps on scroll) */
+    var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 10) : 140;
+    var botEdge = Math.max(topEdge + 160, H - fabReserve);
+    var pocket = Math.max(160, botEdge - topEdge);
+    R = Math.min(W * 0.48, pocket * 0.58);
+    R = Math.max(R, Math.min(W * 0.42, 150));
     CX = W * 0.50;
-    CY = topEdge + pocket * 0.50;
-    if(CY - R < topEdge) CY = topEdge + R;
-    if(CY + R > botEdge) CY = botEdge - R;
-    if(CY - R < topEdge){
-      R = Math.max(56, (botEdge - topEdge) / 2);
-      CY = topEdge + R;
-    }
+    CY = topEdge + pocket * 0.52;
+    if(CY - R < topEdge + 4) CY = topEdge + R + 4;
+    if(CY + R > botEdge - 4) CY = botEdge - R - 4;
   } else {
     CX = W * 0.78;
     CY = H * 0.50;
@@ -2349,7 +2346,7 @@ function drawField(dt){
   g.font = (W < 720 ? '9px ' : '11px ') + '"JetBrains Mono",monospace';
   g.textAlign = 'center';
   g.fillStyle = 'rgba(255,59,31,0.9)';
-  g.fillText(t('field.cam'), camX, yCam + s + 18);
+  g.fillText(t('field.cam'), camX, yCam + s + 28);
   g.fillText(t('field.station'), lapX, yLap + s + 18);
 }
 
@@ -2891,14 +2888,9 @@ function dockOverlays(){
     fab.style.bottom = (bottomGap + 72) + 'px';
     fab.style.right = Math.max(12, rightGap + 12) + 'px';
   }
-  if(stage && window.scrollY < 40 && offsetTop < 40){
-    var h = Math.round(visH);
-    if(h > 200 && stage.style.height !== h + 'px'){
-      stage.style.height = h + 'px';
-      stage.style.minHeight = h + 'px';
-      if(typeof resize === 'function') resize();
-    }
-  }
+  /* Do NOT rewrite #stage height from visualViewport — Safari chrome hide/show
+     was growing the globe on scroll. CSS 100dvh/100svh owns stage height. */
+  if(stage){ stage.style.height = ''; stage.style.minHeight = ''; }
   var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   if(sheet && sheet.classList.contains('on')){
     sheet.style.bottom = 'auto';
