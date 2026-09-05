@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v14 2026-09-05T19:33 — fit full R in band between copy and fab; center; no overlap -->
+<!-- mobile-globe-v15 2026-09-05T19:36 — eager carousel + sticky pin readout -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -193,7 +193,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 /* postcard carousel */
 .pc-bleed{margin-top:28px;overflow:hidden}
 .pc-lane{
-  overflow:hidden;margin-bottom:20px;
+  overflow:hidden;margin-bottom:20px;min-height:320px;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
@@ -212,7 +212,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   flex:none;width:236px;background:var(--paper);
   cursor:pointer;
 }
-.postcard .pc-img{background:#111;overflow:hidden;border-bottom:.4pt solid var(--rule)}
+.postcard .pc-img{background:#111;overflow:hidden;border-bottom:.4pt solid var(--rule);min-height:296px}
 .postcard .pc-img img{
   width:100%;height:296px;object-fit:cover;display:block;
 }
@@ -465,9 +465,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 @media(max-width:900px){
   .chapters{grid-template-columns:1fr;gap:28px}
   .postcard{width:168px}
-  .postcard .pc-img img{height:210px}
+  .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
   .postcard .pc-body{min-height:96px}
-  .pc-lane{-webkit-mask-image:none;mask-image:none}
+  .pc-lane{min-height:260px;-webkit-mask-image:none;mask-image:none}
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
   #flyby .card{width:240px}
   #flyby .card img{height:160px}
@@ -2451,7 +2451,7 @@ function updateHUD(){
 /* ---------- interaction ---------- */
 function pointOf(e){
   var r = cv.getBoundingClientRect();
-  var t = (e.touches && e.touches[0]) || e;
+  var t = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0]) || e;
   return { x: t.clientX - r.left, y: t.clientY - r.top };
 }
 function hitPin(pt, radius){
@@ -2514,9 +2514,28 @@ function up(e){
   if(!dragging) return;
   dragging = false;
   cv.classList.remove('drag');
-  /* Pins stay visual. Tap does not open a city work list. */
-  stuckPin = null;
-  hideReadout();
+  var pt = pointOf(e);
+  var moved = Math.hypot(pt.x - downX, pt.y - downY);
+  /* Tap pin = sticky city label (name + years only). No dossier / work list. */
+  if(moved < 14){
+    var id = hitPin(pt, 40);
+    if(id){
+      if(stuckPin === id){
+        stuckPin = null;
+        hideReadout();
+      } else {
+        stuckPin = id;
+        var c = CITIES.filter(function(x){ return x.id === id; })[0];
+        if(c) showReadout(c);
+      }
+      return;
+    }
+    /* tap empty globe = dismiss sticky */
+    stuckPin = null;
+    hideReadout();
+    return;
+  }
+  /* drag end — keep sticky label if one is open */
 }
 cv.addEventListener('mousedown', down);
 window.addEventListener('mousemove', move);
@@ -2686,7 +2705,7 @@ var STILL_CREDIT = {
     var sub = c.talent ? (c.client || '') : (c.camp || '');
     var alt = who ? (who + (sub ? ' — ' + sub : '')) : t('alt.work');
     return '<article class="postcard workcard" tabindex="0" role="button">' +
-      '<div class="pc-img"><img loading="lazy" decoding="async" width="220" height="280" src="img/work/strip/' + file + '" data-full="img/work/' + file + '" alt="' + esc(alt) + '"></div>' +
+      '<div class="pc-img"><img loading="eager" decoding="async" width="220" height="280" src="img/work/strip/' + file + '" data-full="img/work/' + file + '" alt="' + esc(alt) + '"></div>' +
       '<div class="pc-body">' +
         '<div class="pc-who">' + esc(who) + '</div>' +
         '<div class="pc-camp">' + esc(sub) + '</div>' +
