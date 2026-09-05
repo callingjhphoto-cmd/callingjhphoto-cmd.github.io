@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v10 2026-09-05T16:19 -->
+<!-- mobile-globe-v12 2026-09-05T19:25 — globe lower + spec rows + work/do gap -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -248,8 +248,19 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .ch:nth-child(3) h3{color:#1E22AA}
 .ch p{font-size:var(--fs-body);line-height:1.5;max-width:34ch;margin:0}
 .spec{
-  margin-top:48px;border-top:.4pt solid var(--rule);padding-top:14px;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);text-transform:uppercase;color:var(--grey);line-height:1.8;
+  margin-top:40px;border-top:.4pt solid var(--rule);padding-top:16px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.spec-row{
+  display:grid;grid-template-columns:88px 1fr;gap:12px 16px;align-items:baseline;
+}
+.spec-k{
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);
+  text-transform:uppercase;color:var(--signal);
+}
+.spec-v{
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.04em;
+  text-transform:uppercase;color:var(--grey);line-height:1.55;
 }
 .fieldband{
   margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:16px;
@@ -533,10 +544,16 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .lane-title.prod-title{margin-top:48px}
   #brands{margin-top:20px}
   section.band{padding:40px 0}
+  #work.band{padding-bottom:28px}
+  #do.band{padding-top:28px}
   .wrap{padding-left:16px;padding-right:16px}
   .secno,.meta,.tech,.fieldband .cap{
     font-size:9px;letter-spacing:.1em
   }
+  .spec{margin-top:28px;padding-top:12px;gap:8px}
+  .spec-row{grid-template-columns:72px 1fr;gap:6px 12px}
+  .spec-k{font-size:8px;letter-spacing:.12em}
+  .spec-v{font-size:9px;letter-spacing:.06em;line-height:1.5}
   #work .tbl{margin-top:28px;font-size:12px}
   .row{gap:2px 10px;padding:8px 0}
   .row .ti{font-size:13px;letter-spacing:-.01em}
@@ -703,11 +720,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
         <p data-i18n="do.dat.p">Three copies before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
       </div>
     </div>
-    <div class="spec">
-      Spec — Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync<br>
-      Hasselblad · Phase One · Canon · Nikon · Sony · Fuji<br>
-      Profoto · Elinchrom · Broncolor · KinoFlo · Arri · Briese · Astera · Creamsource · Aputure<br>
-      Phase One Certified Professional / POCP 2017
+    <div class="spec" aria-label="Kit and software">
+      <div class="spec-row"><span class="spec-k">Software</span><span class="spec-v">Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync</span></div>
+      <div class="spec-row"><span class="spec-k">Cameras</span><span class="spec-v">Hasselblad · Phase One · Canon · Nikon · Sony · Fuji</span></div>
+      <div class="spec-row"><span class="spec-k">Lighting</span><span class="spec-v">Profoto · Elinchrom · Broncolor · Kino Flo · Arri · Briese · Astera · Creamsource · Aputure</span></div>
+      <div class="spec-row"><span class="spec-k">Cert</span><span class="spec-v">Phase One Certified Professional · POCP 2017</span></div>
     </div>
   </div>
 </section>
@@ -1979,29 +1996,40 @@ function resize(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   sctx.setTransform(DPR,0,0,DPR,0,0);
   if(W < 720){
-    /* Freeze sphere after first layout for this width — scroll must NOT recompute
-       from hero-copy getBoundingClientRect (copy moves up → pocket grows → R grows). */
+    /* Freeze after settled layout — scroll must NOT grow R.
+       v11: James — globe MUST sit clearly below hero copy (deck+meta), not kissing it. */
     var widthKey = Math.round(W);
-    if(mobileGlobeLock && mobileGlobeLock.W === widthKey){
+    var layoutVer = 11;
+    if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
       var sr = cv.getBoundingClientRect();
       var copy = document.querySelector('#stage .hero-copy');
-      var copyR = copy ? copy.getBoundingClientRect() : null;
-      var fabReserve = 110;
-      /* Clear hero deck+meta — keep R, push sphere down */
-      var topEdge = copyR ? Math.max(120, copyR.bottom - sr.top + 28) : 160;
+      var metaEl = document.querySelector('#stage .hero-copy .meta');
+      var deckEl = document.querySelector('#stage .hero-copy .deck');
+      var anchor = metaEl || deckEl || copy;
+      var anchorR = anchor ? anchor.getBoundingClientRect() : null;
+      var fabReserve = 120;
+      /* Hard clearance under last hero line — previous +28 was invisible on phone */
+      var topEdge = anchorR ? Math.max(140, anchorR.bottom - sr.top + 72) : 200;
       var layoutH = Math.max(H, window.innerHeight || H);
-      var botEdge = Math.max(topEdge + 180, layoutH - fabReserve);
-      var pocket = Math.max(180, botEdge - topEdge);
-      R = Math.min(W * 0.50, pocket * 0.62);
-      R = Math.max(R, Math.min(W * 0.44, 160));
+      var botEdge = Math.max(topEdge + 160, layoutH - fabReserve);
+      var pocket = Math.max(160, botEdge - topEdge);
+      /* Slightly smaller sphere so it can sit lower without eating the copy */
+      R = Math.min(W * 0.46, pocket * 0.52);
+      R = Math.max(R, Math.min(W * 0.40, 148));
       CX = W * 0.50;
-      /* Bias center lower in the pocket so northern arc clears copy */
-      CY = topEdge + pocket * 0.58;
-      if(CY - R < topEdge + 12) CY = topEdge + R + 12;
-      if(CY + R > botEdge - 4) CY = botEdge - R - 4;
-      mobileGlobeLock = { W: widthKey, R: R, CX: CX, CY: CY };
+      CY = topEdge + pocket * 0.72;
+      if(CY - R < topEdge + 8) CY = topEdge + R + 8;
+      if(CY + R > botEdge - 4){
+        CY = botEdge - R - 4;
+        /* If bottom clamp would pull north into copy, shrink R instead */
+        if(CY - R < topEdge + 8){
+          R = Math.max(120, (botEdge - 4) - (topEdge + 8));
+          CY = topEdge + R + 8;
+        }
+      }
+      mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
     }
   } else {
     mobileGlobeLock = null;
@@ -3075,6 +3103,18 @@ if(window.visualViewport){
 
 /* ---------- go ---------- */
 window.addEventListener('resize', resize);
+/* v11: remeasure once fonts/layout settle — first paint often underestimates hero height */
+(function(){
+  function remountGlobe(){
+    mobileGlobeLock = null;
+    resize();
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ setTimeout(remountGlobe, 50); });
+  }
+  setTimeout(remountGlobe, 350);
+})();
+
 if(typeof dockOverlays === 'function') dockOverlays();
 resize();
 if(document.fonts && document.fonts.ready){
