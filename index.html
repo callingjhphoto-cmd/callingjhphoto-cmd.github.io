@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
-<!-- mobile-globe-v8 2026-09-05T16:15 -->
+<!-- mobile-globe-v9 2026-09-05T16:17 -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -466,10 +466,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .hero-copy{width:88%;padding:88px 20px 24px 20px;justify-content:flex-start}
   .hero-copy h1{font-size:clamp(36px, 10vw, 56px)}
   #contact .book-grid{grid-template-columns:1fr;gap:36px}
-  #contact .quote{text-align:left;padding-right:0}
-  #contact .ppair{justify-content:flex-start}
-  #contact .pframe img{width:220px}
-  #contact .pframe{padding:12px 12px 40px}
+  #contact .quote{text-align:left;padding-right:0;max-width:100%;overflow:visible}
+  #contact .quote > :not(.ppair){padding-right:0}
+  #contact .ppair{
+    justify-content:flex-start;width:100%;max-width:100%;
+    box-sizing:border-box;gap:14px;overflow:visible;padding:8px 0 12px
+  }
+  #contact .pframe{flex:1 1 0;min-width:0;max-width:calc(50% - 7px);padding:12px 12px 40px;box-sizing:border-box}
+  #contact .pframe img{width:100%;max-width:100%;height:auto}
 }
 @media(max-width:720px){
   nav{
@@ -511,7 +515,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #bookFab .lab-bot{min-height:var(--hit);font-size:8px;letter-spacing:.1em}
   #bookSheet{left:10px;right:10px;width:auto;top:10px;bottom:auto;max-height:calc(100dvh - 20px)}
   #contact{padding:56px 0 calc(140px + env(safe-area-inset-bottom, 0px))}
-  #contact .pframe img{width:158px}
+  #contact .pframe img{width:100%;max-width:100%}
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
@@ -558,10 +562,27 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .row{grid-template-columns:1fr 1fr;gap:2px 8px}
   .row .pr,.row .ph,.row .ci{grid-column:auto}
   .row .ti{grid-column:1 / -1}
-  /* book polaroids: don't clip */
-  #contact .ppair{max-width:100%;overflow:hidden}
-  #contact .pframe img{width:min(42vw, 148px)}
-  #contact .quote{overflow:hidden}
+  /* book polaroids: BOTH fully visible — never clip */
+  #contact .quote{overflow:visible;max-width:100%}
+  #contact .quote > :not(.ppair){padding-right:0}
+  #contact .ppair{
+    display:flex;width:100%;max-width:100%;
+    box-sizing:border-box;gap:8px;
+    justify-content:flex-start;align-items:flex-end;
+    margin:0 0 18px;padding:10px 2px 14px; /* air for tilt */
+    overflow:visible
+  }
+  #contact .pframe{
+    flex:1 1 0;min-width:0;max-width:calc(50% - 4px);
+    box-sizing:border-box;padding:8px 8px 28px;
+    /* keep tilt inside box — scale slightly so rotate doesn't bleed past wrap */
+    transform-origin:center bottom
+  }
+  #contact .pframe img{width:100%;max-width:100%;height:auto;display:block}
+  #contact .pframe.tilt-a{transform:rotate(-1.6deg) scale(.96)}
+  #contact .pframe.tilt-b{transform:rotate(1.5deg) scale(.96)}
+  @keyframes floatA{0%,100%{transform:rotate(-1.6deg) scale(.96) translateY(-2px)}50%{transform:rotate(-1.6deg) scale(.96) translateY(3px)}}
+  @keyframes floatB{0%,100%{transform:rotate(1.5deg) scale(.96) translateY(2px)}50%{transform:rotate(1.5deg) scale(.96) translateY(-3px)}}
   /* extra bottom pad so FAB never covers last content */
   #work, #contact{padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px))}
 }
