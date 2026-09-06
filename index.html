@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- sentence-case-2026-09-06 friend feedback: no ALL CAPS / text-transform uppercase -->
 <!-- mobile-globe-v15 2026-09-05T19:36 — eager carousel + sticky pin readout -->
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -68,7 +69,7 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
 }
 #langGate .kicker{
   position:absolute;top:calc(16px + env(safe-area-inset-top, 0px));left:12px;right:12px;text-align:center;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--grey2);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--grey2);
   z-index:1;line-height:1.45;
 }
 #langGate button{
@@ -82,7 +83,7 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
   line-height:.9;
 }
 #langGate button small{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;
   color:var(--grey2);font-weight:400;
 }
 #langGate button:hover strong, #langGate button:focus-visible strong{color:var(--signal)}
@@ -94,7 +95,7 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
 
 #brandmark{
   position:fixed;top:0;left:0;z-index:71;padding:10px 18px;background:none;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ink);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--ink);
   display:flex;align-items:center;gap:10px;text-decoration:none;
   min-height:var(--hit);
 }
@@ -104,11 +105,11 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
 nav{
   position:fixed;top:0;right:0;z-index:70;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
   padding:8px 16px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  text-transform:uppercase;background:none;
+  text-transform:none;background:none;
 }
 nav a, nav button.langbtn{
   color:var(--grey);text-decoration:none;background:none;border:0;cursor:pointer;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;
   min-height:var(--hit);padding:10px 12px;
   display:inline-flex;align-items:center;
 }
@@ -129,11 +130,11 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 }
 .hero-copy .tag{
   display:inline-block;align-self:flex-start;
-  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);text-transform:none;
   border:.5pt solid var(--ink);padding:4px 8px;margin-bottom:16px;
 }
 .hero-copy .role{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;
   color:var(--ink);margin:0 0 18px;
 }
 .hero-copy h1{
@@ -147,7 +148,7 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
   min-height:1.4em;transition:opacity .45s ease;
 }
 .hero-copy .meta{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;
   color:var(--grey);margin-top:22px;
 }
 
@@ -158,30 +159,30 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 }
 #readout.on{display:block}
 #readout .c{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--signal);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--signal);
 }
 #readout .x{
-  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:uppercase;color:var(--grey);margin-top:4px;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:none;color:var(--grey);margin-top:4px;
 }
 #readout .jobs{list-style:none;margin:10px 0 0;padding:0;border-top:.4pt solid var(--rule)}
 #readout .jobs li{padding:8px 0;border-bottom:.4pt solid var(--rule)}
 #readout .jobs li:last-child{border-bottom:0;padding-bottom:0}
 #readout .jy{
-  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:uppercase;color:var(--grey);display:block;margin-bottom:2px;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:none;color:var(--grey);display:block;margin-bottom:2px;
 }
 #readout .jc{font-size:15px;letter-spacing:-.02em;line-height:1.25;font-weight:500;display:block}
 #readout .jp{
-  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:uppercase;color:var(--grey);display:block;margin-top:3px;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:none;color:var(--grey);display:block;margin-top:3px;
 }
 #readout .empty{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);text-transform:uppercase;color:var(--grey);margin-top:10px;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);text-transform:none;color:var(--grey);margin-top:10px;
 }
 
 .wrap{width:var(--wrap);margin:0 auto;padding:0 24px}
 section.band{padding:96px 0;border-top:.4pt solid var(--rule);scroll-margin-top:64px}
 #stage{scroll-margin-top:0}
 .secno{
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--grey);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--grey);
   margin-bottom:18px;
 }
 h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-height:.92;font-weight:700;margin:0 0 12px}
@@ -224,7 +225,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   font-size:15px;letter-spacing:-.015em;line-height:1.25;margin-top:2px;min-height:1.25em;
 }
 .postcard .pc-tech{
-  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:none;
   color:var(--grey);line-height:1.55;margin-top:8px;
 }
 
@@ -235,13 +236,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   gap:12px;padding:12px 0;border-bottom:.4pt solid var(--rule);
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.02em;
 }
-.row.head{border-bottom:.5pt solid var(--ink);color:var(--grey);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:uppercase}
+.row.head{border-bottom:.5pt solid var(--ink);color:var(--grey);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:none}
 .row .cl{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;font-size:var(--fs-body)}
 
 /* services */
 .chapters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-top:40px}
 .ch{border-top:.7pt solid var(--ink);padding-top:14px}
-.ch .n{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--signal);text-transform:uppercase}
+.ch .n{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--signal);text-transform:none}
 .ch h3{font-size:clamp(26px, 2.4vw, 32px);letter-spacing:var(--ls-display);margin:10px 0 12px;font-weight:700;text-transform:none}
 .ch:nth-child(1) h3{color:#ff3b1f}
 .ch:nth-child(2) h3{color:#007A53}
@@ -256,11 +257,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 .spec-k{
   font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);
-  text-transform:uppercase;color:var(--signal);
+  text-transform:none;color:var(--signal);
 }
 .spec-v{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.04em;
-  text-transform:uppercase;color:var(--grey);line-height:1.55;
+  text-transform:none;color:var(--grey);line-height:1.55;
 }
 .fieldband{
   margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:16px;
@@ -271,7 +272,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 .fieldband .cap{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  text-transform:uppercase;color:var(--grey);text-align:center;
+  text-transform:none;color:var(--grey);text-align:center;
 }
 
 .logogrid{
@@ -304,13 +305,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #contact .cinfo{color:#c8c4bc;font-size:15px;line-height:2.2;font-family:var(--sans)}
 #contact .cinfo a{color:#c8c4bc;border-bottom:1px solid #333;text-decoration:none}
 #contact .cinfo a:hover{color:var(--signal);border-color:var(--signal)}
-#contact .cinfo .k{color:#777;min-width:92px;display:inline-block;font-family:var(--mono);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:uppercase}
+#contact .cinfo .k{color:#777;min-width:92px;display:inline-block;font-family:var(--mono);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:none}
 #contact .book-grid{
   display:grid;grid-template-columns:1fr minmax(560px, 52%);
   gap:40px;align-items:center;
 }
 #contact .quote{margin-top:0;padding-right:0;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.04em;color:#888;text-align:right;font-style:italic}
-#contact .quote [data-i18n="polaroid.attr"]{font-style:normal;letter-spacing:var(--ls-micro);text-transform:uppercase;font-size:var(--fs-micro);margin-top:4px}
+#contact .quote [data-i18n="polaroid.attr"]{font-style:normal;letter-spacing:var(--ls-micro);text-transform:none;font-size:var(--fs-micro);margin-top:4px}
 #contact .quote > :not(.ppair){padding-right:128px}
 #contact .ppair{
   display:flex;justify-content:flex-end;align-items:flex-end;gap:20px;
@@ -329,7 +330,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 @keyframes floatB{0%,100%{transform:rotate(2.2deg) translateY(3px)}50%{transform:rotate(2.2deg) translateY(-4px)}}
 #contact footer{border-top:1px solid #333;color:#777;padding:24px 0 0;margin-top:48px;
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase}
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none}
 #contact footer svg circle,#contact footer svg ellipse,#contact footer svg path{stroke:#888}
 
 #flyby{
@@ -343,7 +344,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #flyby .tierhd{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
   color:#888;display:flex;align-items:center;gap:16px;
-  text-transform:uppercase;margin:0 0 28px;
+  text-transform:none;margin:0 0 28px;
 }
 #flyby .tierhd:after{content:'';flex:1;height:1px;background:#333}
 #flyby .bts-bleed{overflow:hidden}
@@ -371,7 +372,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #flyby .card:hover img,#flyby .card:focus-visible img{opacity:1;filter:grayscale(0)}
 #flyby .card .cap{
   font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);
-  color:#888;padding:10px 2px 0;line-height:1.55;text-transform:uppercase;
+  color:#888;padding:10px 2px 0;line-height:1.55;text-transform:none;
 }
 
 #bookFab{
@@ -390,7 +391,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #bookFab canvas{width:100%;height:100%;display:block;pointer-events:none}
 #bookFab .lab-bot{
   font-family:var(--mono);font-weight:700;color:var(--signal);
-  letter-spacing:var(--ls-label);font-size:var(--fs-label);text-transform:uppercase;
+  letter-spacing:var(--ls-label);font-size:var(--fs-label);text-transform:none;
   min-height:var(--hit);display:inline-flex;align-items:center;
 }
 #bookScrim{position:fixed;inset:0;z-index:125;background:rgba(17,17,17,.55);display:none}
@@ -403,7 +404,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #bookSheet.on{display:block}
 #bookSheet h3{font-family:var(--sans);font-weight:700;margin:0 0 8px;font-size:28px;letter-spacing:-.03em;padding-right:72px}
 #bookSheet .lede{font-size:var(--fs-body);color:#c8c4bc;margin:0 0 18px;line-height:1.5}
-#bookSheet label{display:block;font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);color:#888;margin:0 0 6px;text-transform:uppercase}
+#bookSheet label{display:block;font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-label);color:#888;margin:0 0 6px;text-transform:none}
 #bookSheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 #bookSheet input,#bookSheet textarea{
   width:100%;background:#000;border:.5pt solid #444;color:var(--paper);
@@ -412,7 +413,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #bookSheet input[type=date]{color-scheme:dark}
 #bookSheet .go{
   width:100%;background:none;color:var(--signal);border:.5pt solid var(--signal);cursor:pointer;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);font-weight:700;padding:16px;text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);font-weight:700;padding:16px;text-transform:none;
   min-height:var(--hit)
 }
 #bookSheet .go:hover{background:var(--signal);color:#fff}
@@ -422,7 +423,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #bookStatus.err{color:var(--signal)}
 #bookSheet .x{
   position:absolute;top:8px;right:8px;background:none;border:0;color:#888;
-  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);cursor:pointer;text-transform:uppercase;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);cursor:pointer;text-transform:none;
   min-width:var(--hit);min-height:var(--hit);
 }
 #bookSheet .x:hover{color:var(--signal)}
@@ -441,7 +442,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #inspect .x{top:12px;right:16px;font-size:12px;letter-spacing:.12em}
 #inspect .nav.prev{left:12px;top:50%}
 #inspect .nav.next{right:12px;top:50%}
-#inspect .cap,#inspect .idx{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);color:var(--grey);margin-top:12px;text-transform:uppercase}
+#inspect .cap,#inspect .idx{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);color:var(--grey);margin-top:12px;text-transform:none}
 
 #scrim,#dossier{display:none!important}
 .doshots,.worklane,#polaroid .ppair{display:none}
@@ -559,7 +560,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .row .ti{font-size:13px;letter-spacing:-.01em}
   .hero-copy{padding:2px 14px 4px}
   .hero-copy .tag,.hero-copy .role,.hero-copy .meta{
-    font-size:9px;letter-spacing:.1em;text-transform:uppercase
+    font-size:9px;letter-spacing:.1em;text-transform:none
   }
   .hero-copy h1{font-size:clamp(26px, 7.2vw, 36px);min-height:0;letter-spacing:-.03em}
   .hero-copy .deck{margin:8px 0 0;font-size:14px;line-height:1.35;max-width:32ch}
@@ -575,7 +576,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
   /* work table: keep a compact header row on mobile */
   .row.head{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px;padding:0 0 8px;border-bottom:.4pt solid var(--rule);margin-bottom:4px}
-  .row.head span{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+  .row.head span{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:none;color:var(--grey)}
   .row{grid-template-columns:1fr 1fr;gap:2px 8px}
   .row .pr,.row .ph,.row .ci{grid-column:auto}
   .row .ti{grid-column:1 / -1}
@@ -650,7 +651,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
     <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
   </svg>
-  JH<em>/</em>01 <b>JAMES HUERTAS</b>
+  JH<em>/</em>01 <b>James Huertas</b>
 </a>
 <nav class="mono">
   <a href="#stage" data-i18n="nav.globe">Globe</a>
@@ -733,7 +734,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   <div class="wrap">
     <div class="secno" data-i18n="fly.secno">[JH_/_04] BTS</div>
     <h2 class="big" data-i18n="fly.h2">BTS</h2>
-    <div class="tierhd mono" data-i18n-html="fly.t1">01 &nbsp;SET-OPS · CART · SCREENS · CABLES</div>
+    <div class="tierhd mono" data-i18n-html="fly.t1">01 &nbsp;Set-ops · Cart · Screens · Cables</div>
   </div>
   <div class="bts-bleed">
     <div class="lane"><div class="track" id="laneA"></div></div>
@@ -749,13 +750,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     <h2 data-i18n-html="book.h1">Send the dates.<br>I'll send the rate.</h2>
     <p class="lede" data-i18n="book.lede">Hello. Dates, city, the job, how to reach you. I will reply.</p>
     <div class="cinfo">
-      <div><span class="k" data-i18n="con.email">EMAIL</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
-      <div><span class="k" data-i18n="con.phone">PHONE</span><a href="tel:+34643147756">+34 643 147 756</a></div>
-      <div><span class="k" data-i18n="con.wa">WHATSAPP</span><a href="https://wa.me/447562393477">+44 7562 393 477</a></div>
-      <div><span class="k" data-i18n="con.ig">INSTAGRAM</span><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a></div>
-      <div><span class="k" data-i18n="con.baseK">BASE</span>Barcelona &amp; Mallorca</div>
-      <div><span class="k" data-i18n="con.langK">LANG</span><span data-i18n="con.langV">English / Español — bilingual</span></div>
-      <div><span class="k" data-i18n="con.statusK">STATUS</span><span data-i18n="con.statusV">EU resident · autónomo</span></div>
+      <div><span class="k" data-i18n="con.email">Email</span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></div>
+      <div><span class="k" data-i18n="con.phone">Phone</span><a href="tel:+34643147756">+34 643 147 756</a></div>
+      <div><span class="k" data-i18n="con.wa">WhatsApp</span><a href="https://wa.me/447562393477">+44 7562 393 477</a></div>
+      <div><span class="k" data-i18n="con.ig">Instagram</span><a href="https://www.instagram.com/tap.dancingoyster/" target="_blank" rel="noopener">@tap.dancingoyster</a></div>
+      <div><span class="k" data-i18n="con.baseK">Base</span>Barcelona &amp; Mallorca</div>
+      <div><span class="k" data-i18n="con.langK">Lang</span><span data-i18n="con.langV">English / Español — bilingual</span></div>
+      <div><span class="k" data-i18n="con.statusK">Status</span><span data-i18n="con.statusV">EU resident · autónomo</span></div>
     </div>
     </div>
     <div class="quote">
@@ -784,7 +785,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
           <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
           <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
         </svg>
-        <span data-i18n="foot.role">JH/01 — DIGITAL TECHNICIAN &amp; LIGHTING ASSISTANT</span>
+        <span data-i18n="foot.role">JH/01 — Digital Technician &amp; Lighting Assistant</span>
       </span>
       <span data-i18n="foot.bak">Secure capture. Three copies before the cards go back in the bag.</span>
     </footer>
@@ -795,17 +796,17 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   <span class="globe-wrap">
     <canvas id="bookGlobe" width="176" height="176"></canvas>
   </span>
-  <span class="lab-bot" data-i18n="fab.book">BOOK ME</span>
+  <span class="lab-bot" data-i18n="fab.book">Book me</span>
 </button>
 <div id="bookScrim"></div>
 <div id="bookSheet" role="dialog" aria-modal="true" data-i18n-aria="book.aria" aria-label="Book me">
-  <button type="button" class="x" id="bookX" data-i18n="ui.close">[ CLOSE ]</button>
+  <button type="button" class="x" id="bookX" data-i18n="ui.close">[ Close ]</button>
   <h3 data-i18n="book.h3">Book me</h3>
   <p class="lede" data-i18n="book.lede">Hello. Dates, city, the job, how to reach you. I will reply.</p>
   <form id="bookForm">
     <div class="row2">
       <div>
-        <label for="bookFrom" data-i18n="book.from">FROM</label>
+        <label for="bookFrom" data-i18n="book.from">From</label>
         <input type="date" id="bookFrom" name="from" required>
       </div>
       <div>
@@ -813,20 +814,20 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
         <input type="date" id="bookTo" name="to">
       </div>
     </div>
-    <label for="bookCity" data-i18n="book.city">CITY</label>
+    <label for="bookCity" data-i18n="book.city">City</label>
     <input type="text" id="bookCity" name="city" data-i18n-placeholder="book.ph.city" placeholder="Barcelona, Mallorca, London…" autocomplete="off">
-    <label for="bookJob" data-i18n="book.job">JOB / PRODUCTION</label>
+    <label for="bookJob" data-i18n="book.job">Job / production</label>
     <input type="text" id="bookJob" name="job" data-i18n-placeholder="book.ph.job" placeholder="Who’s shooting, what’s the job" autocomplete="off">
-    <label for="bookEmail" data-i18n="book.email">YOUR EMAIL</label>
+    <label for="bookEmail" data-i18n="book.email">Your email</label>
     <input type="email" id="bookEmail" name="email" data-i18n-placeholder="book.ph.email" placeholder="producer@studio.com" autocomplete="email" required>
     <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-    <button type="submit" class="go" id="bookGo" data-i18n="book.go">SEND REQUEST</button>
+    <button type="submit" class="go" id="bookGo" data-i18n="book.go">Send request</button>
     <div id="bookStatus" aria-live="polite"></div>
   </form>
 </div>
 
 <div id="inspect" role="dialog" aria-modal="true" data-i18n-aria="inspect.aria" aria-label="Set-operations frame">
-  <button class="x" id="inspectX" data-i18n="ui.close">[ CLOSE ]</button>
+  <button class="x" id="inspectX" data-i18n="ui.close">[ Close ]</button>
   <button type="button" class="nav prev" id="inspectPrev" data-i18n-aria="inspect.prev" aria-label="Previous still">‹</button>
   <img id="inspectImg" alt="">
   <button type="button" class="nav next" id="inspectNext" data-i18n-aria="inspect.next" aria-label="Next still">›</button>
@@ -836,7 +837,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 
 <div id="scrim"></div>
 <aside id="dossier" aria-hidden="true" hidden>
-  <button class="close" id="dClose" tabindex="-1">[ CLOSE ]</button>
+  <button class="close" id="dClose" tabindex="-1">[ Close ]</button>
   <div id="dBody"></div>
 </aside>
 
@@ -914,9 +915,9 @@ var CREDITS = {
 };
 
 var NOCREDIT = {
-  NYC:'NEW YORK — NO CREDIT ON FILE. THE PIN IS HONEST.',
-  RIO:'RIO DE JANEIRO — NO CREDIT ON FILE. THE PIN IS HONEST.',
-  SIN:'SINGAPORE — NO CREDIT ON FILE. THE PIN IS HONEST.'
+  NYC:'New York — no credit on file. The pin is honest.',
+  RIO:'Rio de Janeiro — no credit on file. The pin is honest.',
+  SIN:'Singapore — no credit on file. The pin is honest.'
 };
 var NOCREDIT_SUB = 'James named this pin. The canonical CV carries no work for it, so the site carries no client for it. A fake credit would be a worse thing to find than an empty one — and you would find it.';
 
@@ -947,24 +948,24 @@ var SET = [
 
 /* equipment-log captions. Operational only — no client, no city, no number. */
 var CAPS = [
- 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
- 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
- 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
- 'LIVE VIEW TO CLIENT MONITOR · NO LATENCY COMPLAINTS',
- 'SESSION NAMED · FOLDER STRUCTURE SET BEFORE FRAME ONE',
- 'ICC PROFILE LOADED · STYLE APPLIED AT CAPTURE',
- 'CART RIGGED · SHADED · REACHABLE FROM THE SET',
- 'FOCUS CHECK AT 100% · SELECT FLAGGED · MOVING ON',
- 'SECOND BODY TETHERED · SAME SESSION · SAME NAMING',
- 'SHOT LOG RUNNING · METADATA WRITTEN ON INGEST',
- 'CLIENT SCREEN POSITIONED SO NOBODY STANDS IN THE LIGHT',
- 'CARDS OFFLOADED · VERIFIED · THEN AND ONLY THEN FORMATTED',
- 'LIGHTING ASSIST · MODIFIER SWAP · SANDBAGGED',
- 'STITCH AND LAYER COMP ASSEMBLED ON SET',
- 'HAND-OFF DRIVE MIRRORED · STRUCTURED · LABELLED',
- 'HDMI RUN TAPED TO THE FLOOR. TWICE.',
- 'BATTERY ROTATION LOGGED · NOTHING DIES MID-SETUP',
- 'EXPORTS OUT BEFORE THE CLIENT ASKS FOR THEM'
+ 'Capture One · Tethered · Client screen calibrated',
+ 'Station built · Power on distro · Cables dressed',
+ 'Dual-destination backup · Checksum verified',
+ 'Live view to client monitor · No latency complaints',
+ 'Session named · Folder structure set before frame one',
+ 'ICC profile loaded · Style applied at capture',
+ 'Cart rigged · Shaded · Reachable from the set',
+ 'Focus check at 100% · Select flagged · Moving on',
+ 'Second body tethered · Same session · Same naming',
+ 'Shot log running · Metadata written on ingest',
+ 'Client screen positioned so nobody stands in the light',
+ 'Cards offloaded · Verified · Then and only then formatted',
+ 'Lighting assist · Modifier swap · Sandbagged',
+ 'Stitch and layer comp assembled on set',
+ 'Hand-off drive mirrored · Structured · Labelled',
+ 'HDMI run taped to the floor. Twice.',
+ 'Battery rotation logged · Nothing dies mid-setup',
+ 'Exports out before the client asks for them'
 ];
 
 /* Official marks from Desktop/Brand Logos. ink:1 = black/navy SVG → white on #000. */
@@ -1142,34 +1143,34 @@ var I18N = {
     'hero.role': 'Digital Technician & Lighting Assistant',
     'book.h1': 'Send the dates.<br>I\'ll send the rate.',
     'work.secno': '[JH_/_01] Work',
-    'hero.sub': 'BARCELONA + MALLORCA · EN/ES',
-    'hero.place': 'LOCAL IN SPAIN AND PORTUGAL',
+    'hero.sub': 'Barcelona + Mallorca · EN/ES',
+    'hero.place': 'Local in spain and Portugal',
     'hero.line': 'Secure digital capture for international shoots.',
     'hero.pulse0': 'Two cards. Verified before wrap.',
     'hero.pulse1': 'Fast workflow. Great music.',
     'hero.pulse2': 'International campaigns. Global experience.',
     'hero.pulse3': 'Three copies before the cards go back in the bag.',
-    'hero.tag': 'SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
-    'hud.uptime': 'UPTIME',
-    'hud.latlon': 'LAT/LON',
-    'hud.cardsK': 'CARDS',
-    'hud.cardsV': '2 OF 2 BACKED UP',
+    'hero.tag': 'Serving secure digital capture until the robots retire me',
+    'hud.uptime': 'Uptime',
+    'hud.latlon': 'Lat/lon',
+    'hud.cardsK': 'Cards',
+    'hud.cardsV': '2 Of 2 backed up',
     'hud.hdmiK': 'HDMI',
-    'hud.hdmiV': 'SEATED (VERIFIED TWICE)',
-    'hud.coffeeK': 'COFFEE',
-    'hud.coffeeV': 'CRITICAL',
-    'hud.clientK': 'CLIENT',
-    'hud.clientV': 'HAPPY',
-    'hud.cableK': 'CABLE TENSION',
-    'hud.cableV': 'NOMINAL',
+    'hud.hdmiV': 'Seated (verified twice)',
+    'hud.coffeeK': 'Coffee',
+    'hud.coffeeV': 'Critical',
+    'hud.clientK': 'Client',
+    'hud.clientV': 'Happy',
+    'hud.cableK': 'Cable tension',
+    'hud.cableV': 'Nominal',
     'hud.wifiK': 'WIFI',
-    'hud.wifiV': '“FINE”',
+    'hud.wifiV': '“Fine”',
     'zoom.out': 'Zoom out',
     'zoom.in': 'Zoom in',
-    'zoom.label': 'ZOOM',
-    'zoom.drag': 'DRAG TO SPIN',
-    'scroll': 'SCROLL',
-    'pin.secno': '[00·B] SERVING SECURE DIGITAL CAPTURE UNTIL THE ROBOTS RETIRE ME',
+    'zoom.label': 'Zoom',
+    'zoom.drag': 'Drag to spin',
+    'scroll': 'Scroll',
+    'pin.secno': '[00·B] Serving secure digital capture until the robots retire me',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— a producer at Canadá',
     'brands.secno': 'Brands',
@@ -1197,54 +1198,54 @@ var I18N = {
     'do.dat.2': 'ChronoSync mirroring, structured hand-off',
     'do.dat.3': 'Shot logs, metadata, naming conventions',
     'do.dat.4': 'Power, distro, screens, cable management',
-    'doshot.0': 'CART RIGGED · DUAL CLIENT SCREENS · POWER ON DISTRO',
-    'doshot.1': 'STATION SHADED · CABLES DRESSED · BACKUP IN THE RACK',
-    'doshot.2': 'CAPTURE ONE LIVE · CLIENT SCREEN CALIBRATED · SET RUNNING',
-    'doshot.3': 'HOOD ON · LIVE VIEW · LIGHTS SANDBAGGED',
-    'doshot.4': 'LOCATION STATION · TETHER DRESSED',
-    'doshot.5': 'WHEELS DOWN · HOOD ON · REACHABLE FROM THE SET',
-    'kit.secno': '[04] SOFTWARE · CAMERAS · LIGHTING',
+    'doshot.0': 'Cart rigged · Dual client screens · Power on distro',
+    'doshot.1': 'Station shaded · Cables dressed · Backup in the rack',
+    'doshot.2': 'Capture One live · Client screen calibrated · Set running',
+    'doshot.3': 'Hood on · Live view · Lights sandbagged',
+    'doshot.4': 'Location station · Tether dressed',
+    'doshot.5': 'Wheels down · Hood on · Reachable from the set',
+    'kit.secno': '[04] Software · Cameras · Lighting',
     'kit.h2': 'What I work with',
-    'kit.soft': 'SOFTWARE',
-    'kit.cam': 'CAMERAS',
-    'kit.lit': 'LIGHTING',
-    'kit.cert': 'CERT',
+    'kit.soft': 'Software',
+    'kit.cam': 'Cameras',
+    'kit.lit': 'Lighting',
+    'kit.cert': 'Cert',
     'work.secno': '[JH_/_01] Work',
     'work.h2': 'Selected work',
-    'work.year': 'YEAR',
-    'work.client': 'CLIENT',
-    'work.prod': 'PRODUCTION',
-    'work.photo': 'PHOTOGRAPHER',
-    'work.city': 'CITY',
+    'work.year': 'Year',
+    'work.client': 'Client',
+    'work.prod': 'Production',
+    'work.photo': 'Photographer',
+    'work.city': 'City',
     'fly.secno': '[JH_/_04] BTS',
     'fly.h2': 'BTS',
-    'fly.t1': '01 &nbsp;SET-OPS · CART · SCREENS · CABLES',
-    'fly.t2': '02 &nbsp;BRANDS',
-    'fly.t3': '03 &nbsp;PRODUCTION COMPANIES',
+    'fly.t1': '01 &nbsp;Set-ops · Cart · Screens · Cables',
+    'fly.t2': '02 &nbsp;brands',
+    'fly.t3': '03 &nbsp;production companies',
     'con.secno': '[JH_/_05] Book',
-    'con.email': 'EMAIL',
-    'con.phone': 'PHONE',
-    'con.wa': 'WHATSAPP',
-    'con.ig': 'INSTAGRAM',
-    'con.baseK': 'BASE',
-    'con.langK': 'LANG',
-    'con.statusK': 'STATUS',
+    'con.email': 'Email',
+    'con.phone': 'Phone',
+    'con.wa': 'WhatsApp',
+    'con.ig': 'Instagram',
+    'con.baseK': 'Base',
+    'con.langK': 'Lang',
+    'con.statusK': 'Status',
     'con.langV': 'English / Español — bilingual',
     'con.statusV': 'EU resident · autónomo',
-    'foot.role': 'JH/01 — DIGITAL TECHNICIAN & LIGHTING ASSISTANT',
+    'foot.role': 'JH/01 — Digital Technician & Lighting Assistant',
     'foot.bak': 'Secure capture. Three copies before the cards go back in the bag.',
     'fab.aria': 'Book me',
-    'fab.book': 'BOOK ME',
+    'fab.book': 'Book me',
     'book.aria': 'Book me',
     'book.h3': 'Book me',
     'book.lede': 'Hello. Dates, city, the job, how to reach you. I will reply.',
-    'book.from': 'FROM',
-    'book.to': 'TO',
-    'book.job': 'JOB / PRODUCTION',
-    'book.city': 'CITY',
-    'book.email': 'YOUR EMAIL',
-    'book.go': 'SEND REQUEST',
-    'book.sending': 'SENDING…',
+    'book.from': 'From',
+    'book.to': 'To',
+    'book.job': 'Job / production',
+    'book.city': 'City',
+    'book.email': 'Your email',
+    'book.go': 'Send request',
+    'book.sending': 'Sending…',
     'book.sent': 'SENT. I will reply from callingjhphoto@gmail.com.',
     'book.needDate': 'Need a start date.',
     'book.needEmail': 'Need an email so I can reply.',
@@ -1252,7 +1253,7 @@ var I18N = {
     'book.ph.job': 'Who’s shooting, what’s the job',
     'book.ph.city': 'Barcelona, Mallorca, London…',
     'book.ph.email': 'producer@studio.com',
-    'ui.close': '[ CLOSE ]',
+    'ui.close': '[ Close ]',
     'inspect.prev': 'Previous still',
     'inspect.next': 'Next still',
     'inspect.aria': 'Set-operations frame',
@@ -1261,19 +1262,19 @@ var I18N = {
     'globe.aria': 'Wireframe globe with nine city pins. Drag to spin. Hover or tap a pin for the jobs in that city.',
     'pin.none': 'No credit on file.',
     'readout.go': '',
-    'dos.credits': 'CREDITS · CANONICAL CV',
-    'dos.creditsBare': 'CREDITS',
-    'dos.reel': 'SET-OPS · THE REEL',
-    'dos.note': 'FRAMES ARE FROM THE SET-OPS SET. NOT TAGGED TO THIS CITY — I WILL NOT PRETEND THEY ARE.',
+    'dos.credits': 'Credits · Canonical CV',
+    'dos.creditsBare': 'Credits',
+    'dos.reel': 'Set-ops · The reel',
+    'dos.note': 'Frames are from the set-ops set. Not tagged to this city — i will not pretend they are.',
     'dos.alt': 'Set-operations frame: digital technician station on set.',
     'alt.polaroid1': 'James Huertas on a beach with his digital technician station.',
     'alt.polaroid2': 'James Huertas on set, running tether cables at the capture station.',
     'alt.shot': 'Set-operations frame: tethered capture station on set.',
     'alt.card': 'Set-operations frame: digital technician station, screens and cabling on set.',
     'alt.work': 'Still from selected work.',
-    'nocredit.NYC': 'NEW YORK — NO CREDIT ON FILE. THE PIN IS HONEST.',
-    'nocredit.RIO': 'RIO DE JANEIRO — NO CREDIT ON FILE. THE PIN IS HONEST.',
-    'nocredit.SIN': 'SINGAPORE — NO CREDIT ON FILE. THE PIN IS HONEST.',
+    'nocredit.NYC': 'New York — no credit on file. The pin is honest.',
+    'nocredit.RIO': 'Rio de Janeiro — no credit on file. The pin is honest.',
+    'nocredit.SIN': 'Singapore — no credit on file. The pin is honest.',
     'nocredit.sub': 'James named this pin. The canonical CV carries no work for it, so the site carries no client for it. A fake credit would be a worse thing to find than an empty one — and you would find it.',
     'city.LA': 'Los Angeles',
     'city.NYC': 'New York',
@@ -1293,12 +1294,12 @@ var I18N = {
     'cityline.LIS': 'Good light, long days, hills that punish a loaded cart.',
     'cityline.PMI': 'Island logistics. Everything arrives on a boat, including the panic.',
     'cityline.SIN': 'No credit on file. Ninety percent humidity is a data-integrity issue.',
-    'boot.0': 'PRODUCERS THIS WAY.',
-    'boot.1': 'BILINGUAL.',
-    'boot.2': 'THE DIGI CART TRAVELS.',
-    'boot.3': 'TECH NERD INCOMING.',
-    'field.cam': 'CAMERA',
-    'field.station': 'DIGI STATION',
+    'boot.0': 'Producers this way.',
+    'boot.1': 'Bilingual.',
+    'boot.2': 'The digi cart travels.',
+    'boot.3': 'Tech nerd incoming.',
+    'field.cam': 'Camera',
+    'field.station': 'Digi station',
     'mail.sub': 'Digitech booking — ',
     'mail.body': 'Are you free for digitech work?',
     'mail.dates': 'Dates: ',
@@ -1307,24 +1308,24 @@ var I18N = {
     'mail.name': 'Name: ',
     'mail.email': 'Email: ',
     'mail.phone': 'Phone: ',
-    'cap.0': 'CAPTURE ONE · TETHERED · CLIENT SCREEN CALIBRATED',
-    'cap.1': 'STATION BUILT · POWER ON DISTRO · CABLES DRESSED',
-    'cap.2': 'DUAL-DESTINATION BACKUP · CHECKSUM VERIFIED',
-    'cap.3': 'LIVE VIEW TO CLIENT MONITOR · NO LATENCY COMPLAINTS',
-    'cap.4': 'SESSION NAMED · FOLDER STRUCTURE SET BEFORE FRAME ONE',
-    'cap.5': 'ICC PROFILE LOADED · STYLE APPLIED AT CAPTURE',
-    'cap.6': 'CART RIGGED · SHADED · REACHABLE FROM THE SET',
-    'cap.7': 'FOCUS CHECK AT 100% · SELECT FLAGGED · MOVING ON',
-    'cap.8': 'SECOND BODY TETHERED · SAME SESSION · SAME NAMING',
-    'cap.9': 'SHOT LOG RUNNING · METADATA WRITTEN ON INGEST',
-    'cap.10': 'CLIENT SCREEN POSITIONED SO NOBODY STANDS IN THE LIGHT',
-    'cap.11': 'CARDS OFFLOADED · VERIFIED · THEN AND ONLY THEN FORMATTED',
-    'cap.12': 'LIGHTING ASSIST · MODIFIER SWAP · SANDBAGGED',
-    'cap.13': 'STITCH AND LAYER COMP ASSEMBLED ON SET',
-    'cap.14': 'HAND-OFF DRIVE MIRRORED · STRUCTURED · LABELLED',
-    'cap.15': 'HDMI RUN TAPED TO THE FLOOR. TWICE.',
-    'cap.16': 'BATTERY ROTATION LOGGED · NOTHING DIES MID-SETUP',
-    'cap.17': 'EXPORTS OUT BEFORE THE CLIENT ASKS FOR THEM'
+    'cap.0': 'Capture One · Tethered · Client screen calibrated',
+    'cap.1': 'Station built · Power on distro · Cables dressed',
+    'cap.2': 'Dual-destination backup · Checksum verified',
+    'cap.3': 'Live view to client monitor · No latency complaints',
+    'cap.4': 'Session named · Folder structure set before frame one',
+    'cap.5': 'ICC profile loaded · Style applied at capture',
+    'cap.6': 'Cart rigged · Shaded · Reachable from the set',
+    'cap.7': 'Focus check at 100% · Select flagged · Moving on',
+    'cap.8': 'Second body tethered · Same session · Same naming',
+    'cap.9': 'Shot log running · Metadata written on ingest',
+    'cap.10': 'Client screen positioned so nobody stands in the light',
+    'cap.11': 'Cards offloaded · Verified · Then and only then formatted',
+    'cap.12': 'Lighting assist · Modifier swap · Sandbagged',
+    'cap.13': 'Stitch and layer comp assembled on set',
+    'cap.14': 'Hand-off drive mirrored · Structured · Labelled',
+    'cap.15': 'HDMI run taped to the floor. Twice.',
+    'cap.16': 'Battery rotation logged · Nothing dies mid-setup',
+    'cap.17': 'Exports out before the client asks for them'
   },
   es: {
     'meta.title': 'James Huertas — Técnico digital y ayudante de iluminación',
@@ -1338,34 +1339,34 @@ var I18N = {
     'hero.role': 'Técnico digital y ayudante de iluminación',
     'book.h1': 'Manda las fechas.<br>Te mando la tarifa.',
     'work.secno': '[JH_/_01] Trabajo',
-    'hero.sub': 'BARCELONA + MALLORCA · EN/ES',
-    'hero.place': 'LOCAL EN ESPAÑA Y PORTUGAL',
+    'hero.sub': 'Barcelona + Mallorca · EN/ES',
+    'hero.place': 'Local en España y Portugal',
     'hero.line': 'Captura digital segura para producciones internacionales.',
     'hero.pulse0': 'Dos tarjetas. Verificadas antes de cerrar.',
     'hero.pulse1': 'Flujo rápido. Buena música.',
     'hero.pulse2': 'Campañas internacionales. Experiencia global.',
     'hero.pulse3': 'Tres copias antes de que las tarjetas vuelvan a la bolsa.',
-    'hero.tag': 'CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
-    'hud.uptime': 'TIEMPO',
-    'hud.latlon': 'LAT/LON',
-    'hud.cardsK': 'TARJETAS',
-    'hud.cardsV': '2 DE 2 COPIADAS',
+    'hero.tag': 'Captura digital segura hasta que los robots me jubilen',
+    'hud.uptime': 'Tiempo',
+    'hud.latlon': 'Lat/lon',
+    'hud.cardsK': 'Tarjetas',
+    'hud.cardsV': '2 De 2 copiadas',
     'hud.hdmiK': 'HDMI',
-    'hud.hdmiV': 'COLOCADO (VERIFICADO DOS VECES)',
-    'hud.coffeeK': 'CAFÉ',
-    'hud.coffeeV': 'CRÍTICO',
-    'hud.clientK': 'CLIENTE',
-    'hud.clientV': 'CONTENTO',
-    'hud.cableK': 'TENSIÓN',
-    'hud.cableV': 'NOMINAL',
+    'hud.hdmiV': 'Colocado (verificado dos veces)',
+    'hud.coffeeK': 'Café',
+    'hud.coffeeV': 'Crítico',
+    'hud.clientK': 'Cliente',
+    'hud.clientV': 'Contento',
+    'hud.cableK': 'Tensión',
+    'hud.cableV': 'Nominal',
     'hud.wifiK': 'WIFI',
-    'hud.wifiV': '“BIEN”',
+    'hud.wifiV': '“Bien”',
     'zoom.out': 'Alejar',
     'zoom.in': 'Acercar',
-    'zoom.label': 'ZOOM',
-    'zoom.drag': 'ARRASTRA PARA GIRAR',
-    'scroll': 'BAJA',
-    'pin.secno': '[00·B] CAPTURA DIGITAL SEGURA HASTA QUE LOS ROBOTS ME JUBILEN',
+    'zoom.label': 'Zoom',
+    'zoom.drag': 'Arrastra para girar',
+    'scroll': 'Baja',
+    'pin.secno': '[00·B] Captura digital segura hasta que los robots me jubilen',
     'polaroid.quote': '“Best digi ever”',
     'polaroid.attr': '— un productor de Canadá',
     'brands.secno': 'Marcas',
@@ -1393,54 +1394,54 @@ var I18N = {
     'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
     'do.dat.3': 'Registros de toma, metadatos, convención de nombres',
     'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
-    'doshot.0': 'CARRO MONTADO · DOBLE PANTALLA DE CLIENTE · CORRIENTE EN EL DISTRO',
-    'doshot.1': 'ESTACIÓN A LA SOMBRA · CABLES COLOCADOS · COPIA EN EL RACK',
-    'doshot.2': 'CAPTURE ONE EN VIVO · PANTALLA DE CLIENTE CALIBRADA · SET EN MARCHA',
-    'doshot.3': 'PARASOL PUESTO · VISIÓN EN DIRECTO · LUCES CON SACA',
-    'doshot.4': 'ESTACIÓN EN EXTERIOR · TETHER COLOCADO',
-    'doshot.5': 'RUEDAS ABAJO · PARASOL PUESTO · AL ALCANCE DEL SET',
-    'kit.secno': '[04] PROGRAMAS · CÁMARAS · ILUMINACIÓN',
+    'doshot.0': 'Carro montado · Doble pantalla de cliente · Corriente en el distro',
+    'doshot.1': 'Estación a la sombra · Cables colocados · Copia en el rack',
+    'doshot.2': 'Capture One en vivo · Pantalla de cliente calibrada · Set en marcha',
+    'doshot.3': 'Parasol puesto · Visión en directo · Luces con saca',
+    'doshot.4': 'Estación en exterior · Tether colocado',
+    'doshot.5': 'Ruedas abajo · Parasol puesto · Al alcance del set',
+    'kit.secno': '[04] Programas · Cámaras · Iluminación',
     'kit.h2': 'Con qué trabajo',
-    'kit.soft': 'PROGRAMAS',
-    'kit.cam': 'CÁMARAS',
-    'kit.lit': 'ILUMINACIÓN',
-    'kit.cert': 'CERTIFICACIÓN',
+    'kit.soft': 'Programas',
+    'kit.cam': 'Cámaras',
+    'kit.lit': 'Iluminación',
+    'kit.cert': 'Certificación',
     'work.secno': '[JH_/_01] Trabajo',
     'work.h2': 'Trabajo seleccionado',
-    'work.year': 'AÑO',
-    'work.client': 'CLIENTE',
-    'work.prod': 'PRODUCCIÓN',
-    'work.photo': 'FOTÓGRAFO',
-    'work.city': 'CIUDAD',
+    'work.year': 'Año',
+    'work.client': 'Cliente',
+    'work.prod': 'Producción',
+    'work.photo': 'Fotógrafo',
+    'work.city': 'Ciudad',
     'fly.secno': '[JH_/_04] BTS',
     'fly.h2': 'BTS',
-    'fly.t1': '01 &nbsp;OPS DE SET · CARRO · PANTALLAS · CABLES',
-    'fly.t2': '02 &nbsp;MARCAS',
-    'fly.t3': '03 &nbsp;PRODUCTORAS',
+    'fly.t1': '01 &nbsp;Ops de set · Carro · Pantallas · Cables',
+    'fly.t2': '02 &nbsp;marcas',
+    'fly.t3': '03 &nbsp;productoras',
     'con.secno': '[JH_/_05] Reserva',
-    'con.email': 'CORREO',
-    'con.phone': 'TELÉFONO',
-    'con.wa': 'WHATSAPP',
-    'con.ig': 'INSTAGRAM',
-    'con.baseK': 'BASE',
-    'con.langK': 'IDIOMA',
-    'con.statusK': 'ESTADO',
+    'con.email': 'Correo',
+    'con.phone': 'Teléfono',
+    'con.wa': 'WhatsApp',
+    'con.ig': 'Instagram',
+    'con.baseK': 'Base',
+    'con.langK': 'Idioma',
+    'con.statusK': 'Estado',
     'con.langV': 'English / Español — bilingüe',
     'con.statusV': 'Residente UE · autónomo',
-    'foot.role': 'JH/01 — TÉCNICO DIGITAL Y AYUDANTE DE ILUMINACIÓN',
+    'foot.role': 'JH/01 — Técnico digital y ayudante de iluminación',
     'foot.bak': 'Captura segura. Tres copias antes de que las tarjetas vuelvan a la bolsa.',
     'fab.aria': 'Reserva',
-    'fab.book': 'RESERVA',
+    'fab.book': 'Reserva',
     'book.aria': 'Reserva',
     'book.h3': 'Reserva',
     'book.lede': 'Hola. Fechas, ciudad, el trabajo, cómo contactarte. Te respondo yo.',
-    'book.from': 'DESDE',
-    'book.to': 'HASTA',
-    'book.job': 'TRABAJO / PRODUCCIÓN',
-    'book.city': 'CIUDAD',
-    'book.email': 'TU CORREO',
-    'book.go': 'ENVIAR SOLICITUD',
-    'book.sending': 'ENVIANDO…',
+    'book.from': 'Desde',
+    'book.to': 'Hasta',
+    'book.job': 'Trabajo / producción',
+    'book.city': 'Ciudad',
+    'book.email': 'Tu correo',
+    'book.go': 'Enviar solicitud',
+    'book.sending': 'Enviando…',
     'book.sent': 'ENVIADO. Te respondo desde callingjhphoto@gmail.com.',
     'book.needDate': 'Necesito una fecha de inicio.',
     'book.needEmail': 'Necesito un correo para responderte.',
@@ -1448,7 +1449,7 @@ var I18N = {
     'book.ph.job': 'Quién dispara, cuál es el trabajo',
     'book.ph.city': 'Barcelona, Mallorca, Londres…',
     'book.ph.email': 'productor@estudio.com',
-    'ui.close': '[ CERRAR ]',
+    'ui.close': '[ Cerrar ]',
     'inspect.prev': 'Fotograma anterior',
     'inspect.next': 'Fotograma siguiente',
     'inspect.aria': 'Fotograma de ops de set',
@@ -1457,19 +1458,19 @@ var I18N = {
     'globe.aria': 'Globo de alambre con nueve pines de ciudad. Arrastra para girar. Pasa o toca un pin para ver los trabajos de esa ciudad.',
     'pin.none': 'Sin crédito en archivo.',
     'readout.go': '',
-    'dos.credits': 'CRÉDITOS · CV CANÓNICO',
-    'dos.creditsBare': 'CRÉDITOS',
-    'dos.reel': 'OPS DE SET · EL REEL',
-    'dos.note': 'LOS FOTOGRAMAS SON DE OPS DE SET. NO VAN CON ESTA CIUDAD — NO VOY A PRETENDER QUE SÍ.',
+    'dos.credits': 'Créditos · CV canónico',
+    'dos.creditsBare': 'Créditos',
+    'dos.reel': 'Ops de set · El reel',
+    'dos.note': 'Los fotogramas son de ops de set. No van con esta ciudad — no voy a pretender que sí.',
     'dos.alt': 'Fotograma de ops de set: estación de técnico digital en el set.',
     'alt.polaroid1': 'James Huertas en una playa con su estación de técnico digital.',
     'alt.polaroid2': 'James Huertas en el set, tendiendo cables de tether en la estación de captura.',
     'alt.shot': 'Fotograma de ops de set: estación de captura por tether en el set.',
     'alt.card': 'Fotograma de ops de set: estación de técnico digital, pantallas y cables en el set.',
     'alt.work': 'Fotograma del trabajo seleccionado.',
-    'nocredit.NYC': 'NUEVA YORK — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
-    'nocredit.RIO': 'RÍO DE JANEIRO — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
-    'nocredit.SIN': 'SINGAPUR — SIN CRÉDITO EN EL ARCHIVO. EL PIN ES HONESTO.',
+    'nocredit.NYC': 'Nueva York — sin crédito en el archivo. El pin es honesto.',
+    'nocredit.RIO': 'Río de Janeiro — sin crédito en el archivo. El pin es honesto.',
+    'nocredit.SIN': 'Singapur — sin crédito en el archivo. El pin es honesto.',
     'nocredit.sub': 'James puso este pin. El CV canónico no lleva trabajo aquí, así que la web no lleva cliente. Un crédito inventado sería peor que uno vacío — y se notaría.',
     'city.LA': 'Los Ángeles',
     'city.NYC': 'Nueva York',
@@ -1489,12 +1490,12 @@ var I18N = {
     'cityline.LIS': 'Buena luz, días largos, cuestas que castigan un carro cargado.',
     'cityline.PMI': 'Logística de isla. Todo llega en barco, incluido el pánico.',
     'cityline.SIN': 'Sin crédito en el archivo. El noventa por ciento de humedad es un problema de integridad de datos.',
-    'boot.0': 'PRODUCTORES POR AQUÍ.',
-    'boot.1': 'BILINGÜE.',
-    'boot.2': 'EL CARRO DIGI VIAJA.',
-    'boot.3': 'TECH NERD INCOMING.',
-    'field.cam': 'CÁMARA',
-    'field.station': 'ESTACIÓN DIGI',
+    'boot.0': 'Productores por aquí.',
+    'boot.1': 'Bilingüe.',
+    'boot.2': 'El carro digi viaja.',
+    'boot.3': 'Tech nerd incoming.',
+    'field.cam': 'Cámara',
+    'field.station': 'Estación digi',
     'mail.sub': 'Reserva digitech — ',
     'mail.body': '¿Estás libre para un trabajo de técnico digital?',
     'mail.dates': 'Fechas: ',
@@ -1503,24 +1504,24 @@ var I18N = {
     'mail.name': 'Nombre: ',
     'mail.email': 'Correo: ',
     'mail.phone': 'Teléfono: ',
-    'cap.0': 'CAPTURE ONE · POR TETHER · PANTALLA DE CLIENTE CALIBRADA',
-    'cap.1': 'ESTACIÓN MONTADA · CORRIENTE EN EL DISTRO · CABLES COLOCADOS',
-    'cap.2': 'COPIA A DOBLE DESTINO · CHECKSUM VERIFICADO',
-    'cap.3': 'VISIÓN EN DIRECTO AL MONITOR DEL CLIENTE · SIN QUEJAS DE LATENCIA',
-    'cap.4': 'SESIÓN NOMBRADA · CARPETAS ANTES DEL PRIMER DISPARO',
-    'cap.5': 'PERFIL ICC CARGADO · ESTILO APLICADO EN CAPTURA',
-    'cap.6': 'CARRO MONTADO · A LA SOMBRA · AL ALCANCE DEL SET',
-    'cap.7': 'CHEQUEO DE FOCO AL 100% · SELECCIÓN MARCADA · SEGUIMOS',
-    'cap.8': 'SEGUNDO CUERPO POR TETHER · MISMA SESIÓN · MISMO NOMBRE',
-    'cap.9': 'REGISTRO DE TOMAS EN MARCHA · METADATOS AL INGERIR',
-    'cap.10': 'PANTALLA DEL CLIENTE COLOCADA PARA QUE NADIE SE META EN LA LUZ',
-    'cap.11': 'TARJETAS DESCARGADAS · VERIFICADAS · Y SOLO ENTONCES FORMATEADAS',
-    'cap.12': 'AYUDANTE DE ILUMINACIÓN · CAMBIO DE MODIFICADOR · CON SACA',
-    'cap.13': 'UNIÓN Y COMPOSICIÓN POR CAPAS MONTADAS EN EL SET',
-    'cap.14': 'DISCO DE ENTREGA ESPEJADO · ESTRUCTURADO · ETIQUETADO',
-    'cap.15': 'HDMI PEGADO AL SUELO CON CINTA. DOS VECES.',
-    'cap.16': 'ROTACIÓN DE BATERÍAS APUNTADA · NADA SE MUERE A MEDIA MONTAJE',
-    'cap.17': 'EXPORTACIONES FUERA ANTES DE QUE EL CLIENTE LAS PIDA'
+    'cap.0': 'Capture One · Por tether · Pantalla de cliente calibrada',
+    'cap.1': 'Estación montada · Corriente en el distro · Cables colocados',
+    'cap.2': 'Copia a doble destino · Checksum verificado',
+    'cap.3': 'Visión en directo al monitor del cliente · Sin quejas de latencia',
+    'cap.4': 'Sesión nombrada · Carpetas antes del primer disparo',
+    'cap.5': 'Perfil ICC cargado · Estilo aplicado en captura',
+    'cap.6': 'Carro montado · A la sombra · Al alcance del set',
+    'cap.7': 'Chequeo de foco al 100% · Selección marcada · Seguimos',
+    'cap.8': 'Segundo cuerpo por tether · Misma sesión · Mismo nombre',
+    'cap.9': 'Registro de tomas en marcha · Metadatos al ingerir',
+    'cap.10': 'Pantalla del cliente colocada para que nadie se meta en la luz',
+    'cap.11': 'Tarjetas descargadas · Verificadas · Y solo entonces formateadas',
+    'cap.12': 'Ayudante de iluminación · Cambio de modificador · Con saca',
+    'cap.13': 'Unión y composición por capas montadas en el set',
+    'cap.14': 'Disco de entrega espejado · Estructurado · Etiquetado',
+    'cap.15': 'HDMI pegado al suelo con cinta. Dos veces.',
+    'cap.16': 'Rotación de baterías apuntada · Nada se muere a media montaje',
+    'cap.17': 'Exportaciones fuera antes de que el cliente las pida'
   }
 };
 
@@ -2643,7 +2644,7 @@ var DOSHOTS = [
 (function(){
   var t = $('#workTbl');
   t.appendChild(el('div','row head',
-    '<span data-i18n="work.year">YEAR</span><span data-i18n="work.client">CLIENT</span><span data-i18n="work.prod">PRODUCTION</span><span data-i18n="work.photo">PHOTOGRAPHER</span><span data-i18n="work.city">CITY</span>'));
+    '<span data-i18n="work.year">Year</span><span data-i18n="work.client">Client</span><span data-i18n="work.prod">Production</span><span data-i18n="work.photo">Photographer</span><span data-i18n="work.city">City</span>'));
   WORK.forEach(function(w){
     t.appendChild(el('div','row',
       '<span class="yr">' + esc(w[0]) + '</span>' +
