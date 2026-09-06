@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- lang-carousel-2026-09-06 EN/ES pin + slow coherent marquees + pause on contact -->
 <!-- sentence-case-2026-09-06 friend feedback: no ALL CAPS / text-transform uppercase -->
 <!-- mobile-globe-v15 2026-09-05T19:36 — eager carousel + sticky pin readout -->
 <meta charset="utf-8">
@@ -200,11 +201,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 .pc-track{
   display:flex;gap:20px;width:max-content;
-  animation:pc-marquee 26s linear infinite;
+  animation:pc-marquee 84s linear infinite;
   will-change:transform;
 }
-.pc-track.rev{animation-duration:34s;animation-direction:reverse}
-.pc-lane:hover .pc-track{animation-play-state:paused}
+.pc-track.rev{animation-duration:84s;animation-direction:reverse}
+.pc-lane:hover .pc-track,
+.pc-lane:focus-within .pc-track,
+.pc-lane.is-paused .pc-track{animation-play-state:paused}
 @keyframes pc-marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -355,12 +358,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 #flyby .track{
   display:flex;gap:14px;width:max-content;
-  animation:pc-marquee 78s linear infinite;
+  animation:pc-marquee 96s linear infinite;
   will-change:transform;
 }
-#flyby .track.slow{animation-duration:126s}
-#flyby .track.rev{animation-direction:reverse}
-#flyby .lane:hover .track{animation-play-state:paused}
+#flyby .track.slow{animation-duration:96s}
+#flyby .track.rev{animation-duration:96s;animation-direction:reverse}
+#flyby .lane:hover .track,
+#flyby .lane:focus-within .track,
+#flyby .lane.is-paused .track{animation-play-state:paused}
 #flyby .card{
   width:300px;flex:none;background:#070707;cursor:zoom-in;overflow:hidden;
 }
@@ -501,7 +506,23 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     flex:none;padding:0 11px;font-size:11px;letter-spacing:.12em;
     justify-content:center;min-width:var(--hit);min-height:var(--hit)
   }
-  nav .langpair{flex:none;border-left:.4pt solid var(--rule);margin-left:4px;padding-left:6px}
+  /* James: EN+ES always fully visible/tappable on ~390px — pin off the scroll row */
+  nav{
+    padding-right:calc(100px + env(safe-area-inset-right, 0px));
+  }
+  nav .langpair{
+    position:fixed;top:0;right:0;z-index:74;
+    display:flex;align-items:center;gap:0;
+    height:auto;min-height:calc(var(--hit) + 6px + env(safe-area-inset-top, 0px));
+    margin:0;border-left:.4pt solid var(--rule);
+    padding:calc(4px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 4px 10px;
+    background:var(--paper);
+    box-shadow:-18px 0 14px -4px var(--paper);
+  }
+  nav .langpair .langbtn{
+    flex:none;min-width:44px;min-height:44px;padding:0 14px;
+    font-size:12px;letter-spacing:.1em;
+  }
   #brandmark{display:none}
   #stage{
     padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
@@ -2729,6 +2750,24 @@ var STILL_CREDIT = {
   }
   fill($('#pcTrackA'), WORKSTILLS);
   fill($('#pcTrackB'), WORKSTILLS_B);
+
+  /* Alice: pause marquee on contact so stills can be seen */
+  (function(){
+    function wire(sel){
+      document.querySelectorAll(sel).forEach(function(lane){
+        var pause = function(){ lane.classList.add('is-paused'); };
+        var play = function(){ lane.classList.remove('is-paused'); };
+        lane.addEventListener('pointerenter', pause);
+        lane.addEventListener('pointerleave', play);
+        lane.addEventListener('pointerdown', pause);
+        lane.addEventListener('pointerup', play);
+        lane.addEventListener('pointercancel', play);
+      });
+    }
+    wire('.pc-lane');
+    wire('#flyby .lane');
+  })();
+
   if(reduce){
     var b = $('#pcTrackB');
     if(b && b.parentNode) b.parentNode.style.display = 'none';
