@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- logo-ticker-2026-09-06 Brands+Production thin marquees -->
 <!-- lang-carousel-2026-09-06 EN/ES pin + slow coherent marquees + pause on contact -->
 <!-- sentence-case-2026-09-06 friend feedback: no ALL CAPS / text-transform uppercase -->
 <!-- mobile-globe-v15 2026-09-05T19:36 — eager carousel + sticky pin readout -->
@@ -278,14 +279,29 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   text-transform:none;color:var(--grey);text-align:center;
 }
 
-.logogrid{
-  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
-  gap:22px 28px;margin-top:20px;
+/* Alice: thin ticker tape of logos — one slim horizontal marquee each */
+.logo-bleed{margin-top:16px;overflow:hidden}
+.logo-lane{
+  overflow:hidden;min-height:44px;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);
+  mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);
 }
-#logoLane img{
-  height:56px;width:auto;max-width:200px;object-fit:contain;display:block;
+.logo-track{
+  display:flex;flex-wrap:nowrap;align-items:center;gap:36px;width:max-content;
+  animation:pc-marquee 96s linear infinite;
+  will-change:transform;padding:8px 0;
 }
-#logoLane img.knock{filter:brightness(0)}
+.logo-track.rev{animation-direction:reverse}
+.logo-lane:hover .logo-track,
+.logo-lane:focus-within .logo-track,
+.logo-lane.is-paused .logo-track{animation-play-state:paused}
+.logo-track img{
+  height:28px;width:auto;max-width:120px;object-fit:contain;display:block;flex:none;
+}
+.logo-track img.knock{filter:brightness(0)}
+#prodBleed{background:#111;padding:10px 0;margin-top:8px}
+#prodBleed .logo-lane{-webkit-mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+#prodBleed .logo-track img{height:24px;max-width:110px;filter:none}
 .lane-title{
   font-weight:700;font-size:clamp(36px, 5.4vw, 68px);
   letter-spacing:var(--ls-display);line-height:.92;
@@ -293,8 +309,6 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 .lane-title.brands-title{color:#007A53}
 .lane-title.prod-title{color:#1E22AA;margin-top:96px}
-#prodLane{background:#111;padding:40px 28px;margin-top:8px;gap:28px 36px}
-#prodLane img{filter:none;height:48px;max-height:48px;max-width:220px;width:auto;object-fit:contain;display:block}
 #brands{margin-top:40px}
 #work .tbl{margin-top:48px}
 
@@ -552,11 +566,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
-  /* James 5 Sep mobile tighten: logos, titles, margins, caps */
-  .logogrid{gap:8px 10px;margin-top:8px}
-  #logoLane img{height:20px;max-width:88px}
-  #prodLane{padding:14px 10px;gap:8px 12px;margin-top:4px}
-  #prodLane img{height:18px;max-height:18px;max-width:92px}
+  /* logos are ticker tape now — keep thin on phone */
+  .logo-track{gap:28px;padding:6px 0}
+  .logo-track img{height:20px;max-width:88px}
+  #prodBleed{padding:8px 0}
+  #prodBleed .logo-track img{height:18px;max-width:92px}
   /* Titles stay display-weight; only logo images were meant to shrink */
   .lane-title{
     font-family:var(--sans);font-weight:700;
@@ -713,9 +727,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   </div>
   <div class="wrap" id="brands">
     <h2 class="lane-title brands-title" data-i18n="brands.secno">Brands</h2>
-    <div class="logogrid" id="logoLane"></div>
+    <div class="logo-bleed">
+      <div class="logo-lane"><div class="logo-track" id="logoLane"></div></div>
+    </div>
     <h2 class="lane-title prod-title" data-i18n="brands.prod">Production</h2>
-    <div class="logogrid" id="prodLane"></div>
+    <div class="logo-bleed" id="prodBleed">
+      <div class="logo-lane"><div class="logo-track rev" id="prodLane"></div></div>
+    </div>
     <div class="tbl" id="workTbl"></div>
   </div>
 </section>
@@ -2766,6 +2784,7 @@ var STILL_CREDIT = {
     }
     wire('.pc-lane');
     wire('#flyby .lane');
+    wire('.logo-lane');
   })();
 
   if(reduce){
@@ -2793,20 +2812,29 @@ var STILL_CREDIT = {
   if($('#laneB')) fill($('#laneB'), SET.slice(mid), 6);
 })();
 
-/* brand + production marks — static wrap, one of each, no marquee */
+/* brand + production marks — thin ticker tape (Alice 6 Sep) */
 (function(){
-  function fillGrid(node, list){
+  function fillTicker(node, list){
     if(!node) return;
     var html = '';
-    list.forEach(function(l){
-      html += '<img loading="lazy" class="' + (l.knock ? 'knock' : (l.ink ? 'ink' : '')) + '" src="img/logos/' + l.f +
-              '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
-    });
+    var passes = reduce ? 1 : 2;
+    var p, i, l;
+    for(p = 0; p < passes; p++){
+      for(i = 0; i < list.length; i++){
+        l = list[i];
+        html += '<img loading="lazy" class="' + (l.knock ? 'knock' : (l.ink ? 'ink' : '')) + '" src="img/logos/' + l.f +
+                '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
+      }
+    }
     node.innerHTML = html;
   }
-  fillGrid($('#logoLane'), LOGOS);
-  fillGrid($('#prodLane'), PRODS);
+  fillTicker($('#logoLane'), LOGOS);
+  fillTicker($('#prodLane'), PRODS);
+  if(reduce){
+    document.querySelectorAll('.logo-track').forEach(function(tr){ tr.style.animation = 'none'; });
+  }
 })();
+
 
 /* polaroid drag-tumble */
 (function(){
