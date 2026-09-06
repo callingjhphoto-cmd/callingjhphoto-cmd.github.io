@@ -3,6 +3,7 @@
 <head>
 <!-- charlie-gate-2026-09-06 EN/ES clicks + mobile first-paint nav clear -->
 <!-- mobile-jobs-2026-09-06 job cards + hamburger to 900px -->
+<!-- prod-grid-city-2026-09-06 Production stacked like Brands; mobile year·city inline -->
 <!-- pc-meta-lines-2026-09-06 work-card credits one field per line -->
 <!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
 <!-- brands-grid-restore-2026-09-06 James: static organized logos, no brand carousel -->
@@ -731,28 +732,8 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
   #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
-  /* James: mobile job cards — hide mismatched headers; labeled lines */
+  /* James: mobile job cards — year · city one line; labeled photo/prod */
   .row.head{display:none!important}
-  .row{
-    display:flex;flex-direction:column;align-items:flex-start;gap:8px;
-    padding:18px 0;border-bottom:.4pt solid var(--rule);
-    grid-template-columns:none;
-  }
-  .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
-    grid-column:auto!important;width:100%;max-width:100%;
-  }
-  .row .yr{
-    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
-    letter-spacing:-.01em;order:1;
-  }
-  .row .yr::before{content:'Year · ';font-weight:700;color:var(--grey2)}
-  .row .ci{order:1;margin-top:-8px;padding-left:0}
-  .row .ci .lbl{display:none!important}
-  .row .ci .val{
-    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
-  }
-  .row .ci .val::before{content:' · '}
-  /* put year+city on one visual line via flex row wrapper simulation */
   .row{
     display:grid;
     grid-template-columns:auto 1fr;
@@ -761,26 +742,43 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
       "cl cl"
       "ph ph"
       "pr pr";
-    gap:6px 8px;align-items:baseline;
+    gap:6px 8px;
+    align-items:baseline;
+    padding:18px 0;
+    border-bottom:.4pt solid var(--rule);
   }
-  .row .yr{grid-area:yr;margin:0}
-  .row .yr::before{content:none}
-  .row .ci{grid-area:ci;margin:0}
-  .row .ci .val::before{content:none}
-  .row .ci .val::before{content:''}
-  .row .ci{
+  .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
+    grid-column:auto!important;width:auto;max-width:100%;
+  }
+  .row .yr{
+    grid-area:yr;
+    margin:0;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+    letter-spacing:-.01em;
   }
-  .row .ci::before{content:'· ';color:var(--grey2)}
+  .row .yr::before{content:none}
+  .row .ci{
+    grid-area:ci;
+    margin:0;
+    display:flex;align-items:baseline;gap:0;
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+    letter-spacing:-.01em;
+  }
+  .row .ci::before{content:'·\00a0';color:var(--grey2)}
   .row .ci .lbl{display:none!important}
-  .row .cl{grid-area:cl;font-size:18px;margin:4px 0 2px}
-  .row .ph{grid-area:ph}
-  .row .pr{grid-area:pr}
+  .row .ci .val{
+    display:inline!important;
+    font:inherit;color:inherit;letter-spacing:inherit;
+    white-space:normal;
+  }
+  .row .cl{grid-area:cl;font-size:18px;margin:4px 0 2px;width:100%}
+  .row .ph{grid-area:ph;width:100%}
+  .row .pr{grid-area:pr;width:100%}
   .row .lbl{
     display:block!important;font-family:var(--sans);font-weight:700;
     font-size:11px;letter-spacing:-.01em;color:var(--ink);margin:0 0 2px;
   }
-  .row .val{
+  .row .ph .val,.row .pr .val{
     display:block;font-family:var(--mono);font-size:12px;color:var(--grey2);
     white-space:normal;line-height:1.35;
   }
@@ -904,9 +902,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     <h2 class="lane-title brands-title" data-i18n="brands.secno">Brands</h2>
     <div class="brand-grid" id="logoLane" aria-label="Brand marks"></div>
     <h2 class="lane-title prod-title" data-i18n="brands.prod">Production</h2>
-    <div class="logo-bleed" id="prodBleed">
-      <div class="logo-lane"><div class="logo-track rev" id="prodLane"></div></div>
-    </div>
+    <div class="brand-grid" id="prodLane" aria-label="Production companies"></div>
     <div class="tbl" id="workTbl"></div>
   </div>
 </section>
@@ -3044,7 +3040,7 @@ var STILL_CREDIT = {
     node.innerHTML = html;
   }
   fillGrid($('#logoLane'), LOGOS);
-  fillTicker($('#prodLane'), PRODS);
+  fillGrid($('#prodLane'), PRODS);
   if(reduce){
     document.querySelectorAll('.logo-track').forEach(function(tr){ tr.style.animation = 'none'; });
   }
