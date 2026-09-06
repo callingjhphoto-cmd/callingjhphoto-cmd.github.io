@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- pc-meta-lines-2026-09-06 work-card credits one field per line -->
 <!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
 <!-- brands-grid-restore-2026-09-06 James: static organized logos, no brand carousel -->
 <!-- brands-grid-2026-09-06 James: Brands static grid; Production ticker; secno 01-04 -->
@@ -239,7 +240,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 .postcard .pc-tech{
   font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);text-transform:none;
-  color:var(--grey);line-height:1.55;margin-top:8px;
+  color:var(--grey);line-height:1.45;margin-top:8px;
+  display:flex;flex-direction:column;gap:3px;
+}
+.postcard .pc-tech .pc-line{
+  display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
 /* credits table — Alice: headers + client in display Inter; year Inter bold; meta quiet */
@@ -2807,10 +2812,17 @@ var STILL_CREDIT = {
 (function(){
   function card(file){
     var c = STILL_CREDIT[file] || {};
-    var tech = [];
-    if(c.y || c.city) tech.push([c.y, c.city].filter(Boolean).join(' · '));
-    if(c.ph) tech.push('Photographer · ' + c.ph);
-    if(c.pr) tech.push('Production · ' + c.pr);
+    var lines = [];
+    /* James: one credit field per line — never wrap mid-name */
+    if(c.y || c.city){
+      lines.push('<div class="pc-line">' + esc([c.y, c.city].filter(Boolean).join(' · ')) + '</div>');
+    }
+    if(c.ph){
+      lines.push('<div class="pc-line">' + esc((t('work.photo') || 'Photographer') + ' · ' + c.ph) + '</div>');
+    }
+    if(c.pr){
+      lines.push('<div class="pc-line">' + esc((t('work.prod') || 'Production') + ' · ' + c.pr) + '</div>');
+    }
     var who = c.talent || c.client || '';
     var sub = c.talent ? (c.client || '') : (c.camp || '');
     var alt = who ? (who + (sub ? ' — ' + sub : '')) : t('alt.work');
@@ -2819,8 +2831,9 @@ var STILL_CREDIT = {
       '<div class="pc-body">' +
         '<div class="pc-who">' + esc(who) + '</div>' +
         '<div class="pc-camp">' + esc(sub) + '</div>' +
-        '<div class="pc-tech">' + esc(tech.join('\n')).replace(/\n/g,'<br>') + '</div>' +
+        '<div class="pc-tech">' + lines.join('') + '</div>' +
       '</div></article>';
+  }
   }
   function fill(node, list){
     if(!node) return;
