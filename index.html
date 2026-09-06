@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- charlie-gate-2026-09-06 EN/ES clicks + mobile first-paint nav clear -->
 <!-- mobile-jobs-2026-09-06 job cards + hamburger to 900px -->
 <!-- pc-meta-lines-2026-09-06 work-card credits one field per line -->
 <!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
@@ -69,26 +70,31 @@ html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
 html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibility:hidden}
 
 #langGate{
-  position:fixed;inset:0;z-index:300;background:var(--paper);
+  position:fixed;inset:0;z-index:500;background:var(--paper);
   display:flex;align-items:center;justify-content:center;gap:4px;
   transition:opacity .6s ease;
   padding:env(safe-area-inset-top, 0px) 8px env(safe-area-inset-bottom, 0px);
+  isolation:isolate;
 }
 #langGate.gone{opacity:0;pointer-events:none}
 #langGate canvas{
-  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none!important;z-index:0;
 }
 #langGate .kicker{
   position:absolute;top:calc(16px + env(safe-area-inset-top, 0px));left:12px;right:12px;text-align:center;
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--grey2);
-  z-index:1;line-height:1.45;
+  z-index:2;line-height:1.45;pointer-events:none;
 }
 #langGate button{
   background:none;border:0;color:var(--ink);cursor:pointer;
   font-family:var(--sans);padding:18px 32px;
   display:flex;flex-direction:column;align-items:center;gap:12px;
-  position:relative;z-index:1;min-width:112px;min-height:112px;
+  position:relative;z-index:3;min-width:112px;min-height:112px;
+  pointer-events:auto!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
+html.lang-wait #cursor,
+html.lang-wait #bookScrim,
+html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 #langGate button strong{
   font-size:clamp(52px, 12vw, 120px);font-weight:700;letter-spacing:-.04em;
   line-height:.9;
@@ -576,6 +582,16 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   }
   nav .langpair .langbtn{flex:1;min-width:0;justify-content:center;width:auto}
   #brandmark{display:none}
+  /* Charlie: content clear of fixed hamburger on first paint */
+  #stage{
+    padding-top:calc(52px + env(safe-area-inset-top, 0px));
+    box-sizing:border-box;
+  }
+  .hero-copy{
+    padding-top:12px;
+    justify-content:flex-start;
+  }
+  html{scroll-padding-top:calc(52px + env(safe-area-inset-top, 0px))}
   .chapters{grid-template-columns:1fr;gap:28px}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
@@ -644,14 +660,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   }
   #brandmark{display:none}
   #stage{
-    padding-top:calc(var(--hit) + 8px + env(safe-area-inset-top, 0px));
+    padding-top:calc(52px + env(safe-area-inset-top, 0px));
     padding-bottom:env(safe-area-inset-bottom, 0px);
     height:100svh;height:100dvh;max-height:100svh;min-height:100svh;
-    overflow:hidden
+    overflow:hidden;box-sizing:border-box;
   }
   .hero-copy{
     position:relative;width:100%;max-width:100%;
-    padding:4px 16px 6px;justify-content:flex-start;z-index:12
+    padding:12px 16px 6px;justify-content:flex-start;z-index:12
   }
   .hero-copy h1{font-size:clamp(32px, 8.8vw, 44px);min-height:0}
   .hero-copy .tag{margin-bottom:10px}
@@ -699,7 +715,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #work .tbl{margin-top:28px;font-size:12px}
   .row{gap:2px 10px;padding:8px 0}
   .row .ti{font-size:13px;letter-spacing:-.01em}
-  .hero-copy{padding:2px 14px 4px}
+  .hero-copy{padding:10px 14px 4px}
   .hero-copy .tag,.hero-copy .role,.hero-copy .meta{
     font-size:9px;letter-spacing:.1em;text-transform:none
   }
@@ -1887,6 +1903,8 @@ function startBoot(){
 }
 
 function pickLang(lang, e){
+  if(window.__jhLangPicked) return;
+  window.__jhLangPicked = true;
   LANG = (lang === 'es') ? 'es' : 'en';
   try { localStorage.setItem('jh-lang', LANG); } catch(err){}
   applyI18n();
@@ -1900,6 +1918,14 @@ function pickLang(lang, e){
     gate.classList.add('gone');
     setTimeout(function(){ gate.style.display = 'none'; }, 620);
   }
+  /* Charlie: first paint — clear fixed nav overlap without needing a scroll nudge */
+  requestAnimationFrame(function(){
+    try { window.scrollTo(0, 0); } catch(err){}
+    if(typeof dockOverlays === 'function') dockOverlays();
+    if(typeof resize === 'function') resize();
+    document.body.style.transform = 'translateZ(0)';
+    requestAnimationFrame(function(){ document.body.style.transform = ''; });
+  });
   if(typeof window.__armCursor === 'function'){
     var x = (e && typeof e.clientX === 'number') ? e.clientX : undefined;
     var y = (e && typeof e.clientY === 'number') ? e.clientY : undefined;
@@ -1916,12 +1942,28 @@ var gateFlockStop = null;
     pickLang(((navigator.language||'') + '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
     return;
   }
-  document.querySelectorAll('#langGate [data-lang]').forEach(function(b){
-    b.addEventListener('click', function(e){ pickLang(b.getAttribute('data-lang'), e); });
-  });
-  document.querySelectorAll('nav [data-lang]').forEach(function(b){
-    b.addEventListener('click', function(e){ pickLang(b.getAttribute('data-lang'), e); });
-  });
+  function bindLangBtn(b){
+    if(!b || b.__jhLangBound) return;
+    b.__jhLangBound = true;
+    var go = function(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      var lang = b.getAttribute('data-lang');
+      if(lang) pickLang(lang, e);
+    };
+    b.addEventListener('click', go);
+    b.addEventListener('pointerup', go);
+    b.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ') go(e);
+    });
+  }
+  document.querySelectorAll('#langGate [data-lang]').forEach(bindLangBtn);
+  document.querySelectorAll('nav [data-lang]').forEach(bindLangBtn);
+  /* Charlie: canvas must never steal EN/ES hits */
+  if(cv){ cv.style.pointerEvents = 'none'; }
+  gate.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('[data-lang]') : null;
+    if(b && gate.contains(b)) bindLangBtn(b);
+  }, true);
   if(reduce) return;
 
   var g = cv.getContext('2d');
