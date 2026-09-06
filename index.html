@@ -4,6 +4,7 @@
 <!-- charlie-gate-2026-09-06 EN/ES clicks + mobile first-paint nav clear -->
 <!-- mobile-jobs-2026-09-06 job cards + hamburger to 900px -->
 <!-- prod-grid-city-2026-09-06 Production stacked like Brands; mobile year·city inline -->
+<!-- city-label-2026-09-06 drop City lbl; 2026 · Lisbon; photo/prod column stack -->
 <!-- pc-meta-lines-2026-09-06 work-card credits one field per line -->
 <!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
 <!-- brands-grid-restore-2026-09-06 James: static organized logos, no brand carousel -->
@@ -601,9 +602,64 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
   #flyby .card{width:240px}
   #flyby .card img{height:160px}
-  .row{grid-template-columns:52px 1fr;gap:4px 12px}
-  .row .pr,.row .ph,.row .ci{grid-column:2}
-  .row.head{display:none}
+  /* job cards through tablet; same as phone */
+/* James: mobile job cards — 2026 · Lisbon; Photo/Prod stacked with gap */
+  .row.head{display:none!important}
+  .row{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    grid-template-areas:
+      "yr ci"
+      "cl cl"
+      "ph ph"
+      "pr pr";
+    column-gap:8px;
+    row-gap:8px;
+    align-items:baseline;
+    padding:18px 0;
+    border-bottom:.4pt solid var(--rule);
+  }
+  .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
+    grid-column:auto!important;max-width:100%;
+  }
+  .row .yr{
+    grid-area:yr;margin:0;width:auto;
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+    letter-spacing:-.01em;
+  }
+  .row .yr::before,.row .yr::after{content:none!important}
+  .row .ci{
+    grid-area:ci;margin:0;width:auto;
+    display:inline; /* city name only — no "City" label in markup */
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+    letter-spacing:-.01em;
+  }
+  .row .ci::before{content:"·\00a0";color:var(--grey2)}
+  .row .ci .lbl{display:none!important;speak:never}
+  .row .ci .val{
+    display:inline!important;
+    font:inherit!important;color:inherit!important;letter-spacing:inherit!important;
+    white-space:normal;
+  }
+  .row .cl{grid-area:cl;font-size:18px;margin:0;width:100%}
+  .row .ph,.row .pr{
+    width:100%;
+    display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  }
+  .row .ph{grid-area:ph}
+  .row .pr{grid-area:pr}
+  .row .ph .lbl,.row .pr .lbl{
+    display:block!important;
+    font-family:var(--sans);font-weight:700;
+    font-size:11px;letter-spacing:-.01em;color:var(--ink);margin:0;
+  }
+  .row .ph .val,.row .pr .val{
+    display:block!important;
+    font-family:var(--mono);font-size:12px;color:var(--grey2);
+    white-space:normal;line-height:1.35;margin:0;
+  }
+  .row .mt{font-size:inherit}
+  
   .hero-copy{width:88%;padding:88px 20px 24px 20px;justify-content:flex-start}
   .hero-copy h1{font-size:clamp(36px, 10vw, 56px)}
   #contact .book-grid{grid-template-columns:1fr;gap:36px}
@@ -732,7 +788,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
   #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
-  /* James: mobile job cards — year · city one line; labeled photo/prod */
+  /* James: mobile job cards — 2026 · Lisbon; Photo/Prod stacked with gap */
   .row.head{display:none!important}
   .row{
     display:grid;
@@ -742,45 +798,50 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
       "cl cl"
       "ph ph"
       "pr pr";
-    gap:6px 8px;
+    column-gap:8px;
+    row-gap:8px;
     align-items:baseline;
     padding:18px 0;
     border-bottom:.4pt solid var(--rule);
   }
   .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
-    grid-column:auto!important;width:auto;max-width:100%;
+    grid-column:auto!important;max-width:100%;
   }
   .row .yr{
-    grid-area:yr;
-    margin:0;
+    grid-area:yr;margin:0;width:auto;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
   }
-  .row .yr::before{content:none}
+  .row .yr::before,.row .yr::after{content:none!important}
   .row .ci{
-    grid-area:ci;
-    margin:0;
-    display:flex;align-items:baseline;gap:0;
+    grid-area:ci;margin:0;width:auto;
+    display:inline; /* city name only — no "City" label in markup */
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
   }
-  .row .ci::before{content:'·\00a0';color:var(--grey2)}
-  .row .ci .lbl{display:none!important}
+  .row .ci::before{content:"·\00a0";color:var(--grey2)}
+  .row .ci .lbl{display:none!important;speak:never}
   .row .ci .val{
     display:inline!important;
-    font:inherit;color:inherit;letter-spacing:inherit;
+    font:inherit!important;color:inherit!important;letter-spacing:inherit!important;
     white-space:normal;
   }
-  .row .cl{grid-area:cl;font-size:18px;margin:4px 0 2px;width:100%}
-  .row .ph{grid-area:ph;width:100%}
-  .row .pr{grid-area:pr;width:100%}
-  .row .lbl{
-    display:block!important;font-family:var(--sans);font-weight:700;
-    font-size:11px;letter-spacing:-.01em;color:var(--ink);margin:0 0 2px;
+  .row .cl{grid-area:cl;font-size:18px;margin:0;width:100%}
+  .row .ph,.row .pr{
+    width:100%;
+    display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  }
+  .row .ph{grid-area:ph}
+  .row .pr{grid-area:pr}
+  .row .ph .lbl,.row .pr .lbl{
+    display:block!important;
+    font-family:var(--sans);font-weight:700;
+    font-size:11px;letter-spacing:-.01em;color:var(--ink);margin:0;
   }
   .row .ph .val,.row .pr .val{
-    display:block;font-family:var(--mono);font-size:12px;color:var(--grey2);
-    white-space:normal;line-height:1.35;
+    display:block!important;
+    font-family:var(--mono);font-size:12px;color:var(--grey2);
+    white-space:normal;line-height:1.35;margin:0;
   }
   .row .mt{font-size:inherit}
   /* book polaroids: BOTH fully visible — never clip */
@@ -2886,9 +2947,9 @@ var DOSHOTS = [
     t.appendChild(el('div','row',
       '<span class="yr">' + esc(w[0]) + '</span>' +
       '<span class="cl" data-loc>' + esc(w[1]) + '</span>' +
-      '<span class="mt pr" data-loc><span class="lbl" data-i18n="work.prod">Production</span><span class="val">' + esc(w[2]) + '</span></span>' +
-      '<span class="mt ph"><span class="lbl" data-i18n="work.photo">Photographer</span><span class="val">' + esc(w[3]) + '</span></span>' +
-      '<span class="mt ci" data-loc><span class="lbl" data-i18n="work.city">City</span><span class="val">' + esc(w[4]) + '</span></span>'));
+      '<span class="mt pr" data-loc><span class="lbl" data-i18n="work.prod">Production</span> <span class="val">' + esc(w[2]) + '</span></span>' +
+      '<span class="mt ph"><span class="lbl" data-i18n="work.photo">Photographer</span> <span class="val">' + esc(w[3]) + '</span></span>' +
+      '<span class="mt ci" data-loc><span class="val">' + esc(w[4]) + '</span></span>'));
   });
 })();
 
