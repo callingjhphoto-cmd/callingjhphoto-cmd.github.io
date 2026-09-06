@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- mobile-jobs-2026-09-06 job cards + hamburger to 900px -->
 <!-- pc-meta-lines-2026-09-06 work-card credits one field per line -->
 <!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
 <!-- brands-grid-restore-2026-09-06 James: static organized logos, no brand carousel -->
@@ -275,6 +276,8 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.02em;
   color:var(--grey2);line-height:1.35;
 }
+.row .lbl{display:none}
+.row .val{display:inline}
 
 /* services */
 .chapters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-top:40px}
@@ -532,6 +535,47 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 
 @media(max-width:900px){
+  /* hamburger through tablet widths — Book must not clip to "B" */
+  nav{
+    left:auto;right:0;top:0;width:auto;max-width:none;
+    display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
+    overflow:visible;
+    padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
+    background:transparent;z-index:74
+  }
+  .nav-toggle{
+    display:inline-flex!important;align-items:center;justify-content:center;
+    width:44px;height:44px;padding:0;border:0;background:var(--paper);
+    border:.4pt solid var(--rule);cursor:pointer;z-index:75;position:relative;
+  }
+  .nav-toggle-bars,
+  .nav-toggle-bars:before,
+  .nav-toggle-bars:after{
+    display:block;width:18px;height:2px;background:var(--ink);content:'';
+  }
+  .nav-toggle-bars{position:relative}
+  .nav-toggle-bars:before{position:absolute;top:-6px;left:0}
+  .nav-toggle-bars:after{position:absolute;top:6px;left:0}
+  nav.is-open .nav-toggle-bars{background:transparent}
+  nav.is-open .nav-toggle-bars:before{top:0;transform:rotate(45deg)}
+  nav.is-open .nav-toggle-bars:after{top:0;transform:rotate(-45deg)}
+  .nav-panel{
+    display:none;position:absolute;top:calc(44px + env(safe-area-inset-top, 0px));right:max(10px, env(safe-area-inset-right, 0px));
+    min-width:200px;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--paper);border:.4pt solid var(--rule);
+    padding:8px 0;box-shadow:0 12px 28px rgba(17,17,17,.08);
+  }
+  nav.is-open .nav-panel{display:flex}
+  nav a, nav button.langbtn{
+    flex:none;width:100%;padding:12px 18px;font-size:14px;letter-spacing:.08em;
+    justify-content:flex-start;min-width:0;min-height:44px;box-sizing:border-box
+  }
+  nav .langpair{
+    display:flex;width:100%;margin:8px 0 0;padding:8px 10px 0;border-left:0;
+    border-top:.4pt solid var(--rule);gap:8px;box-sizing:border-box
+  }
+  nav .langpair .langbtn{flex:1;min-width:0;justify-content:center;width:auto}
+  #brandmark{display:none}
   .chapters{grid-template-columns:1fr;gap:28px}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
@@ -671,15 +715,60 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
   #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
-  /* work table: keep a compact header row on mobile */
-  .row.head{display:grid!important;grid-template-columns:1fr 1fr;gap:6px 10px;padding:0 0 10px;border-bottom:.5pt solid var(--ink);margin-bottom:6px}
-  .row.head span{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:-.02em;color:var(--ink)}
-  .row{grid-template-columns:1fr 1fr;gap:4px 10px;align-items:start}
-  .row .yr{font-size:14px}
-  .row .cl{font-size:16px;grid-column:1 / -1}
-  .row .pr,.row .ph,.row .ci{grid-column:auto}
-  .row .mt{font-size:11px}
-  .row .ti{grid-column:1 / -1}
+  /* James: mobile job cards — hide mismatched headers; labeled lines */
+  .row.head{display:none!important}
+  .row{
+    display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+    padding:18px 0;border-bottom:.4pt solid var(--rule);
+    grid-template-columns:none;
+  }
+  .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
+    grid-column:auto!important;width:100%;max-width:100%;
+  }
+  .row .yr{
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+    letter-spacing:-.01em;order:1;
+  }
+  .row .yr::before{content:'Year · ';font-weight:700;color:var(--grey2)}
+  .row .ci{order:1;margin-top:-8px;padding-left:0}
+  .row .ci .lbl{display:none!important}
+  .row .ci .val{
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+  }
+  .row .ci .val::before{content:' · '}
+  /* put year+city on one visual line via flex row wrapper simulation */
+  .row{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    grid-template-areas:
+      "yr ci"
+      "cl cl"
+      "ph ph"
+      "pr pr";
+    gap:6px 8px;align-items:baseline;
+  }
+  .row .yr{grid-area:yr;margin:0}
+  .row .yr::before{content:none}
+  .row .ci{grid-area:ci;margin:0}
+  .row .ci .val::before{content:none}
+  .row .ci .val::before{content:''}
+  .row .ci{
+    font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
+  }
+  .row .ci::before{content:'· ';color:var(--grey2)}
+  .row .ci .lbl{display:none!important}
+  .row .cl{grid-area:cl;font-size:18px;margin:4px 0 2px}
+  .row .ph{grid-area:ph}
+  .row .pr{grid-area:pr}
+  .row .lbl{
+    display:block!important;font-family:var(--sans);font-weight:700;
+    font-size:11px;letter-spacing:-.01em;color:var(--ink);margin:0 0 2px;
+  }
+  .row .val{
+    display:block;font-family:var(--mono);font-size:12px;color:var(--grey2);
+    white-space:normal;line-height:1.35;
+  }
+  .row .mt{font-size:inherit}
   /* book polaroids: BOTH fully visible — never clip */
   #contact .quote{overflow:visible;max-width:100%}
   #contact .quote > :not(.ppair){padding-right:0}
@@ -2759,9 +2848,9 @@ var DOSHOTS = [
     t.appendChild(el('div','row',
       '<span class="yr">' + esc(w[0]) + '</span>' +
       '<span class="cl" data-loc>' + esc(w[1]) + '</span>' +
-      '<span class="mt pr" data-loc>' + esc(w[2]) + '</span>' +
-      '<span class="mt ph">' + esc(w[3]) + '</span>' +
-      '<span class="mt ci" data-loc>' + esc(w[4]) + '</span>'));
+      '<span class="mt pr" data-loc><span class="lbl" data-i18n="work.prod">Production</span><span class="val">' + esc(w[2]) + '</span></span>' +
+      '<span class="mt ph"><span class="lbl" data-i18n="work.photo">Photographer</span><span class="val">' + esc(w[3]) + '</span></span>' +
+      '<span class="mt ci" data-loc><span class="lbl" data-i18n="work.city">City</span><span class="val">' + esc(w[4]) + '</span></span>'));
   });
 })();
 
