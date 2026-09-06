@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- mobile-menu-2026-09-06 hamburger nav + EN/ES; Brands grid deploy -->
+<!-- brands-grid-restore-2026-09-06 James: static organized logos, no brand carousel -->
+<!-- brands-grid-2026-09-06 James: Brands static grid; Production ticker; secno 01-04 -->
 <!-- alice-colour-2026-09-06 ink titles; one --blue #1E22AA -->
 <!-- alice-type-2026-09-06 work table + kit label hierarchy -->
 <!-- logo-ticker-2026-09-06 Brands+Production thin marquees -->
+<!-- brands-visible-2026-09-06 forceKnock on logoLane -->
 <!-- lang-carousel-2026-09-06 EN/ES pin + slow coherent marquees + pause on contact -->
 <!-- sentence-case-2026-09-06 friend feedback: no ALL CAPS / text-transform uppercase -->
 <!-- mobile-globe-v15 2026-09-05T19:36 — eager carousel + sticky pin readout -->
@@ -112,6 +116,8 @@ nav{
   padding:8px 16px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
   text-transform:none;background:none;
 }
+.nav-toggle{display:none}
+.nav-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:2px}
 nav a, nav button.langbtn{
   color:var(--grey);text-decoration:none;background:none;border:0;cursor:pointer;
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;
@@ -302,7 +308,23 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   text-transform:none;color:var(--grey);text-align:center;
 }
 
-/* Alice: thin ticker tape of logos — one slim horizontal marquee each */
+/* James: Brands = clean static grid (visible ink on paper). Production = thin ticker. */
+.brand-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
+  gap:28px 32px;
+  align-items:center;
+  justify-items:center;
+  margin-top:20px;
+  padding:8px 0 12px;
+}
+.brand-grid img{
+  height:36px;width:auto;max-width:120px;max-height:36px;
+  object-fit:contain;display:block;
+  /* force readable marks on light paper */
+  filter:brightness(0);
+}
+.brand-grid img.colorok{filter:none} /* rare full-colour marks if needed later */
 .logo-bleed{margin-top:16px;overflow:hidden}
 .logo-lane{
   overflow:hidden;min-height:44px;
@@ -321,7 +343,6 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .logo-track img{
   height:28px;width:auto;max-width:120px;object-fit:contain;display:block;flex:none;
 }
-.logo-track img.knock{filter:brightness(0)}
 #prodBleed{background:#111;padding:10px 0;margin-top:8px}
 #prodBleed .logo-lane{-webkit-mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
 #prodBleed .logo-track img{height:24px;max-width:110px;filter:none}
@@ -530,35 +551,47 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact .pframe img{width:100%;max-width:100%;height:auto}
 }
 @media(max-width:720px){
+  /* James: hamburger — full nav + EN/ES in dropdown; no cramped top row */
   nav{
-    left:0;right:0;top:0;width:100%;max-width:100%;
-    display:flex!important;flex-wrap:nowrap;justify-content:flex-start;align-items:center;gap:0;
-    overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;overscroll-behavior-x:contain;
-    padding:calc(4px + env(safe-area-inset-top, 0px)) 8px 2px;
-    background:var(--paper);z-index:72
+    left:auto;right:0;top:0;width:auto;max-width:none;
+    display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
+    overflow:visible;
+    padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
+    background:transparent;z-index:74
   }
-  nav::-webkit-scrollbar{display:none}
+  .nav-toggle{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;padding:0;border:0;background:var(--paper);
+    border:.4pt solid var(--rule);cursor:pointer;z-index:75;position:relative;
+  }
+  .nav-toggle-bars,
+  .nav-toggle-bars:before,
+  .nav-toggle-bars:after{
+    display:block;width:18px;height:2px;background:var(--ink);content:'';
+  }
+  .nav-toggle-bars{position:relative}
+  .nav-toggle-bars:before{position:absolute;top:-6px;left:0}
+  .nav-toggle-bars:after{position:absolute;top:6px;left:0}
+  nav.is-open .nav-toggle-bars{background:transparent}
+  nav.is-open .nav-toggle-bars:before{top:0;transform:rotate(45deg)}
+  nav.is-open .nav-toggle-bars:after{top:0;transform:rotate(-45deg)}
+  .nav-panel{
+    display:none;position:absolute;top:calc(44px + env(safe-area-inset-top, 0px));right:max(10px, env(safe-area-inset-right, 0px));
+    min-width:200px;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--paper);border:.4pt solid var(--rule);
+    padding:8px 0;box-shadow:0 12px 28px rgba(17,17,17,.08);
+  }
+  nav.is-open .nav-panel{display:flex}
   nav a, nav button.langbtn{
-    flex:none;padding:0 11px;font-size:11px;letter-spacing:.12em;
-    justify-content:center;min-width:var(--hit);min-height:var(--hit)
-  }
-  /* James: EN+ES always fully visible/tappable on ~390px — pin off the scroll row */
-  nav{
-    padding-right:calc(100px + env(safe-area-inset-right, 0px));
+    flex:none;width:100%;padding:12px 18px;font-size:14px;letter-spacing:.08em;
+    justify-content:flex-start;min-width:0;min-height:44px;box-sizing:border-box
   }
   nav .langpair{
-    position:fixed;top:0;right:0;z-index:74;
-    display:flex;align-items:center;gap:0;
-    height:auto;min-height:calc(var(--hit) + 6px + env(safe-area-inset-top, 0px));
-    margin:0;border-left:.4pt solid var(--rule);
-    padding:calc(4px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 4px 10px;
-    background:var(--paper);
-    box-shadow:-18px 0 14px -4px var(--paper);
+    display:flex;width:100%;margin:8px 0 0;padding:8px 10px 0;border-left:0;
+    border-top:.4pt solid var(--rule);gap:8px;box-sizing:border-box
   }
   nav .langpair .langbtn{
-    flex:none;min-width:44px;min-height:44px;padding:0 14px;
-    font-size:12px;letter-spacing:.1em;
+    flex:1;min-width:0;justify-content:center;text-align:center;width:auto
   }
   #brandmark{display:none}
   #stage{
@@ -589,9 +622,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
-  /* logos are ticker tape now — keep thin on phone */
+  .brand-grid{gap:18px 16px;grid-template-columns:repeat(auto-fill, minmax(72px, 1fr))}
+  .brand-grid img{height:28px;max-height:28px;max-width:88px}
   .logo-track{gap:28px;padding:6px 0}
-  .logo-track img{height:20px;max-width:88px}
   #prodBleed{padding:8px 0}
   #prodBleed .logo-track img{height:18px;max-width:92px}
   /* Titles stay display-weight; only logo images were meant to shrink */
@@ -715,16 +748,21 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   </svg>
   JH<em>/</em>01 <b>James Huertas</b>
 </a>
-<nav class="mono">
-  <a href="#stage" data-i18n="nav.globe">Globe</a>
-  <a href="#work" data-i18n="nav.work">Work</a>
-  <a href="#do" data-i18n="nav.do">Services</a>
-  <a href="#flyby" data-i18n="nav.bts">BTS</a>
-  <a href="#contact" id="navBook" data-i18n="nav.book">Book</a>
-  <span class="langpair">
-    <button type="button" class="langbtn" data-lang="en" aria-label="English">EN</button>
-    <button type="button" class="langbtn" data-lang="es" aria-label="Español">ES</button>
-  </span>
+<nav class="mono" id="siteNav">
+  <button type="button" id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="navPanel" data-i18n-aria="nav.menu" aria-label="Menu">
+    <span class="nav-toggle-bars" aria-hidden="true"></span>
+  </button>
+  <div id="navPanel" class="nav-panel">
+    <a href="#stage" data-i18n="nav.globe">Globe</a>
+    <a href="#work" data-i18n="nav.work">Work</a>
+    <a href="#do" data-i18n="nav.do">Services</a>
+    <a href="#flyby" data-i18n="nav.bts">BTS</a>
+    <a href="#contact" id="navBook" data-i18n="nav.book">Book</a>
+    <span class="langpair">
+      <button type="button" class="langbtn" data-lang="en" aria-label="English">EN</button>
+      <button type="button" class="langbtn" data-lang="es" aria-label="Español">ES</button>
+    </span>
+  </div>
 </nav>
 
 <section id="stage">
@@ -754,9 +792,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   </div>
   <div class="wrap" id="brands">
     <h2 class="lane-title brands-title" data-i18n="brands.secno">Brands</h2>
-    <div class="logo-bleed">
-      <div class="logo-lane"><div class="logo-track" id="logoLane"></div></div>
-    </div>
+    <div class="brand-grid" id="logoLane" aria-label="Brand marks"></div>
     <h2 class="lane-title prod-title" data-i18n="brands.prod">Production</h2>
     <div class="logo-bleed" id="prodBleed">
       <div class="logo-lane"><div class="logo-track rev" id="prodLane"></div></div>
@@ -787,6 +823,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
         <p data-i18n="do.dat.p">Three copies before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
       </div>
     </div>
+    <div class="secno" data-i18n="kit.secno">[JH_/_03] Data</div>
     <div class="spec" aria-label="Kit and software">
       <div class="spec-row"><span class="spec-k">Software</span><span class="spec-v">Capture One Pro · Phocus · Lightroom · Photoshop · ChronoSync</span></div>
       <div class="spec-row"><span class="spec-k">Cameras</span><span class="spec-v">Hasselblad · Phase One · Canon · Nikon · Sony · Fuji</span></div>
@@ -1204,6 +1241,7 @@ var I18N = {
     'nav.do': 'Services',
     'nav.work': 'Work',
     'nav.bts': 'BTS',
+    'nav.menu': 'Menu',
     'nav.book': 'Book',
     'hero.h1': 'international shoots.<br><em>secure</em> capture.',
     'hero.role': 'Digital Technician & Lighting Assistant',
@@ -1270,7 +1308,7 @@ var I18N = {
     'doshot.3': 'Hood on · Live view · Lights sandbagged',
     'doshot.4': 'Location station · Tether dressed',
     'doshot.5': 'Wheels down · Hood on · Reachable from the set',
-    'kit.secno': '[04] Software · Cameras · Lighting',
+    'kit.secno': '[JH_/_03] Data',
     'kit.h2': 'What I work with',
     'kit.soft': 'Software',
     'kit.cam': 'Cameras',
@@ -1400,6 +1438,7 @@ var I18N = {
     'nav.do': 'Servicios',
     'nav.work': 'Trabajo',
     'nav.bts': 'BTS',
+    'nav.menu': 'Menú',
     'nav.book': 'Reserva',
     'hero.h1': 'producciones internacionales.<br>captura <em>segura</em>.',
     'hero.role': 'Técnico digital y ayudante de iluminación',
@@ -1466,7 +1505,7 @@ var I18N = {
     'doshot.3': 'Parasol puesto · Visión en directo · Luces con saca',
     'doshot.4': 'Estación en exterior · Tether colocado',
     'doshot.5': 'Ruedas abajo · Parasol puesto · Al alcance del set',
-    'kit.secno': '[04] Programas · Cámaras · Iluminación',
+    'kit.secno': '[JH_/_03] Datos',
     'kit.h2': 'Con qué trabajo',
     'kit.soft': 'Programas',
     'kit.cam': 'Cámaras',
@@ -2839,28 +2878,35 @@ var STILL_CREDIT = {
   if($('#laneB')) fill($('#laneB'), SET.slice(mid), 6);
 })();
 
-/* brand + production marks — thin ticker tape (Alice 6 Sep) */
+/* Brands = static grid (James). Production = thin ticker (Alice). */
 (function(){
+  function markImg(l){
+    return '<img loading="lazy" src="img/logos/' + l.f +
+           '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
+  }
+  function fillGrid(node, list){
+    if(!node) return;
+    var html = '';
+    for(var i = 0; i < list.length; i++) html += markImg(list[i]);
+    node.innerHTML = html;
+  }
   function fillTicker(node, list){
     if(!node) return;
     var html = '';
     var passes = reduce ? 1 : 2;
-    var p, i, l;
+    var p, i;
     for(p = 0; p < passes; p++){
-      for(i = 0; i < list.length; i++){
-        l = list[i];
-        html += '<img loading="lazy" class="' + (l.knock ? 'knock' : (l.ink ? 'ink' : '')) + '" src="img/logos/' + l.f +
-                '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
-      }
+      for(i = 0; i < list.length; i++) html += markImg(list[i]);
     }
     node.innerHTML = html;
   }
-  fillTicker($('#logoLane'), LOGOS);
+  fillGrid($('#logoLane'), LOGOS);
   fillTicker($('#prodLane'), PRODS);
   if(reduce){
     document.querySelectorAll('.logo-track').forEach(function(tr){ tr.style.animation = 'none'; });
   }
 })();
+
 
 
 /* polaroid drag-tumble */
