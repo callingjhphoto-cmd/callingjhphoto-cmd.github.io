@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-scroll-2026-09-07 work lanes: drag/swipe + a touch faster -->
 <!-- do-copy-2026-09-07 What I actually do — keeping the shoot moving -->
 <!-- chapters-color-2026-09-07 Capture green / Colour signal / Data blue -->
 <!-- brands-color-2026-09-07 full-colour marks; Brands green / Production blue; grid centered -->
@@ -216,22 +217,20 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   max-width:40ch;margin:0 0 8px;color:var(--ink);
 }
 
-/* postcard carousel */
+/* postcard carousel — native horizontal scroll; JS auto-creeps. Drag/swipe between stills. */
 .pc-bleed{margin-top:28px;overflow:hidden}
 .pc-lane{
-  overflow:hidden;margin-bottom:20px;min-height:320px;
+  overflow-x:auto;overflow-y:hidden;margin-bottom:20px;min-height:320px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  cursor:grab;touch-action:pan-x;overscroll-behavior-x:contain;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
+.pc-lane::-webkit-scrollbar{display:none;height:0}
+.pc-lane.is-dragging{cursor:grabbing;scroll-behavior:auto}
 .pc-track{
   display:flex;gap:20px;width:max-content;
-  animation:pc-marquee 84s linear infinite;
-  will-change:transform;
 }
-.pc-track.rev{animation-duration:84s;animation-direction:reverse}
-.pc-lane:hover .pc-track,
-.pc-lane:focus-within .pc-track,
-.pc-lane.is-paused .pc-track{animation-play-state:paused}
 @keyframes pc-marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -3071,7 +3070,78 @@ var STILL_CREDIT = {
   fill($('#pcTrackA'), WORKSTILLS);
   fill($('#pcTrackB'), WORKSTILLS_B);
 
-  /* Alice: pause marquee on contact so stills can be seen */
+  /* Work lanes: auto-creep (72s / loop, was 84s) + drag / swipe / trackpad. */
+  (function(){
+    if(reduce) return;
+    var PERIOD = 72000;
+    function drive(lane, reverse){
+      var track = lane.querySelector('.pc-track');
+      if(!track) return;
+      var paused = false, dragging = false, last = 0, half = 0, resumeT = 0;
+      function measure(){
+        half = track.scrollWidth / 2;
+        if(reverse && lane.scrollLeft < 8) lane.scrollLeft = half;
+      }
+      measure();
+      window.addEventListener('resize', measure);
+      function wrap(){
+        if(half <= 1) return;
+        if(lane.scrollLeft >= half - 1) lane.scrollLeft -= half;
+        else if(lane.scrollLeft <= 1) lane.scrollLeft += half;
+      }
+      function tick(now){
+        if(!last) last = now;
+        var dt = Math.min(48, now - last);
+        last = now;
+        if(!paused && !dragging && half > 1){
+          var px = (half / PERIOD) * dt;
+          lane.scrollLeft += reverse ? -px : px;
+          wrap();
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(function(){ measure(); requestAnimationFrame(tick); });
+      function pause(){ paused = true; }
+      function playSoon(){
+        clearTimeout(resumeT);
+        resumeT = setTimeout(function(){ if(!dragging) paused = false; }, 1100);
+      }
+      lane.addEventListener('pointerenter', pause);
+      lane.addEventListener('pointerleave', function(){ if(!dragging) paused = false; });
+      lane.addEventListener('wheel', function(){ pause(); playSoon(); }, {passive:true});
+      lane.addEventListener('scroll', wrap, {passive:true});
+      var sx = 0, sl = 0, moved = 0;
+      lane.addEventListener('pointerdown', function(e){
+        pause();
+        if(e.pointerType !== 'mouse' || e.button !== 0) return;
+        dragging = true;
+        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
+        lane.classList.add('is-dragging');
+        try { lane.setPointerCapture(e.pointerId); } catch(err){}
+      });
+      lane.addEventListener('pointermove', function(e){
+        if(!dragging) return;
+        var dx = e.clientX - sx;
+        moved = Math.max(moved, Math.abs(dx));
+        lane.scrollLeft = sl - dx;
+      });
+      function endDrag(){
+        if(!dragging) return;
+        dragging = false;
+        lane.classList.remove('is-dragging');
+        if(moved > 8) lane._skipClick = true;
+        playSoon();
+      }
+      lane.addEventListener('pointerup', endDrag);
+      lane.addEventListener('pointercancel', endDrag);
+      lane.addEventListener('pointerup', function(){ if(!dragging) playSoon(); });
+    }
+    document.querySelectorAll('.pc-lane').forEach(function(lane){
+      drive(lane, !!(lane.querySelector('.pc-track.rev')));
+    });
+  })();
+
+  /* Alice: pause BTS / logo marquees on contact */
   (function(){
     function wire(sel){
       document.querySelectorAll(sel).forEach(function(lane){
@@ -3084,7 +3154,6 @@ var STILL_CREDIT = {
         lane.addEventListener('pointercancel', play);
       });
     }
-    wire('.pc-lane');
     wire('#flyby .lane');
     wire('.logo-lane');
   })();
@@ -3286,7 +3355,10 @@ var STILL_CREDIT = {
   }
   document.addEventListener('click', function(e){
     var n = e.target.closest ? e.target.closest('.shot, .card, .workcard') : null;
-    if(n){ e.preventDefault(); fromCard(n); }
+    if(!n) return;
+    var lane = n.closest ? n.closest('.pc-lane') : null;
+    if(lane && lane._skipClick){ lane._skipClick = false; e.preventDefault(); return; }
+    e.preventDefault(); fromCard(n);
   });
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Enter') return;
