@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- corr-pass-2026-09-07 lang switch, services align, kit gap, header, Londres, ph, footer -->
 <!-- carousel-resume-2026-09-07 mobile creep resumes after swipe -->
 <!-- mobile-cities-2026-09-07 job cities share one column -->
 <!-- mobile-pass-2026-09-07 hamburger opens; chrome clear of copy -->
@@ -124,7 +125,10 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 }
 
 #brandmark{
-  position:fixed;top:0;left:0;z-index:71;padding:10px 18px;background:none;
+  position:fixed;top:0;left:0;z-index:620;padding:10px 18px;
+  background:color-mix(in srgb, var(--paper) 92%, transparent);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1);
+  backdrop-filter:blur(12px) saturate(1.1);
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--ink);
   display:flex;align-items:center;gap:10px;text-decoration:none;
   min-height:var(--hit);
@@ -133,9 +137,12 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 #brandmark b{font-weight:500}
 #brandmark em{font-style:normal;color:var(--signal)}
 nav{
-  position:fixed;top:0;right:0;z-index:510;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
+  position:fixed;top:0;right:0;z-index:620;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
   padding:8px 16px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  text-transform:none;background:none;pointer-events:auto;
+  text-transform:none;pointer-events:auto;
+  background:color-mix(in srgb, var(--paper) 92%, transparent);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1);
+  backdrop-filter:blur(12px) saturate(1.1);
 }
 .nav-toggle{display:none}
 .nav-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:2px}
@@ -297,8 +304,16 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .row .val{display:inline}
 
 /* services */
-.chapters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-top:40px}
-.ch{border-top:.7pt solid var(--ink);padding-top:14px}
+.chapters{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-top:40px;
+  grid-template-rows:auto auto auto 1fr;
+  align-items:stretch;
+}
+.ch{
+  border-top:.7pt solid var(--ink);padding-top:14px;
+  display:grid;grid-template-rows:subgrid;grid-row:1 / -1;
+  align-content:start;
+}
 .ch .n{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--signal);text-transform:none}
 .ch h3{font-size:clamp(26px, 2.4vw, 32px);letter-spacing:var(--ls-display);margin:10px 0 12px;font-weight:700;text-transform:none}
 .ch:nth-child(1) h3{color:var(--green)}
@@ -314,8 +329,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   padding:7px 0;
   border-top:.4pt solid var(--rule);
 }
+#do .chapters + .secno{margin-top:72px}
 .spec{
-  margin-top:48px;border-top:.4pt solid var(--rule);padding-top:28px;
+  margin-top:20px;border-top:.4pt solid var(--rule);padding-top:28px;
   display:flex;flex-direction:column;gap:18px;
 }
 .spec-row{
@@ -395,13 +411,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #contact{
   background:var(--ink);color:var(--paper);padding:80px 0 48px;border-top:0;
 }
-#contact .secno,#contact .meta,#contact .tech{color:#888}
+#contact .secno,#contact .meta,#contact .tech{color:#C2C2BC}
 #contact h2{color:var(--paper);font-size:clamp(36px, 5vw, 64px);letter-spacing:var(--ls-display);line-height:.95;margin:16px 0 16px;font-weight:700}
 #contact .lede{font-size:var(--fs-deck);max-width:46ch;color:#d8d4cc;margin:0 0 36px;letter-spacing:-.015em;line-height:1.35}
 #contact .cinfo{color:#c8c4bc;font-size:15px;line-height:2.2;font-family:var(--sans)}
 #contact .cinfo a{color:#c8c4bc;border-bottom:1px solid #333;text-decoration:none}
 #contact .cinfo a:hover{color:var(--signal);border-color:var(--signal)}
-#contact .cinfo .k{color:#777;min-width:108px;display:inline-block;font-family:var(--mono);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:none}
+#contact .cinfo .k{color:#B4B4AE;min-width:108px;display:inline-block;font-family:var(--mono);letter-spacing:var(--ls-label);font-size:var(--fs-micro);text-transform:none}
 #contact .book-grid{
   display:grid;grid-template-columns:1fr minmax(560px, 52%);
   gap:40px;align-items:center;
@@ -424,7 +440,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #contact .pframe img{display:block;width:300px;height:auto}
 @keyframes floatA{0%,100%{transform:rotate(-2.4deg) translateY(-3px)}50%{transform:rotate(-2.4deg) translateY(4px)}}
 @keyframes floatB{0%,100%{transform:rotate(2.2deg) translateY(3px)}50%{transform:rotate(2.2deg) translateY(-4px)}}
-#contact footer{border-top:1px solid #333;color:#777;padding:24px 0 0;margin-top:48px;
+#contact footer{border-top:1px solid #333;color:#B4B4AE;padding:24px 152px 8px 0;margin-top:48px;
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none}
 #contact footer svg circle,#contact footer svg ellipse,#contact footer svg path{stroke:#888}
@@ -432,14 +448,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #flyby{
   background:var(--ink);color:var(--paper);padding:80px 0 56px;border-top:0;
 }
-#flyby .secno{color:#888}
+#flyby .secno{color:#C2C2BC}
 #flyby h2.big{
   color:var(--paper);font-size:clamp(56px, 10vw, 120px);
   letter-spacing:-.045em;line-height:.85;margin:8px 0 28px;font-weight:700;
 }
 #flyby .tierhd{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  color:#888;display:flex;align-items:center;gap:16px;
+  color:#C2C2BC;display:flex;align-items:center;gap:16px;
   text-transform:none;margin:0 0 28px;
 }
 #flyby .tierhd:after{content:'';flex:1;height:1px;background:#333}
@@ -470,7 +486,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 #flyby .card:hover img,#flyby .card:focus-visible img{opacity:1;filter:grayscale(0)}
 #flyby .card .cap{
   font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);
-  color:#888;padding:10px 2px 0;line-height:1.55;text-transform:none;
+  color:#C8C8C2;padding:10px 2px 0;line-height:1.55;text-transform:none;
 }
 
 #bookFab{
@@ -480,6 +496,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 }
 #bookFab.on{display:flex}
 html.contact-in #bookFab.on{display:none}
+@media(min-width:721px){
+  html.contact-in #bookFab.on{display:flex}
+}
 #bookFab .globe-wrap{
   width:120px;height:120px;border-radius:50%;
   background:#000;border:1px solid #111;
@@ -530,7 +549,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
 #bookSheet .desk,#bookSheet .botlink{display:none}
 
 #inspect{
-  position:fixed;inset:0;z-index:200;background:rgba(250,250,248,.96);
+  position:fixed;inset:0;z-index:700;background:rgba(250,250,248,.96);
   display:none;align-items:center;justify-content:center;flex-direction:column;padding:48px;
 }
 #inspect.on{display:flex}
@@ -551,8 +570,9 @@ html.book-open nav{visibility:hidden;pointer-events:none}
 @media (hover: hover) and (pointer: fine){
   /* Never hide the native pointer until the laptop is actually on-screen. */
   html.laptop-cursor.cursor-live,
-  html.laptop-cursor.cursor-live *:not(input):not(textarea):not(select) { cursor: none !important; }
+  html.laptop-cursor.cursor-live *:not(input):not(textarea):not(select):not(button):not(a):not(label):not(nav):not(nav *) { cursor: none !important; }
   html.laptop-cursor input, html.laptop-cursor textarea, html.laptop-cursor select { cursor: auto !important; }
+  html.laptop-cursor a, html.laptop-cursor button, html.laptop-cursor label, html.laptop-cursor nav, html.laptop-cursor nav * { cursor: pointer !important; }
   #cursor{
     position:fixed;z-index:600;width:56px;height:56px;left:0;top:0;
     margin:-28px 0 0 -28px;pointer-events:none;opacity:0;display:block;
@@ -570,12 +590,12 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
     overflow:visible;
     padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
-    background:transparent;z-index:520
+    background:transparent;z-index:620
   }
   .nav-toggle{
     display:inline-flex!important;align-items:center;justify-content:center;
     width:44px;height:44px;padding:0;border:0;background:var(--paper);
-    border:.4pt solid var(--rule);cursor:pointer;z-index:521;position:relative;
+    border:.4pt solid var(--rule);cursor:pointer;z-index:621;position:relative;
     touch-action:manipulation;
     box-shadow:0 0 0 6px var(--paper);
   }
@@ -622,8 +642,8 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   }
   h2.big, .lane-title, #contact h2, .lede{padding-right:72px;box-sizing:border-box}
   .brand-grid{padding-left:8px;padding-right:64px;box-sizing:border-box}
-  .chapters{grid-template-columns:1fr;gap:28px}
-  .ch{padding-right:72px;box-sizing:border-box}
+  .chapters{grid-template-columns:1fr;grid-template-rows:none;gap:28px}
+  .ch{display:block;grid-row:auto;padding-right:72px;box-sizing:border-box}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
   .postcard .pc-body{min-height:96px}
@@ -708,12 +728,12 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
     overflow:visible;
     padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
-    background:transparent;z-index:520
+    background:transparent;z-index:620
   }
   .nav-toggle{
     display:inline-flex;align-items:center;justify-content:center;
     width:44px;height:44px;padding:0;border:0;background:var(--paper);
-    border:.4pt solid var(--rule);cursor:pointer;z-index:521;position:relative;
+    border:.4pt solid var(--rule);cursor:pointer;z-index:621;position:relative;
     touch-action:manipulation;
     box-shadow:0 0 0 6px var(--paper);
   }
@@ -819,7 +839,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #contact{padding:48px 0 calc(120px + env(safe-area-inset-bottom, 0px))}
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
-  #contact footer{font-size:9px;padding:16px 0 0;margin-top:32px}
+  #contact footer{font-size:9px;padding:16px 88px calc(16px + env(safe-area-inset-bottom, 0px)) 0;margin-top:32px}
   /* James: mobile job cards — 2026 · Lisbon; Photo/Prod stacked with gap */
   .row.head{display:none!important}
   .row{
@@ -1775,7 +1795,7 @@ var I18N = {
     'book.needDate': 'Necesito una fecha de inicio.',
     'book.needEmail': 'Necesito un correo para responderte.',
     'book.fail': 'No se ha podido enviar. Escribe a callingjhphoto@gmail.com.',
-    'book.ph.job': 'Fotógrafo, producción y detalles de la sesión',
+    'book.ph.job': 'Fotógrafo y detalles de la sesión',
     'book.ph.city': 'Barcelona, Mallorca, Londres…',
     'book.ph.email': 'productor@estudio.com',
     'ui.close': '[ Cerrar ]',
@@ -2019,9 +2039,11 @@ function startBoot(){
 }
 
 function setLang(lang){
-  LANG = (lang === 'es') ? 'es' : 'en';
+  var next = (lang === 'es') ? 'es' : 'en';
+  var changed = LANG !== next;
+  LANG = next;
   try { localStorage.setItem('jh-lang', LANG); } catch(err){}
-  if(typeof window.__fillWorkCards === 'function') window.__fillWorkCards();
+  if(changed && typeof window.__fillWorkCards === 'function') window.__fillWorkCards();
   applyI18n();
 }
 
@@ -2100,13 +2122,23 @@ var gateFlockStop = null;
       if(lang) pickLang(lang, e);
     };
     b.addEventListener('click', go);
-    if(b.closest && b.closest('#langGate')) b.addEventListener('pointerup', go);
+    b.addEventListener('pointerup', go);
     b.addEventListener('keydown', function(e){
       if(e.key === 'Enter' || e.key === ' ') go(e);
     });
   }
   document.querySelectorAll('#langGate [data-lang]').forEach(bindLangBtn);
   document.querySelectorAll('nav [data-lang]').forEach(bindLangBtn);
+  var siteNav = $('#siteNav');
+  if(siteNav && !siteNav.__jhLangDelegated){
+    siteNav.__jhLangDelegated = true;
+    siteNav.addEventListener('click', function(e){
+      var b = e.target && e.target.closest ? e.target.closest('[data-lang]') : null;
+      if(!b || !siteNav.contains(b)) return;
+      var lang = b.getAttribute('data-lang');
+      if(lang === 'en' || lang === 'es') pickLang(lang, e);
+    }, true);
+  }
   /* Charlie: canvas must never steal EN/ES hits */
   if(cv){ cv.style.pointerEvents = 'none'; }
   gate.addEventListener('click', function(e){
@@ -3096,7 +3128,7 @@ var STILL_CREDIT = {
     var lines = [];
     /* James: one credit field per line — never wrap mid-name */
     if(c.y || c.city){
-      lines.push('<div class="pc-line">' + esc([c.y, c.city].filter(Boolean).join(' · ')) + '</div>');
+      lines.push('<div class="pc-line" data-loc>' + esc([c.y, c.city].filter(Boolean).join(' · ')) + '</div>');
     }
     if(c.ph){
       lines.push('<div class="pc-line">' + esc((t('work.photo') || 'Photographer') + ' · ' + c.ph) + '</div>');
@@ -3388,7 +3420,8 @@ var STILL_CREDIT = {
       var c = STILL_CREDIT[f] || {};
       var who = c.talent || c.client || '';
       var sub = c.talent ? (c.client || '') : (c.camp || '');
-      var cap = [who, sub].filter(Boolean).join(' — ');
+      var meta = [c.y, c.city].filter(Boolean).join(' · ');
+      var cap = [who, sub, meta].filter(Boolean).join(' — ');
       return { src: 'img/work/' + f, cap: cap, alt: cap || t('alt.work') };
     });
   }
@@ -3410,7 +3443,7 @@ var STILL_CREDIT = {
     var item = gal[galI];
     img.src = item.src;
     img.alt = item.alt || (ownMode ? t('own.alt') : t('inspect.alt'));
-    cap.textContent = item.cap || '';
+    cap.textContent = locFrag(item.cap || '');
     if(idxEl) idxEl.textContent = (galI + 1) + ' / ' + gal.length;
     var many = gal.length > 1;
     if(prevBtn) prevBtn.hidden = !many;
@@ -3826,7 +3859,7 @@ document.addEventListener('visibilitychange', syncOnScreen);
   window.__armCursor = arm;
   window.addEventListener('pointermove', function(e){
     lastX = e.clientX; lastY = e.clientY; havePos = true;
-    var native = e.target && e.target.closest && e.target.closest('input, textarea, select');
+    var native = e.target && e.target.closest && e.target.closest('input, textarea, select, button, a, nav, label, #brandmark, [role="button"]');
     if(native){
       hideLaptop();
       return;
