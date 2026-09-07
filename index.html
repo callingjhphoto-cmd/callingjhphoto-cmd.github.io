@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- hero-first-2026-09-07 first slide: international campaigns / secure capture -->
+<!-- hero-phrase-2026-09-07 first slide: international production for global brands -->
+<!-- pin-projects-2026-09-07 city pin click → projects in that place -->
 <!-- carousel-xform-2026-09-07 transform pan, no nested iOS scroll -->
 <!-- carousel-touchmove-2026-09-07 iOS preventDefault pan; desktop drag unchanged -->
 <!-- carousel-ios-2026-09-07 native pan-x on phone; flick does not open still -->
@@ -60,7 +63,7 @@
   --grey2:#5c5c58;
   --rule:#DEDEDA;
   --line:#DEDEDA;
-  --hero-acc:#ff3b1f;
+  --hero-acc:#1E22AA;
   --hit:42px;
   --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -87,7 +90,7 @@ a{color:inherit}
 :focus-visible{outline:1px solid var(--signal);outline-offset:3px}
 em.acc, h1 em{font-style:normal;color:var(--hero-acc)}
 
-#crt,#vig,#boot,#hudTL,#hudTR,#hudBL,#hudBR,#zoomui,#via,#scrollcue,#pinButtons{display:none!important}
+#crt,#vig,#boot,#hudTL,#hudTR,#hudBL,#hudBR,#zoomui,#via,#scrollcue{display:none!important}
 html.lang-wait, html.lang-wait body{overflow:hidden;height:100%}
 html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibility:hidden}
 
@@ -225,6 +228,32 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 }
 #readout .empty{
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);text-transform:none;color:var(--grey);margin-top:10px;
+}
+#readout .go{
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:var(--ls-micro);
+  text-transform:none;color:#C8102E;margin-top:6px;
+}
+
+/* mobile city chips — tap opens the city project panel */
+#pinButtons{display:none}
+@media(max-width:720px){
+  #pinButtons{
+    display:flex;position:absolute;left:0;right:0;z-index:15;
+    bottom:calc(84px + env(safe-area-inset-bottom, 0px));
+    gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    padding:0 16px 4px;padding-right:88px;pointer-events:auto;
+    scrollbar-width:none;
+  }
+  #pinButtons::-webkit-scrollbar{display:none}
+  #pinButtons [data-city]{
+    flex:none;min-height:42px;padding:8px 12px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    text-transform:none;border:.5pt solid var(--ink);
+    background:rgba(250,250,248,.92);color:var(--ink);
+    cursor:pointer;white-space:nowrap;
+    display:inline-flex;align-items:center;
+  }
+  #pinButtons [data-city]:focus-visible{outline:1px solid var(--signal);outline-offset:2px}
 }
 
 .wrap{width:var(--wrap);margin:0 auto;padding:0 24px}
@@ -572,7 +601,41 @@ html.book-open nav{visibility:hidden;pointer-events:none}
 #inspect .nav.next{right:12px;top:50%}
 #inspect .cap,#inspect .idx{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);color:var(--grey);margin-top:12px;text-transform:none}
 
-#scrim,#dossier{display:none!important}
+/* city dossier — restored 2026-09-07 (paper chrome). Above nav so Close is hittable. */
+#scrim{
+  position:fixed;inset:0;z-index:630;background:rgba(17,17,17,.45);
+  opacity:0;pointer-events:none;transition:opacity .25s;display:block;
+}
+#scrim.on{opacity:1;pointer-events:auto}
+#dossier{
+  position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);z-index:640;
+  background:var(--paper);border-left:.5pt solid var(--ink);color:var(--ink);
+  transform:translateX(100%);transition:transform .28s ease;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:28px 26px 60px;
+  pointer-events:none;visibility:hidden;
+}
+#dossier.on{transform:translateX(0);visibility:visible;pointer-events:auto;display:block}
+#dossier .close{
+  position:absolute;top:8px;right:8px;background:none;border:0;color:var(--grey);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);cursor:pointer;
+  min-width:var(--hit);min-height:var(--hit);
+  display:inline-flex;align-items:center;justify-content:center;padding:8px;text-transform:none;
+}
+#dossier .close:hover{color:var(--signal)}
+#dossier h2{font-family:var(--sans);font-weight:700;font-size:clamp(24px,4.4vw,42px);letter-spacing:-.035em;
+  margin:8px 0 4px;text-transform:none;color:var(--ink)}
+#dossier .coord{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-micro);color:var(--grey);text-transform:none}
+#dossier .cityline{font-family:var(--mono);font-size:14px;color:var(--grey2);
+  line-height:1.7;margin:18px 0 20px;border-left:2px solid #C8102E;padding-left:12px}
+#dossier .hd{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--grey);
+  margin:8px 0 12px;border-bottom:.5pt solid var(--line);padding-bottom:7px;text-transform:none}
+#dossier .cred{font-family:var(--mono);font-size:14px;line-height:1.65;margin-bottom:14px;color:var(--ink)}
+#dossier .cred .y{color:#C8102E}
+#dossier .cred .cl{color:var(--ink);font-weight:500}
+#dossier .cred .meta{color:var(--grey2)}
+#dossier .cred.has-still{cursor:pointer}
+#dossier .cred.has-still:hover .cl{color:#C8102E}
+#dossier .none{font-family:var(--mono);font-size:14px;color:var(--grey);line-height:1.7;margin:16px 0 8px}
 .doshots,.worklane,#polaroid .ppair{display:none}
 
 #cursor{display:none}
@@ -1013,10 +1076,11 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   <div class="hero-copy">
     <div class="tag">[JH_/_00]</div>
     <div class="role" data-i18n="hero.role">Digital Technician &amp; Lighting Assistant</div>
-    <h1 id="heroH1">colour is<br>a <em>decision</em>,<br>not a preset.</h1>
-    <p class="deck" id="heroPulse">Secure digital capture for international shoots.</p>
+    <h1 id="heroH1">international<br>campaigns.<br>secure <em>capture</em>.</h1>
+    <p class="deck" id="heroPulse">Studio to location. Same station.</p>
     <div class="meta" data-i18n="hero.sub">Barcelona + Mallorca · EN/ES</div>
   </div>
+  <div id="pinButtons"></div>
   <div id="hudTL" hidden><span id="hLat"></span></div>
   <div id="hudTR" hidden></div>
   <div id="hudBL" hidden><span id="hUp"></span></div>
@@ -1203,7 +1267,6 @@ html.book-open nav{visibility:hidden;pointer-events:none}
 <div id="doShots" hidden></div>
 <div id="workLane" hidden></div>
 <div id="workLaneB" hidden></div>
-<div id="pinButtons" hidden></div>
 <div id="polaroid" hidden>
   <img src="img/polaroid/station_crop.jpg" alt="">
   <img src="img/polaroid/cables.jpg" alt="">
@@ -1234,27 +1297,26 @@ var CITIES = [
    Nothing here is invented. Cities with no credit carry none. */
 var CREDITS = {
   BCN:[
-    {y:'2026', c:'Off-White',                      p:'Twentyfour Seven Plus',   ph:'William Arcand'},
+    {y:'2026', c:'Off-White',                      p:'Twentyfour Seven Plus',   ph:'William Arcand', img:'work_13.jpg'},
     {y:'2026', c:'adidas SS27 × Audi F1',          p:'Rayo Productions',        ph:'William Arcand', n:'Sitges'},
-    {y:'2026', c:'adidas × FC Barcelona',          p:'Players Magazine',        ph:'William Arcand'},
-    {y:'2026', c:'Cupra — Layered key visual',     p:'Canadá Pictures · &Rosàs',ph:'Joe Howatt'},
+    {y:'2026', c:'adidas × FC Barcelona',          p:'Players Magazine',        ph:'William Arcand', img:'work_10.jpg'},
+    {y:'2026', c:'Cupra — Layered key visual',     p:'Canadá Pictures · &Rosàs',ph:'Joe Howatt', img:'work_28.jpg'},
     {y:'2026', c:'Sfera',                          p:'Canadá Pictures',         ph:'Javier Fernández · Xavier Casanueva'},
-    {y:'2026', c:'Mercedes-Benz VLE',              p:'Nouri Films · U-Crane',   ph:'Chris Noltekuhlman'},
     {y:'2026', c:'Senseo',                         p:'Fight Films',             ph:'—'},
     {y:'2026', c:'Questex / FNTV — MWC',           p:'Questex',                 ph:'—'},
     {y:'2026', c:'adL',                            p:'Palma Pictures · Noe Projects', ph:'Lukasz Pukowiec'},
-    {y:'2025', c:'0039 Italy',                     p:'Inezz Productions',       ph:'Stephan Glathe'}
+    {y:'2025', c:'0039 Italy',                     p:'Inezz Productions',       ph:'Stephan Glathe', img:'work_33.jpg'}
   ],
   PMI:[
-    {y:'2026', c:'REVOLVE / FWRD',                 p:"The Blonde's Pool",       ph:'Kate Bellm', n:'talent: Rosie Huntington-Whiteley'},
-    {y:'2026', c:'Matthew Williamson / Free People',p:"The Blonde's Pool",       ph:'Kate Bellm'},
+    {y:'2026', c:'REVOLVE / FWRD',                 p:"The Blonde's Pool",       ph:'Kate Bellm', n:'talent: Rosie Huntington-Whiteley', img:'work_00.jpg'},
+    {y:'2026', c:'Matthew Williamson / Free People',p:"The Blonde's Pool",       ph:'Kate Bellm', img:'work_08.jpg'},
     {y:'2026', c:'Mahou Cinco Estrellas',          p:'Bakery Productions',      ph:'—', n:'Copa del Rey · San Isidro'},
     {y:'2026', c:'Stella Artois',                  p:'Palma Pictures',          ph:'Nathan Lang'},
     {y:'2026', c:'Clif Bar',                       p:'Palma Pictures',          ph:'Elliot Wilcox'},
     {y:'2026', c:'Anton Renborg',                  p:'OAS Company',             ph:'Anton Renborg'}
   ],
   LDN:[
-    {y:'2021—25', c:'Diageo · Bacardi · Guinness · Bombay · Macallan · Stella · Don Papa', p:'—', ph:'Rob Lawson'},
+    {y:'2021—25', c:'Diageo · Bacardi · Guinness · Bombay · Macallan · Stella · Don Papa', p:'—', ph:'Rob Lawson', img:'work_16.jpg'},
     {y:'2022—25', c:'Nike · New Balance · The North Face', p:'—',               ph:'Tayler Prince-Fraser'},
     {y:'2023', c:'adidas · Harvey Nichols',        p:'—',                       ph:'Ben Stockley'},
     {y:'2026', c:'TrueGroup',                       p:'TrueGroup',               ph:'James Huertas', n:'London & Brussels'},
@@ -1503,16 +1565,16 @@ var I18N = {
     'nav.bts': 'BTS',
     'nav.menu': 'Menu',
     'nav.book': 'Book',
-    'hero.h1': 'international shoots.<br><em>secure</em> capture.',
+    'hero.h1': 'international<br>campaigns.<br>secure <em>capture</em>.',
     'hero.role': 'Digital Technician & Lighting Assistant',
     'book.h1': 'Send the dates.<br>I\'ll send the rate.',
     'work.secno': '[JH_/_01] Work',
     'hero.sub': 'Barcelona + Mallorca · EN/ES',
     'hero.place': 'Local in spain and Portugal',
     'hero.line': 'Secure digital capture for international shoots.',
-    'hero.pulse0': 'Two cards. Verified before wrap.',
-    'hero.pulse1': 'Fast workflow. Great music.',
-    'hero.pulse2': 'International campaigns. Global experience.',
+    'hero.pulse0': 'International campaigns. Secure capture.',
+    'hero.pulse1': 'International production for global brands.',
+    'hero.pulse2': 'Fast workflow. Great music.',
     'hero.pulse3': 'Three copies before the cards go back in the bag.',
     'hero.tag': 'Serving secure digital capture until the robots retire me',
     'hud.uptime': 'Uptime',
@@ -1544,7 +1606,7 @@ var I18N = {
     'do.lede': 'Keeping the shoot moving.',
     'do.globe': 'The same station, wherever the call sheet says.',
     'do.cap.h': 'Capture',
-    'do.cap.aphor': 'Tether that does not drop.',
+    'do.cap.aphor': 'Advanced Tether Solutions.',
     'do.cap.p': 'I run a fast, organised Capture One workflow, keeping the photographer shooting and the agency and client close to the images as they come in.',
     'do.cap.1': 'Capture One sessions, naming and structure',
     'do.cap.2': 'Phase One · Hasselblad · Canon · Nikon · Sony · Fuji',
@@ -1627,7 +1689,9 @@ var I18N = {
     'own.alt': 'Photograph by James Huertas.',
     'globe.aria': 'Wireframe globe with nine city pins. Drag to spin. Hover or tap a pin for the jobs in that city.',
     'pin.none': 'No credit on file.',
-    'readout.go': '',
+    'pin.projects': 'Projects',
+    'pin.go': 'Projects →',
+    'readout.go': 'Projects →',
     'dos.credits': 'Credits · Canonical CV',
     'dos.creditsBare': 'Credits',
     'dos.reel': 'Set-ops · The reel',
@@ -1702,16 +1766,16 @@ var I18N = {
     'nav.bts': 'BTS',
     'nav.menu': 'Menú',
     'nav.book': 'Reserva',
-    'hero.h1': 'producciones internacionales.<br>captura <em>segura</em>.',
+    'hero.h1': 'campañas<br>internacionales.<br>captura <em>segura</em>.',
     'hero.role': 'Técnico digital y ayudante de iluminación',
     'book.h1': 'Manda las fechas.<br>Te mando la tarifa.',
     'work.secno': '[JH_/_01] Trabajo',
     'hero.sub': 'Barcelona + Mallorca · EN/ES',
     'hero.place': 'Local en España y Portugal',
     'hero.line': 'Captura digital segura para producciones internacionales.',
-    'hero.pulse0': 'Dos tarjetas. Verificadas antes de cerrar.',
-    'hero.pulse1': 'Flujo rápido. Buena música.',
-    'hero.pulse2': 'Campañas internacionales. Experiencia global.',
+    'hero.pulse0': 'Campañas internacionales. Captura segura.',
+    'hero.pulse1': 'Producción internacional para marcas globales.',
+    'hero.pulse2': 'Flujo rápido. Buena música.',
     'hero.pulse3': 'Tres copias antes de que las tarjetas vuelvan a la bolsa.',
     'hero.tag': 'Captura digital segura hasta que los robots me jubilen',
     'hud.uptime': 'Tiempo',
@@ -1743,7 +1807,7 @@ var I18N = {
     'do.lede': 'Para que la sesión siga su ritmo.',
     'do.globe': 'La misma estación, donde diga el call sheet.',
     'do.cap.h': 'Captura',
-    'do.cap.aphor': 'Tether que no se cae.',
+    'do.cap.aphor': 'Soluciones avanzadas de Tether.',
     'do.cap.p': 'Trabajo con un flujo de Capture One rápido y organizado para que el fotógrafo pueda seguir disparando mientras la agencia y el cliente revisan las imágenes.',
     'do.cap.1': 'Sesiones de Capture One: nombres y estructura',
     'do.cap.2': 'Phase One · Hasselblad · Canon · Nikon · Sony · Fuji',
@@ -1826,7 +1890,9 @@ var I18N = {
     'own.alt': 'Fotografía de James Huertas.',
     'globe.aria': 'Globo de alambre con nueve pines de ciudad. Arrastra para girar. Pasa o toca un pin para ver los trabajos de esa ciudad.',
     'pin.none': 'Sin crédito en archivo.',
-    'readout.go': '',
+    'pin.projects': 'Proyectos',
+    'pin.go': 'Proyectos →',
+    'readout.go': 'Proyectos →',
     'dos.credits': 'Créditos · CV canónico',
     'dos.creditsBare': 'Créditos',
     'dos.reel': 'Ops de set · El reel',
@@ -1957,7 +2023,7 @@ function applyI18n(){
   document.querySelectorAll('#pinButtons [data-city]').forEach(function(b){
     var id = b.getAttribute('data-city');
     var c = CITIES.filter(function(x){ return x.id === id; })[0];
-    if(c) b.textContent = cityName(c).toUpperCase();
+    if(c) b.textContent = cityName(c);
   });
   document.querySelectorAll('[data-loc]').forEach(function(n){
     if(!n.getAttribute('data-src')) n.setAttribute('data-src', n.textContent);
@@ -1968,43 +2034,54 @@ function applyI18n(){
     b.classList.toggle('on', b.getAttribute('data-lang') === LANG);
   });
   paintHeroFlip();
+  if(typeof openDossier === 'function' && dossier && dossier.classList.contains('on') && activePin){
+    openDossier(activePin);
+  }
 }
 
 /* H1 aphorisms — James's lines, plus Pop/LS DIGI territory in his voice.
    Accent is a print colour that holds on paper. Not magenta. */
 var HERO_FLIPS = {
   en: [
+    { h1: 'international<br>campaigns.<br>secure <em>capture</em>.', deck: 'Studio to location. Same station.', color: 'var(--blue)' },
     { h1: 'colour is<br>a <em>decision</em>,<br>not a preset.', deck: 'Secure digital capture for international shoots.', color: '#FF3B1F' },
+    { h1: 'international<br>production for<br>global <em>brands</em>.', deck: 'Barcelona + Mallorca · EN/ES', color: '#C8102E' },
     { h1: 'three <em>copies</em><br>before the cards<br>go back in the bag.', deck: 'Three backups minimum.', color: 'var(--blue)' },
-    { h1: 'tether that<br>does not <em>drop</em>.', deck: 'The camera talks to the station.', color: '#007A53' },
-    { h1: 'two cards.<br><em>verified</em><br>before wrap.', deck: 'Fast workflow. Great music.', color: '#C8102E' },
-    { h1: 'international<br><em>campaigns</em>.<br>secure capture.', deck: 'Studio to location. Same station.', color: 'var(--blue)' },
+    { h1: 'Advanced<br><em>Tether</em><br>Solutions.', deck: 'The camera talks to the station.', color: '#007A53' },
     { h1: 'fast workflow.<br>great <em>music</em>.', deck: 'International shoots. Global experience.', color: '#5C068C' }
   ],
   es: [
+    { h1: 'campañas<br>internacionales.<br>captura <em>segura</em>.', deck: 'De estudio a localización. La misma estación.', color: 'var(--blue)' },
     { h1: 'el color es<br>una <em>decisión</em>,<br>no un preset.', deck: 'Captura digital segura para producciones internacionales.', color: '#FF3B1F' },
+    { h1: 'producción<br>internacional para<br><em>marcas</em> globales.', deck: 'Barcelona + Mallorca · EN/ES', color: '#C8102E' },
     { h1: 'tres <em>copias</em><br>antes de que las tarjetas<br>vuelvan a la bolsa.', deck: 'Tres copias. Mínimo.', color: 'var(--blue)' },
-    { h1: 'tether que<br>no se <em>cae</em>.', deck: 'La cámara habla con la estación.', color: '#007A53' },
-    { h1: 'dos tarjetas.<br><em>verificadas</em><br>antes de cerrar.', deck: 'Flujo rápido. Buena música.', color: '#C8102E' },
-    { h1: 'campañas<br><em>internacionales</em>.<br>captura segura.', deck: 'De estudio a localización. La misma estación.', color: 'var(--blue)' },
+    { h1: 'Soluciones<br>avanzadas de<br><em>Tether</em>.', deck: 'La cámara habla con la estación.', color: '#007A53' },
     { h1: 'flujo rápido.<br>buena <em>música</em>.', deck: 'Producciones internacionales. Experiencia global.', color: '#5C068C' }
   ]
 };
 var pulseI = 0;
+var heroFlipTimer = null;
+var heroFlipKick = null;
 function paintHeroFlip(){
   var pack = HERO_FLIPS[LANG] || HERO_FLIPS.en;
-  var s = pack[pulseI % pack.length];
+  var s = pack[0];
+  if(pulseI) s = pack[pulseI % pack.length];
   var h1 = $('#heroH1'), deck = $('#heroPulse');
   if(!s) return;
   document.documentElement.style.setProperty('--hero-acc', s.color);
   if(h1) h1.innerHTML = s.h1;
   if(deck) deck.textContent = s.deck;
 }
-(function(){
+function startHeroFlips(){
+  if(heroFlipTimer){ clearInterval(heroFlipTimer); heroFlipTimer = null; }
+  if(heroFlipKick){ clearTimeout(heroFlipKick); heroFlipKick = null; }
+  pulseI = 0;
   var h1 = $('#heroH1'), deck = $('#heroPulse');
+  if(h1) h1.style.opacity = '1';
+  if(deck) deck.style.opacity = '1';
   paintHeroFlip();
-  if(!h1 || reduce) return;
-  setInterval(function(){
+  if(reduce || !h1) return;
+  function advance(){
     h1.style.opacity = '0';
     if(deck) deck.style.opacity = '0';
     setTimeout(function(){
@@ -2014,8 +2091,13 @@ function paintHeroFlip(){
       h1.style.opacity = '1';
       if(deck) deck.style.opacity = '1';
     }, 420);
-  }, 4400);
-})();
+  }
+  /* Hold slide 0 after EN/ES — do not tick during the language gate. */
+  heroFlipKick = setTimeout(function(){
+    advance();
+    heroFlipTimer = setInterval(advance, 4400);
+  }, 6500);
+}
 
 var bootStarted = false;
 function startBoot(){
@@ -2096,6 +2178,7 @@ function pickLang(lang, e){
     window.__armCursor(x, y);
   }
   startBoot();
+  if(typeof startHeroFlips === 'function') startHeroFlips();
 }
 
 (function(){
@@ -2452,7 +2535,7 @@ function resize(){
       var copyR = copy ? copy.getBoundingClientRect() : null;
       var gapTop = 12;
       var gapBot = 8;
-      var fabReserve = 100;
+      var fabReserve = 148;
       var topEdge = copyR ? (copyR.bottom - sr.top + gapTop) : 150;
       topEdge = Math.max(96, topEdge);
       var layoutH = Math.max(H, window.innerHeight || H);
@@ -2960,23 +3043,18 @@ function up(e){
   cv.classList.remove('drag');
   var pt = pointOf(e);
   var moved = Math.hypot(pt.x - downX, pt.y - downY);
-  /* Tap pin = sticky city label (name + years only). No dossier / work list. */
+  /* Tap pin = open city dossier (projects from CREDITS). */
   if(moved < 14){
-    var id = hitPin(pt, 40);
+    var id = hitPin(pt, (e.changedTouches ? 52 : 40));
     if(id){
-      if(stuckPin === id){
-        stuckPin = null;
-        hideReadout();
-      } else {
-        stuckPin = id;
-        var c = CITIES.filter(function(x){ return x.id === id; })[0];
-        if(c) showReadout(c);
-      }
+      stuckPin = id;
+      openDossier(id);
       return;
     }
-    /* tap empty globe = dismiss sticky */
+    /* tap empty globe = dismiss sticky / dossier */
     stuckPin = null;
     hideReadout();
+    closeDossier();
     return;
   }
   /* drag end — keep sticky label if one is open */
@@ -2997,8 +3075,10 @@ var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   if(!readout) return;
   readoutCity = c;
-  var html = '<div class="c">' + esc(cityName(c).toUpperCase()) + '</div>';
+  var html = '<div class="c">' + esc(cityName(c)) + '</div>';
   if(c.yrs && c.yrs !== '—') html += '<div class="x">' + esc(c.yrs) + '</div>';
+  var n = (CREDITS[c.id] || []).length;
+  if(n) html += '<div class="go">' + n + ' · ' + esc(t('pin.go') || 'Projects →') + '</div>';
   readout.innerHTML = html;
   readout.classList.add('on');
 }
@@ -3021,12 +3101,47 @@ function positionReadout(){
   readout.style.top  = Math.round(y) + 'px';
 }
 
-/* ---------- dossier (unused) ---------- */
+/* ---------- dossier — city projects from CREDITS ---------- */
 var dossier = $('#dossier'), dBody = $('#dBody'), scrim = $('#scrim');
 
-function openDossier(){ return; }
+function openDossier(id){
+  if(!id || !dossier || !dBody) return;
+  var c = CITIES.filter(function(x){ return x.id === id; })[0];
+  if(!c) return;
+  activePin = id;
+  stuckPin = id;
+  hideReadout();
+  var credits = CREDITS[id] || [];
+  var html = '<h2>' + esc(cityName(c)) + '</h2>';
+  if(c.yrs && c.yrs !== '—') html += '<div class="coord">' + esc(c.yrs) + '</div>';
+  if(!credits.length){
+    /* short honest empty — no essay, no untagged reel */
+    html += '<div class="none">' + esc(t('pin.none') || 'No credit on file.') + '</div>';
+    html += '<div class="cityline">' + esc(cityLine(c)) + '</div>';
+  } else {
+    html += '<div class="cityline">' + esc(cityLine(c)) + '</div>';
+    html += '<div class="hd">' + esc(t('pin.projects') || 'Projects') + '</div>';
+    credits.forEach(function(r){
+      html += '<div class="cred' + (r.img ? ' has-still' : '') + '"' +
+        (r.img ? ' data-still="' + esc(r.img) + '" role="button" tabindex="0"' : '') + '>' +
+        '<span class="y">' + esc(r.y) + '</span> · ' +
+        '<span class="cl">' + esc(r.c) + '</span> · ' +
+        '<span class="meta">' + esc(r.p || '—') + '</span> · ' +
+        '<span class="meta">' + esc(r.ph || '—') + '</span>' +
+        (r.n ? '<div class="meta">' + esc(r.n) + '</div>' : '') +
+      '</div>';
+    });
+  }
+  dBody.innerHTML = html;
+  dossier.classList.add('on');
+  dossier.setAttribute('aria-hidden','false');
+  dossier.removeAttribute('hidden');
+  if(scrim) scrim.classList.add('on');
+  var xc = $('#dClose');
+  if(xc){ xc.removeAttribute('tabindex'); xc.focus(); }
+}
 function closeDossier(){
-  activePin = null; hoverPin = null; easeTarget = null;
+  activePin = null; hoverPin = null; stuckPin = null; easeTarget = null;
   if(dossier){
     dossier.classList.remove('on');
     dossier.setAttribute('aria-hidden','true');
@@ -3034,9 +3149,27 @@ function closeDossier(){
   }
   if(dBody) dBody.innerHTML = '';
   if(scrim) scrim.classList.remove('on');
+  var xc = $('#dClose');
+  if(xc) xc.setAttribute('tabindex','-1');
 }
 if($('#dClose')) $('#dClose').addEventListener('click', closeDossier);
 if(scrim) scrim.addEventListener('click', closeDossier);
+if(dBody){
+  dBody.addEventListener('click', function(e){
+    var n = e.target.closest ? e.target.closest('[data-still]') : null;
+    if(!n) return;
+    var file = n.getAttribute('data-still');
+    if(file && window.__openWorkStill) window.__openWorkStill(file);
+  });
+  dBody.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter' && e.key !== ' ') return;
+    var n = e.target.closest ? e.target.closest('[data-still]') : null;
+    if(!n) return;
+    e.preventDefault();
+    var file = n.getAttribute('data-still');
+    if(file && window.__openWorkStill) window.__openWorkStill(file);
+  });
+}
 /* Escape is handled with the inspect overlay so one key closes whichever is open. */
 
 /* idle typewriter removed — a producer does not need it. SCROLL stays. */
@@ -3049,13 +3182,19 @@ function kick(){
    BUILD THE PAGE
    ============================================================ */
 
-/* mobile pin labels — names only, never open a dossier */
+/* mobile pin labels — tap opens city dossier */
 (function(){
   var g = $('#pinButtons');
   if(!g) return;
   CITIES.forEach(function(c){
-    var s = el('span', null, esc(c.name.toUpperCase()));
+    var s = el('span', null, esc(cityName(c)));
     s.setAttribute('data-city', c.id);
+    s.setAttribute('role','button');
+    s.setAttribute('tabindex','0');
+    s.addEventListener('click', function(){ openDossier(c.id); });
+    s.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openDossier(c.id); }
+    });
     g.appendChild(s);
   });
 })();
@@ -3496,6 +3635,11 @@ var STILL_CREDIT = {
     polaroidOpenAt = Date.now();
     var list = polaroidGallery();
     openAt(list, indexOfSrc(list, src), true);
+  };
+  window.__openWorkStill = function(file){
+    if(!file) return;
+    var list = workGallery();
+    openAt(list, indexOfSrc(list, 'img/work/' + file), false);
   };
   document.querySelectorAll('#contact .pframe img').forEach(function(im){
     im.style.cursor = 'zoom-in';
