@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- nav-no-chip-2026-09-07 no white bar under desktop nav -->
 <!-- corr-pass-2026-09-07 lang switch, services align, kit gap, header, Londres, ph, footer -->
 <!-- carousel-resume-2026-09-07 mobile creep resumes after swipe -->
 <!-- mobile-cities-2026-09-07 job cities share one column -->
@@ -125,10 +126,7 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 }
 
 #brandmark{
-  position:fixed;top:0;left:0;z-index:620;padding:10px 18px;
-  background:color-mix(in srgb, var(--paper) 92%, transparent);
-  -webkit-backdrop-filter:blur(12px) saturate(1.1);
-  backdrop-filter:blur(12px) saturate(1.1);
+  position:fixed;top:0;left:0;z-index:620;padding:10px 18px;background:none;
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:none;color:var(--ink);
   display:flex;align-items:center;gap:10px;text-decoration:none;
   min-height:var(--hit);
@@ -139,11 +137,17 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 nav{
   position:fixed;top:0;right:0;z-index:620;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
   padding:8px 16px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  text-transform:none;pointer-events:auto;
-  background:color-mix(in srgb, var(--paper) 92%, transparent);
-  -webkit-backdrop-filter:blur(12px) saturate(1.1);
-  backdrop-filter:blur(12px) saturate(1.1);
+  text-transform:none;background:none;pointer-events:auto;
 }
+html.over-dark #brandmark{color:var(--paper)}
+html.over-dark #brandmark svg circle:not([fill]),
+html.over-dark #brandmark svg ellipse,
+html.over-dark #brandmark svg path[stroke="#111"]{stroke:#FAFAF8}
+html.over-dark nav a, html.over-dark nav button.langbtn{color:#C8C8C2}
+html.over-dark nav a:hover, html.over-dark nav button.langbtn:hover,
+html.over-dark nav button.langbtn.on{color:var(--paper)}
+html.over-dark nav a.here{color:var(--signal)}
+html.over-dark nav .langpair{border-left-color:#555}
 .nav-toggle{display:none}
 .nav-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:2px}
 nav a, nav button.langbtn{
@@ -3616,6 +3620,20 @@ if(window.visualViewport){
       document.documentElement.classList.toggle('contact-in', !!on);
     }, {threshold:0, rootMargin:'0px'});
     io.observe(contact);
+  }
+  if('IntersectionObserver' in window){
+    var darkFlags = {flyby:false, contact:false};
+    function syncOverDark(){
+      document.documentElement.classList.toggle('over-dark', !!(darkFlags.flyby || darkFlags.contact));
+    }
+    ['flyby','contact'].forEach(function(id){
+      var n = $('#'+id);
+      if(!n) return;
+      new IntersectionObserver(function(entries){
+        darkFlags[id] = !!(entries[0] && entries[0].isIntersecting);
+        syncOverDark();
+      }, {threshold:0, rootMargin:'0px 0px -88% 0px'}).observe(n);
+    });
   }
   if(!form) return;
   form.addEventListener('focusin', function(e){
