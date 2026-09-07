@@ -650,7 +650,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   html.laptop-cursor input, html.laptop-cursor textarea, html.laptop-cursor select { cursor: auto !important; }
   html.laptop-cursor a, html.laptop-cursor button, html.laptop-cursor label, html.laptop-cursor nav, html.laptop-cursor nav * { cursor: pointer !important; }
   #cursor{
-    position:fixed;z-index:600;width:56px;height:56px;left:0;top:0;
+    position:fixed;z-index:680;width:56px;height:56px;left:0;top:0;
     margin:-28px 0 0 -28px;pointer-events:none;opacity:0;display:block;
     will-change:transform;
   }
@@ -4189,7 +4189,7 @@ document.addEventListener('visibilitychange', syncOnScreen);
   window.__armCursor = arm;
   window.addEventListener('pointermove', function(e){
     lastX = e.clientX; lastY = e.clientY; havePos = true;
-    var native = e.target && e.target.closest && e.target.closest('input, textarea, select, button, a, nav, label, #brandmark, [role="button"]');
+    var native = e.target && e.target.closest && e.target.closest('input, textarea, select, button, a, nav, label, #brandmark');
     if(native){
       hideLaptop();
       return;
