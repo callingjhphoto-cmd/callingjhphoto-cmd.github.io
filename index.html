@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-scrub-2026-09-07 wheel/drag both ways; auto-creep only when cursor is off -->
 <!-- carousel-scroll-2026-09-07 work lanes: drag/swipe + a touch faster -->
 <!-- do-copy-2026-09-07 What I actually do — keeping the shoot moving -->
 <!-- chapters-color-2026-09-07 Capture green / Colour signal / Data blue -->
@@ -3070,50 +3071,60 @@ var STILL_CREDIT = {
   fill($('#pcTrackA'), WORKSTILLS);
   fill($('#pcTrackB'), WORKSTILLS_B);
 
-  /* Work lanes: auto-creep (72s / loop, was 84s) + drag / swipe / trackpad. */
+  /* Work lanes: auto-creep only when the cursor is off the strip.
+     Wheel / drag / swipe scrub both ways so you can go back and look. */
   (function(){
     if(reduce) return;
     var PERIOD = 72000;
     function drive(lane, reverse){
       var track = lane.querySelector('.pc-track');
       if(!track) return;
-      var paused = false, dragging = false, last = 0, half = 0, resumeT = 0;
+      var hovering = false, dragging = false, last = 0, half = 0;
+      var sx = 0, sl = 0, moved = 0;
       function measure(){
         half = track.scrollWidth / 2;
-        if(reverse && lane.scrollLeft < 8) lane.scrollLeft = half;
+        if(reverse && lane.scrollLeft < 8 && half > 1) lane.scrollLeft = half;
+      }
+      function setX(x){
+        if(half > 1){
+          while(x >= half) x -= half;
+          while(x < 0) x += half;
+        }
+        lane.scrollLeft = x;
       }
       measure();
       window.addEventListener('resize', measure);
-      function wrap(){
-        if(half <= 1) return;
-        if(lane.scrollLeft >= half - 1) lane.scrollLeft -= half;
-        else if(lane.scrollLeft <= 1) lane.scrollLeft += half;
-      }
+      lane.querySelectorAll('img').forEach(function(im){
+        if(!im.complete) im.addEventListener('load', measure, {once:true});
+      });
       function tick(now){
         if(!last) last = now;
         var dt = Math.min(48, now - last);
         last = now;
-        if(!paused && !dragging && half > 1){
+        if(!hovering && !dragging && half > 1){
           var px = (half / PERIOD) * dt;
-          lane.scrollLeft += reverse ? -px : px;
-          wrap();
+          setX(lane.scrollLeft + (reverse ? -px : px));
         }
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(function(){ measure(); requestAnimationFrame(tick); });
-      function pause(){ paused = true; }
-      function playSoon(){
-        clearTimeout(resumeT);
-        resumeT = setTimeout(function(){ if(!dragging) paused = false; }, 1100);
-      }
-      lane.addEventListener('pointerenter', pause);
-      lane.addEventListener('pointerleave', function(){ if(!dragging) paused = false; });
-      lane.addEventListener('wheel', function(){ pause(); playSoon(); }, {passive:true});
-      lane.addEventListener('scroll', wrap, {passive:true});
-      var sx = 0, sl = 0, moved = 0;
+      lane.addEventListener('pointerenter', function(){ hovering = true; });
+      lane.addEventListener('pointerleave', function(){
+        hovering = false;
+        dragging = false;
+        lane.classList.remove('is-dragging');
+      });
+      lane.addEventListener('wheel', function(e){
+        var dx = e.deltaX, dy = e.deltaY;
+        if(e.deltaMode === 1){ dx *= 16; dy *= 16; }
+        var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+        if(!delta) return;
+        e.preventDefault();
+        setX(lane.scrollLeft + delta);
+      }, {passive:false});
       lane.addEventListener('pointerdown', function(e){
-        pause();
-        if(e.pointerType !== 'mouse' || e.button !== 0) return;
+        if(e.pointerType === 'mouse' && e.button !== 0) return;
+        if(e.pointerType !== 'mouse') return;
         dragging = true;
         sx = e.clientX; sl = lane.scrollLeft; moved = 0;
         lane.classList.add('is-dragging');
@@ -3123,18 +3134,16 @@ var STILL_CREDIT = {
         if(!dragging) return;
         var dx = e.clientX - sx;
         moved = Math.max(moved, Math.abs(dx));
-        lane.scrollLeft = sl - dx;
+        setX(sl - dx);
       });
       function endDrag(){
         if(!dragging) return;
         dragging = false;
         lane.classList.remove('is-dragging');
         if(moved > 8) lane._skipClick = true;
-        playSoon();
       }
       lane.addEventListener('pointerup', endDrag);
       lane.addEventListener('pointercancel', endDrag);
-      lane.addEventListener('pointerup', function(){ if(!dragging) playSoon(); });
     }
     document.querySelectorAll('.pc-lane').forEach(function(lane){
       drive(lane, !!(lane.querySelector('.pc-track.rev')));
