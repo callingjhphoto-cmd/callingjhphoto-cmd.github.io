@@ -2318,35 +2318,54 @@ var gateFlockStop = null;
       layout.x1 = Wg - layout.x0;
       layout.amp = Math.min(Hg * 0.11, 78);
     }
+    var sIcon = Wg < 720 ? 16 : 24;
+    layout.sIcon = sIcon;
+    if(layout.mobile){
+      layout.lapX = layout.slX;
+      layout.lapY = layout.y1;
+    } else {
+      layout.lapX = layout.x1;
+      layout.lapY = layout.cy;
+    }
+    /* USB-C on the left of the base — not the middle of the screen. */
+    layout.portX = layout.lapX - sIcon * 1.32;
+    layout.portY = layout.lapY + sIcon * 0.70;
     layout.ready = true;
   }
 
   function cablePoint(u){
     if(!layout.ready) refreshLayout();
     u = Math.max(0, Math.min(1, u));
+    var x, y, env, inIsland, amp;
     if(layout.mobile){
-      var y = layout.y0 + (layout.y1 - layout.y0) * u;
-      var env = Math.sin(Math.PI * u); env *= env;
-      var inIsland = gate01(y, layout.islandT - 70, layout.islandT) * (1 - gate01(y, layout.islandB, layout.islandB + 70));
-      var amp = layout.amp * env * (1 - inIsland);
-      var x = layout.slX
+      y = layout.y0 + (layout.y1 - layout.y0) * u;
+      env = Math.sin(Math.PI * u); env *= env;
+      inIsland = gate01(y, layout.islandT - 70, layout.islandT) * (1 - gate01(y, layout.islandB, layout.islandB + 70));
+      amp = layout.amp * env * (1 - inIsland);
+      x = layout.slX
         + Math.sin(u * Math.PI * 2 * 2.0) * amp
         + Math.sin(u * Math.PI * 2 * 1.1 + 0.7) * amp * 0.32;
       x = x * (1 - inIsland) + layout.slX * inIsland;
-      return { x: x, y: y };
+    } else {
+      x = layout.x0 + (layout.x1 - layout.x0) * u;
+      env = Math.sin(Math.PI * u); env *= env;
+      var sag = layout.railY - layout.cy;
+      y = layout.cy + sag * env;
+      var leftMu = (layout.x0 + layout.islandL) * 0.5;
+      var rightMu = (layout.islandR + layout.x1) * 0.5;
+      var sig = Math.max(48, (layout.islandL - layout.x0) * 0.24);
+      y -= layout.amp * gauss(x, leftMu, sig);
+      y -= layout.amp * gauss(x, rightMu, sig);
+      y += Math.sin(u * Math.PI * 2 * 3.4 + 0.5) * 6 * env;
+      inIsland = gate01(x, layout.islandL - 150, layout.islandL + 8) * (1 - gate01(x, layout.islandR - 8, layout.islandR + 150));
+      y = y * (1 - inIsland) + layout.railY * inIsland;
     }
-    var x = layout.x0 + (layout.x1 - layout.x0) * u;
-    var env = Math.sin(Math.PI * u); env *= env;
-    var sag = layout.railY - layout.cy;
-    var y = layout.cy + sag * env;
-    var leftMu = (layout.x0 + layout.islandL) * 0.5;
-    var rightMu = (layout.islandR + layout.x1) * 0.5;
-    var sig = Math.max(48, (layout.islandL - layout.x0) * 0.24);
-    y -= layout.amp * gauss(x, leftMu, sig);
-    y -= layout.amp * gauss(x, rightMu, sig);
-    y += Math.sin(u * Math.PI * 2 * 3.4 + 0.5) * 6 * env;
-    var inIsland = gate01(x, layout.islandL - 150, layout.islandL + 8) * (1 - gate01(x, layout.islandR - 8, layout.islandR + 150));
-    y = y * (1 - inIsland) + layout.railY * inIsland;
+    if(u > 0.78 && layout.portX != null){
+      var tt = (u - 0.78) / 0.22;
+      tt = tt * tt * (3 - 2 * tt);
+      x += (layout.portX - x) * tt;
+      y += (layout.portY - y) * tt;
+    }
     return { x: x, y: y };
   }
 
@@ -2386,6 +2405,12 @@ var gateFlockStop = null;
     g.beginPath();
     g.moveTo(-s * 1.45, s * 0.58); g.lineTo(s * 1.45, s * 0.58);
     g.lineTo(s * 1.2, s * 0.86); g.lineTo(-s * 1.2, s * 0.86); g.closePath(); g.stroke();
+    /* side port on the base */
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(-s * 1.42, s * 0.66);
+    g.lineTo(-s * 1.42, s * 0.76);
+    g.stroke();
     g.restore();
   }
 
@@ -2454,19 +2479,21 @@ var gateFlockStop = null;
     }
 
     p = cable(0); q = cable(1);
-    sIcon = Wg < 720 ? 16 : 24;
+    sIcon = layout.sIcon || (Wg < 720 ? 16 : 24);
+    var lapX = layout.lapX != null ? layout.lapX : q.x;
+    var lapY = layout.lapY != null ? layout.lapY : q.y;
     var pulse = 0.45 + 0.55 * Math.sin(t0 * 3);
     g.strokeStyle = 'rgba(255,59,31,' + (0.35 + 0.4 * pulse).toFixed(3) + ')';
     g.lineWidth = 1.4;
     g.beginPath(); g.arc(p.x, p.y, sIcon * 1.8, 0, Math.PI * 2); g.stroke();
-    g.beginPath(); g.arc(q.x, q.y, sIcon * 1.8, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.arc(lapX, lapY, sIcon * 1.8, 0, Math.PI * 2); g.stroke();
     drawCam(p.x, p.y, sIcon);
-    drawLap(q.x, q.y, sIcon);
+    drawLap(lapX, lapY, sIcon);
     g.font = (Wg < 720 ? '9px ' : '11px ') + '"JetBrains Mono",monospace';
     g.textAlign = 'center';
     g.fillStyle = 'rgba(255,59,31,0.9)';
     g.fillText('CAMERA', p.x, p.y + sIcon + 38);
-    g.fillText('DIGI STATION', q.x, q.y + sIcon + 38);
+    g.fillText('DIGI STATION', lapX, lapY + sIcon + 38);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
@@ -2856,6 +2883,11 @@ function drawLapIcon(g, x, y, s){
   g.lineTo(-s * 1.2, s * 0.86);
   g.closePath();
   g.stroke();
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(-s * 1.42, s * 0.66);
+  g.lineTo(-s * 1.42, s * 0.76);
+  g.stroke();
   g.restore();
 }
 
@@ -2886,6 +2918,13 @@ function drawField(dt){
     var dydu = Math.cos(u * Math.PI * 2 * 1.7) * Math.PI * 2 * 1.7 * amp * env
       + Math.cos(u * Math.PI * 2 * 0.85 + 0.7) * Math.PI * 2 * 0.85 * amp * 0.28 * env
       + Math.sin(u * Math.PI * 2 * 1.7) * amp * Math.PI * Math.sin(2 * Math.PI * u);
+    var portX = lapX - s * 1.32, portY = yLap + s * 0.70;
+    if(u > 0.78){
+      var tt = (u - 0.78) / 0.22;
+      tt = tt * tt * (3 - 2 * tt);
+      x += (portX - x) * tt;
+      y += (portY - y) * tt;
+    }
     var len = Math.hypot(dx, dydu) || 1;
     return { x: x, y: y, nx: -dydu / len, ny: dx / len };
   }
