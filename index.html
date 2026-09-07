@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-inset-2026-09-07 mobile work strip matches page margins -->
 <!-- brands-center-2026-09-07 mobile Brands + Production grids centered -->
 <!-- carousel-touch-2026-09-07 phone swipe pans the strip, does not open inspect -->
 <!-- nav-no-chip-2026-09-07 no white bar under desktop nav -->
@@ -654,6 +655,10 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
   .postcard .pc-body{min-height:96px}
+  .pc-bleed{
+    width:var(--wrap);margin-left:auto;margin-right:auto;
+    padding-left:24px;padding-right:24px;box-sizing:border-box;
+  }
   .pc-lane{min-height:260px;-webkit-mask-image:none;mask-image:none}
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
   #flyby .card{width:240px}
@@ -822,6 +827,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #work.band{padding-bottom:28px}
   #do.band{padding-top:28px}
   .wrap{padding-left:16px;padding-right:16px}
+  .pc-bleed{padding-left:16px;padding-right:16px}
   .secno,.meta,.tech,.fieldband .cap{
     font-size:9px;letter-spacing:.1em
   }
