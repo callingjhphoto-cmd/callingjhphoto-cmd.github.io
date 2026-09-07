@@ -1,1 +1,0 @@
-# Huertas Digital — root page
