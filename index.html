@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- do-copy-2026-09-07 What I actually do — keeping the shoot moving -->
+<!-- chapters-color-2026-09-07 Capture green / Colour signal / Data blue -->
+<!-- brands-color-2026-09-07 full-colour marks; Brands green / Production blue; grid centered -->
+<!-- cursor-on-gate-2026-09-07 laptop cursor on EN/ES; z-index above gate; no click steal -->
 <!-- charlie-gate-2026-09-06 EN/ES clicks + mobile first-paint nav clear -->
 <!-- mobile-jobs-2026-09-06 job cards + hamburger to 900px -->
 <!-- prod-grid-city-2026-09-06 Production stacked like Brands; mobile year·city inline -->
@@ -35,7 +39,8 @@
   --signal:#ff3b1f;
   --red:#ff3b1f;
   --red-aaa:#ff3b1f;
-  --blue:#1E22AA; /* Alice: one blue site-wide — was also var(--blue) */
+  --blue:#1E22AA; /* Alice: one blue site-wide — campaigns / Production */
+  --green:#007A53; /* hero "drop" — Brands */
   --grey:#8A8A85;
   --grey2:#5c5c58;
   --rule:#DEDEDA;
@@ -94,7 +99,6 @@ html.lang-wait nav, html.lang-wait #brandmark, html.lang-wait #bookFab{visibilit
   position:relative;z-index:3;min-width:112px;min-height:112px;
   pointer-events:auto!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
-html.lang-wait #cursor,
 html.lang-wait #bookScrim,
 html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 #langGate button strong{
@@ -292,10 +296,19 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .ch{border-top:.7pt solid var(--ink);padding-top:14px}
 .ch .n{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);color:var(--signal);text-transform:none}
 .ch h3{font-size:clamp(26px, 2.4vw, 32px);letter-spacing:var(--ls-display);margin:10px 0 12px;font-weight:700;text-transform:none}
-.ch:nth-child(1) h3{color:var(--ink)}
-.ch:nth-child(2) h3{color:var(--ink)}
-.ch:nth-child(3) h3{color:var(--ink)}
-.ch p{font-size:var(--fs-body);line-height:1.5;max-width:34ch;margin:0}
+.ch:nth-child(1) h3{color:var(--green)}
+.ch:nth-child(2) h3{color:var(--signal)}
+.ch:nth-child(3) h3{color:var(--blue)}
+.ch p{font-size:var(--fs-body);line-height:1.5;max-width:38ch;margin:0 0 16px}
+.ch ul{
+  margin:0;padding:0;list-style:none;
+  font-family:var(--mono);font-size:13px;letter-spacing:.02em;
+  color:var(--grey2);line-height:1.45;
+}
+.ch li{
+  padding:7px 0;
+  border-top:.4pt solid var(--rule);
+}
 .spec{
   margin-top:48px;border-top:.4pt solid var(--rule);padding-top:28px;
   display:flex;flex-direction:column;gap:18px;
@@ -324,23 +337,24 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   text-transform:none;color:var(--grey);text-align:center;
 }
 
-/* James: Brands = clean static grid (visible ink on paper). Production = thin ticker. */
+/* James: Brands + Production = centred rows. Natural brand colour; knock only white-on-transparent. */
 .brand-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
-  gap:28px 32px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
   align-items:center;
-  justify-items:center;
+  gap:28px 36px;
   margin-top:20px;
   padding:8px 0 12px;
 }
 .brand-grid img{
   height:36px;width:auto;max-width:120px;max-height:36px;
   object-fit:contain;display:block;
-  /* force readable marks on light paper */
-  filter:brightness(0);
+  filter:none;
 }
-.brand-grid img.colorok{filter:none} /* rare full-colour marks if needed later */
+.brand-grid img.knock{filter:brightness(0)}
+.brand-grid img.sq{height:44px;max-height:44px;max-width:52px}
+.brand-grid img.blend{mix-blend-mode:multiply}
 .logo-bleed{margin-top:16px;overflow:hidden}
 .logo-lane{
   overflow:hidden;min-height:44px;
@@ -367,8 +381,8 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   letter-spacing:var(--ls-display);line-height:.92;
   margin:0 0 28px;text-transform:none;
 }
-.lane-title.brands-title{color:var(--ink)}
-.lane-title.prod-title{color:var(--ink);margin-top:96px}
+.lane-title.brands-title{color:var(--green)}
+.lane-title.prod-title{color:var(--blue);margin-top:96px}
 #brands{margin-top:40px}
 #work .tbl{margin-top:48px}
 
@@ -533,7 +547,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   html.laptop-cursor.cursor-live *:not(input):not(textarea):not(select) { cursor: none !important; }
   html.laptop-cursor input, html.laptop-cursor textarea, html.laptop-cursor select { cursor: auto !important; }
   #cursor{
-    position:fixed;z-index:400;width:56px;height:56px;left:0;top:0;
+    position:fixed;z-index:600;width:56px;height:56px;left:0;top:0;
     margin:-28px 0 0 -28px;pointer-events:none;opacity:0;display:block;
     will-change:transform;
   }
@@ -744,8 +758,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
-  .brand-grid{gap:18px 16px;grid-template-columns:repeat(auto-fill, minmax(72px, 1fr))}
+  .brand-grid{gap:18px 20px}
   .brand-grid img{height:28px;max-height:28px;max-width:88px}
+  .brand-grid img.sq{height:34px;max-height:34px;max-width:40px}
   .logo-track{gap:28px;padding:6px 0}
   #prodBleed{padding:8px 0}
   #prodBleed .logo-track img{height:18px;max-width:92px}
@@ -970,24 +985,41 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 
 <section id="do" class="band">
   <div class="wrap">
-    <div class="secno" data-i18n="do.secno">[JH_/_02] Services</div>
-    <h2 class="big" data-i18n="do.h2">The station.</h2>
-    <p class="lede" data-i18n="do.lede">Capture, colour, data. Same rig in every city.</p>
+    <div class="secno" data-i18n="do.secno">[JH_/_02] What I actually do</div>
+    <h2 class="big" data-i18n="do.h2">Keeping the shoot moving.</h2>
     <div class="chapters">
       <div class="ch">
         <div class="n">01</div>
         <h3 data-i18n="do.cap.h">Capture</h3>
-        <p data-i18n="do.cap.p">The camera talks to the station, the station talks to the client screen. Nobody stands around waiting for a frame.</p>
+        <p data-i18n="do.cap.p">I run a fast, organised Capture One workflow, keeping the photographer shooting and the agency and client close to the images as they come in.</p>
+        <ul>
+          <li data-i18n="do.cap.1">Capture One sessions, naming and structure</li>
+          <li data-i18n="do.cap.2">Phase One · Hasselblad · Canon · Nikon · Sony · Fuji</li>
+          <li data-i18n="do.cap.3">Live view, focus checks and frame overlays</li>
+          <li data-i18n="do.cap.4">Phase One Certified Professional</li>
+        </ul>
       </div>
       <div class="ch">
         <div class="n">02</div>
         <h3 data-i18n="do.col.h">Colour</h3>
-        <p data-i18n="do.col.p">A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher's inbox. Styles and ICC set before the first frame, not after.</p>
+        <p data-i18n="do.col.p">I build the look with the photographer and keep it consistent across the shoot, from the first test to the final handover.</p>
+        <ul>
+          <li data-i18n="do.col.1">Calibrated client monitoring</li>
+          <li data-i18n="do.col.2">Styles, ICC profiles and capture adjustments</li>
+          <li data-i18n="do.col.3">On-set comps, plates and stitching</li>
+          <li data-i18n="do.col.4">Selects, exports and client previews</li>
+        </ul>
       </div>
       <div class="ch">
         <div class="n">03</div>
         <h3 data-i18n="do.dat.h">Data</h3>
-        <p data-i18n="do.dat.p">Three copies before the cards go back in the bag. The words “where's the file” do not get said on a day I am running.</p>
+        <p data-i18n="do.dat.p">Every frame is organised, checked and backed up throughout the day, with a clean handover when we wrap.</p>
+        <ul>
+          <li data-i18n="do.dat.1">Three-copy backup workflow</li>
+          <li data-i18n="do.dat.2">ChronoSync mirroring</li>
+          <li data-i18n="do.dat.3">Shot logs, metadata and file naming</li>
+          <li data-i18n="do.dat.4">Screens, power and cable management</li>
+        </ul>
       </div>
     </div>
     <div class="secno" data-i18n="kit.secno">[JH_/_03] Data</div>
@@ -1238,61 +1270,61 @@ var CAPS = [
  'Exports out before the client asks for them'
 ];
 
-/* Official marks from Desktop/Brand Logos. ink:1 = black/navy SVG → white on #000. */
+/* Official marks from Desktop/Brand Logos. knock:1 = white-on-transparent → ink on paper. */
 var LOGOS = [
-  {f:'cv/nike.svg', n:'Nike', ink:1},
-  {f:'cv/adidas.svg', n:'adidas', ink:1},
+  {f:'cv/nike.svg', n:'Nike'},
+  {f:'cv/adidas.svg', n:'adidas'},
   {f:'cv/netflix.svg', n:'Netflix'},
-  {f:'cv/mercedes-benz.svg', n:'Mercedes-Benz', ink:1},
-  {f:'cv/off-white.svg', n:'Off-White', ink:1},
-  {f:'cv/uber.svg', n:'Uber', ink:1},
-  {f:'cv/amazon.svg', n:'Amazon', ink:1},
-  {f:'cv/audi.svg', n:'Audi', ink:1},
-  {f:'cv/volkswagen.svg', n:'Volkswagen', ink:1},
+  {f:'cv/mercedes-benz.svg', n:'Mercedes-Benz'},
+  {f:'cv/off-white.svg', n:'Off-White'},
+  {f:'cv/uber.svg', n:'Uber'},
+  {f:'cv/amazon.svg', n:'Amazon'},
+  {f:'cv/audi.svg', n:'Audi'},
+  {f:'cv/volkswagen.svg', n:'Volkswagen'},
   {f:'diageo-mark.png', n:'Diageo', knock:1},
-  {f:'cv/fc-barcelona.svg', n:'FC Barcelona'},
-  {f:'cv/the-north-face.svg', n:'The North Face'},
+  {f:'cv/fc-barcelona.svg', n:'FC Barcelona', sq:1},
+  {f:'cv/the-north-face.svg', n:'The North Face', sq:1},
   {f:'cv/new-balance.svg', n:'New Balance'},
-  {f:'cv/bloomberg.svg', n:'Bloomberg', ink:1},
-  {f:'cv/reuters.svg', n:'Reuters', ink:1},
-  {f:'cv/getty.svg', n:'Getty', ink:1},
+  {f:'cv/bloomberg.svg', n:'Bloomberg'},
+  {f:'cv/reuters.svg', n:'Reuters'},
+  {f:'cv/getty.svg', n:'Getty'},
   {f:'cv/the-macallan.svg', n:'The Macallan'},
   {f:'cv/stella-artois.png', n:'Stella Artois'},
-  {f:'cv/guinness.svg', n:'Guinness', ink:1},
-  {f:'cv/bacardi.svg', n:'Bacardi', ink:1},
+  {f:'cv/guinness.svg', n:'Guinness', sq:1},
+  {f:'cv/bacardi.svg', n:'Bacardi'},
   {f:'cv/bombay-sapphire.png', n:'Bombay Sapphire', knock:1},
   {f:'cv/don-papa.svg', n:'Don Papa', knock:1},
-  {f:'cv/fwrd.svg', n:'FWRD', ink:1},
-  {f:'cv/harvey-nichols.svg', n:'Harvey Nichols'},
-  {f:'cv/free-people.svg', n:'Free People', ink:1},
-  {f:'cv/mahou.png', n:'Mahou', knock:1},
-  {f:'cv/cupra.svg', n:'Cupra', ink:1},
-  {f:'marks/sfera.png', n:'Sfera', knock:1},
-  {f:'cv/die-zeit.svg', n:'Die Zeit', ink:1},
-  {f:'cv/senseo.svg', n:'Senseo', ink:1},
-  {f:'cv/matthew-williamson.png', n:'Matthew Williamson', ink:1},
-  {f:'cv/0039-italy.svg', n:'0039 Italy', ink:1},
-  {f:'cv/questex.svg', n:'Questex', ink:1},
+  {f:'cv/fwrd.svg', n:'FWRD'},
+  {f:'cv/harvey-nichols.svg', n:'Harvey Nichols', knock:1},
+  {f:'cv/free-people.svg', n:'Free People'},
+  {f:'mahou.svg', n:'Mahou', sq:1, blend:1},
+  {f:'cv/cupra.svg', n:'Cupra'},
+  {f:'marks/sfera.svg', n:'Sfera'},
+  {f:'cv/die-zeit.svg', n:'Die Zeit'},
+  {f:'cv/senseo.svg', n:'Senseo'},
+  {f:'cv/matthew-williamson.png', n:'Matthew Williamson'},
+  {f:'cv/0039-italy.svg', n:'0039 Italy'},
+  {f:'cv/questex.svg', n:'Questex'},
   {f:'cv/truegroup.png', n:'TrueGroup', knock:1}
 ];
 
 /* Production houses from JOBS.md. Canadá is the real mark; the rest are nameplates
-   where a clean vector wasn't on disk. */
+   where a clean vector wasn't on disk. knock:1 = white nameplate → ink on paper. */
 var PRODS = [
-  {f:'canada.png', n:'Canadá'},
+  {f:'canada.png', n:'Canadá', knock:1},
   {f:'cv/apostrophe.png', n:'Apostrophe'},
-  {f:'palma-pictures.png', n:'Palma Pictures'},
-  {f:'xlob.png', n:'xLOB'},
-  {f:'rayo-productions.png', n:'Rayo Productions'},
-  {f:'fight-films.png', n:'Fight Films'},
-  {f:'blondes-pool.png', n:"The Blonde's Pool"},
-  {f:'twentyfour-seven.png', n:'Twentyfour Seven Plus'},
-  {f:'and-rosas.png', n:'&Rosàs'},
-  {f:'nouri-films.png', n:'Nouri Films'},
-  {f:'bakery-productions.png', n:'Bakery Productions'},
-  {f:'oas-company.png', n:'OAS Company'},
-  {f:'inezz.png', n:'Inezz Productions'},
-  {f:'truegroup.png', n:'TrueGroup'}
+  {f:'palma-pictures.png', n:'Palma Pictures', knock:1},
+  {f:'xlob.png', n:'xLOB', knock:1},
+  {f:'rayo-productions.png', n:'Rayo Productions', knock:1},
+  {f:'fight-films.png', n:'Fight Films', knock:1},
+  {f:'blondes-pool.png', n:"The Blonde's Pool", knock:1},
+  {f:'twentyfour-seven.png', n:'Twentyfour Seven Plus', knock:1},
+  {f:'and-rosas.png', n:'&Rosàs', knock:1},
+  {f:'nouri-films.png', n:'Nouri Films', knock:1},
+  {f:'bakery-productions.png', n:'Bakery Productions', knock:1},
+  {f:'oas-company.png', n:'OAS Company', knock:1},
+  {f:'inezz.png', n:'Inezz Productions', knock:1},
+  {f:'cv/truegroup.png', n:'TrueGroup', knock:1}
 ];
 
 /* work table — verbatim from JOBS.md */
@@ -1446,29 +1478,31 @@ var I18N = {
     'polaroid.attr': '— a producer at Canadá',
     'brands.secno': 'Brands',
     'brands.prod': 'Production',
-    'do.secno': '[JH_/_02] Services',
-    'do.h2': 'The station.',
-    'do.lede': 'Capture, colour, data. Same rig in every city.',
+    'do.secno': '[JH_/_02] What I actually do',
+    'do.h2': 'Keeping the shoot moving.',
+    'do.lede': 'Keeping the shoot moving.',
     'do.globe': 'The same station, wherever the call sheet says.',
     'do.cap.h': 'Capture',
     'do.cap.aphor': 'Tether that does not drop.',
-    'do.cap.p': 'The camera talks to the station, the station talks to the client screen. Nobody stands around waiting for a frame.',
-    'do.cap.1': 'Capture One Pro sessions, named and structured',
-    'do.cap.3': 'Live view, focus checks, frame overlays',
+    'do.cap.p': 'I run a fast, organised Capture One workflow, keeping the photographer shooting and the agency and client close to the images as they come in.',
+    'do.cap.1': 'Capture One sessions, naming and structure',
+    'do.cap.2': 'Phase One · Hasselblad · Canon · Nikon · Sony · Fuji',
+    'do.cap.3': 'Live view, focus checks and frame overlays',
+    'do.cap.4': 'Phase One Certified Professional',
     'do.col.h': 'Colour',
     'do.col.aphor': 'Colour is a decision, not a preset.',
-    'do.col.p': 'A calibrated client screen so the approval you give at 19:40 is the same image that lands in the retoucher\'s inbox. Styles and ICC set before the first frame, not after.',
-    'do.col.1': 'Monitor calibration and profiling',
-    'do.col.2': 'Session styles, ICC, capture adjustments',
-    'do.col.3': 'Layered comps and stitching on set',
-    'do.col.4': 'Selects, exports and client-ready previews',
+    'do.col.p': 'I build the look with the photographer and keep it consistent across the shoot, from the first test to the final handover.',
+    'do.col.1': 'Calibrated client monitoring',
+    'do.col.2': 'Styles, ICC profiles and capture adjustments',
+    'do.col.3': 'On-set comps, plates and stitching',
+    'do.col.4': 'Selects, exports and client previews',
     'do.dat.h': 'Data',
     'do.dat.aphor': 'Three copies before the cards go back in the bag.',
-    'do.dat.p': 'Three copies before the cards go back in the bag. The words “where\'s the file” do not get said on a day I am running.',
-    'do.dat.1': 'Card plus two destinations, checksum verified',
-    'do.dat.2': 'ChronoSync mirroring, structured hand-off',
-    'do.dat.3': 'Shot logs, metadata, naming conventions',
-    'do.dat.4': 'Power, distro, screens, cable management',
+    'do.dat.p': 'Every frame is organised, checked and backed up throughout the day, with a clean handover when we wrap.',
+    'do.dat.1': 'Three-copy backup workflow',
+    'do.dat.2': 'ChronoSync mirroring',
+    'do.dat.3': 'Shot logs, metadata and file naming',
+    'do.dat.4': 'Screens, power and cable management',
     'doshot.0': 'Cart rigged · Dual client screens · Power on distro',
     'doshot.1': 'Station shaded · Cables dressed · Backup in the rack',
     'doshot.2': 'Capture One live · Client screen calibrated · Set running',
@@ -1643,29 +1677,31 @@ var I18N = {
     'polaroid.attr': '— un productor de Canadá',
     'brands.secno': 'Marcas',
     'brands.prod': 'Producción',
-    'do.secno': '[JH_/_02] Servicios',
-    'do.h2': 'La estación.',
-    'do.lede': 'Captura, color, datos. El mismo rig en cada ciudad.',
+    'do.secno': '[JH_/_02] Lo que hago de verdad',
+    'do.h2': 'Que el set no pare.',
+    'do.lede': 'Que el set no pare.',
     'do.globe': 'La misma estación, donde diga el call sheet.',
     'do.cap.h': 'Captura',
     'do.cap.aphor': 'Tether que no se cae.',
-    'do.cap.p': 'La cámara habla con la estación, la estación habla con la pantalla del cliente. Nadie espera un fotograma.',
-    'do.cap.1': 'Sesiones de Capture One Pro, nombradas y estructuradas',
-    'do.cap.3': 'Visión en directo, chequeos de foco, superposición de recuadro',
+    'do.cap.p': 'Llevo un flujo de Capture One rápido y ordenado: el fotógrafo sigue disparando y la agencia y el cliente ven las imágenes según entran.',
+    'do.cap.1': 'Sesiones de Capture One, nombres y estructura',
+    'do.cap.2': 'Phase One · Hasselblad · Canon · Nikon · Sony · Fuji',
+    'do.cap.3': 'Live view, chequeos de foco y superposición de recuadro',
+    'do.cap.4': 'Phase One Certified Professional',
     'do.col.h': 'Color',
     'do.col.aphor': 'El color es una decisión, no un preset.',
-    'do.col.p': 'Una pantalla de cliente calibrada para que el ok que das a las 19:40 sea la misma imagen que llega al retocador. Estilos e ICC puestos antes del primer disparo, no después.',
-    'do.col.1': 'Calibración y perfilado de monitor',
-    'do.col.2': 'Estilos de sesión, ICC, ajustes de captura',
-    'do.col.3': 'Composiciones por capas y uniones en el set',
-    'do.col.4': 'Selección, exportaciones y previsualizaciones para el cliente',
+    'do.col.p': 'Construyo el look con el fotógrafo y lo mantengo en todo el día, de la primera prueba al hand-off.',
+    'do.col.1': 'Monitor de cliente calibrado',
+    'do.col.2': 'Estilos, perfiles ICC y ajustes de captura',
+    'do.col.3': 'Comps, plates y uniones en el set',
+    'do.col.4': 'Selects, exportaciones y previews para el cliente',
     'do.dat.h': 'Datos',
     'do.dat.aphor': 'Tres copias antes de que las tarjetas vuelvan a la bolsa.',
-    'do.dat.p': 'Tres copias antes de que las tarjetas vuelvan a la bolsa. En un día mío no se dice «dónde está el archivo».',
-    'do.dat.1': 'Tarjeta más dos destinos, checksum verificado',
-    'do.dat.2': 'Espejo con ChronoSync, entrega estructurada',
-    'do.dat.3': 'Registros de toma, metadatos, convención de nombres',
-    'do.dat.4': 'Corriente, distro, pantallas, gestión de cables',
+    'do.dat.p': 'Cada fotograma está organizado, comprobado y copiado durante el día, con un hand-off limpio al wrap.',
+    'do.dat.1': 'Flujo de copias por triplicado',
+    'do.dat.2': 'Espejo con ChronoSync',
+    'do.dat.3': 'Registros de toma, metadatos y nombres de archivo',
+    'do.dat.4': 'Pantallas, corriente y gestión de cables',
     'doshot.0': 'Carro montado · Doble pantalla de cliente · Corriente en el distro',
     'doshot.1': 'Estación a la sombra · Cables colocados · Copia en el rack',
     'doshot.2': 'Capture One en vivo · Pantalla de cliente calibrada · Set en marcha',
@@ -3081,7 +3117,12 @@ var STILL_CREDIT = {
 /* Brands = static grid (James). Production = thin ticker (Alice). */
 (function(){
   function markImg(l){
-    return '<img loading="lazy" src="img/logos/' + l.f +
+    var cls = [];
+    if(l.knock) cls.push('knock');
+    if(l.sq) cls.push('sq');
+    if(l.blend) cls.push('blend');
+    return '<img loading="lazy"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +
+           ' src="img/logos/' + l.f +
            '" alt="' + esc(l.n) + '" onerror="this.style.display=\'none\'">';
   }
   function fillGrid(node, list){
