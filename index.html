@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- mobile-cities-2026-09-07 job cities share one column -->
 <!-- mobile-pass-2026-09-07 hamburger opens; chrome clear of copy -->
 <!-- nav-lang-2026-09-07 EN/ES on main page actually switches -->
 <!-- copy-pass-2026-09-07 ES services + labels + BTS + contact + credits -->
@@ -634,7 +635,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .row.head{display:none!important}
   .row{
     display:grid;
-    grid-template-columns:auto 1fr;
+    grid-template-columns:9ch 1fr;
     grid-template-areas:
       "yr ci"
       "cl cl"
@@ -647,17 +648,17 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     border-bottom:.4pt solid var(--rule);
   }
   .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
-    grid-column:auto!important;max-width:100%;
+    max-width:100%;
   }
   .row .yr{
     grid-area:yr;margin:0;width:auto;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums;
   }
   .row .yr::before,.row .yr::after{content:none!important}
   .row .ci{
-    grid-area:ci;margin:0;width:auto;
-    display:inline; /* city name only — no "City" label in markup */
+    grid-area:ci;margin:0;width:auto;justify-self:start;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
   }
@@ -822,7 +823,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .row.head{display:none!important}
   .row{
     display:grid;
-    grid-template-columns:auto 1fr;
+    grid-template-columns:9ch 1fr;
     grid-template-areas:
       "yr ci"
       "cl cl"
@@ -835,17 +836,17 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     border-bottom:.4pt solid var(--rule);
   }
   .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
-    grid-column:auto!important;max-width:100%;
+    max-width:100%;
   }
   .row .yr{
     grid-area:yr;margin:0;width:auto;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums;
   }
   .row .yr::before,.row .yr::after{content:none!important}
   .row .ci{
-    grid-area:ci;margin:0;width:auto;
-    display:inline; /* city name only — no "City" label in markup */
+    grid-area:ci;margin:0;width:auto;justify-self:start;
     font-family:var(--sans);font-weight:700;font-size:13px;color:var(--grey2);
     letter-spacing:-.01em;
   }
