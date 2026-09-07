@@ -3230,35 +3230,20 @@ function placeDossier(){
   dossier.style.top = Math.round(y) + 'px';
 }
 function openDossier(id){
-  if(!id || !dossier || !dBody) return;
+  if(!id) return;
   var c = CITIES.filter(function(x){ return x.id === id; })[0];
   if(!c) return;
   var credits = CREDITS[id] || [];
   if(!credits.length) return;
   activePin = id;
   stuckPin = id;
-  hideReadout();
-  easeTarget = { lon: c.lon, lat: Math.max(-35, Math.min(35, c.lat * 0.4)) };
-  var html = '<h2>' + esc(cityName(c)) + '</h2>';
-  if(credits.length){
-    credits.forEach(function(r){
-      var client = r.url
-        ? ('<a class="cl" href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.c) + '</a>')
-        : ('<span class="cl">' + esc(r.c) + '</span>');
-      html += '<div class="cred">' +
-        '<span class="y">' + esc(r.y) + '</span> · ' +
-        client +
-      '</div>';
-    });
+  if(dossier){
+    dossier.classList.remove('on');
+    dossier.setAttribute('aria-hidden','true');
+    dossier.setAttribute('hidden','');
   }
-  dBody.innerHTML = html;
-  dossier.classList.add('on');
-  dossier.setAttribute('aria-hidden','false');
-  dossier.removeAttribute('hidden');
   if(scrim) scrim.classList.remove('on');
-  placeDossier();
-  var xc = $('#dClose');
-  if(xc) xc.removeAttribute('tabindex');
+  showReadout(c);
 }
 function closeDossier(){
   activePin = null; hoverPin = null; stuckPin = null; easeTarget = null;
