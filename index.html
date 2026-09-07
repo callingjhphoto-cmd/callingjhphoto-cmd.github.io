@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-ios-2026-09-07 native pan-x on phone; flick does not open still -->
 <!-- carousel-inset-2026-09-07 mobile work strip matches page margins -->
 <!-- brands-center-2026-09-07 mobile Brands + Production grids centered -->
 <!-- carousel-touch-2026-09-07 phone swipe pans the strip, does not open inspect -->
@@ -242,7 +243,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .pc-lane{
   overflow-x:auto;overflow-y:hidden;margin-bottom:20px;min-height:320px;
   -webkit-overflow-scrolling:touch;scrollbar-width:none;
-  cursor:grab;touch-action:pan-y;overscroll-behavior-x:contain;
+  cursor:grab;touch-action:pan-x;overscroll-behavior-x:contain;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
@@ -655,11 +656,11 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
   .postcard .pc-body{min-height:96px}
-  .pc-bleed{
-    width:var(--wrap);margin-left:auto;margin-right:auto;
-    padding-left:24px;padding-right:24px;box-sizing:border-box;
+  .pc-bleed{width:auto;margin-left:0;margin-right:0;padding-left:0;padding-right:0}
+  .pc-lane{
+    min-height:260px;-webkit-mask-image:none;mask-image:none;
+    padding-left:24px;padding-right:24px;touch-action:pan-x;
   }
-  .pc-lane{min-height:260px;-webkit-mask-image:none;mask-image:none}
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
   #flyby .card{width:240px}
   #flyby .card img{height:160px}
@@ -827,7 +828,8 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #work.band{padding-bottom:28px}
   #do.band{padding-top:28px}
   .wrap{padding-left:16px;padding-right:16px}
-  .pc-bleed{padding-left:16px;padding-right:16px}
+  .pc-bleed{padding-left:0;padding-right:0}
+  .pc-lane{padding-left:16px;padding-right:16px;touch-action:pan-x}
   .secno,.meta,.tech,.fieldband .cap{
     font-size:9px;letter-spacing:.1em
   }
@@ -3196,7 +3198,7 @@ var STILL_CREDIT = {
       var track = lane.querySelector('.pc-track');
       if(!track) return;
       var hovering = false, dragging = false, last = 0, half = 0;
-      var sx = 0, sy = 0, sl = 0, moved = 0, axis = null;
+      var sx = 0, sl = 0, moved = 0;
       function measure(){
         half = track.scrollWidth / 2;
         if(reverse && lane.scrollLeft < 8 && half > 1) lane.scrollLeft = half;
@@ -3260,44 +3262,52 @@ var STILL_CREDIT = {
         e.preventDefault();
         setX(lane.scrollLeft + delta);
       }, {passive:false});
+      /* Mouse: JS drag. Touch: native overflow-x (iOS). Never capture on touch —
+         that was eating the swipe and opening the still. */
       lane.addEventListener('pointerdown', function(e){
         if(e.pointerType === 'mouse' && e.button !== 0) return;
         pauseCreep();
+        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
+        if(e.pointerType !== 'mouse') return;
         dragging = true;
-        axis = null;
-        sx = e.clientX; sy = e.clientY; sl = lane.scrollLeft; moved = 0;
         lane.classList.add('is-dragging');
         try { lane.setPointerCapture(e.pointerId); } catch(err){}
       });
       lane.addEventListener('pointermove', function(e){
         if(!dragging) return;
-        var dx = e.clientX - sx, dy = e.clientY - sy;
-        if(!axis){
-          if(Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-          axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
-          if(axis === 'y'){
-            dragging = false;
-            lane.classList.remove('is-dragging');
-            try { lane.releasePointerCapture(e.pointerId); } catch(err){}
-            return;
-          }
-        }
-        if(axis !== 'x') return;
-        if(e.cancelable) e.preventDefault();
+        var dx = e.clientX - sx;
         moved = Math.max(moved, Math.abs(dx));
         setX(sl - dx);
-      }, {passive:false});
-      function endDrag(e){
+      });
+      function endMouseDrag(){
+        if(!dragging) return;
         if(moved > 8) lane._skipClick = true;
         dragging = false;
-        axis = null;
         lane.classList.remove('is-dragging');
-        if(e && e.pointerType === 'mouse') playCreep();
-        else playCreepSoon();
+        playCreep();
       }
-      lane.addEventListener('pointerup', endDrag);
-      lane.addEventListener('pointercancel', endDrag);
-      lane.addEventListener('touchend', playCreepSoon, {passive:true});
+      lane.addEventListener('pointerup', function(e){
+        if(e.pointerType === 'mouse') endMouseDrag();
+        else{
+          if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
+          playCreepSoon();
+        }
+      });
+      lane.addEventListener('pointercancel', function(e){
+        if(e.pointerType === 'mouse') endMouseDrag();
+        else playCreepSoon();
+      });
+      lane.addEventListener('touchstart', function(){
+        pauseCreep();
+        sl = lane.scrollLeft;
+      }, {passive:true});
+      lane.addEventListener('touchmove', function(){
+        if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
+      }, {passive:true});
+      lane.addEventListener('touchend', function(){
+        if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
+        playCreepSoon();
+      }, {passive:true});
       lane.addEventListener('touchcancel', playCreepSoon, {passive:true});
     }
     document.querySelectorAll('.pc-lane').forEach(function(lane){
