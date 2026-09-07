@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- mobile-pass-2026-09-07 hamburger opens; chrome clear of copy -->
 <!-- nav-lang-2026-09-07 EN/ES on main page actually switches -->
 <!-- copy-pass-2026-09-07 ES services + labels + BTS + contact + credits -->
 <!-- carousel-scrub-2026-09-07 wheel/drag both ways; auto-creep only when cursor is off -->
@@ -476,6 +477,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   display:none;flex-direction:column;align-items:center;gap:6px;
 }
 #bookFab.on{display:flex}
+html.contact-in #bookFab.on{display:none}
 #bookFab .globe-wrap{
   width:120px;height:120px;border-radius:50%;
   background:#000;border:1px solid #111;
@@ -489,10 +491,11 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   letter-spacing:var(--ls-label);font-size:var(--fs-label);text-transform:none;
   min-height:var(--hit);display:inline-flex;align-items:center;
 }
-#bookScrim{position:fixed;inset:0;z-index:125;background:rgba(17,17,17,.55);display:none}
+#bookScrim{position:fixed;inset:0;z-index:600;background:rgba(17,17,17,.55);display:none}
 #bookScrim.on{display:block}
+html.book-open nav{visibility:hidden;pointer-events:none}
 #bookSheet{
-  position:fixed;right:18px;bottom:160px;z-index:126;width:min(400px,calc(100vw - 28px));
+  position:fixed;right:18px;bottom:160px;z-index:601;width:min(400px,calc(100vw - 28px));
   background:var(--ink);border:.5pt solid #333;padding:28px 24px 22px;color:var(--paper);
   display:none;max-height:min(86vh,640px);overflow:auto;border-radius:0;
 }
@@ -565,12 +568,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
     overflow:visible;
     padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
-    background:transparent;z-index:74
+    background:transparent;z-index:520
   }
   .nav-toggle{
     display:inline-flex!important;align-items:center;justify-content:center;
     width:44px;height:44px;padding:0;border:0;background:var(--paper);
-    border:.4pt solid var(--rule);cursor:pointer;z-index:75;position:relative;
+    border:.4pt solid var(--rule);cursor:pointer;z-index:521;position:relative;
+    touch-action:manipulation;
+    box-shadow:0 0 0 6px var(--paper);
   }
   .nav-toggle-bars,
   .nav-toggle-bars:before,
@@ -610,7 +615,13 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     justify-content:flex-start;
   }
   html{scroll-padding-top:calc(52px + env(safe-area-inset-top, 0px))}
+  #work, #do, #flyby, #contact, #brands{
+    scroll-margin-top:calc(56px + env(safe-area-inset-top, 0px));
+  }
+  h2.big, .lane-title, #contact h2, .lede{padding-right:72px;box-sizing:border-box}
+  .brand-grid{padding-left:8px;padding-right:64px;box-sizing:border-box}
   .chapters{grid-template-columns:1fr;gap:28px}
+  .ch{padding-right:72px;box-sizing:border-box}
   .postcard{width:168px}
   .postcard .pc-img{min-height:210px}.postcard .pc-img img{height:210px}
   .postcard .pc-body{min-height:96px}
@@ -632,7 +643,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     column-gap:8px;
     row-gap:8px;
     align-items:baseline;
-    padding:18px 0;
+    padding:18px 72px 18px 0;
     border-bottom:.4pt solid var(--rule);
   }
   .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
@@ -695,12 +706,14 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     display:flex!important;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;gap:0;
     overflow:visible;
     padding:calc(4px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 4px 10px;
-    background:transparent;z-index:74
+    background:transparent;z-index:520
   }
   .nav-toggle{
     display:inline-flex;align-items:center;justify-content:center;
     width:44px;height:44px;padding:0;border:0;background:var(--paper);
-    border:.4pt solid var(--rule);cursor:pointer;z-index:75;position:relative;
+    border:.4pt solid var(--rule);cursor:pointer;z-index:521;position:relative;
+    touch-action:manipulation;
+    box-shadow:0 0 0 6px var(--paper);
   }
   .nav-toggle-bars,
   .nav-toggle-bars:before,
@@ -749,7 +762,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   .hero-copy .meta{margin-top:6px;position:relative;z-index:13}
   #bookFab{
     right:10px;
-    bottom:calc(16px + env(safe-area-inset-bottom, 0px) + 72px);
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px));
     width:64px;touch-action:manipulation
   }
   #bookFab .globe-wrap{width:64px;height:64px}
@@ -760,6 +773,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
+  #brands, #do, #flyby{padding-bottom:calc(100px + env(safe-area-inset-bottom, 0px))}
   .brand-grid{gap:18px 20px}
   .brand-grid img{height:28px;max-height:28px;max-width:88px}
   .brand-grid img.sq{height:34px;max-height:34px;max-width:40px}
@@ -782,10 +796,9 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     font-size:9px;letter-spacing:.1em
   }
   .spec{margin-top:28px;padding-top:12px;gap:8px}
-  .spec-row{grid-template-columns:1fr;gap:4px 0}
+  .spec-row{grid-template-columns:1fr;gap:4px 0;padding-right:72px}
   .spec-k{font-size:18px;letter-spacing:-.03em}
-  .spec-v{font-size:12px}
-  .spec-v{font-size:9px;letter-spacing:.06em;line-height:1.5}
+  .spec-v{font-size:11px;letter-spacing:.06em;line-height:1.5}
   #work .tbl{margin-top:28px;font-size:12px}
   .row{gap:2px 10px;padding:8px 0}
   .row .ti{font-size:13px;letter-spacing:-.01em}
@@ -800,7 +813,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   #flyby .tierhd{font-size:9px;margin:0 0 16px}
   #flyby .card{width:200px}
   #flyby .card img{height:132px}
-  #flyby .card .cap{font-size:8px;letter-spacing:.08em}
+  #flyby .card .cap{font-size:10px;letter-spacing:.08em;line-height:1.4}
   #contact{padding:48px 0 calc(120px + env(safe-area-inset-bottom, 0px))}
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
@@ -818,7 +831,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
     column-gap:8px;
     row-gap:8px;
     align-items:baseline;
-    padding:18px 0;
+    padding:18px 72px 18px 0;
     border-bottom:.4pt solid var(--rule);
   }
   .row .yr,.row .cl,.row .pr,.row .ph,.row .ci{
@@ -2040,6 +2053,33 @@ function pickLang(lang, e){
   }
   startBoot();
 }
+
+(function(){
+  var nav = $('#siteNav');
+  var toggle = $('#navToggle');
+  if(!nav || !toggle) return;
+  function setOpen(on){
+    nav.classList.toggle('is-open', !!on);
+    toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  function closeNav(){ setOpen(false); }
+  toggle.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    setOpen(!nav.classList.contains('is-open'));
+  });
+  nav.querySelectorAll('a, .langbtn').forEach(function(n){
+    n.addEventListener('click', closeNav);
+  });
+  document.addEventListener('click', function(e){
+    if(!nav.classList.contains('is-open')) return;
+    if(nav.contains(e.target)) return;
+    closeNav();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeNav();
+  });
+})();
 
 var gateFlockStop = null;
 (function(){
@@ -3442,7 +3482,7 @@ function dockOverlays(){
   var bottomGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   var rightGap = Math.max(0, window.innerWidth - (offsetLeft + visW));
   if(fab){
-    fab.style.bottom = (bottomGap + 72) + 'px';
+    fab.style.bottom = (bottomGap + 16) + 'px';
     fab.style.right = Math.max(12, rightGap + 12) + 'px';
   }
   /* Do NOT rewrite #stage height from visualViewport — Safari chrome hide/show
@@ -3475,6 +3515,7 @@ function openBook(e){
   sheet.classList.add('on');
   if(scrim) scrim.classList.add('on');
   if(fab) fab.classList.remove('on');
+  document.documentElement.classList.add('book-open');
   lockPage(true);
   dockOverlays();
   var from = $('#bookFrom');
@@ -3488,6 +3529,7 @@ function closeBook(){
   }
   if(scrim) scrim.classList.remove('on');
   if(fab) fab.classList.add('on');
+  document.documentElement.classList.remove('book-open');
   lockPage(false);
   dockOverlays();
 }
@@ -3506,6 +3548,14 @@ if(window.visualViewport){
   if(x) x.addEventListener('click', closeBook);
   var scrim = $('#bookScrim');
   if(scrim) scrim.addEventListener('click', closeBook);
+  var contact = $('#contact');
+  if(contact && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      var on = entries[0] && entries[0].isIntersecting;
+      document.documentElement.classList.toggle('contact-in', !!on);
+    }, {threshold:0, rootMargin:'0px'});
+    io.observe(contact);
+  }
   if(!form) return;
   form.addEventListener('focusin', function(e){
     var n = e.target;
