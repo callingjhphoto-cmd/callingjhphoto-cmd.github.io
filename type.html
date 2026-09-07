@@ -1575,7 +1575,7 @@ var I18N = {
     'nav.bts': 'BTS',
     'nav.menu': 'Menu',
     'nav.book': 'Book',
-    'hero.h1': 'international<br>campaigns.<br>secure <em>capture</em>.',
+    'hero.h1': 'International<br>campaigns.<br>Secure <em>capture</em>.',
     'hero.role': 'Digital Technician & Lighting Assistant',
     'book.h1': 'Send the dates.<br>I\'ll send the rate.',
     'work.secno': '[JH_/_01] Work',
@@ -1776,7 +1776,7 @@ var I18N = {
     'nav.bts': 'BTS',
     'nav.menu': 'Menú',
     'nav.book': 'Reserva',
-    'hero.h1': 'campañas<br>internacionales.<br>captura <em>segura</em>.',
+    'hero.h1': 'Campañas<br>internacionales.<br>Captura <em>segura</em>.',
     'hero.role': 'Técnico digital y ayudante de iluminación',
     'book.h1': 'Manda las fechas.<br>Te mando la tarifa.',
     'work.secno': '[JH_/_01] Trabajo',
@@ -3168,22 +3168,21 @@ cv.addEventListener('dblclick', function(){ setZoom(zoom > 1.4 ? 1 : 1.55); kick
 var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   if(!readout) return;
+  var credits = CREDITS[c.id] || [];
+  if(!credits.length){
+    hideReadout();
+    return;
+  }
   readoutCity = c;
   var html = '<div class="c">' + esc(cityName(c)) + '</div>';
   if(c.yrs && c.yrs !== '—') html += '<div class="x">' + esc(c.yrs) + '</div>';
-  var credits = CREDITS[c.id] || [];
-  if(!credits.length){
-    html += '<div class="empty">' + esc(t('pin.none') || 'No credit on file.') + '</div>';
-  } else {
-    html += '<ul class="jobs">';
-    credits.forEach(function(r){
-      html += '<li><span class="jy">' + esc(r.y) + '</span><span class="jc">' + esc(r.c) + '</span>' +
-        (r.ph && r.ph !== '—' ? '<span class="jp">' + esc(r.ph) + '</span>' : '') +
-      '</li>';
-    });
-    html += '</ul>';
-    html += '<div class="go">' + esc(t('pin.go') || 'Projects →') + '</div>';
-  }
+  html += '<ul class="jobs">';
+  credits.forEach(function(r){
+    html += '<li><span class="jy">' + esc(r.y) + '</span><span class="jc">' + esc(r.c) + '</span>' +
+      (r.ph && r.ph !== '—' ? '<span class="jp">' + esc(r.ph) + '</span>' : '') +
+    '</li>';
+  });
+  html += '</ul>';
   readout.innerHTML = html;
   readout.classList.add('on');
 }
@@ -3234,15 +3233,14 @@ function openDossier(id){
   if(!id || !dossier || !dBody) return;
   var c = CITIES.filter(function(x){ return x.id === id; })[0];
   if(!c) return;
+  var credits = CREDITS[id] || [];
+  if(!credits.length) return;
   activePin = id;
   stuckPin = id;
   hideReadout();
   easeTarget = { lon: c.lon, lat: Math.max(-35, Math.min(35, c.lat * 0.4)) };
-  var credits = CREDITS[id] || [];
   var html = '<h2>' + esc(cityName(c)) + '</h2>';
-  if(!credits.length){
-    html += '<div class="none">' + esc(t('pin.none') || 'No credit on file.') + '</div>';
-  } else {
+  if(credits.length){
     credits.forEach(function(r){
       var client = r.url
         ? ('<a class="cl" href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.c) + '</a>')
