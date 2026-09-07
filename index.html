@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- brands-center-2026-09-07 mobile Brands + Production grids centered -->
 <!-- carousel-touch-2026-09-07 phone swipe pans the strip, does not open inspect -->
 <!-- nav-no-chip-2026-09-07 no white bar under desktop nav -->
 <!-- corr-pass-2026-09-07 lang switch, services align, kit gap, header, Londres, ph, footer -->
@@ -646,7 +647,8 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     scroll-margin-top:calc(56px + env(safe-area-inset-top, 0px));
   }
   h2.big, .lane-title, #contact h2, .lede{padding-right:72px;box-sizing:border-box}
-  .brand-grid{padding-left:8px;padding-right:64px;box-sizing:border-box}
+  .lane-title.brands-title, .lane-title.prod-title{padding-right:0;text-align:center}
+  .brand-grid{padding:8px 4px 12px;box-sizing:border-box;justify-content:center}
   .chapters{grid-template-columns:1fr;grid-template-rows:none;gap:28px}
   .ch{display:block;grid-row:auto;padding-right:72px;box-sizing:border-box}
   .postcard{width:168px}
@@ -813,6 +815,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     font-size:clamp(28px, 7.5vw, 40px);letter-spacing:-.03em;text-transform:none;
     margin:0 0 16px;line-height:.95
   }
+  .lane-title.brands-title, .lane-title.prod-title{padding-right:0;text-align:center}
   .lane-title.prod-title{margin-top:48px}
   #brands{margin-top:20px}
   section.band{padding:40px 0}
