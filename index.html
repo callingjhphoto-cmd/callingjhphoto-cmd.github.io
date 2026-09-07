@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-touch-2026-09-07 phone swipe pans the strip, does not open inspect -->
 <!-- nav-no-chip-2026-09-07 no white bar under desktop nav -->
 <!-- corr-pass-2026-09-07 lang switch, services align, kit gap, header, Londres, ph, footer -->
 <!-- carousel-resume-2026-09-07 mobile creep resumes after swipe -->
@@ -239,7 +240,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .pc-lane{
   overflow-x:auto;overflow-y:hidden;margin-bottom:20px;min-height:320px;
   -webkit-overflow-scrolling:touch;scrollbar-width:none;
-  cursor:grab;touch-action:pan-x;overscroll-behavior-x:contain;
+  cursor:grab;touch-action:pan-y;overscroll-behavior-x:contain;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
@@ -3166,6 +3167,14 @@ var STILL_CREDIT = {
   window.__fillWorkCards = function(){
     fill($('#pcTrackA'), WORKSTILLS);
     fill($('#pcTrackB'), WORKSTILLS_B);
+    document.querySelectorAll('.pc-lane').forEach(function(lane){
+      if(typeof lane.__pcMeasure === 'function'){
+        lane.querySelectorAll('img').forEach(function(im){
+          if(!im.complete) im.addEventListener('load', lane.__pcMeasure, {once:true});
+        });
+        lane.__pcMeasure();
+      }
+    });
   };
   window.__fillWorkCards();
 
@@ -3178,11 +3187,12 @@ var STILL_CREDIT = {
       var track = lane.querySelector('.pc-track');
       if(!track) return;
       var hovering = false, dragging = false, last = 0, half = 0;
-      var sx = 0, sl = 0, moved = 0;
+      var sx = 0, sy = 0, sl = 0, moved = 0, axis = null;
       function measure(){
         half = track.scrollWidth / 2;
         if(reverse && lane.scrollLeft < 8 && half > 1) lane.scrollLeft = half;
       }
+      lane.__pcMeasure = measure;
       function setX(x){
         if(half > 1){
           while(x >= half) x -= half;
@@ -3195,6 +3205,12 @@ var STILL_CREDIT = {
       lane.querySelectorAll('img').forEach(function(im){
         if(!im.complete) im.addEventListener('load', measure, {once:true});
       });
+      lane.addEventListener('scroll', function(){
+        if(dragging || half < 2) return;
+        var x = lane.scrollLeft;
+        if(x >= half) lane.scrollLeft = x - half;
+        else if(x < 0) lane.scrollLeft = x + half;
+      }, {passive:true});
       function tick(now){
         if(!last) last = now;
         var dt = Math.min(48, now - last);
@@ -3237,35 +3253,41 @@ var STILL_CREDIT = {
       }, {passive:false});
       lane.addEventListener('pointerdown', function(e){
         if(e.pointerType === 'mouse' && e.button !== 0) return;
-        if(e.pointerType !== 'mouse'){
-          pauseCreep();
-          return;
-        }
+        pauseCreep();
         dragging = true;
-        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
+        axis = null;
+        sx = e.clientX; sy = e.clientY; sl = lane.scrollLeft; moved = 0;
         lane.classList.add('is-dragging');
         try { lane.setPointerCapture(e.pointerId); } catch(err){}
       });
       lane.addEventListener('pointermove', function(e){
         if(!dragging) return;
-        var dx = e.clientX - sx;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if(!axis){
+          if(Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+          if(axis === 'y'){
+            dragging = false;
+            lane.classList.remove('is-dragging');
+            try { lane.releasePointerCapture(e.pointerId); } catch(err){}
+            return;
+          }
+        }
+        if(axis !== 'x') return;
+        if(e.cancelable) e.preventDefault();
         moved = Math.max(moved, Math.abs(dx));
         setX(sl - dx);
-      });
-      function endDrag(){
-        if(!dragging) return;
-        dragging = false;
-        lane.classList.remove('is-dragging');
+      }, {passive:false});
+      function endDrag(e){
         if(moved > 8) lane._skipClick = true;
+        dragging = false;
+        axis = null;
+        lane.classList.remove('is-dragging');
+        if(e && e.pointerType === 'mouse') playCreep();
+        else playCreepSoon();
       }
-      lane.addEventListener('pointerup', function(e){
-        endDrag();
-        if(e.pointerType !== 'mouse') playCreepSoon();
-      });
-      lane.addEventListener('pointercancel', function(e){
-        endDrag();
-        if(e.pointerType !== 'mouse') playCreepSoon();
-      });
+      lane.addEventListener('pointerup', endDrag);
+      lane.addEventListener('pointercancel', endDrag);
       lane.addEventListener('touchend', playCreepSoon, {passive:true});
       lane.addEventListener('touchcancel', playCreepSoon, {passive:true});
     }
