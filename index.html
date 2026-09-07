@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-xform-2026-09-07 transform pan, no nested iOS scroll -->
 <!-- carousel-touchmove-2026-09-07 iOS preventDefault pan; desktop drag unchanged -->
 <!-- carousel-ios-2026-09-07 native pan-x on phone; flick does not open still -->
 <!-- carousel-inset-2026-09-07 mobile work strip matches page margins -->
@@ -76,7 +77,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;overflow-x:clip;-webkit-font-smoothing:antialiased;
   font-size:var(--fs-body);line-height:1.5;
 }
 ::selection{background:var(--signal);color:#fff}
@@ -242,16 +243,15 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 /* postcard carousel — native horizontal scroll; JS auto-creeps. Drag/swipe between stills. */
 .pc-bleed{margin-top:28px;overflow:hidden}
 .pc-lane{
-  overflow-x:auto;overflow-y:hidden;margin-bottom:20px;min-height:320px;
-  -webkit-overflow-scrolling:touch;scrollbar-width:none;
-  cursor:grab;touch-action:pan-y;overscroll-behavior-x:contain;
+  overflow:hidden;margin-bottom:20px;min-height:320px;
+  cursor:grab;touch-action:pan-y;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
-.pc-lane::-webkit-scrollbar{display:none;height:0}
-.pc-lane.is-dragging{cursor:grabbing;scroll-behavior:auto}
+.pc-lane.is-dragging{cursor:grabbing}
 .pc-track{
   display:flex;gap:20px;width:max-content;
+  will-change:transform;
 }
 @keyframes pc-marquee{
   from{transform:translateX(0)}
@@ -659,8 +659,10 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .postcard .pc-body{min-height:96px}
   .pc-bleed{width:auto;margin-left:0;margin-right:0;padding-left:0;padding-right:0}
   .pc-lane{
-    min-height:260px;-webkit-mask-image:none;mask-image:none;
-    padding-left:24px;padding-right:24px;touch-action:pan-y;
+    min-height:260px;overflow:hidden;touch-action:pan-y;
+    padding-left:16px;padding-right:16px;
+    -webkit-mask-image:linear-gradient(to right,transparent,#000 16px,#000 calc(100% - 16px),transparent);
+    mask-image:linear-gradient(to right,transparent,#000 16px,#000 calc(100% - 16px),transparent);
   }
   .postcard, .postcard img{touch-action:pan-y}
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
@@ -831,7 +833,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #do.band{padding-top:28px}
   .wrap{padding-left:16px;padding-right:16px}
   .pc-bleed{padding-left:0;padding-right:0}
-  .pc-lane{padding-left:16px;padding-right:16px;touch-action:pan-y}
+  .pc-lane{padding-left:16px;padding-right:16px;overflow:hidden;touch-action:pan-y}
   .secno,.meta,.tech,.fieldband .cap{
     font-size:9px;letter-spacing:.1em
   }
@@ -3183,9 +3185,13 @@ var STILL_CREDIT = {
     document.querySelectorAll('.pc-lane').forEach(function(lane){
       if(typeof lane.__pcMeasure === 'function'){
         lane.querySelectorAll('img').forEach(function(im){
-          if(!im.complete) im.addEventListener('load', lane.__pcMeasure, {once:true});
+          if(!im.complete) im.addEventListener('load', function(){
+            lane.__pcMeasure();
+            if(typeof lane.__pcSetX === 'function') lane.__pcSetX(0);
+          }, {once:true});
         });
         lane.__pcMeasure();
+        if(typeof lane.__pcSetX === 'function') lane.__pcSetX(0);
       }
     });
   };
@@ -3200,10 +3206,9 @@ var STILL_CREDIT = {
       var track = lane.querySelector('.pc-track');
       if(!track) return;
       var hovering = false, dragging = false, touching = false, last = 0, half = 0;
-      var sx = 0, sl = 0, moved = 0;
+      var sx = 0, sl = 0, moved = 0, pos = 0;
       function measure(){
         half = track.scrollWidth / 2;
-        if(reverse && lane.scrollLeft < 8 && half > 1) lane.scrollLeft = half;
       }
       lane.__pcMeasure = measure;
       function setX(x){
@@ -3211,26 +3216,23 @@ var STILL_CREDIT = {
           while(x >= half) x -= half;
           while(x < 0) x += half;
         }
-        lane.scrollLeft = x;
+        pos = x;
+        track.style.transform = 'translate3d(' + (-pos) + 'px,0,0)';
       }
+      lane.__pcSetX = setX;
       measure();
-      window.addEventListener('resize', measure);
+      setX(0);
+      window.addEventListener('resize', function(){ measure(); setX(pos); });
       lane.querySelectorAll('img').forEach(function(im){
-        if(!im.complete) im.addEventListener('load', measure, {once:true});
+        if(!im.complete) im.addEventListener('load', function(){ measure(); setX(pos); }, {once:true});
       });
-      lane.addEventListener('scroll', function(){
-        if(dragging || half < 2) return;
-        var x = lane.scrollLeft;
-        if(x >= half) lane.scrollLeft = x - half;
-        else if(x < 0) lane.scrollLeft = x + half;
-      }, {passive:true});
       function tick(now){
         if(!last) last = now;
         var dt = Math.min(48, now - last);
         last = now;
         if(!hovering && !dragging && !touching && half > 1){
           var px = (half / PERIOD) * dt;
-          setX(lane.scrollLeft + (reverse ? -px : px));
+          setX(pos + (reverse ? -px : px));
         }
         requestAnimationFrame(tick);
       }
@@ -3262,14 +3264,14 @@ var STILL_CREDIT = {
         var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
         if(!delta) return;
         e.preventDefault();
-        setX(lane.scrollLeft + delta);
+        setX(pos + delta);
       }, {passive:false});
       /* Desktop mouse drag — unchanged. */
       lane.addEventListener('pointerdown', function(e){
         if(e.pointerType !== 'mouse' || e.button !== 0) return;
         pauseCreep();
         dragging = true;
-        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
+        sx = e.clientX; sl = pos; moved = 0;
         lane.classList.add('is-dragging');
         try { lane.setPointerCapture(e.pointerId); } catch(err){}
       });
@@ -3302,7 +3304,7 @@ var STILL_CREDIT = {
         tLock = null;
         tX = e.touches[0].clientX;
         tY = e.touches[0].clientY;
-        sl = lane.scrollLeft;
+        sl = pos;
         moved = 0;
       }, {passive:true});
       lane.addEventListener('touchmove', function(e){
