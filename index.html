@@ -3219,11 +3219,8 @@ function openDossier(id){
   var html = '<h2>' + esc(cityName(c)) + '</h2>';
   if(c.yrs && c.yrs !== '—') html += '<div class="coord">' + esc(c.yrs) + '</div>';
   if(!credits.length){
-    /* short honest empty — no essay, no untagged reel */
     html += '<div class="none">' + esc(t('pin.none') || 'No credit on file.') + '</div>';
-    html += '<div class="cityline">' + esc(cityLine(c)) + '</div>';
   } else {
-    html += '<div class="cityline">' + esc(cityLine(c)) + '</div>';
     html += '<div class="hd">' + esc(t('pin.projects') || 'Projects') + '</div>';
     credits.forEach(function(r){
       var client = r.url
