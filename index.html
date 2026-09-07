@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-touchmove-2026-09-07 iOS preventDefault pan; desktop drag unchanged -->
 <!-- carousel-ios-2026-09-07 native pan-x on phone; flick does not open still -->
 <!-- carousel-inset-2026-09-07 mobile work strip matches page margins -->
 <!-- brands-center-2026-09-07 mobile Brands + Production grids centered -->
@@ -243,7 +244,7 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
 .pc-lane{
   overflow-x:auto;overflow-y:hidden;margin-bottom:20px;min-height:320px;
   -webkit-overflow-scrolling:touch;scrollbar-width:none;
-  cursor:grab;touch-action:pan-x;overscroll-behavior-x:contain;
+  cursor:grab;touch-action:pan-y;overscroll-behavior-x:contain;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
   mask-image:linear-gradient(to right,transparent,#000 28px,#000 calc(100% - 28px),transparent);
 }
@@ -659,8 +660,9 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .pc-bleed{width:auto;margin-left:0;margin-right:0;padding-left:0;padding-right:0}
   .pc-lane{
     min-height:260px;-webkit-mask-image:none;mask-image:none;
-    padding-left:24px;padding-right:24px;touch-action:pan-x;
+    padding-left:24px;padding-right:24px;touch-action:pan-y;
   }
+  .postcard, .postcard img{touch-action:pan-y}
   #flyby .lane{-webkit-mask-image:none;mask-image:none}
   #flyby .card{width:240px}
   #flyby .card img{height:160px}
@@ -829,7 +831,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #do.band{padding-top:28px}
   .wrap{padding-left:16px;padding-right:16px}
   .pc-bleed{padding-left:0;padding-right:0}
-  .pc-lane{padding-left:16px;padding-right:16px;touch-action:pan-x}
+  .pc-lane{padding-left:16px;padding-right:16px;touch-action:pan-y}
   .secno,.meta,.tech,.fieldband .cap{
     font-size:9px;letter-spacing:.1em
   }
@@ -3197,7 +3199,7 @@ var STILL_CREDIT = {
     function drive(lane, reverse){
       var track = lane.querySelector('.pc-track');
       if(!track) return;
-      var hovering = false, dragging = false, last = 0, half = 0;
+      var hovering = false, dragging = false, touching = false, last = 0, half = 0;
       var sx = 0, sl = 0, moved = 0;
       function measure(){
         half = track.scrollWidth / 2;
@@ -3226,7 +3228,7 @@ var STILL_CREDIT = {
         if(!last) last = now;
         var dt = Math.min(48, now - last);
         last = now;
-        if(!hovering && !dragging && half > 1){
+        if(!hovering && !dragging && !touching && half > 1){
           var px = (half / PERIOD) * dt;
           setX(lane.scrollLeft + (reverse ? -px : px));
         }
@@ -3262,14 +3264,12 @@ var STILL_CREDIT = {
         e.preventDefault();
         setX(lane.scrollLeft + delta);
       }, {passive:false});
-      /* Mouse: JS drag. Touch: native overflow-x (iOS). Never capture on touch —
-         that was eating the swipe and opening the still. */
+      /* Desktop mouse drag — unchanged. */
       lane.addEventListener('pointerdown', function(e){
-        if(e.pointerType === 'mouse' && e.button !== 0) return;
+        if(e.pointerType !== 'mouse' || e.button !== 0) return;
         pauseCreep();
-        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
-        if(e.pointerType !== 'mouse') return;
         dragging = true;
+        sx = e.clientX; sl = lane.scrollLeft; moved = 0;
         lane.classList.add('is-dragging');
         try { lane.setPointerCapture(e.pointerId); } catch(err){}
       });
@@ -3288,27 +3288,45 @@ var STILL_CREDIT = {
       }
       lane.addEventListener('pointerup', function(e){
         if(e.pointerType === 'mouse') endMouseDrag();
-        else{
-          if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
-          playCreepSoon();
-        }
       });
       lane.addEventListener('pointercancel', function(e){
         if(e.pointerType === 'mouse') endMouseDrag();
-        else playCreepSoon();
       });
-      lane.addEventListener('touchstart', function(){
+      /* Phone: own the horizontal flick. Native overflow-x is broken under
+         body overflow-x:hidden on iOS; pointer capture ate the gesture. */
+      var tX = 0, tY = 0, tLock = null;
+      lane.addEventListener('touchstart', function(e){
+        if(!e.touches || !e.touches[0]) return;
         pauseCreep();
+        touching = true;
+        tLock = null;
+        tX = e.touches[0].clientX;
+        tY = e.touches[0].clientY;
         sl = lane.scrollLeft;
+        moved = 0;
       }, {passive:true});
-      lane.addEventListener('touchmove', function(){
-        if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
-      }, {passive:true});
-      lane.addEventListener('touchend', function(){
-        if(Math.abs(lane.scrollLeft - sl) > 8) lane._skipClick = true;
+      lane.addEventListener('touchmove', function(e){
+        if(!touching || !e.touches || !e.touches[0]) return;
+        var dx = e.touches[0].clientX - tX;
+        var dy = e.touches[0].clientY - tY;
+        if(!tLock){
+          if(Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+          tLock = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+        }
+        if(tLock !== 'x') return;
+        if(e.cancelable) e.preventDefault();
+        moved = Math.max(moved, Math.abs(dx));
+        setX(sl - dx);
+      }, {passive:false});
+      function endTouch(){
+        if(!touching) return;
+        touching = false;
+        if(tLock === 'x' && moved > 8) lane._skipClick = true;
+        tLock = null;
         playCreepSoon();
-      }, {passive:true});
-      lane.addEventListener('touchcancel', playCreepSoon, {passive:true});
+      }
+      lane.addEventListener('touchend', endTouch, {passive:true});
+      lane.addEventListener('touchcancel', endTouch, {passive:true});
     }
     document.querySelectorAll('.pc-lane').forEach(function(lane){
       drive(lane, !!(lane.querySelector('.pc-track.rev')));
