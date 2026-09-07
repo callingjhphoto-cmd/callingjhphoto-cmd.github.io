@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- carousel-resume-2026-09-07 mobile creep resumes after swipe -->
 <!-- mobile-cities-2026-09-07 job cities share one column -->
 <!-- mobile-pass-2026-09-07 hamburger opens; chrome clear of copy -->
 <!-- nav-lang-2026-09-07 EN/ES on main page actually switches -->
@@ -3169,11 +3170,26 @@ var STILL_CREDIT = {
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(function(){ measure(); requestAnimationFrame(tick); });
-      lane.addEventListener('pointerenter', function(){ hovering = true; });
-      lane.addEventListener('pointerleave', function(){
+      var resumeTimer = 0;
+      function pauseCreep(){ hovering = true; }
+      function playCreep(){
+        if(resumeTimer){ clearTimeout(resumeTimer); resumeTimer = 0; }
         hovering = false;
         dragging = false;
         lane.classList.remove('is-dragging');
+      }
+      /* Phone: wait for the flick to settle, then creep again. Mouse: play at once. */
+      function playCreepSoon(){
+        if(resumeTimer) clearTimeout(resumeTimer);
+        dragging = false;
+        lane.classList.remove('is-dragging');
+        resumeTimer = setTimeout(function(){ hovering = false; resumeTimer = 0; }, 650);
+      }
+      lane.addEventListener('pointerenter', function(e){
+        if(e.pointerType === 'mouse') pauseCreep();
+      });
+      lane.addEventListener('pointerleave', function(e){
+        if(e.pointerType === 'mouse') playCreep();
       });
       lane.addEventListener('wheel', function(e){
         var dx = e.deltaX, dy = e.deltaY;
@@ -3185,7 +3201,10 @@ var STILL_CREDIT = {
       }, {passive:false});
       lane.addEventListener('pointerdown', function(e){
         if(e.pointerType === 'mouse' && e.button !== 0) return;
-        if(e.pointerType !== 'mouse') return;
+        if(e.pointerType !== 'mouse'){
+          pauseCreep();
+          return;
+        }
         dragging = true;
         sx = e.clientX; sl = lane.scrollLeft; moved = 0;
         lane.classList.add('is-dragging');
@@ -3203,8 +3222,16 @@ var STILL_CREDIT = {
         lane.classList.remove('is-dragging');
         if(moved > 8) lane._skipClick = true;
       }
-      lane.addEventListener('pointerup', endDrag);
-      lane.addEventListener('pointercancel', endDrag);
+      lane.addEventListener('pointerup', function(e){
+        endDrag();
+        if(e.pointerType !== 'mouse') playCreepSoon();
+      });
+      lane.addEventListener('pointercancel', function(e){
+        endDrag();
+        if(e.pointerType !== 'mouse') playCreepSoon();
+      });
+      lane.addEventListener('touchend', playCreepSoon, {passive:true});
+      lane.addEventListener('touchcancel', playCreepSoon, {passive:true});
     }
     document.querySelectorAll('.pc-lane').forEach(function(lane){
       drive(lane, !!(lane.querySelector('.pc-track.rev')));
