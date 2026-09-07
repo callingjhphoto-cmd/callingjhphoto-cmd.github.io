@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-wait">
 <head>
+<!-- nav-lang-2026-09-07 EN/ES on main page actually switches -->
 <!-- copy-pass-2026-09-07 ES services + labels + BTS + contact + credits -->
 <!-- carousel-scrub-2026-09-07 wheel/drag both ways; auto-creep only when cursor is off -->
 <!-- carousel-scroll-2026-09-07 work lanes: drag/swipe + a touch faster -->
@@ -129,9 +130,9 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 #brandmark b{font-weight:500}
 #brandmark em{font-style:normal;color:var(--signal)}
 nav{
-  position:fixed;top:0;right:0;z-index:70;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
+  position:fixed;top:0;right:0;z-index:510;display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;align-items:center;
   padding:8px 16px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
-  text-transform:none;background:none;
+  text-transform:none;background:none;pointer-events:auto;
 }
 .nav-toggle{display:none}
 .nav-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:2px}
@@ -2002,12 +2003,18 @@ function startBoot(){
   step();
 }
 
-function pickLang(lang, e){
-  if(window.__jhLangPicked) return;
-  window.__jhLangPicked = true;
+function setLang(lang){
   LANG = (lang === 'es') ? 'es' : 'en';
   try { localStorage.setItem('jh-lang', LANG); } catch(err){}
+  if(typeof window.__fillWorkCards === 'function') window.__fillWorkCards();
   applyI18n();
+}
+
+function pickLang(lang, e){
+  var first = !window.__jhLangPicked;
+  window.__jhLangPicked = true;
+  setLang(lang);
+  if(!first) return;
   document.documentElement.classList.remove('lang-wait');
   if(typeof dockOverlays === 'function') dockOverlays();
   var gate = $('#langGate');
@@ -2051,7 +2058,7 @@ var gateFlockStop = null;
       if(lang) pickLang(lang, e);
     };
     b.addEventListener('click', go);
-    b.addEventListener('pointerup', go);
+    if(b.closest && b.closest('#langGate')) b.addEventListener('pointerup', go);
     b.addEventListener('keydown', function(e){
       if(e.key === 'Enter' || e.key === ' ') go(e);
     });
@@ -3078,8 +3085,11 @@ var STILL_CREDIT = {
     }
     node.innerHTML = html;
   }
-  fill($('#pcTrackA'), WORKSTILLS);
-  fill($('#pcTrackB'), WORKSTILLS_B);
+  window.__fillWorkCards = function(){
+    fill($('#pcTrackA'), WORKSTILLS);
+    fill($('#pcTrackB'), WORKSTILLS_B);
+  };
+  window.__fillWorkCards();
 
   /* Work lanes: auto-creep only when the cursor is off the strip.
      Wheel / drag / swipe scrub both ways so you can go back and look. */
