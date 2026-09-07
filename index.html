@@ -2744,8 +2744,7 @@ function drawGlobe(){
     ctx.fillStyle = RED;
     ctx.beginPath(); ctx.arc(p.x, p.y, pr, 0, Math.PI * 2); ctx.fill();
 
-    var nJobs = (CREDITS[city.id] || []).length;
-    var label = cityName(city) + (nJobs ? ' · ' + nJobs : '');
+    var label = cityName(city);
     ctx.font = '500 11px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = hot ? RED : 'rgba(17,17,17,' + (0.62 + 0.32 * p.z).toFixed(3) + ')';
