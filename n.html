@@ -1286,15 +1286,15 @@ html.book-open nav{visibility:hidden;pointer-events:none}
 var RED = '#ff3b1f';
 
 var CITIES = [
-  {id:'LA', name:'Los Angeles',    lat: 34.05, lon:-118.24, yrs:'2017 · 2024',      line:'Editorial. Everyone has a second job. Including the sun.'},
-  {id:'NYC', name:'New York',       lat: 40.71, lon: -74.01, yrs:'—',               line:'No credit on file. The pin is honest. The pin is patient.'},
-  {id:'RIO', name:'Rio de Janeiro', lat:-22.91, lon: -43.17, yrs:'2016',             line:'The Independent, 2016. The pin is not empty.'},
-  {id:'LDN', name:'London',         lat: 51.51, lon:  -0.13, yrs:'2015 — 2026',     line:'Eleven years of tethering in rooms with no natural light. Formative.'},
-  {id:'HAM', name:'Hamburg',        lat: 53.55, lon:   9.99, yrs:'2018 · 2024',     line:'Precision. They start on time. It was a genuine shock.'},
-  {id:'BCN', name:'Barcelona',      lat: 41.39, lon:   2.17, yrs:'2026',            line:'Home. Where the cart lives. Where the coffee is correct.'},
-  {id:'LIS', name:'Lisbon',         lat: 38.72, lon:  -9.14, yrs:'2022 — 2026',     line:'Good light, long days, hills that punish a loaded cart.'},
-  {id:'PMI', name:'Mallorca',       lat: 39.57, lon:   2.65, yrs:'2026',            line:'Island logistics. Everything arrives on a boat, including the panic.'},
-  {id:'SIN', name:'Singapore',      lat:  1.35, lon: 103.82, yrs:'—',               line:'No credit on file. Ninety percent humidity is a data-integrity issue.'}
+  {id:'LA', name:'Los Angeles',    lat: 34.05, lon:-118.24, yrs:'2017 · 2024',      line:''},
+  {id:'NYC', name:'New York',       lat: 40.71, lon: -74.01, yrs:'—',               line:''},
+  {id:'RIO', name:'Rio de Janeiro', lat:-22.91, lon: -43.17, yrs:'2016',             line:''},
+  {id:'LDN', name:'London',         lat: 51.51, lon:  -0.13, yrs:'2015 — 2026',     line:''},
+  {id:'HAM', name:'Hamburg',        lat: 53.55, lon:   9.99, yrs:'2018 · 2024',     line:''},
+  {id:'BCN', name:'Barcelona',      lat: 41.39, lon:   2.17, yrs:'2026',            line:''},
+  {id:'LIS', name:'Lisbon',         lat: 38.72, lon:  -9.14, yrs:'2022 — 2026',     line:''},
+  {id:'PMI', name:'Mallorca',       lat: 39.57, lon:   2.65, yrs:'2026',            line:''},
+  {id:'SIN', name:'Singapore',      lat:  1.35, lon: 103.82, yrs:'—',               line:''}
 ];
 
 /* credits — verbatim from JOBS.md, which is verbatim from the canonical CV.
@@ -1724,15 +1724,15 @@ var I18N = {
     'city.LIS': 'Lisbon',
     'city.PMI': 'Mallorca',
     'city.SIN': 'Singapore',
-    'cityline.LA': 'Editorial. Everyone has a second job. Including the sun.',
-    'cityline.NYC': 'No credit on file. The pin is honest. The pin is patient.',
-    'cityline.RIO': 'The Independent, 2016. The pin is not empty.',
-    'cityline.LDN': 'Eleven years of tethering in rooms with no natural light. Formative.',
-    'cityline.HAM': 'Precision. They start on time. It was a genuine shock.',
-    'cityline.BCN': 'Home. Where the cart lives. Where the coffee is correct.',
-    'cityline.LIS': 'Good light, long days, hills that punish a loaded cart.',
-    'cityline.PMI': 'Island logistics. Everything arrives on a boat, including the panic.',
-    'cityline.SIN': 'No credit on file. Ninety percent humidity is a data-integrity issue.',
+    'cityline.LA': '',
+    'cityline.NYC': '',
+    'cityline.RIO': '',
+    'cityline.LDN': '',
+    'cityline.HAM': '',
+    'cityline.BCN': '',
+    'cityline.LIS': '',
+    'cityline.PMI': '',
+    'cityline.SIN': '',
     'boot.0': 'Producers this way.',
     'boot.1': 'Bilingual.',
     'boot.2': 'The digi cart travels.',
@@ -1925,15 +1925,15 @@ var I18N = {
     'city.LIS': 'Lisboa',
     'city.PMI': 'Mallorca',
     'city.SIN': 'Singapur',
-    'cityline.LA': 'Editorial. Aquí todo el mundo tiene un segundo trabajo. Incluido el sol.',
-    'cityline.NYC': 'Sin crédito en el archivo. El pin es honesto. El pin es paciente.',
-    'cityline.RIO': 'The Independent, 2016. El pin no está vacío.',
-    'cityline.LDN': 'Once años de tether en salas sin luz natural. Formativo.',
-    'cityline.HAM': 'Precisión. Empiezan a la hora. Fue un shock de verdad.',
-    'cityline.BCN': 'Casa. Donde vive el carro. Donde el café está bien.',
-    'cityline.LIS': 'Buena luz, días largos, cuestas que castigan un carro cargado.',
-    'cityline.PMI': 'Logística de isla. Todo llega en barco, incluido el pánico.',
-    'cityline.SIN': 'Sin crédito en el archivo. El noventa por ciento de humedad es un problema de integridad de datos.',
+    'cityline.LA': '',
+    'cityline.NYC': '',
+    'cityline.RIO': '',
+    'cityline.LDN': '',
+    'cityline.HAM': '',
+    'cityline.BCN': '',
+    'cityline.LIS': '',
+    'cityline.PMI': '',
+    'cityline.SIN': '',
     'boot.0': 'Productores por aquí.',
     'boot.1': 'Bilingüe.',
     'boot.2': 'El carro digi viaja.',
@@ -1976,7 +1976,7 @@ function t(key){
   return key;
 }
 function cityName(c){ return t('city.' + c.id) || c.name; }
-function cityLine(c){ return t('cityline.' + c.id) || c.line; }
+function cityLine(c){ return ''; }
 function locFrag(s){
   if(s == null) return s;
   s = String(s);
