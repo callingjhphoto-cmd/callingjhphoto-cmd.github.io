@@ -584,6 +584,29 @@ h2.big{font-size:clamp(36px, 5.2vw, 56px);letter-spacing:var(--ls-display);line-
   color:#C8C8C2;padding:10px 2px 0;line-height:1.55;text-transform:none;
 }
 
+#last{padding:96px 0 72px;border-top:.4pt solid var(--rule);scroll-margin-top:64px}
+#last .lede{
+  font-size:var(--fs-body);line-height:1.45;letter-spacing:-.015em;color:var(--grey2);
+  max-width:46ch;margin:8px 0 0;
+}
+#last .own-go{
+  display:inline-flex;align-items:center;margin-top:28px;
+  border:.5pt solid var(--ink);color:var(--ink);text-decoration:none;
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);
+  padding:12px 18px;min-height:var(--hit);
+}
+#last .own-go:hover,#last .own-go:focus-visible{border-color:var(--signal);color:var(--signal)}
+#last .own-preview{
+  display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:10px;margin-top:36px;
+}
+#last .own-preview a{display:block;background:#111;overflow:hidden;line-height:0}
+#last .own-preview img{
+  width:100%;height:280px;object-fit:cover;display:block;
+  transition:transform 1s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+  filter:brightness(.96);
+}
+#last .own-preview a:hover img{transform:scale(1.03);filter:brightness(1.04)}
+
 #bookFab{
   position:fixed;right:18px;bottom:18px;z-index:80;
   width:120px;padding:0;border:0;background:none;cursor:pointer;
@@ -768,7 +791,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     justify-content:flex-start;
   }
   html{scroll-padding-top:calc(52px + env(safe-area-inset-top, 0px))}
-  #work, #do, #flyby, #contact, #brands{
+  #work, #do, #flyby, #last, #contact, #brands{
     scroll-margin-top:calc(56px + env(safe-area-inset-top, 0px));
   }
   h2.big, .lane-title, #contact h2, .lede{padding-right:72px;box-sizing:border-box}
@@ -934,7 +957,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #contact .pframe{padding:10px 10px 32px}
   #contact .ppair{gap:12px}
   section.band{padding:56px 0}
-  #brands, #do, #flyby{padding-bottom:calc(100px + env(safe-area-inset-bottom, 0px))}
+  #brands, #do, #flyby, #last{padding-bottom:calc(100px + env(safe-area-inset-bottom, 0px))}
   .brand-grid{gap:18px 20px}
   .brand-grid img{height:28px;max-height:28px;max-width:88px}
   .brand-grid img.sq{height:34px;max-height:34px;max-width:40px}
@@ -978,6 +1001,10 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #flyby .card{width:200px}
   #flyby .card img{height:132px}
   #flyby .card .cap{font-size:10px;letter-spacing:.08em;line-height:1.4}
+  #last{padding:56px 0 40px}
+  #last h2.big{font-size:clamp(36px, 12vw, 64px)}
+  #last .own-preview{grid-template-columns:1fr;gap:8px}
+  #last .own-preview img{height:220px}
   #contact{padding:48px 0 calc(120px + env(safe-area-inset-bottom, 0px))}
   #contact h2{font-size:clamp(28px, 8vw, 40px);margin:12px 0}
   #contact .lede{font-size:14px;margin:0 0 24px}
@@ -1122,6 +1149,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
     <a href="#work" data-i18n="nav.work">Work</a>
     <a href="#do" data-i18n="nav.do">Services</a>
     <a href="#flyby" data-i18n="nav.bts">BTS</a>
+    <a href="photography.html" data-i18n="nav.photo">Photography</a>
     <a href="#contact" id="navBook" data-i18n="nav.book">Book</a>
     <span class="langpair">
       <button type="button" class="langbtn" data-lang="en" aria-label="English">EN</button>
@@ -1258,6 +1286,19 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   <div class="bts-bleed">
     <div class="lane"><div class="track" id="laneA"></div></div>
     <div class="lane"><div class="track slow rev" id="laneB"></div></div>
+  </div>
+</section>
+
+<section id="last" class="band">
+  <div class="wrap">
+    <div class="secno" data-i18n="own.secno">[JH_/_06] Personal Projects</div>
+    <h2 class="big" data-i18n="own.h2">Personal projects</h2>
+    <a class="own-go" href="photography.html" data-i18n="own.open">Open the gallery →</a>
+    <div class="own-preview">
+      <a href="photography.html"><img src="img/own/home_00_1.jpg" data-i18n-alt="own.alt" alt="Photograph by James Huertas."></a>
+      <a href="photography.html"><img src="img/own/fencers_00_fencer-12.jpg" data-i18n-alt="own.alt" alt="Photograph by James Huertas."></a>
+      <a href="photography.html"><img src="img/own/archery_00_archery1-copy.jpg" data-i18n-alt="own.alt" alt="Photograph by James Huertas."></a>
+    </div>
   </div>
 </section>
 
@@ -1649,6 +1690,7 @@ var I18N = {
     'nav.do': 'Services',
     'nav.work': 'Work',
     'nav.bts': 'BTS',
+    'nav.photo': 'Photography',
     'nav.menu': 'Menu',
     'nav.book': 'Book',
     'hero.h1': 'International<br>campaigns.<br>Secure <em>capture</em>.',
@@ -1737,6 +1779,9 @@ var I18N = {
     'fly.t1': '01 &nbsp;Set-ops · Cart · Screens · Cables',
     'fly.t2': '02 &nbsp;brands',
     'fly.t3': '03 &nbsp;production companies',
+    'own.secno': '[JH_/_06] Personal Projects',
+    'own.h2': 'Personal projects',
+    'own.open': 'Open the gallery →',
     'con.secno': '[JH_/_05] Book',
     'con.email': 'Email',
     'con.phone': 'Phone',
@@ -1851,6 +1896,7 @@ var I18N = {
     'nav.do': 'Servicios',
     'nav.work': 'Trabajo',
     'nav.bts': 'BTS',
+    'nav.photo': 'Fotografía',
     'nav.menu': 'Menú',
     'nav.book': 'Reserva',
     'hero.h1': 'Campañas<br>internacionales.<br>Captura <em>segura</em>.',
@@ -1939,6 +1985,9 @@ var I18N = {
     'fly.t1': '01 &nbsp;En el set · Carro · Pantallas · Cables',
     'fly.t2': '02 &nbsp;marcas',
     'fly.t3': '03 &nbsp;productoras',
+    'own.secno': '[JH_/_06] Proyectos personales',
+    'own.h2': 'Proyectos personales',
+    'own.open': 'Abrir la galería →',
     'con.secno': '[JH_/_05] Reserva',
     'con.email': 'Correo',
     'con.phone': 'Teléfono',
@@ -3888,6 +3937,7 @@ var STILL_CREDIT = {
       return { src: 'img/work/' + f, cap: cap, alt: stillAlt(c) };
     });
   }
+
   var polaroidOpenAt = 0;
   window.__openPolaroid = function(src){
     if(Date.now() - polaroidOpenAt < 400) return;
