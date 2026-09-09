@@ -222,8 +222,10 @@ function mixWall(works){
 }
 var PAIRS = {
   'img/own/home_02_0.jpg': 'img/own/home_02_1.jpg',
-  'img/own/home_00_0.jpg': 'img/own/home_00_1.jpg'
+  'img/own/home_00_0.jpg': 'img/own/home_00_1.jpg',
+  'img/own/home_01_0.jpg': 'img/own/home_01_1.jpg'
 };
+var PAIR_LEAD_BOOST = { 'img/own/home_01_0.jpg': 1.42 };
 function clusterPairs(wall){
   var mateOf = {}, skip = {}, src, i, out = [], used = {};
   for(src in PAIRS){ if(PAIRS.hasOwnProperty(src)) skip[PAIRS[src]] = src; }
@@ -319,13 +321,16 @@ function layout(){
     if(mate != null){
       top = placedTop[mate] + rand(2, 6);
       left = Math.min(62, placedLeft[mate] + (currentDevice === "mobile" ? 22 : 18) + rand(0, 4));
-      scales[i] = scales[mate];
+      scales[i] = scales[mate] / (PAIR_LEAD_BOOST[WALL[mate].src] || 1);
     } else {
       row = Math.floor(slot / L.columns);
       col = slot % L.columns;
       top = L.initialTop + row * L.vGap + rand(L.marginVH[0], L.marginVH[1]);
       left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
       scales[i] = rand(S[0], S[1]);
+      if(PAIR_LEAD_BOOST[WALL[i].src]){
+        scales[i] = Math.min(1.2, Math.max(0.72, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
+      }
       slot++;
     }
     placedTop[i] = top;
