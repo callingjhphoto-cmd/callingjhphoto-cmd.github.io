@@ -108,6 +108,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   max-width:40vw;
   will-change:transform;
   line-height:0;
+  transform-origin:0 0;
 }
 .linkedparaimg{
   display:block;
@@ -367,17 +368,17 @@ function layout(){
       }
       leadPx = visPx(mate, scales[mate]);
       matePx = visPx(i, scales[i]);
-      gapVw = 2.4;
+      gapVw = 3.2;
       if(followN === 0){
-        top = placedTop[mate] + rand(-1, 3);
+        top = placedTop[mate] + rand(0, 2);
         left = placedLeft[mate] + (leadPx.w / window.innerWidth) * 100 + gapVw;
       } else {
-        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 2.4;
-        left = placedLeft[mate] + rand(0, 3);
+        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 3.2;
+        left = placedLeft[mate] + rand(0, 2);
       }
       if(left + (matePx.w / window.innerWidth) * 100 > 94){
         left = placedLeft[mate];
-        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 2.4;
+        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 3.2;
       }
     } else {
       row = Math.floor(slot / L.columns);
@@ -400,13 +401,19 @@ function layout(){
     divs[i].style.top = top + "vh";
     divs[i].style.left = left + "vw";
     if(top > maxTop) maxTop = top;
-    if(window.gsap) gsap.set(divs[i], { scale: scales[i] });
-    else divs[i].style.transform = "scale("+scales[i]+")";
+    if(window.gsap) gsap.set(divs[i], { scale: scales[i], transformOrigin: "0px 0px" });
+    else {
+      divs[i].style.transformOrigin = "0 0";
+      divs[i].style.transform = "scale("+scales[i]+")";
+    }
   }
   sMin = Math.min.apply(null, scales);
   sMax = Math.max.apply(null, scales);
   for(j = 0; j < scales.length; j++){
     depths[j] = (sMax === sMin) ? 1 : 0.4 + 0.6 * ((scales[j] - sMin) / (sMax - sMin));
+  }
+  for(j = 0; j < scales.length; j++){
+    if(MATE[j] != null) depths[j] = depths[MATE[j]];
   }
   document.getElementById("pad").style.top = (maxTop + CONFIG.paddingTopOffsetVh) + "vh";
 }
@@ -421,10 +428,12 @@ function buildScrollParallax(){
   divs.forEach(function(div, i){
     var drift = (MATE[i] != null) ? drifts[MATE[i]] : rand(range[0], range[1]);
     drifts[i] = drift;
-    var tween = gsap.fromTo(div, { y: drift }, {
-      y: -drift, ease: "none",
-      scrollTrigger: { trigger: div, start: "top bottom", end: "bottom top", scrub: true }
-    });
+    var tween = gsap.fromTo(div,
+      { y: drift, scale: scales[i], transformOrigin: "0px 0px" },
+      {
+        y: -drift, scale: scales[i], transformOrigin: "0px 0px", ease: "none",
+        scrollTrigger: { trigger: div, start: "top bottom", end: "bottom top", scrub: true }
+      });
     if(tween.scrollTrigger) scrollTriggers.push(tween.scrollTrigger);
   });
   ScrollTrigger.refresh();
