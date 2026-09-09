@@ -225,7 +225,10 @@ var PAIRS = {
   'img/own/home_00_0.jpg': 'img/own/home_00_1.jpg',
   'img/own/home_01_0.jpg': 'img/own/home_01_1.jpg'
 };
-var PAIR_LEAD_BOOST = { 'img/own/home_01_0.jpg': 1.42 };
+var PAIR_LEAD_BOOST = {
+  'img/own/home_01_0.jpg': 1.42,
+  'img/own/home_04_0.jpg': 1.7
+};
 function clusterPairs(wall){
   var mateOf = {}, skip = {}, src, i, out = [], used = {};
   for(src in PAIRS){ if(PAIRS.hasOwnProperty(src)) skip[PAIRS[src]] = src; }
@@ -329,7 +332,8 @@ function layout(){
       left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
       scales[i] = rand(S[0], S[1]);
       if(PAIR_LEAD_BOOST[WALL[i].src]){
-        scales[i] = Math.min(1.2, Math.max(0.72, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
+        var cap = WALL[i].src.indexOf('home_04_0') !== -1 ? 1.45 : 1.2;
+        scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
       }
       slot++;
     }
