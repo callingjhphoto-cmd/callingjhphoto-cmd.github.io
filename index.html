@@ -299,17 +299,16 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 @media(max-width:720px){
   #pinButtons{
     display:flex;position:absolute;left:0;right:0;z-index:15;
-    bottom:calc(84px + env(safe-area-inset-bottom, 0px));
-    gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
-    padding:0 16px 4px;padding-right:88px;pointer-events:auto;
-    scrollbar-width:none;
+    bottom:calc(92px + env(safe-area-inset-bottom, 0px));
+    gap:6px;flex-wrap:wrap;justify-content:flex-start;
+    overflow:visible;pointer-events:auto;
+    padding:0 16px 4px;padding-right:92px;
   }
-  #pinButtons::-webkit-scrollbar{display:none}
   #pinButtons [data-city]{
-    flex:none;min-height:42px;padding:8px 12px;
-    font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    flex:none;min-height:36px;padding:6px 10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.07em;
     text-transform:none;border:.5pt solid var(--ink);
-    background:rgba(250,250,248,.92);color:var(--ink);
+    background:rgba(250,250,248,.96);color:var(--ink);
     cursor:pointer;white-space:nowrap;
     display:inline-flex;align-items:center;
   }
@@ -1094,6 +1093,13 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .hero-copy .deck{margin-top:8px;font-size:15px}
   .hero-copy .meta{margin-top:8px}
   .hero-copy .role{margin:0 0 8px}
+  #pinButtons{
+    flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    bottom:calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-right:96px;
+    -webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 72px),transparent);
+    mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 72px),transparent);
+  }
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -2716,27 +2722,27 @@ function resize(){
   if(W < 720){
     
     var widthKey = Math.round(W);
-    var layoutVer = 14;
+    var layoutVer = 16;
     if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
       var sr = cv.getBoundingClientRect();
       var copy = document.querySelector('#stage .hero-copy');
       var copyR = copy ? copy.getBoundingClientRect() : null;
-      var gapTop = 12;
-      var gapBot = 8;
-      var fabReserve = 148;
+      var gapTop = 10;
+      var pinStrip = 88;
+      var fabReserve = 118;
       var topEdge = copyR ? (copyR.bottom - sr.top + gapTop) : 150;
-      topEdge = Math.max(96, topEdge);
+      topEdge = Math.max(88, topEdge);
       var layoutH = Math.max(H, window.innerHeight || H);
-      var botEdge = layoutH - fabReserve - gapBot;
-      if(botEdge < topEdge + 180) botEdge = topEdge + 180;
+      var botEdge = layoutH - fabReserve - pinStrip;
+      if(botEdge < topEdge + 160) botEdge = topEdge + 160;
       var band = botEdge - topEdge;
-      var Rwant = Math.min(W * 0.50, band); 
-      Rwant = Math.max(Rwant, Math.min(W * 0.44, 160));
-      R = Math.min(Rwant, band * 0.5);
+      var Rwant = Math.min(W * 0.40, band * 0.46);
+      R = Math.max(110, Math.min(Rwant, 148));
+      if(layoutH < 740) R = Math.min(R, 122);
       CX = W * 0.50;
-      CY = topEdge + band * 0.5;
+      CY = topEdge + Math.min(band * 0.46, R + 6);
       mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
     }
   } else {
@@ -2874,15 +2880,17 @@ function drawGlobe(){
     ctx.fillStyle = RED;
     ctx.beginPath(); ctx.arc(p.x, p.y, pr, 0, Math.PI * 2); ctx.fill();
 
-    var label = cityName(city);
-    ctx.font = '500 11px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = hot ? RED : 'rgba(17,17,17,' + (0.62 + 0.32 * p.z).toFixed(3) + ')';
-    var tw = ctx.measureText(label).width;
-    var lx = p.x + 12;
-    var ly = p.y - stem;
-    if(lx + tw > W - 14) lx = p.x - 12 - tw;
-    if(ly > 78 && ly < H - 28) ctx.fillText(label, lx, ly);
+    if(W >= 720){
+      var label = cityName(city);
+      ctx.font = '500 11px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = hot ? RED : 'rgba(17,17,17,' + (0.62 + 0.32 * p.z).toFixed(3) + ')';
+      var tw = ctx.measureText(label).width;
+      var lx = p.x + 12;
+      var ly = p.y - stem;
+      if(lx + tw > W - 14) lx = p.x - 12 - tw;
+      if(ly > 78 && ly < H - 28) ctx.fillText(label, lx, ly);
+    }
   }
   ctx.restore();
 }
