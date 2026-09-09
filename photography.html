@@ -109,10 +109,12 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
 .shot img{
   width:100%;height:auto;display:block;
   border-radius:0;
-  transform:translate3d(0, var(--py, 0px), 0);
+  transform:translate3d(var(--mx, 0px), calc(var(--sy, 0px) + var(--my, 0px)), 0);
   will-change:transform;
 }
-.shot:hover img, .shot:focus-visible img{transform:translate3d(0, var(--py, 0px), 0) scale(1.012)}
+.shot:hover img, .shot:focus-visible img{
+  transform:translate3d(var(--mx, 0px), calc(var(--sy, 0px) + var(--my, 0px)), 0) scale(1.012);
+}
 .shot .cap{
   display:none;
   margin-top:8px;
@@ -395,29 +397,59 @@ if(!reduceMotion && 'IntersectionObserver' in window){
 }
 
 var bgword = document.getElementById('bgword');
-function onScroll(){
+var finePointer = window.matchMedia('(pointer: fine)').matches;
+var targetMX = 0, targetMY = 0, curMX = 0, curMY = 0, mouseOn = false;
+var MAX_MOUSE = 160;
+var SCROLL_GAIN = 0.16;
+var SCROLL_CAP = 90;
+
+function applyMotion(){
   var y = window.scrollY || 0;
   if(bgword){
     bgword.style.opacity = String(Math.max(0.035, 0.12 - y / 2200));
-    if(!reduceMotion) bgword.style.transform = 'translate3d(0,' + (y * 0.12) + 'px,0)';
+    if(!reduceMotion) bgword.style.transform = 'translate3d(' + (-curMX * 18).toFixed(1) + 'px,' + (y * 0.12).toFixed(1) + 'px,0)';
   }
   if(reduceMotion) return;
   var vh = window.innerHeight || 1;
+  var box = document.getElementById('lb');
+  var lbOpen = box && box.classList.contains('on');
   shots.forEach(function(btn){
-    var img = btn.querySelector('img');
-    if(!img) return;
     var r = btn.getBoundingClientRect();
-    if(r.bottom < -80 || r.top > vh + 80) return;
+    if(r.bottom < -120 || r.top > vh + 120) return;
     var depth = parseFloat(btn.getAttribute('data-depth') || '0.4');
     var mid = r.top + r.height / 2 - vh / 2;
-    var shift = -mid * depth * 0.06;
-    if(shift > 28) shift = 28;
-    if(shift < -28) shift = -28;
-    btn.style.setProperty('--py', shift.toFixed(1) + 'px');
+    var sy = -mid * depth * SCROLL_GAIN;
+    if(sy > SCROLL_CAP) sy = SCROLL_CAP;
+    if(sy < -SCROLL_CAP) sy = -SCROLL_CAP;
+    btn.style.setProperty('--sy', sy.toFixed(1) + 'px');
+    if(finePointer && !lbOpen){
+      btn.style.setProperty('--mx', (-curMX * MAX_MOUSE * depth).toFixed(1) + 'px');
+      btn.style.setProperty('--my', (-curMY * MAX_MOUSE * depth).toFixed(1) + 'px');
+    }
   });
 }
-window.addEventListener('scroll', onScroll, {passive:true});
-onScroll();
+
+if(!reduceMotion && finePointer){
+  window.addEventListener('mousemove', function(e){
+    targetMX = (e.clientX / window.innerWidth) * 2 - 1;
+    targetMY = (e.clientY / window.innerHeight) * 2 - 1;
+    mouseOn = true;
+  }, {passive:true});
+  (function tick(){
+    if(mouseOn){
+      curMX += (targetMX - curMX) * 0.08;
+      curMY += (targetMY - curMY) * 0.08;
+      if(Math.abs(targetMX - curMX) < 0.001 && Math.abs(targetMY - curMY) < 0.001){
+        curMX = targetMX; curMY = targetMY; mouseOn = false;
+      }
+    }
+    applyMotion();
+    requestAnimationFrame(tick);
+  })();
+} else {
+  window.addEventListener('scroll', applyMotion, {passive:true});
+  applyMotion();
+}
 
 var lb = document.getElementById('lb');
 var lbImg = document.getElementById('lbImg');
