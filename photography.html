@@ -229,7 +229,8 @@ var PAIRS = {
 };
 var PAIR_LEAD_BOOST = {
   'img/own/home_01_0.jpg': 1.42,
-  'img/own/home_04_0.jpg': 1.7
+  'img/own/home_04_0.jpg': 1.7,
+  'img/own/home_09_0.jpg': 1.65
 };
 function clusterPairs(wall){
   var mateOf = {}, skip = {}, src, i, out = [], used = {};
@@ -334,7 +335,7 @@ function layout(){
       left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
       scales[i] = rand(S[0], S[1]);
       if(PAIR_LEAD_BOOST[WALL[i].src]){
-        var cap = WALL[i].src.indexOf('home_04_0') !== -1 ? 1.45 : 1.2;
+        var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1) ? 1.45 : 1.2;
         scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
       }
       slot++;
