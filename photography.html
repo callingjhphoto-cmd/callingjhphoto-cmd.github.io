@@ -220,29 +220,45 @@ function mixWall(works){
   while(ei < extras.length) wall.push(extras[ei++]);
   return wall;
 }
-var PAIRS = {
-  'img/own/home_02_0.jpg': 'img/own/home_02_1.jpg',
-  'img/own/home_00_0.jpg': 'img/own/home_00_1.jpg',
-  'img/own/home_01_0.jpg': 'img/own/home_01_1.jpg',
-  'img/own/archery_06_archery7-copy.jpg': 'img/own/archery_05_archery6-copy.jpg',
-  'img/own/home_05_1.jpg': 'img/own/violins_09_ian-violin-4.jpg'
-};
+var GROUPS = [
+  ['img/own/home_02_0.jpg', 'img/own/home_02_1.jpg'],
+  ['img/own/home_00_0.jpg', 'img/own/home_00_1.jpg'],
+  ['img/own/home_01_0.jpg', 'img/own/home_01_1.jpg'],
+  ['img/own/archery_06_archery7-copy.jpg', 'img/own/archery_05_archery6-copy.jpg'],
+  ['img/own/violins_03_ian-violin-14.jpg', 'img/own/home_05_1.jpg', 'img/own/violins_09_ian-violin-4.jpg']
+];
 var PAIR_LEAD_BOOST = {
   'img/own/home_01_0.jpg': 1.42,
   'img/own/home_04_0.jpg': 1.7,
-  'img/own/home_09_0.jpg': 1.65
+  'img/own/home_09_0.jpg': 1.65,
+  'img/own/violins_03_ian-violin-14.jpg': 1.65
 };
 function clusterPairs(wall){
-  var mateOf = {}, skip = {}, src, i, out = [], used = {};
-  for(src in PAIRS){ if(PAIRS.hasOwnProperty(src)) skip[PAIRS[src]] = src; }
+  var bySrc = {}, skip = {}, i, n, g, out = [], used = {}, mateOf = {};
+  for(i = 0; i < wall.length; i++) bySrc[wall[i].src] = wall[i];
+  for(i = 0; i < GROUPS.length; i++){
+    g = GROUPS[i];
+    for(n = 1; n < g.length; n++) skip[g[n]] = 1;
+  }
+  function groupFor(src){
+    for(var gi = 0; gi < GROUPS.length; gi++){
+      if(GROUPS[gi][0] === src) return GROUPS[gi];
+    }
+    return null;
+  }
   for(i = 0; i < wall.length; i++){
-    src = wall[i].src;
-    if(used[src] || skip[src]) continue;
+    if(used[wall[i].src] || skip[wall[i].src]) continue;
     out.push(wall[i]);
-    used[src] = 1;
-    if(PAIRS[src]){
-      for(var k = 0; k < wall.length; k++){
-        if(wall[k].src === PAIRS[src]){ out.push(wall[k]); used[wall[k].src] = 1; mateOf[out.length - 1] = out.length - 2; break; }
+    used[wall[i].src] = 1;
+    g = groupFor(wall[i].src);
+    if(g){
+      var leadIdx = out.length - 1;
+      for(n = 1; n < g.length; n++){
+        if(bySrc[g[n]] && !used[g[n]]){
+          out.push(bySrc[g[n]]);
+          used[g[n]] = 1;
+          mateOf[out.length - 1] = leadIdx;
+        }
       }
     }
   }
@@ -325,8 +341,10 @@ function layout(){
   for(i = 0; i < divs.length; i++){
     mate = MATE[i];
     if(mate != null){
-      top = placedTop[mate] + rand(2, 6);
-      left = Math.min(62, placedLeft[mate] + (currentDevice === "mobile" ? 22 : 18) + rand(0, 4));
+      var followN = 0, p;
+      for(p = 0; p < i; p++) if(MATE[p] === mate) followN++;
+      top = placedTop[mate] + (followN === 0 ? rand(2, 5) : rand(10, 16));
+      left = Math.min(62, placedLeft[mate] + (followN === 0 ? (currentDevice === "mobile" ? 22 : 17) : rand(2, 8)) + rand(0, 3));
       scales[i] = scales[mate] / (PAIR_LEAD_BOOST[WALL[mate].src] || 1);
     } else {
       row = Math.floor(slot / L.columns);
@@ -335,7 +353,7 @@ function layout(){
       left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
       scales[i] = rand(S[0], S[1]);
       if(PAIR_LEAD_BOOST[WALL[i].src]){
-        var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1) ? 1.45 : 1.2;
+        var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1 || WALL[i].src.indexOf('violins_03') !== -1) ? 1.45 : 1.2;
         scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
       }
       slot++;
