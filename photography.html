@@ -117,6 +117,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   object-fit:contain;
   cursor:pointer;
 }
+.parallaxdiv.big, .parallaxdiv.big .linkedparaimg{
+  max-width:46vw;
+  max-height:72vh;
+}
 .pad{
   position:absolute;
   left:0;width:100%;
@@ -234,6 +238,10 @@ var PAIR_LEAD_BOOST = {
   'img/own/home_09_0.jpg': 1.65,
   'img/own/violins_03_ian-violin-14.jpg': 1.65
 };
+var GROUP_SCALE = {
+  'img/own/home_00_0.jpg': 1.08,
+  'img/own/home_00_1.jpg': 1.08
+};
 function clusterPairs(wall){
   var bySrc = {}, skip = {}, i, n, g, out = [], used = {}, mateOf = {};
   for(i = 0; i < wall.length; i++) bySrc[wall[i].src] = wall[i];
@@ -301,7 +309,7 @@ document.querySelectorAll('.langbtn').forEach(function(b){
 var field = document.getElementById('field');
 var html = '';
 for(var i = 0; i < WALL.length; i++){
-  html += '<aside class="parallaxdiv"><img class="linkedparaimg" data-i="'+i+'" src="'+WALL[i].src+'" alt="" '+(i<6?'loading="eager"':'loading="lazy"')+' decoding="async"></aside>';
+  html += '<aside class="parallaxdiv'+(GROUP_SCALE[WALL[i].src] ? ' big' : '')+'"><img class="linkedparaimg" data-i="'+i+'" src="'+WALL[i].src+'" alt="" '+(i<6?'loading="eager"':'loading="lazy"')+' decoding="async"></aside>';
 }
 html += '<div class="pad" id="pad"></div>';
 field.innerHTML = html;
@@ -333,29 +341,57 @@ var divs = [], imgs = [], scales = [], depths = [], currentDevice = device(), sc
 
 var slot = 0;
 var placedTop = [], placedLeft = [];
+function visPx(idx, scale){
+  var it = WALL[idx];
+  var big = !!(GROUP_SCALE[WALL[idx].src] || (MATE[idx] != null && GROUP_SCALE[WALL[MATE[idx]].src]));
+  var maxW = window.innerWidth * (big ? 0.46 : 0.40);
+  var maxH = window.innerHeight * (big ? 0.72 : 0.50);
+  var s = Math.min(maxW / it.w, maxH / it.h, 1) * (scale || 1);
+  return { w: it.w * s, h: it.h * s };
+}
 function layout(){
   currentDevice = device();
   var L = CONFIG.layout[currentDevice];
   var S = CONFIG.scale[currentDevice];
-  var maxTop = 0, i, row, col, top, left, sMin, sMax, j, mate;
+  var maxTop = 0, i, row, col, top, left, sMin, sMax, j, mate, leadPx, matePx, followN, p, gapVw;
   slot = 0;
   for(i = 0; i < divs.length; i++){
     mate = MATE[i];
     if(mate != null){
-      var followN = 0, p;
+      followN = 0;
       for(p = 0; p < i; p++) if(MATE[p] === mate) followN++;
-      top = placedTop[mate] + (followN === 0 ? rand(2, 5) : rand(10, 16));
-      left = Math.min(62, placedLeft[mate] + (followN === 0 ? (currentDevice === "mobile" ? 22 : 17) : rand(2, 8)) + rand(0, 3));
-      scales[i] = scales[mate] / (PAIR_LEAD_BOOST[WALL[mate].src] || 1);
+      if(GROUP_SCALE[WALL[i].src] || GROUP_SCALE[WALL[mate].src]){
+        scales[i] = GROUP_SCALE[WALL[i].src] || GROUP_SCALE[WALL[mate].src] || scales[mate];
+      } else {
+        scales[i] = scales[mate] / (PAIR_LEAD_BOOST[WALL[mate].src] || 1);
+      }
+      leadPx = visPx(mate, scales[mate]);
+      matePx = visPx(i, scales[i]);
+      gapVw = 2.4;
+      if(followN === 0){
+        top = placedTop[mate] + rand(-1, 3);
+        left = placedLeft[mate] + (leadPx.w / window.innerWidth) * 100 + gapVw;
+      } else {
+        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 2.4;
+        left = placedLeft[mate] + rand(0, 3);
+      }
+      if(left + (matePx.w / window.innerWidth) * 100 > 94){
+        left = placedLeft[mate];
+        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 2.4;
+      }
     } else {
       row = Math.floor(slot / L.columns);
       col = slot % L.columns;
       top = L.initialTop + row * L.vGap + rand(L.marginVH[0], L.marginVH[1]);
       left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
-      scales[i] = rand(S[0], S[1]);
-      if(PAIR_LEAD_BOOST[WALL[i].src]){
-        var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1 || WALL[i].src.indexOf('violins_03') !== -1) ? 1.45 : 1.2;
-        scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
+      if(GROUP_SCALE[WALL[i].src]){
+        scales[i] = GROUP_SCALE[WALL[i].src];
+      } else {
+        scales[i] = rand(S[0], S[1]);
+        if(PAIR_LEAD_BOOST[WALL[i].src]){
+          var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1 || WALL[i].src.indexOf('violins_03') !== -1) ? 1.45 : 1.2;
+          scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
+        }
       }
       slot++;
     }
