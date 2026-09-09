@@ -220,7 +220,27 @@ function mixWall(works){
   while(ei < extras.length) wall.push(extras[ei++]);
   return wall;
 }
-var WALL = mixWall(WORKS);
+var PAIRS = { 'img/own/home_02_0.jpg': 'img/own/home_02_1.jpg' };
+function clusterPairs(wall){
+  var mateOf = {}, skip = {}, src, i, out = [], used = {};
+  for(src in PAIRS){ if(PAIRS.hasOwnProperty(src)) skip[PAIRS[src]] = src; }
+  for(i = 0; i < wall.length; i++){
+    src = wall[i].src;
+    if(used[src] || skip[src]) continue;
+    out.push(wall[i]);
+    used[src] = 1;
+    if(PAIRS[src]){
+      for(var k = 0; k < wall.length; k++){
+        if(wall[k].src === PAIRS[src]){ out.push(wall[k]); used[wall[k].src] = 1; mateOf[out.length - 1] = out.length - 2; break; }
+      }
+    }
+  }
+  for(i = 0; i < wall.length; i++){ if(!used[wall[i].src]) out.push(wall[i]); }
+  out._mateOf = mateOf;
+  return out;
+}
+var WALL = clusterPairs(mixWall(WORKS));
+var MATE = WALL._mateOf || {};
 var I18N = {
   en: { 'hero.h1':'Photography', 'nav.digitech':'Digitech', 'alt':'Photograph by James Huertas.' },
   es: { 'hero.h1':'Fotografía', 'nav.digitech':'Digitech', 'alt':'Fotografía de James Huertas.' }
@@ -283,20 +303,33 @@ function device(){
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var divs = [], imgs = [], scales = [], depths = [], currentDevice = device(), scrollTriggers = [];
 
+var slot = 0;
+var placedTop = [], placedLeft = [];
 function layout(){
   currentDevice = device();
   var L = CONFIG.layout[currentDevice];
   var S = CONFIG.scale[currentDevice];
-  var maxTop = 0, i, row, col, top, left, sMin, sMax, j;
+  var maxTop = 0, i, row, col, top, left, sMin, sMax, j, mate;
+  slot = 0;
   for(i = 0; i < divs.length; i++){
-    row = Math.floor(i / L.columns);
-    col = i % L.columns;
-    top = L.initialTop + row * L.vGap + rand(L.marginVH[0], L.marginVH[1]);
-    left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
+    mate = MATE[i];
+    if(mate != null){
+      top = placedTop[mate] + rand(2, 6);
+      left = Math.min(62, placedLeft[mate] + (currentDevice === "mobile" ? 22 : 18) + rand(0, 4));
+      scales[i] = scales[mate];
+    } else {
+      row = Math.floor(slot / L.columns);
+      col = slot % L.columns;
+      top = L.initialTop + row * L.vGap + rand(L.marginVH[0], L.marginVH[1]);
+      left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
+      scales[i] = rand(S[0], S[1]);
+      slot++;
+    }
+    placedTop[i] = top;
+    placedLeft[i] = left;
     divs[i].style.top = top + "vh";
     divs[i].style.left = left + "vw";
     if(top > maxTop) maxTop = top;
-    scales[i] = rand(S[0], S[1]);
     if(window.gsap) gsap.set(divs[i], { scale: scales[i] });
     else divs[i].style.transform = "scale("+scales[i]+")";
   }
@@ -314,8 +347,10 @@ function buildScrollParallax(){
   scrollTriggers = [];
   if(reduceMotion) return;
   var range = CONFIG.scrollDrift[currentDevice] || CONFIG.scrollDrift.desktop;
-  divs.forEach(function(div){
-    var drift = rand(range[0], range[1]);
+  var drifts = [];
+  divs.forEach(function(div, i){
+    var drift = (MATE[i] != null) ? drifts[MATE[i]] : rand(range[0], range[1]);
+    drifts[i] = drift;
     var tween = gsap.fromTo(div, { y: drift }, {
       y: -drift, ease: "none",
       scrollTrigger: { trigger: div, start: "top bottom", end: "bottom top", scrub: true }
