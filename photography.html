@@ -318,16 +318,16 @@ field.innerHTML = html;
 var CONFIG = {
   breakpoints: { mobile: 768, tablet: 1024 },
   layout: {
-    desktop:         { columns: 2, initialTop: 88, initialLeft: 0,  hGap: 30, vGap: 40, colGap: 10, marginVW: [2, 24], marginVH: [6, 18] },
-    tablet:          { columns: 2, initialTop: 88, initialLeft: 5,  hGap: 30, vGap: 30, colGap: 4,  marginVW: [5, 10], marginVH: [5, 15] },
-    mobile:          { columns: 2, initialTop: 80, initialLeft: 8,  hGap: 30, vGap: 25, colGap: 4,  marginVW: [2, 20], marginVH: [4, 18] },
-    mobileLandscape: { columns: 3, initialTop: 80, initialLeft: 0,  hGap: 30, vGap: 30, colGap: 4,  marginVW: [5, 10], marginVH: [5, 15] }
+    desktop:         { columns: 2, initialTop: 12, initialLeft: 0,  hGap: 30, vGap: 36, colGap: 10, marginVW: [2, 24], marginVH: [2, 8] },
+    tablet:          { columns: 2, initialTop: 12, initialLeft: 5,  hGap: 30, vGap: 28, colGap: 4,  marginVW: [5, 10], marginVH: [2, 7] },
+    mobile:          { columns: 2, initialTop: 10, initialLeft: 8,  hGap: 30, vGap: 24, colGap: 4,  marginVW: [2, 20], marginVH: [2, 6] },
+    mobileLandscape: { columns: 3, initialTop: 10, initialLeft: 0,  hGap: 30, vGap: 26, colGap: 4,  marginVW: [5, 10], marginVH: [2, 7] }
   },
   scale: { desktop: [0.3, 1], tablet: [0.3, 1.4], mobile: [0.8, 2.2], mobileLandscape: [0.3, 1] },
   scrollDrift: { desktop: [40, 220], tablet: [40, 180], mobile: [30, 120] },
   mouse: { maxShift: 350, invert: true, ease: 0.08 },
   autoscroll: { minWidth: 800, idleDelay: 3000, speedPxPerFrame: 1 },
-  paddingTopOffsetVh: 150
+  paddingTopOffsetVh: 32
 };
 function rand(min, max){ return Math.random() * (max - min) + min; }
 function device(){
