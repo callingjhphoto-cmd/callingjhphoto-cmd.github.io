@@ -298,11 +298,11 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 #pinButtons{display:none}
 @media(max-width:720px){
   #pinButtons{
-    display:flex;position:absolute;left:0;right:0;z-index:15;
-    bottom:calc(118px + env(safe-area-inset-bottom, 0px));
+    display:flex;position:relative;left:auto;right:auto;bottom:auto;
+    z-index:15;flex:0 0 auto;margin-top:auto;
     gap:6px;flex-wrap:wrap;justify-content:flex-start;
     overflow:visible;pointer-events:auto;
-    padding:0 16px 4px;padding-right:92px;
+    padding:8px 16px 4px;padding-right:92px;
   }
   #pinButtons [data-city]{
     flex:none;min-height:36px;padding:6px 10px;
@@ -929,13 +929,15 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   }
   #brandmark{display:none}
   #stage{
+    display:flex;flex-direction:column;
     padding-top:calc(8px + env(safe-area-inset-top, 0px));
-    padding-bottom:0;
-    height:100svh;max-height:100svh;min-height:0;
+    padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px));
+    height:100svh;max-height:100svh;min-height:100svh;
     overflow:hidden;box-sizing:border-box;
   }
   .hero-copy{
     position:relative;width:100%;max-width:100%;
+    flex:0 0 auto;
     padding:8px 56px 8px 16px;justify-content:flex-start;z-index:12
   }
   #readout{display:none!important}
@@ -1094,7 +1096,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   .hero-copy .deck{margin-top:4px;font-size:13px}
   .hero-copy .meta{margin-top:4px}
   .hero-copy .role{margin:0 0 4px}
-  #pinButtons{gap:4px;bottom:calc(100px + env(safe-area-inset-bottom, 0px))}
+  #pinButtons{gap:4px}
   #pinButtons [data-city]{min-height:32px;padding:4px 8px;font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -2717,28 +2719,24 @@ function resize(){
   if(W < 720){
     
     var widthKey = Math.round(W);
-    var layoutVer = 18;
+    var layoutVer = 19;
     if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
       var sr = cv.getBoundingClientRect();
       var copy = document.querySelector('#stage .hero-copy');
+      var pins = document.getElementById('pinButtons');
       var copyR = copy ? copy.getBoundingClientRect() : null;
-      var gapTop = 10;
-      var pinStrip = 88;
-      var fabReserve = 118;
-      var topEdge = copyR ? (copyR.bottom - sr.top + gapTop) : 150;
-      topEdge = Math.max(88, topEdge);
-      var layoutH = H;
-      if(window.visualViewport) layoutH = Math.min(H, window.visualViewport.height);
-      var botEdge = layoutH - fabReserve - pinStrip;
-      if(botEdge < topEdge + 160) botEdge = topEdge + 160;
+      var pinR = pins ? pins.getBoundingClientRect() : null;
+      var topEdge = copyR ? (copyR.bottom - sr.top + 10) : 150;
+      topEdge = Math.max(72, topEdge);
+      var botEdge = pinR ? (pinR.top - sr.top - 10) : (H - 96);
+      if(botEdge < topEdge + 140) botEdge = topEdge + 140;
       var band = botEdge - topEdge;
-      var Rwant = Math.min(W * 0.40, band * 0.46);
-      R = Math.max(110, Math.min(Rwant, 148));
-      if(layoutH < 760) R = Math.min(R, 108);
+      var Rwant = Math.min(W * 0.38, band * 0.46);
+      R = Math.max(96, Math.min(Rwant, 148));
       CX = W * 0.50;
-      CY = topEdge + Math.min(band * 0.46, R + 6);
+      CY = topEdge + band * 0.5;
       mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
     }
   } else {
@@ -4079,18 +4077,15 @@ function dockOverlays(){
   var bottomGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   var rightGap = Math.max(0, window.innerWidth - (offsetLeft + visW));
   if(fab){
-    var chromeBottom = Math.max(bottomGap, 52);
+    var chromeBottom = Math.max(bottomGap, 12);
     fab.style.bottom = chromeBottom + 'px';
     fab.style.right = Math.max(12, rightGap + 12) + 'px';
   }
   if(stage){
-    stage.style.height = visH + 'px';
-    stage.style.minHeight = visH + 'px';
-    stage.style.maxHeight = visH + 'px';
-    var topCover = Math.max(0, offsetTop);
-    var extra = Math.max(0, window.innerHeight - visH - bottomGap);
-    if(extra > 24) topCover = Math.max(topCover, Math.min(extra, 100));
-    stage.style.paddingTop = (8 + topCover) + 'px';
+    stage.style.height = '';
+    stage.style.minHeight = '';
+    stage.style.maxHeight = '';
+    stage.style.paddingTop = '';
   }
   var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   if(sheet && sheet.classList.contains('on')){
@@ -4139,8 +4134,9 @@ function closeBook(){
 }
 window.addEventListener('resize', dockOverlays);
 if(window.visualViewport){
-  window.visualViewport.addEventListener('resize', dockOverlays);
-  window.visualViewport.addEventListener('scroll', dockOverlays);
+  window.visualViewport.addEventListener('resize', function(){
+    if(window.innerWidth <= 720) dockOverlays();
+  });
 }
 (function(){
   var form = $('#bookForm');
@@ -4265,7 +4261,16 @@ if(window.visualViewport){
   map.forEach(function(m){ io.observe(m.t); });
 })();
 
-window.addEventListener('resize', resize);
+var lastGlobeW = 0;
+window.addEventListener('resize', function(){
+  if(window.innerWidth <= 720 && Math.abs(window.innerWidth - lastGlobeW) < 24 && lastGlobeW){
+    dockOverlays();
+    return;
+  }
+  lastGlobeW = window.innerWidth;
+  mobileGlobeLock = null;
+  resize();
+});
 
 (function(){
   function remountGlobe(){
