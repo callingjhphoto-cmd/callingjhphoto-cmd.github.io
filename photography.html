@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>James Huertas — Photography</title>
-<meta name="description" content="Personal photography by James Huertas. Selected work, Future Fencers, Archery and Brandenburg Violins.">
+<meta name="description" content="Personal photography by James Huertas.">
 <meta name="author" content="James Huertas">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://jameshphoto.com/photography.html">
@@ -14,10 +14,10 @@
 <meta property="og:site_name" content="James Huertas">
 <meta property="og:title" content="James Huertas — Photography">
 <meta property="og:description" content="Personal photography by James Huertas.">
-<meta property="og:image" content="https://jameshphoto.com/img/own/home_00_1.jpg">
+<meta property="og:image" content="https://jameshphoto.com/img/own/home_04_0.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="James Huertas — Photography">
-<meta name="twitter:image" content="https://jameshphoto.com/img/own/home_00_1.jpg">
+<meta name="twitter:image" content="https://jameshphoto.com/img/own/home_04_0.jpg">
 <link rel="icon" href="img/favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -27,19 +27,16 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#FFFFFF;
   --ink:#111111;
   --mute:#8A8A85;
-  --line:#E8E8E4;
+  --line:#EDEDE8;
   --signal:#ff3b1f;
-  --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --gap:8px;
-  --hang:48px;
-  --pad:40px;
+  --sans:"Manrope","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --pad:28px;
   --hit:42px;
 }
 *{box-sizing:border-box}
@@ -47,145 +44,100 @@ figure{margin:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.45;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.4;
 }
 ::selection{background:var(--signal);color:#fff}
-a{color:inherit}
+a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit}
 :focus-visible{outline:1px solid var(--signal);outline-offset:3px}
 
 #topbar{
   position:sticky;top:0;z-index:80;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:10px var(--pad);
-  background:rgba(255,255,255,.94);
-  border-bottom:1px solid var(--line);
+  padding:14px var(--pad);
+  background:rgba(255,255,255,.92);
 }
 #brand{
-  display:flex;align-items:center;gap:10px;text-decoration:none;
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;min-height:var(--hit);
+  display:flex;align-items:center;gap:10px;
+  font-size:15px;font-weight:600;letter-spacing:-.02em;min-height:var(--hit);
 }
-#brand svg{width:22px;height:22px;display:block}
+#brand svg{width:20px;height:20px;display:block}
 #brand em{font-style:normal;color:var(--signal)}
-#brand b{font-weight:500}
 #toplinks{
   display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  font-size:13px;font-weight:500;
 }
 #toplinks a, #toplinks button{
-  background:none;border:0;cursor:pointer;text-decoration:none;color:var(--mute);
-  min-height:var(--hit);padding:10px 11px;display:inline-flex;align-items:center;
+  background:none;border:0;cursor:pointer;color:var(--mute);
+  min-height:var(--hit);padding:8px 10px;display:inline-flex;align-items:center;
 }
 #toplinks a:hover, #toplinks button:hover, #toplinks a.on, #toplinks button.on{color:var(--ink)}
-#toplinks .langpair{display:flex;gap:0;margin-left:6px;border-left:1px solid var(--line);padding-left:6px}
-
-.intro{padding:48px var(--pad) 12px;max-width:720px}
-.intro h1{
-  font-weight:700;letter-spacing:-.035em;line-height:.92;
-  font-size:clamp(36px, 5.4vw, 56px);margin:0 0 10px;
-}
-.intro p{margin:0;color:var(--mute);max-width:46ch}
-
-.projects{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:28px 32px;
-  padding:40px var(--pad) 16px;
-}
-.project{
-  display:block;text-decoration:none;color:inherit;cursor:pointer;
-}
-.project .ph{background:#f3f3f0;overflow:hidden;line-height:0}
-.project img{width:100%;height:220px;object-fit:cover;display:block}
-.project h2{
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;font-weight:500;
-  margin:10px 0 0;
-}
-.project:hover h2{color:var(--signal)}
-
-.series-head{
-  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  padding:48px var(--pad) 8px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  scroll-margin-top:64px;
-}
-.series-head h2{font-family:var(--sans);font-size:clamp(22px, 3vw, 32px);letter-spacing:-.03em;margin:0;font-weight:700}
-.series-head .ct{color:var(--mute)}
+#toplinks .langpair{display:flex;gap:0;margin-left:4px}
 
 #wall{
-  display:block;
-  padding:48px 8vw 96px;
   width:100%;
-  overflow:visible;
+  padding:8vh 5vw 12vh;
+  display:flex;flex-direction:column;align-items:center;
 }
-.row{
-  display:flex;flex-wrap:nowrap;align-items:flex-end;
-  justify-content:flex-start;
-  gap:56px 48px;
-  margin:0 0 56px;
-  width:max-content;
-  max-width:100%;
-  padding:0;
-  box-sizing:border-box;
+.block{
+  width:100%;
+  display:flex;justify-content:center;align-items:flex-end;
+  margin:0 0 8vh;
 }
+.block.pair{gap:22px;flex-wrap:nowrap}
 .tile, figure.tile{
   position:relative;flex:none;flex-shrink:0;
-  margin:0;
-  max-width:100%;
+  margin:0;padding:0;
   background:transparent;cursor:zoom-in;overflow:visible;
+  line-height:0;
 }
 .tile img{
   width:100%;height:100%;object-fit:contain;object-position:center;
-  display:block;vertical-align:bottom;
+  display:block;
 }
 
 footer.site{
-  padding:28px var(--pad) 40px;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px 32px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mute);
+  padding:20px var(--pad) 36px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;
+  font-size:13px;font-weight:500;color:var(--mute);
 }
-footer.site a{color:var(--ink);text-decoration:none}
+footer.site a{color:var(--ink)}
 footer.site a:hover{color:var(--signal)}
 
 #lb{
   position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.97);
   display:none;align-items:center;justify-content:center;flex-direction:column;
-  padding:64px 72px 72px;
+  padding:56px 48px 64px;
 }
 #lb.on{display:flex}
 #lb img{
   width:auto;height:auto;
-  max-width:min(560px, 72vw);
-  max-height:min(64vh, 640px);
+  max-width:min(92vw, 1100px);
+  max-height:86vh;
   object-fit:contain;
 }
 #lb .x, #lb .nav{
   position:absolute;background:none;border:0;color:var(--ink);cursor:pointer;
-  font-family:var(--mono);min-width:var(--hit);min-height:var(--hit);
+  min-width:var(--hit);min-height:var(--hit);
 }
-#lb .x{top:14px;right:18px;font-size:12px;letter-spacing:.14em}
-#lb .nav.prev{left:12px;top:50%;transform:translateY(-50%);font-size:28px}
-#lb .nav.next{right:12px;top:50%;transform:translateY(-50%);font-size:28px}
+#lb .x{top:12px;right:16px;font-size:13px;font-weight:500}
+#lb .nav.prev{left:8px;top:50%;transform:translateY(-50%);font-size:28px}
+#lb .nav.next{right:8px;top:50%;transform:translateY(-50%);font-size:28px}
 #lb .x:hover, #lb .nav:hover{color:var(--signal)}
 #lb .meta{
-  position:absolute;bottom:18px;left:24px;right:24px;
+  position:absolute;bottom:16px;left:24px;right:24px;
   display:flex;justify-content:space-between;gap:16px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mute);
+  font-size:12px;font-weight:500;color:var(--mute);
 }
 
-@media(max-width:1100px){
-  .projects{grid-template-columns:1fr 1fr;gap:24px}
-  .project img{height:200px}
-  #wall{padding:32px 6vw 72px}
-  .row{gap:36px 32px;margin-bottom:40px}
-}
 @media(max-width:860px){
-  :root{--pad:16px;--gap:6px;--hang:28px}
+  :root{--pad:16px}
   #topbar{padding:8px 12px}
-  #brand b{display:none}
-  .projects{display:none}
-  #wall{padding:24px 16px 64px}
-  .row{gap:24px 16px;margin-bottom:28px}
-  .row:nth-child(n){padding-left:0;padding-right:0;justify-content:flex-start}
-  #lb{padding:56px 12px 64px}
+  #brand span.full{display:none}
+  #wall{padding:5vh 4vw 10vh}
+  .block{margin-bottom:5.5vh}
+  .block.pair{gap:10px}
+  #lb{padding:48px 10px 56px}
   #lb .nav.prev{left:0} #lb .nav.next{right:0}
 }
 @media(prefers-reduced-motion:reduce){
@@ -198,7 +150,7 @@ footer.site a:hover{color:var(--signal)}
 <body>
 
 <header id="topbar">
-  <a id="brand" href="/" aria-label="James Huertas — JH/01">
+  <a id="brand" href="/" aria-label="James Huertas">
     <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <circle cx="16" cy="18" r="10.2" stroke="#111" stroke-width="1.25"/>
       <ellipse cx="16" cy="18" rx="4.2" ry="10.2" stroke="#111" stroke-width=".7" opacity=".4"/>
@@ -206,9 +158,10 @@ footer.site a:hover{color:var(--signal)}
       <path d="M16 8.2V2.4" stroke="#ff3b1f" stroke-width="1.35" stroke-linecap="round"/>
       <circle cx="16" cy="8.2" r="1.85" fill="#ff3b1f"/>
     </svg>
-    JH<em>/</em>01 <b>James Huertas</b>
+    James Huertas
   </a>
   <nav id="toplinks">
+    <a href="photography.html" class="on" data-i18n="hero.h1">Photography</a>
     <a href="/" data-i18n="nav.digitech">Digitech</a>
     <span class="langpair">
       <button type="button" class="langbtn" data-lang="en" aria-label="English">EN</button>
@@ -217,19 +170,16 @@ footer.site a:hover{color:var(--signal)}
   </nav>
 </header>
 
-<div class="intro">
-  <h1 data-i18n="hero.h1">Photography</h1>
-</div>
 <div id="wall"></div>
 
 <footer class="site">
-  <span data-i18n="foot.who">JH/01 — Photography</span>
+  <span data-i18n="foot.who">James Huertas — Photography</span>
   <span><a href="mailto:callingjhphoto@gmail.com">callingjhphoto@gmail.com</a></span>
   <span><a href="/" data-i18n="nav.digitech">Digitech</a></span>
 </footer>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Photograph">
-  <button type="button" class="x" id="lbX">[ Close ]</button>
+  <button type="button" class="x" id="lbX">Close</button>
   <button type="button" class="nav prev" id="lbPrev" aria-label="Previous">‹</button>
   <img id="lbImg" alt="">
   <button type="button" class="nav next" id="lbNext" aria-label="Next">›</button>
@@ -264,13 +214,13 @@ var I18N = {
   en: {
     'hero.h1':'Photography',
     'nav.digitech':'Digitech',
-    'foot.who':'JH/01 — Photography',
+    'foot.who':'James Huertas — Photography',
     'alt':'Photograph by James Huertas.'
   },
   es: {
     'hero.h1':'Fotografía',
     'nav.digitech':'Digitech',
-    'foot.who':'JH/01 — Fotografía',
+    'foot.who':'James Huertas — Fotografía',
     'alt':'Fotografía de James Huertas.'
   }
 };
@@ -304,70 +254,50 @@ document.querySelectorAll('.langbtn').forEach(function(b){
   });
 });
 
-var LARGE = {
-  'img/own/home_04_0.jpg': 1,
-  'img/own/home_09_0.jpg': 1,
-  'img/own/home_23_1.jpg': 1,
-  'img/own/home_03_0.jpg': 1
-};
-function sizeFor(it, i, maxW){
+function isWide(it){ return (it.w / it.h) > 1.12; }
+function fit(it, capW, capH){
   var ar = it.w / it.h;
-  var band = window.innerWidth;
-  var odd = (i % 2) === 1;
-  var hero = !!LARGE[it.src];
-  var sizes = band < 560 ? [132, 156, 118, 148] : band < 860 ? [160, 196, 140, 184] : [200, 248, 168, 228, 156, 236];
-  var h = sizes[i % sizes.length];
-  if(odd) h = Math.round(h * 1.62);
-  if(hero) h = band < 860 ? 320 : 460;
-  else {
-    if(ar > 1.55) h = Math.min(h, odd ? (band < 860 ? 200 : 268) : (band < 860 ? 140 : 176));
-    if(ar < 0.78) h = Math.min(h + (odd ? 40 : 20), odd ? (band < 860 ? 290 : 390) : (band < 860 ? 200 : 252));
-  }
-  h = Math.min(h, it.h);
-  var w = it.w * (h / it.h);
-  var imgCap = Math.min(maxW, (hero || odd) ? (band < 860 ? maxW : 520) : (band < 860 ? maxW : 340));
-  if(w > imgCap){
-    w = imgCap;
-    h = w / ar;
-  }
+  var h = Math.min(it.h, capH);
+  var w = h * ar;
+  if(w > capW){ w = capW; h = w / ar; }
+  if(w > it.w){ w = it.w; h = it.h; }
+  if(h > it.h){ h = it.h; w = it.w; }
   return { w: w, h: h };
 }
-
+function tile(it, i, sz, eager){
+  return '<figure class="tile" data-i="'+i+'" tabindex="0" role="button" style="width:'+sz.w.toFixed(2)+'px;height:'+sz.h.toFixed(2)+'px">' +
+    '<img '+(eager ? 'loading="eager"' : 'loading="lazy"')+' decoding="async" src="'+it.src+'" alt="'+t('alt')+'">' +
+    '</figure>';
+}
 function renderWall(){
   var el = document.getElementById('wall');
   var items = WALL;
-  var cs = getComputedStyle(el);
-  var pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-  var inner = Math.max(200, (el.clientWidth || document.documentElement.clientWidth || window.innerWidth) - pad);
-  var g = window.innerWidth < 860 ? 16 : window.innerWidth < 1100 ? 32 : 48;
-  var maxW = Math.floor(inner * 0.9);
-  var cap = maxW;
-  var html = '', row = [], rowW = 0, i, it, sz, k, n = 0, shift, eager;
-  function tile(x){
-    eager = x.i < 6;
-    return '<figure class="tile" data-i="'+x.i+'" tabindex="0" role="button" style="width:'+x.sz.w.toFixed(2)+'px;height:'+x.sz.h.toFixed(2)+'px;margin:0">' +
-      '<img '+(eager ? 'loading="eager"' : 'loading="lazy"')+' decoding="async" src="'+x.it.src+'" alt="'+t('alt')+'">' +
-      '</figure>';
+  var band = window.innerWidth;
+  var inner = Math.max(260, el.clientWidth || band);
+  var capH = Math.min(window.innerHeight * (band < 860 ? 0.70 : 0.78), 880);
+  var capW = Math.min(inner * 0.92, band < 860 ? inner : 1040);
+  var pairBox = Math.min(inner * 0.92, 1080);
+  var gap = band < 860 ? 10 : 22;
+  var html = '', i = 0, a, b, sa, sb, h, wide, eager;
+  while(i < items.length){
+    a = items[i];
+    b = items[i + 1];
+    eager = i < 4;
+    if(b && i > 0 && !isWide(a) && !isWide(b) && (i % 4) !== 0){
+      sa = fit(a, (pairBox - gap) / 2, capH);
+      sb = fit(b, (pairBox - gap) / 2, capH);
+      h = Math.min(sa.h, sb.h);
+      sa = fit(a, (pairBox - gap) / 2, h);
+      sb = fit(b, (pairBox - gap) / 2, h);
+      html += '<div class="block pair">'+tile(a,i,sa,eager)+tile(b,i+1,sb,eager)+'</div>';
+      i += 2;
+    } else {
+      wide = isWide(a);
+      sa = fit(a, wide ? capW : Math.min(capW, capH * (a.w / a.h)), capH);
+      html += '<div class="block single'+(wide ? ' land' : '')+'">'+tile(a,i,sa,eager)+'</div>';
+      i += 1;
+    }
   }
-  function flush(){
-    if(!row.length) return;
-    shift = Math.max(0, inner - rowW);
-    if(n % 2 === 1) shift = shift;
-    else if(n % 3 === 2) shift = shift * 0.5;
-    else shift = 0;
-    html += '<div class="row" style="margin-left:'+shift.toFixed(2)+'px">';
-    for(k = 0; k < row.length; k++) html += tile(row[k]);
-    html += '</div>';
-    row = []; rowW = 0; n++;
-  }
-  for(i = 0; i < items.length; i++){
-    it = items[i];
-    sz = sizeFor(it, i, cap);
-    if(row.length && rowW + g + sz.w > maxW) flush();
-    row.push({it: it, sz: sz, i: i});
-    rowW += sz.w + (row.length > 1 ? g : 0);
-  }
-  flush();
   el.innerHTML = html;
 }
 
@@ -388,8 +318,8 @@ function showLb(){
   var list = WALL;
   curI = (curI + list.length) % list.length;
   var it = list[curI];
-  var capW = Math.min(it.w, 560, Math.floor(window.innerWidth * 0.72));
-  var capH = Math.min(it.h, 640, Math.floor(window.innerHeight * 0.64));
+  var capW = Math.min(it.w, Math.floor(window.innerWidth * 0.92), 1100);
+  var capH = Math.min(it.h, Math.floor(window.innerHeight * 0.86));
   lbImg.style.maxWidth = capW + 'px';
   lbImg.style.maxHeight = capH + 'px';
   lbImg.src = it.src;
@@ -435,10 +365,7 @@ lb.addEventListener('touchend', function(e){
   showLb();
 }, {passive:true});
 document.addEventListener('keydown', function(e){
-  if(!lb.classList.contains('on')){
-    if(e.key === 'ArrowRight'){ e.preventDefault(); }
-    return;
-  }
+  if(!lb.classList.contains('on')) return;
   if(e.key === 'Escape') closeLb();
   else if(e.key === 'ArrowRight'){ e.preventDefault(); curI++; showLb(); }
   else if(e.key === 'ArrowLeft'){ e.preventDefault(); curI--; showLb(); }
