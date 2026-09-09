@@ -220,7 +220,10 @@ function mixWall(works){
   while(ei < extras.length) wall.push(extras[ei++]);
   return wall;
 }
-var PAIRS = { 'img/own/home_02_0.jpg': 'img/own/home_02_1.jpg' };
+var PAIRS = {
+  'img/own/home_02_0.jpg': 'img/own/home_02_1.jpg',
+  'img/own/home_00_0.jpg': 'img/own/home_00_1.jpg'
+};
 function clusterPairs(wall){
   var mateOf = {}, skip = {}, src, i, out = [], used = {};
   for(src in PAIRS){ if(PAIRS.hasOwnProperty(src)) skip[PAIRS[src]] = src; }
