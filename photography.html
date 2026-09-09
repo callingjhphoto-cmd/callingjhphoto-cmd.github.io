@@ -45,6 +45,28 @@ body{
   margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
 }
+body.is-booting{overflow:hidden}
+body.is-booting #topbar{opacity:0;pointer-events:none}
+
+#boot{
+  position:fixed;inset:0;z-index:300;
+  background:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .85s ease;
+}
+#boot.out{opacity:0;pointer-events:none}
+#boot .mark{
+  font-family:var(--serif);
+  font-weight:500;
+  font-style:italic;
+  font-size:clamp(28px, 6.6vw, 76px);
+  letter-spacing:-.01em;
+  line-height:1;
+  color:var(--ink);
+  text-align:center;
+  padding:0 24px;
+  white-space:nowrap;
+}
 ::selection{background:var(--signal);color:#fff}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -148,6 +170,7 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
 }
 
 @media(max-width:768px){
+  #boot .mark{font-size:clamp(26px, 8vw, 48px); letter-spacing:0}
   #topbar{padding:10px 12px}
   #bgword{font-size:clamp(36px, 14vw, 64px); top:18vh; opacity:.08}
   .band{
@@ -176,7 +199,11 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
 <script data-goatcounter="https://callingjhphoto.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </head>
-<body>
+<body class="is-booting">
+
+<div id="boot" aria-label="James H. Photo">
+  <div class="mark">James H. Photo</div>
+</div>
 
 <header id="topbar">
   <a id="brand" href="/" aria-label="James Huertas">
@@ -370,6 +397,33 @@ bands.forEach(function(band){
 wall.innerHTML = html;
 
 var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+function runBoot(){
+  var boot = document.getElementById('boot');
+  if(!boot) return;
+  var gone = false;
+  function dismiss(){
+    if(gone) return;
+    gone = true;
+    boot.classList.add('out');
+    document.body.classList.remove('is-booting');
+    setTimeout(function(){ if(boot.parentNode) boot.parentNode.removeChild(boot); }, 900);
+  }
+  if(reduceMotion){ dismiss(); return; }
+  var need = Math.min(4, shots.length);
+  var ready = 0;
+  var minOk = false;
+  function maybe(){ if(minOk && ready >= need) dismiss(); }
+  setTimeout(function(){ minOk = true; maybe(); }, 1100);
+  shots.slice(0, need).forEach(function(btn){
+    var img = btn.querySelector('img');
+    var done = function(){ ready++; maybe(); };
+    if(!img || (img.complete && img.naturalWidth)) done();
+    else { img.addEventListener('load', done); img.addEventListener('error', done); }
+  });
+  if(!need){ minOk = true; dismiss(); }
+  setTimeout(dismiss, 2600);
+}
+runBoot();
 shots.forEach(function(btn){
   var img = btn.querySelector('img');
   img.style.opacity = '1';
