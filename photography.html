@@ -43,6 +43,7 @@
   --hit:42px;
 }
 *{box-sizing:border-box}
+figure{margin:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
@@ -117,18 +118,17 @@ button{font:inherit;color:inherit}
 }
 .row{
   display:flex;flex-wrap:nowrap;align-items:flex-end;
+  justify-content:flex-start;
   gap:56px 48px;
   margin:0 0 56px;
-  width:100%;
+  width:max-content;
   max-width:100%;
   padding:0;
   box-sizing:border-box;
 }
-.row:nth-child(odd){justify-content:flex-start}
-.row:nth-child(even){justify-content:flex-end}
-.row:nth-child(3n){justify-content:center}
-.tile{
+.tile, figure.tile{
   position:relative;flex:none;flex-shrink:0;
+  margin:0;
   max-width:100%;
   background:transparent;cursor:zoom-in;overflow:visible;
 }
@@ -319,23 +319,27 @@ function renderWall(){
   var items = WALL;
   var cs = getComputedStyle(el);
   var pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-  var inner = Math.max(200, (el.clientWidth || window.innerWidth) - pad);
-  var g = window.innerWidth < 860 ? 16 : 48;
+  var inner = Math.max(200, (el.clientWidth || document.documentElement.clientWidth || window.innerWidth) - pad);
+  var g = window.innerWidth < 860 ? 16 : window.innerWidth < 1100 ? 32 : 48;
   var maxW = Math.floor(inner * 0.9);
   var cap = maxW;
-  var html = '', row = [], rowW = 0, i, it, sz, k, x, eager;
+  var html = '', row = [], rowW = 0, i, it, sz, k, n = 0, shift, eager;
   function tile(x){
     eager = x.i < 6;
-    return '<figure class="tile" data-i="'+x.i+'" tabindex="0" role="button" style="width:'+x.sz.w.toFixed(2)+'px;height:'+x.sz.h.toFixed(2)+'px">' +
+    return '<figure class="tile" data-i="'+x.i+'" tabindex="0" role="button" style="width:'+x.sz.w.toFixed(2)+'px;height:'+x.sz.h.toFixed(2)+'px;margin:0">' +
       '<img '+(eager ? 'loading="eager"' : 'loading="lazy"')+' decoding="async" src="'+x.it.src+'" alt="'+t('alt')+'">' +
       '</figure>';
   }
   function flush(){
     if(!row.length) return;
-    html += '<div class="row">';
+    shift = Math.max(0, inner - rowW);
+    if(n % 2 === 1) shift = shift;
+    else if(n % 3 === 2) shift = shift * 0.5;
+    else shift = 0;
+    html += '<div class="row" style="margin-left:'+shift.toFixed(2)+'px">';
     for(k = 0; k < row.length; k++) html += tile(row[k]);
     html += '</div>';
-    row = []; rowW = 0;
+    row = []; rowW = 0; n++;
   }
   for(i = 0; i < items.length; i++){
     it = items[i];
