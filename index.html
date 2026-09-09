@@ -299,7 +299,7 @@ nav .langpair{display:flex;gap:0;margin-left:8px;border-left:.4pt solid var(--ru
 @media(max-width:720px){
   #pinButtons{
     display:flex;position:absolute;left:0;right:0;z-index:15;
-    bottom:calc(92px + env(safe-area-inset-bottom, 0px));
+    bottom:calc(118px + env(safe-area-inset-bottom, 0px));
     gap:6px;flex-wrap:wrap;justify-content:flex-start;
     overflow:visible;pointer-events:auto;
     padding:0 16px 4px;padding-right:92px;
@@ -929,15 +929,16 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   }
   #brandmark{display:none}
   #stage{
-    padding-top:calc(52px + env(safe-area-inset-top, 0px));
-    padding-bottom:env(safe-area-inset-bottom, 0px);
-    height:100svh;height:100dvh;max-height:100svh;min-height:100svh;
+    padding-top:calc(8px + env(safe-area-inset-top, 0px));
+    padding-bottom:0;
+    height:100svh;max-height:100svh;min-height:0;
     overflow:hidden;box-sizing:border-box;
   }
   .hero-copy{
     position:relative;width:100%;max-width:100%;
-    padding:12px 16px 6px;justify-content:flex-start;z-index:12
+    padding:8px 56px 8px 16px;justify-content:flex-start;z-index:12
   }
+  #readout{display:none!important}
   .hero-copy h1{font-size:clamp(32px, 8.8vw, 44px);min-height:0}
   .hero-copy .tag{margin-bottom:10px}
   .hero-copy .role{margin:0 0 10px}
@@ -988,7 +989,7 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   #work .tbl{margin-top:28px;font-size:12px}
   .row{gap:2px 10px;padding:8px 0}
   .row .ti{font-size:13px;letter-spacing:-.01em}
-  .hero-copy{padding:10px 14px 4px}
+  .hero-copy{padding:8px 56px 6px 16px}
   .hero-copy .tag,.hero-copy .role,.hero-copy .meta{
     font-size:9px;letter-spacing:.1em;text-transform:none
   }
@@ -1088,18 +1089,13 @@ html.book-open nav{visibility:hidden;pointer-events:none}
   
   #work, #contact{padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px))}
 }
-@media(max-width:720px) and (max-height:740px){
-  .hero-copy h1{font-size:clamp(28px, 7.8vw, 38px);min-height:0}
-  .hero-copy .deck{margin-top:8px;font-size:15px}
-  .hero-copy .meta{margin-top:8px}
-  .hero-copy .role{margin:0 0 8px}
-  #pinButtons{
-    flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
-    bottom:calc(80px + env(safe-area-inset-bottom, 0px));
-    padding-right:96px;
-    -webkit-mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 72px),transparent);
-    mask-image:linear-gradient(to right,#000 0%,#000 calc(100% - 72px),transparent);
-  }
+@media(max-width:720px) and (max-height:760px){
+  .hero-copy h1{font-size:clamp(24px, 6.6vw, 32px);min-height:0}
+  .hero-copy .deck{margin-top:4px;font-size:13px}
+  .hero-copy .meta{margin-top:4px}
+  .hero-copy .role{margin:0 0 4px}
+  #pinButtons{gap:4px;bottom:calc(100px + env(safe-area-inset-bottom, 0px))}
+  #pinButtons [data-city]{min-height:32px;padding:4px 8px;font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -2722,7 +2718,7 @@ function resize(){
   if(W < 720){
     
     var widthKey = Math.round(W);
-    var layoutVer = 16;
+    var layoutVer = 18;
     if(mobileGlobeLock && mobileGlobeLock.W === widthKey && mobileGlobeLock.v === layoutVer){
       R = mobileGlobeLock.R; CX = mobileGlobeLock.CX; CY = mobileGlobeLock.CY;
     } else {
@@ -2734,13 +2730,14 @@ function resize(){
       var fabReserve = 118;
       var topEdge = copyR ? (copyR.bottom - sr.top + gapTop) : 150;
       topEdge = Math.max(88, topEdge);
-      var layoutH = Math.max(H, window.innerHeight || H);
+      var layoutH = H;
+      if(window.visualViewport) layoutH = Math.min(H, window.visualViewport.height);
       var botEdge = layoutH - fabReserve - pinStrip;
       if(botEdge < topEdge + 160) botEdge = topEdge + 160;
       var band = botEdge - topEdge;
       var Rwant = Math.min(W * 0.40, band * 0.46);
       R = Math.max(110, Math.min(Rwant, 148));
-      if(layoutH < 740) R = Math.min(R, 122);
+      if(layoutH < 760) R = Math.min(R, 108);
       CX = W * 0.50;
       CY = topEdge + Math.min(band * 0.46, R + 6);
       mobileGlobeLock = { W: widthKey, v: layoutVer, R: R, CX: CX, CY: CY };
@@ -3301,6 +3298,7 @@ cv.addEventListener('dblclick', function(){ setZoom(zoom > 1.4 ? 1 : 1.55); kick
 var readout = $('#readout'), readoutCity = null;
 function showReadout(c){
   if(!readout) return;
+  if(window.innerWidth <= 720) return;
   var credits = CREDITS[c.id] || [];
   if(!credits.length){
     hideReadout();
@@ -3366,9 +3364,21 @@ function openDossier(id){
   var c = CITIES.filter(function(x){ return x.id === id; })[0];
   if(!c) return;
   var credits = CREDITS[id] || [];
-  if(!credits.length) return;
+  if(!credits.length && window.innerWidth > 720) return;
   activePin = id;
   stuckPin = id;
+  if(window.innerWidth <= 720){
+    hideReadout();
+    if(dossier){
+      dossier.classList.remove('on');
+      dossier.setAttribute('aria-hidden','true');
+      dossier.setAttribute('hidden','');
+    }
+    if(scrim) scrim.classList.remove('on');
+    easeTarget = { lon: c.lon, lat: rotLat };
+    return;
+  }
+  if(!credits.length) return;
   if(dossier){
     dossier.classList.remove('on');
     dossier.setAttribute('aria-hidden','true');
@@ -4070,11 +4080,19 @@ function dockOverlays(){
   var bottomGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   var rightGap = Math.max(0, window.innerWidth - (offsetLeft + visW));
   if(fab){
-    fab.style.bottom = (bottomGap + 16) + 'px';
+    var chromeBottom = Math.max(bottomGap, 52);
+    fab.style.bottom = chromeBottom + 'px';
     fab.style.right = Math.max(12, rightGap + 12) + 'px';
   }
-  
-  if(stage){ stage.style.height = ''; stage.style.minHeight = ''; }
+  if(stage){
+    stage.style.height = visH + 'px';
+    stage.style.minHeight = visH + 'px';
+    stage.style.maxHeight = visH + 'px';
+    var topCover = Math.max(0, offsetTop);
+    var extra = Math.max(0, window.innerHeight - visH - bottomGap);
+    if(extra > 24) topCover = Math.max(topCover, Math.min(extra, 100));
+    stage.style.paddingTop = (8 + topCover) + 'px';
+  }
   var kbGap = Math.max(0, window.innerHeight - (offsetTop + visH));
   if(sheet && sheet.classList.contains('on')){
     sheet.style.bottom = 'auto';
