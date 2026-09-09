@@ -323,7 +323,7 @@ var CONFIG = {
     mobile:          { columns: 2, initialTop: 10, initialLeft: 8,  hGap: 30, vGap: 24, colGap: 4,  marginVW: [2, 20], marginVH: [2, 6] },
     mobileLandscape: { columns: 3, initialTop: 10, initialLeft: 0,  hGap: 30, vGap: 26, colGap: 4,  marginVW: [5, 10], marginVH: [2, 7] }
   },
-  scale: { desktop: [0.3, 1], tablet: [0.3, 1.4], mobile: [0.8, 2.2], mobileLandscape: [0.3, 1] },
+  scale: { desktop: [0.45, 1], tablet: [0.45, 1.4], mobile: [0.8, 2.2], mobileLandscape: [0.45, 1] },
   scrollDrift: { desktop: [40, 220], tablet: [40, 180], mobile: [30, 120] },
   mouse: { maxShift: 350, invert: true, ease: 0.08 },
   autoscroll: { minWidth: 800, idleDelay: 3000, speedPxPerFrame: 1 },
@@ -350,61 +350,158 @@ function visPx(idx, scale){
   var s = Math.min(maxW / it.w, maxH / it.h, 1) * (scale || 1);
   return { w: it.w * s, h: it.h * s };
 }
+function visBox(idx, scale){
+  var px = visPx(idx, scale);
+  return { w: (px.w / window.innerWidth) * 100, h: (px.h / window.innerHeight) * 100 };
+}
+function pickScale(i){
+  var S = CONFIG.scale[currentDevice];
+  if(GROUP_SCALE[WALL[i].src]) return GROUP_SCALE[WALL[i].src];
+  var s = rand(S[0], S[1]);
+  if(PAIR_LEAD_BOOST[WALL[i].src]){
+    var cap = (WALL[i].src.indexOf("home_04_0") !== -1 || WALL[i].src.indexOf("home_09_0") !== -1 || WALL[i].src.indexOf("violins_03") !== -1) ? 1.45 : 1.2;
+    s = Math.min(cap, Math.max(0.85, s * PAIR_LEAD_BOOST[WALL[i].src]));
+  }
+  return s;
+}
 function layout(){
   currentDevice = device();
   var L = CONFIG.layout[currentDevice];
-  var S = CONFIG.scale[currentDevice];
-  var maxTop = 0, i, row, col, top, left, sMin, sMax, j, mate, leadPx, matePx, followN, p, gapVw;
+  var maxTop = 0, i, j, p, mate, followN, sMin, sMax, sz, b, col;
+  var GAP_W = 2.6, GAP_H = 3.4;
+  var boxes = [];
+  var colBottom = [L.initialTop, L.initialTop];
   slot = 0;
+
+  function collide(box){
+    if(box.L < 1 || box.L + box.W > 98.8) return true;
+    for(var k = 0; k < boxes.length; k++){
+      var o = boxes[k];
+      if(box.L < o.L + o.W + GAP_W && box.L + box.W + GAP_W > o.L &&
+         box.T < o.T + o.H + GAP_H && box.T + box.H + GAP_H > o.T) return true;
+    }
+    return false;
+  }
+  function settle(box){
+    if(box.L + box.W > 98.8) box.L = Math.max(1.4, 98.8 - box.W);
+    if(box.L < 1.4) box.L = 1.4;
+    var n = 0;
+    while(collide(box) && n < 180){ box.T += 2.2; n++; }
+    return box;
+  }
+  function commit(idx, box){
+    boxes.push({ L: box.L, T: box.T, W: box.W, H: box.H });
+    placedLeft[idx] = box.L;
+    placedTop[idx] = box.T;
+    if(box.T + box.H > maxTop) maxTop = box.T + box.H;
+  }
+  function clusterBottom(leadIdx, upTo){
+    var bot = placedTop[leadIdx] + visBox(leadIdx, scales[leadIdx]).h;
+    for(var q = 0; q < upTo; q++){
+      if(q === leadIdx || MATE[q] === leadIdx){
+        var bb = visBox(q, scales[q]);
+        var t = placedTop[q] + bb.h;
+        if(t > bot) bot = t;
+      }
+    }
+    return bot;
+  }
+
   for(i = 0; i < divs.length; i++){
     mate = MATE[i];
     if(mate != null){
-      followN = 0;
-      for(p = 0; p < i; p++) if(MATE[p] === mate) followN++;
       if(GROUP_SCALE[WALL[i].src] || GROUP_SCALE[WALL[mate].src]){
         scales[i] = GROUP_SCALE[WALL[i].src] || GROUP_SCALE[WALL[mate].src] || scales[mate];
       } else {
         scales[i] = scales[mate] / (PAIR_LEAD_BOOST[WALL[mate].src] || 1);
       }
-      leadPx = visPx(mate, scales[mate]);
-      matePx = visPx(i, scales[i]);
-      gapVw = 3.2;
-      if(followN === 0){
-        top = placedTop[mate] + rand(0, 2);
-        left = placedLeft[mate] + (leadPx.w / window.innerWidth) * 100 + gapVw;
-      } else {
-        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 3.2;
-        left = placedLeft[mate] + rand(0, 2);
-      }
-      if(left + (matePx.w / window.innerWidth) * 100 > 94){
-        left = placedLeft[mate];
-        top = placedTop[mate] + (leadPx.h / window.innerHeight) * 100 + 3.2;
-      }
     } else {
-      row = Math.floor(slot / L.columns);
-      col = slot % L.columns;
-      top = L.initialTop + row * L.vGap + rand(L.marginVH[0], L.marginVH[1]);
-      left = L.initialLeft + col * (L.hGap + L.colGap) + rand(L.marginVW[0], L.marginVW[1]);
-      if(GROUP_SCALE[WALL[i].src]){
-        scales[i] = GROUP_SCALE[WALL[i].src];
-      } else {
-        scales[i] = rand(S[0], S[1]);
-        if(PAIR_LEAD_BOOST[WALL[i].src]){
-          var cap = (WALL[i].src.indexOf('home_04_0') !== -1 || WALL[i].src.indexOf('home_09_0') !== -1 || WALL[i].src.indexOf('violins_03') !== -1) ? 1.45 : 1.2;
-          scales[i] = Math.min(cap, Math.max(0.85, scales[i] * PAIR_LEAD_BOOST[WALL[i].src]));
+      scales[i] = pickScale(i);
+    }
+  }
+  var inCluster = {};
+  for(i = 0; i < divs.length; i++){
+    if(MATE[i] != null){ inCluster[i] = 1; inCluster[MATE[i]] = 1; }
+  }
+  for(i = 0; i < divs.length; i++){
+    if(inCluster[i] && !GROUP_SCALE[WALL[i].src]) scales[i] = Math.max(scales[i], 0.75);
+  }
+
+  for(i = 0; i < divs.length; i++){
+    sz = visBox(i, scales[i]);
+    mate = MATE[i];
+    if(mate != null){
+      followN = 0;
+      for(p = 0; p < i; p++) if(MATE[p] === mate) followN++;
+      var leadSz = visBox(mate, scales[mate]);
+      var rightL = placedLeft[mate] + leadSz.w + GAP_W;
+      if(followN > 0){
+        var prev = i - 1;
+        if(MATE[prev] === mate){
+          var prevSz = visBox(prev, scales[prev]);
+          rightL = placedLeft[prev] + prevSz.w + GAP_W;
         }
+      }
+      b = { L: rightL, T: placedTop[mate] + rand(0, 1.6), W: sz.w, H: sz.h };
+      if(rightL + sz.w > 97.5 || collide(b)){
+        b = {
+          L: placedLeft[mate] + rand(0, 1.2),
+          T: clusterBottom(mate, i) + GAP_H,
+          W: sz.w, H: sz.h
+        };
+      }
+      settle(b);
+      commit(i, b);
+      var mateBot = placedTop[i] + sz.h + GAP_H;
+      if(mateBot > colBottom[0]) colBottom[0] = mateBot;
+      if(mateBot > colBottom[1]) colBottom[1] = mateBot;
+    } else {
+      col = slot % 2;
+      if(colBottom[col] > colBottom[1 - col] + 32) col = 1 - col;
+      var hasMate = (i + 1 < divs.length && MATE[i + 1] === i);
+      var left;
+      if(hasMate){
+        var mateSz = visBox(i + 1, scales[i + 1]);
+        if(sz.w + GAP_W + mateSz.w <= 94) left = rand(2, 8);
+        else left = rand(2, 12);
+      } else if(col === 0){
+        left = L.initialLeft + rand(L.marginVW[0], Math.min(L.marginVW[1], 12));
+      } else {
+        left = rand(50, 62);
+        if(left + sz.w > 97) left = Math.max(2, 97 - sz.w - rand(0, 3));
+      }
+      b = {
+        L: left,
+        T: colBottom[col] + rand(L.marginVH[0], L.marginVH[1]),
+        W: sz.w, H: sz.h
+      };
+      if(hasMate && sz.w + GAP_W + mateSz.w <= 94){
+        var mateTry = { L: left + sz.w + GAP_W, T: b.T, W: mateSz.w, H: mateSz.h };
+        var n = 0;
+        while((collide(b) || collide(mateTry)) && n < 180){
+          b.T += 2.2;
+          mateTry.T = b.T;
+          n++;
+        }
+      } else {
+        settle(b);
+      }
+      commit(i, b);
+      var leadBot = placedTop[i] + sz.h + GAP_H;
+      if(hasMate){
+        if(leadBot > colBottom[0]) colBottom[0] = leadBot;
+      } else {
+        colBottom[col] = leadBot;
       }
       slot++;
     }
-    placedTop[i] = top;
-    placedLeft[i] = left;
-    divs[i].style.top = top + "vh";
-    divs[i].style.left = left + "vw";
-    if(top > maxTop) maxTop = top;
+    divs[i].style.top = placedTop[i] + "vh";
+    divs[i].style.left = placedLeft[i] + "vw";
+    divs[i].style.zIndex = String(Math.round(scales[i] * 100));
     if(window.gsap) gsap.set(divs[i], { scale: scales[i], transformOrigin: "0px 0px" });
     else {
       divs[i].style.transformOrigin = "0 0";
-      divs[i].style.transform = "scale("+scales[i]+")";
+      divs[i].style.transform = "scale(" + scales[i] + ")";
     }
   }
   sMin = Math.min.apply(null, scales);
@@ -415,7 +512,7 @@ function layout(){
   for(j = 0; j < scales.length; j++){
     if(MATE[j] != null) depths[j] = depths[MATE[j]];
   }
-  document.getElementById("pad").style.top = (maxTop + CONFIG.paddingTopOffsetVh) + "vh";
+  document.getElementById("pad").style.top = (maxTop + 18) + "vh";
 }
 
 function buildScrollParallax(){
