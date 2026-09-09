@@ -125,6 +125,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   max-width:46vw;
   max-height:72vh;
 }
+.parallaxdiv.wide, .parallaxdiv.wide .linkedparaimg{
+  max-width:72vw;
+  max-height:44vh;
+}
 .pad{
   position:absolute;
   left:0;width:100%;
@@ -154,11 +158,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 @media(max-width:1024px){
   .parallaxdiv, .linkedparaimg{max-width:30vw}
+  .parallaxdiv.wide, .parallaxdiv.wide .linkedparaimg{max-width:70vw;max-height:38vh}
+  .parallaxdiv.big, .parallaxdiv.big .linkedparaimg{max-width:46vw;max-height:72vh}
 }
 @media(max-width:768px){
   #boot .mark{font-size:clamp(26px, 8vw, 48px); letter-spacing:0}
   #topbar{padding:10px 12px}
   .parallaxdiv, .linkedparaimg{max-width:42vw;max-height:36vh}
+  .parallaxdiv.wide, .parallaxdiv.wide .linkedparaimg{max-width:88vw;max-height:34vh}
   #lb{padding:48px 10px 56px}
   #lb .nav.prev{left:0} #lb .nav.next{right:0}
 }
@@ -234,7 +241,7 @@ var GROUPS = [
   ['img/own/home_02_0.jpg', 'img/own/home_02_1.jpg'],
   ['img/own/home_00_0.jpg', 'img/own/home_00_1.jpg'],
   ['img/own/home_01_0.jpg', 'img/own/home_01_1.jpg'],
-  ['img/own/archery_06_archery7-copy.jpg', 'img/own/archery_05_archery6-copy.jpg'],
+  ['img/own/archery_03_archery4-copy.jpg', 'img/own/archery_05_archery6-copy.jpg', 'img/own/archery_06_archery7-copy.jpg', 'img/own/archery_02_archery3-copy.jpg'],
   ['img/own/violins_03_ian-violin-14.jpg', 'img/own/home_05_1.jpg', 'img/own/violins_09_ian-violin-4.jpg']
 ];
 var PAIR_LEAD_BOOST = {
@@ -314,7 +321,10 @@ document.querySelectorAll('.langbtn').forEach(function(b){
 var field = document.getElementById('field');
 var html = '';
 for(var i = 0; i < WALL.length; i++){
-  html += '<aside class="parallaxdiv'+(GROUP_SCALE[WALL[i].src] ? ' big' : '')+'"><img class="linkedparaimg" data-i="'+i+'" src="'+WALL[i].src+'" alt="" '+(i<6?'loading="eager"':'loading="lazy"')+' decoding="async"></aside>';
+  var cls = 'parallaxdiv';
+  if(GROUP_SCALE[WALL[i].src]) cls += ' big';
+  if(WALL[i].w / WALL[i].h >= 2) cls += ' wide';
+  html += '<aside class="'+cls+'"><img class="linkedparaimg" data-i="'+i+'" src="'+WALL[i].src+'" alt="" '+(i<6?'loading="eager"':'loading="lazy"')+' decoding="async"></aside>';
 }
 html += '<div class="pad" id="pad"></div>';
 field.innerHTML = html;
@@ -348,8 +358,16 @@ var placedTop = [], placedLeft = [];
 function visPx(idx, scale){
   var it = WALL[idx];
   var big = !!(GROUP_SCALE[WALL[idx].src] || (MATE[idx] != null && GROUP_SCALE[WALL[MATE[idx]].src]));
-  var maxW = window.innerWidth * (big ? 0.46 : 0.40);
-  var maxH = window.innerHeight * (big ? 0.72 : 0.50);
+  var wide = it.w / it.h >= 2;
+  var wFrac = 0.40, hFrac = 0.50;
+  if(big){ wFrac = 0.46; hFrac = 0.72; }
+  else if(wide){
+    if(window.innerWidth <= 768){ wFrac = 0.88; hFrac = 0.34; }
+    else if(window.innerWidth <= 1024){ wFrac = 0.70; hFrac = 0.38; }
+    else { wFrac = 0.72; hFrac = 0.44; }
+  }
+  var maxW = window.innerWidth * wFrac;
+  var maxH = window.innerHeight * hFrac;
   var s = Math.min(maxW / it.w, maxH / it.h, 1) * (scale || 1);
   return { w: it.w * s, h: it.h * s };
 }
@@ -365,6 +383,7 @@ function pickScale(i){
     var cap = (WALL[i].src.indexOf("home_04_0") !== -1 || WALL[i].src.indexOf("home_09_0") !== -1 || WALL[i].src.indexOf("violins_03") !== -1) ? 1.45 : 1.2;
     s = Math.min(cap, Math.max(0.85, s * PAIR_LEAD_BOOST[WALL[i].src]));
   }
+  if(WALL[i].w / WALL[i].h >= 2) s = Math.max(0.98, Math.min(1, s));
   return s;
 }
 function collectClusters(){
@@ -412,9 +431,10 @@ function layout(){
     }
   }
   for(i = 0; i < divs.length; i++){
+    if(WALL[i].w / WALL[i].h >= 2) scales[i] = Math.max(scales[i], 0.98);
     if(MATE[i] == null) continue;
-    scales[i] = Math.max(scales[i], 0.72);
-    scales[MATE[i]] = Math.max(scales[MATE[i]], 0.78);
+    scales[i] = Math.max(scales[i], 0.82);
+    scales[MATE[i]] = Math.max(scales[MATE[i]], 0.82);
   }
 
   var groups = collectClusters();
@@ -427,8 +447,8 @@ function layout(){
       else {
         prev = parts[j - 1];
         relL = prev.relL + prev.W + INTRA_W;
-        relT = rand(0, 2.8);
-        if(relL + sz.w > 90){
+        relT = prev.relT + rand(0, 2.8);
+        if(sz.w > 50 || prev.W > 50 || relL + sz.w > 90){
           relL = rand(0, 3.5);
           relT = clusterH + INTRA_H;
         }
