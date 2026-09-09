@@ -158,7 +158,9 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
 
 @media(max-width:768px){
   #boot .mark{font-size:clamp(26px, 8vw, 48px); letter-spacing:0}
-  #topbar{padding:10px 12px}
+  #topbar{padding:10px 12px; gap:8px}
+  #brand{font-size:13px;white-space:nowrap}
+  #toplinks a{padding:8px 8px;font-size:12px}
   .band{
     grid-template-columns:repeat(6, minmax(0, 1fr));
     padding-bottom:4vh;
@@ -205,10 +207,6 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
   <nav id="toplinks">
     <a href="photography.html" class="on" data-i18n="hero.h1">Photography</a>
     <a href="/" data-i18n="nav.digitech">Digitech</a>
-    <span>
-      <button type="button" class="langbtn" data-lang="en" aria-label="English">EN</button>
-      <button type="button" class="langbtn" data-lang="es" aria-label="Español">ES</button>
-    </span>
   </nav>
 </header>
 
@@ -337,21 +335,11 @@ function applyI18n(){
   document.querySelectorAll('[data-i18n]').forEach(function(n){
     n.textContent = t(n.getAttribute('data-i18n'));
   });
-  document.querySelectorAll('.langbtn').forEach(function(b){
-    b.classList.toggle('on', b.getAttribute('data-lang') === LANG);
-  });
   document.querySelectorAll('.shot img').forEach(function(im){ im.alt = t('alt'); });
   document.getElementById('lbX').textContent = t('close');
   document.getElementById('lbPrev').setAttribute('aria-label', t('prev'));
   document.getElementById('lbNext').setAttribute('aria-label', t('next'));
 }
-document.querySelectorAll('.langbtn').forEach(function(b){
-  b.addEventListener('click', function(){
-    LANG = b.getAttribute('data-lang') === 'es' ? 'es' : 'en';
-    try { localStorage.setItem('jh-lang', LANG); } catch(e){}
-    applyI18n();
-  });
-});
 
 var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var wall = document.getElementById('wall');
