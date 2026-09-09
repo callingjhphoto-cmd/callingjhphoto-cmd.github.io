@@ -27,7 +27,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
 <style>
@@ -44,6 +44,23 @@ html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
   overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body.is-booting{overflow:hidden}
+
+#boot{
+  position:fixed;inset:0;z-index:300;
+  background:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .75s ease;
+}
+#boot.out{opacity:0;pointer-events:none}
+#boot .mark{
+  font-family:"Syne",var(--sans);
+  font-weight:800;
+  font-size:clamp(40px, 8.5vw, 88px);
+  letter-spacing:-.045em;
+  line-height:.9;
+  color:var(--ink);
 }
 ::selection{background:var(--signal);color:#fff}
 a{color:inherit;text-decoration:none}
@@ -142,7 +159,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <script data-goatcounter="https://callingjhphoto.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </head>
-<body>
+<body class="is-booting">
+
+<div id="boot" aria-label="jhphoto">
+  <div class="mark">jhphoto</div>
+</div>
 
 <header id="topbar">
   <a id="brand" href="/" aria-label="James Huertas">
@@ -375,6 +396,7 @@ function initField(){
   buildScrollParallax();
   buildMouseParallax();
   buildAutoscroll();
+  runBoot();
   var resizeTimer;
   window.addEventListener("resize", function(){
     clearTimeout(resizeTimer);
@@ -433,6 +455,31 @@ document.addEventListener("keydown", function(e){
   else if(e.key === "ArrowRight"){ e.preventDefault(); curI++; showLb(); }
   else if(e.key === "ArrowLeft"){ e.preventDefault(); curI--; showLb(); }
 });
+
+function runBoot(){
+  var boot = document.getElementById("boot");
+  var gone = false;
+  function dismiss(){
+    if(gone) return;
+    gone = true;
+    boot.classList.add("out");
+    document.body.classList.remove("is-booting");
+    setTimeout(function(){ if(boot.parentNode) boot.parentNode.removeChild(boot); }, 800);
+  }
+  if(reduceMotion){ dismiss(); return; }
+  var need = Math.min(6, imgs.length);
+  var ready = 0;
+  var minOk = false;
+  function maybe(){ if(minOk && ready >= need) dismiss(); }
+  setTimeout(function(){ minOk = true; maybe(); }, 1100);
+  imgs.slice(0, need).forEach(function(img){
+    var done = function(){ ready++; maybe(); };
+    if(img.complete && img.naturalWidth) done();
+    else { img.addEventListener("load", done); img.addEventListener("error", done); }
+  });
+  if(!need){ minOk = true; dismiss(); }
+  setTimeout(dismiss, 2600);
+}
 
 applyI18n();
 if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initField);
