@@ -85,8 +85,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="prefetch" as="video" href="img/entry/jh-entry-en.mp4" type="video/mp4">
-<link rel="prefetch" as="video" href="img/entry/jh-entry-es.mp4" type="video/mp4">
+<link rel="prefetch" as="video" href="img/entry/jh-entry-en.mp4" type="video/mp4" media="(min-width:721px)">
+<link rel="prefetch" as="video" href="img/entry/jh-entry-es.mp4" type="video/mp4" media="(min-width:721px)">
+<link rel="prefetch" as="video" href="img/entry/jh-entry-en-mobile.mp4" type="video/mp4" media="(max-width:720px)">
+<link rel="prefetch" as="video" href="img/entry/jh-entry-es-mobile.mp4" type="video/mp4" media="(max-width:720px)">
 <noscript>
 <style>
 html.lang-wait, html.lang-wait body{overflow:visible!important;height:auto!important}
@@ -221,8 +223,9 @@ html.lang-wait #bookSheet{display:none!important;pointer-events:none!important}
 }
 @media (max-width:720px){
   #entryFilm video{
-    width:min(92vw, calc(100vw - 32px));
-    max-height:56vh;
+    width:min(86vw, calc(82vh * 9 / 16));
+    max-height:82vh;
+    aspect-ratio:9/16;
   }
 }
 html.entry-playing, html.entry-playing body{overflow:hidden;height:100%}
@@ -2372,6 +2375,14 @@ function enterSite(e){
   if(typeof startHeroFlips === 'function') startHeroFlips();
 }
 
+function isEntryMobile(){
+  return window.matchMedia && window.matchMedia('(max-width:720px)').matches;
+}
+function entrySrc(lang){
+  var base = (lang === 'es') ? 'img/entry/jh-entry-es' : 'img/entry/jh-entry-en';
+  return isEntryMobile() ? (base + '-mobile.mp4') : (base + '.mp4');
+}
+
 function playEntryThenEnter(lang, e){
   if(reduce || window.__jhSkipEntry){
     enterSite(e);
@@ -2379,7 +2390,7 @@ function playEntryThenEnter(lang, e){
   }
   var film = $('#entryFilm');
   var vid = $('#entryVideo');
-  var src = (lang === 'es') ? 'img/entry/jh-entry-es.mp4' : 'img/entry/jh-entry-en.mp4';
+  var src = entrySrc(lang);
   if(!film || !vid){
     enterSite(e);
     return;
@@ -2462,16 +2473,16 @@ var gateFlockStop = null;
   }
   function warmEntry(lang){
     if(lang !== 'en' && lang !== 'es') return;
+    var href = entrySrc(lang);
     window.__jhEntryWarm = window.__jhEntryWarm || {};
-    if(window.__jhEntryWarm[lang]) return;
-    var href = (lang === 'es') ? 'img/entry/jh-entry-es.mp4' : 'img/entry/jh-entry-en.mp4';
+    if(window.__jhEntryWarm[href]) return;
     var v = document.createElement('video');
     v.muted = true;
     v.preload = 'auto';
     v.playsInline = true;
     v.src = href;
     try { v.load(); } catch(err){}
-    window.__jhEntryWarm[lang] = v;
+    window.__jhEntryWarm[href] = v;
   }
   function bindLangBtn(b){
     if(!b || b.__jhLangBound) return;
