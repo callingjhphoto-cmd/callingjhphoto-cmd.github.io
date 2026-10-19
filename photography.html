@@ -8,6 +8,8 @@
 <meta name="author" content="James Huertas">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://jameshphoto.com/photography.html">
+<link rel="describedby" type="text/markdown" href="https://jameshphoto.com/llms.txt">
+<link rel="alternate" type="text/markdown" href="https://jameshphoto.com/llms.txt" title="Plain summary for AI assistants">
 <link rel="me" href="https://www.instagram.com/tap.dancingoyster/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jameshphoto.com/photography.html">
@@ -215,7 +217,7 @@ main#wall{position:relative;z-index:1;padding:72px 0 16vh}
 <div id="lb" role="dialog" aria-modal="true" aria-label="Photograph">
   <button type="button" class="x" id="lbX">Close</button>
   <button type="button" class="nav prev" id="lbPrev" aria-label="Previous">‹</button>
-  <img id="lbImg" alt="">
+  <img id="lbImg" alt="Enlarged photograph">
   <button type="button" class="nav next" id="lbNext" aria-label="Next">›</button>
   <div class="meta"><span id="lbCap"></span><span id="lbIdx"></span></div>
 </div>
@@ -362,7 +364,7 @@ bands.forEach(function(band){
     if(p.col >= 7) cls += ' offset';
     var eager = p.i < 5 ? 'eager' : 'lazy';
     html += '<button type="button" class="'+cls+'" data-i="'+p.i+'" data-depth="'+(p.depth||.4)+'" style="--col:'+p.col+';--span:'+p.span+';--mt:'+(p.mt||0)+';--mb:'+(p.mb||0)+'" aria-label="'+t('alt')+'">';
-    html += '<img src="'+p.src+'" width="'+p.w+'" height="'+p.h+'" alt="" loading="'+eager+'" decoding="async">';
+    html += '<img src="'+p.src+'" width="'+p.w+'" height="'+p.h+'" alt="Photograph by James Huertas" loading="'+eager+'" decoding="async">';
     html += '</button>';
   });
   html += '</section>';
