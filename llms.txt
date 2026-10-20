@@ -45,3 +45,4 @@ Photographers, production companies, agencies and brands shooting fashion and ad
 ## Optional
 
 - [Full profile](https://jameshphoto.com/llms-full.txt): every service, tool and contact detail in plain text
+- [Agent readiness report](https://www.startuphub.ai/agent-readiness?url=jameshphoto.com): independent scan of how well AI agents can read this site
