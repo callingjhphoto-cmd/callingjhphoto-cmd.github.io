@@ -1,0 +1,21 @@
+{
+  "name": "James Huertas — Digital Technician & Lighting Assistant",
+  "url": "https://jameshphoto.com/",
+  "description": "What an AI agent can do for someone who wants to hire James Huertas, a digital technician and lighting assistant for fashion and advertising stills in Barcelona and Mallorca.",
+  "skills": [
+    {
+      "id": "check-availability-and-book",
+      "name": "Check availability and book",
+      "description": "Ask whether James is free for a stills shoot and request a quote.",
+      "how": "Email callingjhphoto@gmail.com with the shoot dates, the city and a one-line brief. Phone: +34 643 147 756. Phone and WhatsApp: 0044 7562 393 477.",
+      "docs": "https://jameshphoto.com/llms.txt"
+    },
+    {
+      "id": "learn-services",
+      "name": "Learn what he does",
+      "description": "Read a plain summary of his services, equipment, languages and area.",
+      "how": "Fetch https://jameshphoto.com/llms-full.txt",
+      "docs": "https://jameshphoto.com/llms-full.txt"
+    }
+  ]
+}
