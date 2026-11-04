@@ -378,7 +378,7 @@ var film=$('#entryFilm');var vid=$('#entryVideo');var src=entrySrc(lang);if(!fil
 var gate=$('#langGate');if(gate)gate.classList.add('playing');document.documentElement.classList.add('entry-playing');if(typeof gateFlockStop==='function'){gateFlockStop(gate?gate.querySelector('[data-lang="'+lang+'"]'):null);}
 var done=false;function finish(){if(done)return;done=true;if(window.__jhEntryTimer){clearTimeout(window.__jhEntryTimer);window.__jhEntryTimer=null;}
 enterSite(e);}
-vid.onended=finish;vid.onerror=finish;window.__jhEntryTimer=setTimeout(finish,14000);try{vid.pause();}catch(err){}
+vid.onended=finish;vid.onerror=finish;window.__jhEntryTimer=setTimeout(finish,7000);try{vid.pause();}catch(err){}
 vid.muted=true;vid.defaultMuted=true;vid.playsInline=true;vid.setAttribute('playsinline','');vid.setAttribute('webkit-playsinline','');vid.src=src;film.removeAttribute('hidden');film.setAttribute('aria-hidden','false');film.style.display='flex';film.classList.remove('gone');film.classList.add('on');var p=vid.play();if(p&&p.catch)p.catch(function(){finish();});}
 function pickLang(lang,e){var first=!window.__jhLangPicked;window.__jhLangPicked=true;setLang(lang);if(!first)return;playEntryThenEnter(lang,e);}
 (function(){var nav=$('#siteNav');var toggle=$('#navToggle');if(!nav||!toggle)return;function setOpen(on){nav.classList.toggle('is-open',!!on);toggle.setAttribute('aria-expanded',on?'true':'false');}
